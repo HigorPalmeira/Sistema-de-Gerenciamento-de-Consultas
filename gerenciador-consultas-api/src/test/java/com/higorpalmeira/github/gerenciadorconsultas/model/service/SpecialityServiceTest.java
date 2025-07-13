@@ -5,10 +5,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +27,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.SpecialityRepository;
 
@@ -135,6 +140,170 @@ public class SpecialityServiceTest {
 			// Assert
 			assertTrue(output.isEmpty());
 			assertEquals(specialityId, uuidArgumentCaptor.getValue());
+			
+		}
+		
+	}
+	
+	@Nested
+	class listSpecialities {
+		
+		@Test
+		@DisplayName("Should all specialities with success")
+		void shouldAllSpecialitiesWithSuccess() {
+			
+			// Arrange
+			var speciality = new Speciality(
+					UUID.randomUUID(),
+					"description",
+					Instant.now(),
+					null
+					);
+			
+			var specialityList = List.of(speciality);
+			
+			doReturn(specialityList)
+				.when(specialityRepository)
+				.findAll();
+			
+			// Act
+			var output = specialityService.listSpecialities();
+			
+			// Assert
+			assertNotNull(output);
+			assertEquals(specialityList.size(), output.size());
+			
+		}
+		
+	}
+
+	@Nested
+	class deleteById {
+		
+		@Test
+		@DisplayName("Should delete speciality with success when speciality exists")
+		void shouldDeleteSpecialityWithSuccessWhenSpecialityExists() {
+			
+			// Arrange
+			doReturn(true)
+				.when(specialityRepository)
+				.existsById(uuidArgumentCaptor.capture());
+			
+			doNothing()
+				.when(specialityRepository)
+				.deleteById(uuidArgumentCaptor.capture());
+			
+			var specialityId = UUID.randomUUID();
+			
+			// Act
+			specialityService.deleteSpecialityById(specialityId.toString());
+			
+			// Assert
+			var idList = uuidArgumentCaptor.getAllValues();
+			assertEquals(specialityId, idList.get(0));
+			assertEquals(specialityId, idList.get(1));
+			
+			verify(specialityRepository, times(1)).existsById(idList.get(0));
+			verify(specialityRepository, times(1)).existsById(idList.get(1));
+			
+		}
+		
+		@Test
+		@DisplayName("Should not delete speciality with success when speciality not exists")
+		void shouldNotDeleteSpecialityWithSuccessWhenSpecialityNotExists() {
+			
+			// Arrange
+			doReturn(false)
+				.when(specialityRepository)
+				.existsById(uuidArgumentCaptor.capture());
+			
+			var specialityId = UUID.randomUUID();
+			
+			// Act
+			specialityService.deleteSpecialityById(specialityId.toString());;
+			
+			// Assert
+			assertEquals(specialityId, uuidArgumentCaptor.getValue());
+			
+			verify(specialityRepository, times(1)).existsById(uuidArgumentCaptor.getValue());
+			
+			verify(specialityRepository, times(0)).deleteById(any());
+			
+		}
+		
+	}
+	
+	@Nested
+	class updateSpecialityById {
+		
+		@Test
+		@DisplayName("Should update speciality by id when speciality exists and description is filled")
+		void shouldUpdateSpecialityByIdWhenSpecialityExistsAndDescriptionIsFilled() {
+			
+			// Arrange
+			var updateSpecialityDto = new UpdateSpecialityDto(
+					"description"
+					);
+			
+			var speciality = new Speciality(
+					UUID.randomUUID(),
+					"description",
+					Instant.now(),
+					null
+					);
+			
+			doReturn(Optional.of(speciality))
+				.when(specialityRepository)
+				.findById(uuidArgumentCaptor.capture());
+			
+			doReturn(speciality)
+				.when(specialityRepository)
+				.save(specialityArgumentCaptor.capture());
+			
+			// Act
+			specialityService.updateSpecialityById(speciality.getId().toString(), updateSpecialityDto);
+			
+			// Assert
+			assertEquals(speciality.getId(), uuidArgumentCaptor.getValue());
+			
+			var specialityCaptured = specialityArgumentCaptor.getValue();
+			
+			assertEquals(updateSpecialityDto.description(), specialityCaptured.getDescription());
+			
+			verify(specialityRepository, times(1))
+				.findById(uuidArgumentCaptor.getValue());
+			
+			verify(specialityRepository, times(1))
+				.save(speciality);
+			
+		}
+		
+		@Test
+		@DisplayName("Should not update speciality when speciality not exists")
+		void shouldNotUpdateSpecialityWhenSpecialityNotExists() {
+			
+			// Arrange
+			var updateSpecialityDto = new UpdateSpecialityDto(
+					"description"
+					);
+			
+			var specialityId = UUID.randomUUID();
+			
+			doReturn(Optional.empty())
+				.when(specialityRepository)
+				.findById(uuidArgumentCaptor.capture());
+			
+			// Act
+			specialityService.updateSpecialityById(specialityId.toString(), updateSpecialityDto);
+			
+			// Assert
+			assertEquals(specialityId, uuidArgumentCaptor.getValue());
+
+			verify(specialityRepository, times(1))
+				.findById(uuidArgumentCaptor.getValue());
+			
+			verify(specialityRepository, times(0))
+				.save(any());
 			
 		}
 		
