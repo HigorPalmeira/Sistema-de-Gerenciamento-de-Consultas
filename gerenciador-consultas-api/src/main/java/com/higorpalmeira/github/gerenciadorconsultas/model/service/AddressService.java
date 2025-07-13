@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.AddressRepository;
 
@@ -48,6 +49,45 @@ public class AddressService {
 	public List<Address> listAddresses() {
 		
 		return addressRepository.findAll();
+		
+	}
+	
+	public void updateAddressById(String addressId, UpdateAddressDto updateAddressDto) {
+		
+		var id = UUID.fromString(addressId);
+		var addressEntity = addressRepository.findById(id);
+		
+		if (addressEntity.isPresent()) {
+			
+			var address = addressEntity.get();
+			
+			if (updateAddressDto.cep() != null) {
+				address.setCep(updateAddressDto.cep());
+			}
+			
+			if (updateAddressDto.street() != null) {
+				address.setStreet(updateAddressDto.street());
+			}
+			
+			if (updateAddressDto.complement() != null) {
+				address.setComplement(updateAddressDto.complement());
+			}
+			
+			if (updateAddressDto.neighborhood() != null) {
+				address.setNeighborhood(updateAddressDto.neighborhood());
+			}
+			
+			if (updateAddressDto.locality() != null) {
+				address.setLocality(updateAddressDto.locality());
+			}
+			
+			if (updateAddressDto.uf() != null) {
+				address.setUf(updateAddressDto.uf());
+			}
+			
+			addressRepository.save(address);
+			
+		}
 		
 	}
 
