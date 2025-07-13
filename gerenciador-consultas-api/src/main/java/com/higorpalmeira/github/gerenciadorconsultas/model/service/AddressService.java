@@ -1,6 +1,7 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,6 +42,12 @@ public class AddressService {
 	public Optional<Address> findAddressById(String addressId) {
 		
 		return addressRepository.findById(UUID.fromString(addressId));
+		
+	}
+	
+	public List<Address> listAddresses() {
+		
+		return addressRepository.findAll();
 		
 	}
 
