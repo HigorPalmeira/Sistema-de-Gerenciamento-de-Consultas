@@ -7,11 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.AddressService;
 
@@ -57,6 +59,15 @@ public class AddressController {
 		var addresses = addressService.listAddresses();
 		
 		return ResponseEntity.ok(addresses);
+		
+	}
+	
+	@PutMapping("/{addressId}")
+	public ResponseEntity<Void> updateAddressById(@PathVariable("addressId") String addressId, @RequestBody UpdateAddressDto updateAddressDto) {
+		
+		addressService.updateAddressById(addressId, updateAddressDto);
+		
+		return ResponseEntity.noContent().build();
 		
 	}
 
