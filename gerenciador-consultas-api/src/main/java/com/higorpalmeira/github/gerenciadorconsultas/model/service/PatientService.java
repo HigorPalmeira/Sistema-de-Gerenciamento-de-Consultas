@@ -3,6 +3,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -56,6 +57,12 @@ public class PatientService {
 	public Optional<Patient> findPatientById(String patientId) {
 		
 		return patientRepository.findById(UUID.fromString(patientId));
+		
+	}
+	
+	public List<Patient> listPatients() {
+		
+		return patientRepository.findAll();
 		
 	}
 	
