@@ -1,6 +1,7 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -34,6 +35,12 @@ public class AddressService {
 		var addressSaved = addressRepository.save(address);
 		
 		return addressSaved.getId();
+		
+	}
+	
+	public Optional<Address> findAddressById(String addressId) {
+		
+		return addressRepository.findById(UUID.fromString(addressId));
 		
 	}
 
