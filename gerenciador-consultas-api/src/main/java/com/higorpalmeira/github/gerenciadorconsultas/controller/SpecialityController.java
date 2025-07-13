@@ -3,6 +3,8 @@ package com.higorpalmeira.github.gerenciadorconsultas.controller;
 import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,23 @@ public class SpecialityController {
 		var specialityId = specialityService.createSpeciality(createSpecialityDto);
 		
 		return ResponseEntity.created(URI.create("/v1/users/" + specialityId.toString())).build();
+		
+	}
+	
+	@GetMapping ("/{specialityId}")
+	public ResponseEntity<Speciality> findSpecialityById(@PathVariable("specialityId") String specialityId) {
+		
+		var speciality = specialityService.findSpecialityById(specialityId);
+		
+		if (speciality.isPresent()) {
+			
+			return ResponseEntity.ok(speciality.get());
+			
+		} else {
+			
+			return ResponseEntity.notFound().build();
+			
+		}
 		
 	}
 

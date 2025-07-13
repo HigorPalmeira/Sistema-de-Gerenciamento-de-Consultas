@@ -1,6 +1,7 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -28,6 +29,12 @@ public class SpecialityService {
 		var specialitySaved = specialityRepository.save(speciality);
 		
 		return specialitySaved.getId();
+		
+	}
+	
+	public Optional<Speciality> findSpecialityById(String specialityId) {
+		
+		return specialityRepository.findById(UUID.fromString(specialityId));
 		
 	}
 
