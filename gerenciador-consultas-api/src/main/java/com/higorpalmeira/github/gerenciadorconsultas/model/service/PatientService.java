@@ -58,5 +58,16 @@ public class PatientService {
 		return patientRepository.findById(UUID.fromString(patientId));
 		
 	}
+	
+	public void deletePatientById(String patientId) {
+		
+		var id = UUID.fromString(patientId);
+		var patientExists = patientRepository.existsById(id);
+		
+		if (patientExists) {
+			patientRepository.deleteById(id);
+		}
+		 
+	}
 
 }
