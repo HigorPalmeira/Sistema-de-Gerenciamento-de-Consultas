@@ -90,5 +90,16 @@ public class AddressService {
 		}
 		
 	}
+	
+	public void deleteAddressById(String addressId) {
+		
+		var id = UUID.fromString(addressId);
+		var addressExists = addressRepository.existsById(id);
+		
+		if (addressExists) {
+			addressRepository.deleteById(id);
+		}
+		
+	}
 
 }
