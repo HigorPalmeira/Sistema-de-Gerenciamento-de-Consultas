@@ -64,5 +64,16 @@ public class SpecialityService {
 		}
 		
 	}
+	
+	public void deleteSpecialityById(String specialityId) {
+		
+		var id = UUID.fromString(specialityId);
+		var specialityExists = specialityRepository.existsById(id);
+		
+		if (specialityExists) {
+			specialityRepository.deleteById(id);
+		}
+		
+	}
 
 }
