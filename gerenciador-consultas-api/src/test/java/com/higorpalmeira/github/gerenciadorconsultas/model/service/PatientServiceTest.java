@@ -2,7 +2,10 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -91,6 +94,30 @@ public class PatientServiceTest {
 			assertEquals(GenderType.fromType(input.gender()), patientCaptured.getGender());
 			assertEquals(input.telephone(), patientCaptured.getTelephone());
 			assertEquals(input.email(), patientCaptured.getEmail());
+			
+		}
+		
+		@Test
+		@DisplayName("Should Throw Exception When Erro Occurs")
+		void shouldThrowExceptionWhenErrorOccurs() {
+			
+			// Arrange
+			doThrow(new RuntimeException())
+				.when(patientRepository)
+				.save(any());
+			
+			var input = new CreatePatientDto(
+					"Benedito",
+					"Danilo Nogueira",
+					"689.254.310-33",
+					"1988-06-23",
+					"MALE",
+					"(96) 99980-7549",
+					"benedito-nogueira77@dpi.ig.br"
+					);
+			
+			// Act & Assert
+			assertThrows(RuntimeException.class, () -> patientService.createPatient(input));
 			
 		}
 		
