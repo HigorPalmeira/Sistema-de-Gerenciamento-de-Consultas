@@ -1,5 +1,7 @@
 package com.higorpalmeira.github.gerenciadorconsultas.util;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,6 +11,15 @@ public class Validator {
             "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
             "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 	private static final Pattern PATTERN_EMAIL = Pattern.compile(EMAIL_REGEX);
+	
+	private static final String CRM_REGEX = "^CRM/([A-Z]{2})\\s(\\d{6})$";
+	private static final Pattern PATTERN_CRM = Pattern.compile(CRM_REGEX);
+	
+	private static final List<String> UFS_VALIDAS = Arrays.asList(
+            "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", 
+            "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", 
+            "RR", "SC", "SP", "SE", "TO"
+    );
 	
 	public static boolean CPFValidation(final String input) {
 		
@@ -65,6 +76,35 @@ public class Validator {
 		Matcher matcher = PATTERN_EMAIL.matcher(input);
 		
 		return matcher.matches();
+		
+	}
+	
+	public static boolean CRMValidation(final String input) {
+		
+		if (input == null || input.isBlank()) {
+			return false;
+		}
+		
+		Matcher matcher = PATTERN_CRM.matcher(input.trim());
+		
+		if (!matcher.matches()) {
+			return false;
+		}
+		
+		String uf = matcher.group(1);
+		String numero = matcher.group(2);
+		
+		try {
+			Integer.parseInt(numero);
+		} catch(NumberFormatException e) {
+			return false;
+		}
+		
+		if (!UFS_VALIDAS.contains(uf)) {
+			return false;
+		}
+		
+		return true;
 		
 	}
 	
