@@ -1,5 +1,7 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
 
+import java.time.LocalDateTime;
+
 public record CreatePatientDto(
 		String firstName,
 		String lastName,
