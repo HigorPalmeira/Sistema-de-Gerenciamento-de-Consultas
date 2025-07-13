@@ -1,6 +1,7 @@
 package com.higorpalmeira.github.gerenciadorconsultas.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,6 +49,15 @@ public class PatientController {
 			return ResponseEntity.notFound().build();
 			
 		}
+		
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Patient>> listPatients() {
+		
+		var patients = patientService.listPatients();
+		
+		return ResponseEntity.ok(patients);
 		
 	}
 	
