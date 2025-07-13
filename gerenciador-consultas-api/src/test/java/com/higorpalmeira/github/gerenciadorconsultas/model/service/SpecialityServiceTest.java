@@ -2,7 +2,10 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -65,6 +68,22 @@ public class SpecialityServiceTest {
 			
 			var specialityCaptured = specialityArgumentCaptor.getValue();
 			assertEquals(input.description(), specialityCaptured.getDescription());
+			
+		}
+		
+		@Test
+		@DisplayName("Should Throw Exception When Error Occurs")
+		void shouldThrowExceptionWhenErrorOccurs() {
+			
+			// Arrange
+			doThrow(new RuntimeException())
+				.when(specialityRepository)
+				.save(any());
+			
+			var input = new CreateSpecialityDto("description");
+			
+			// Act & Assert
+			assertThrows(RuntimeException.class, () -> specialityService.createSpeciality(input));
 			
 		}
 		
