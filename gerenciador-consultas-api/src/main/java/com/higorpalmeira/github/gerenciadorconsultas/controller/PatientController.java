@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.PatientService;
 
@@ -58,6 +60,15 @@ public class PatientController {
 		var patients = patientService.listPatients();
 		
 		return ResponseEntity.ok(patients);
+		
+	}
+	
+	@PutMapping("/{patientId}")
+	public ResponseEntity<Void> updatePatientById(@PathVariable("patientId") String patientId, @RequestBody UpdatePatientDto updatePatientDto) {
+		
+		patientService.updatePatientById(patientId, updatePatientDto);
+		
+		return ResponseEntity.noContent().build();
 		
 	}
 	
