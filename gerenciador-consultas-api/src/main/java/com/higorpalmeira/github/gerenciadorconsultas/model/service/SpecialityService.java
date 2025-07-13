@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.SpecialityRepository;
 
@@ -42,6 +43,25 @@ public class SpecialityService {
 	public List<Speciality> listSpecialities() {
 		
 		return specialityRepository.findAll();
+		
+	}
+	
+	public void updateSpecialityById(String specialityId, UpdateSpecialityDto updateSpecialityDto) {
+		
+		var id = UUID.fromString(specialityId);
+		var specialityEntity = specialityRepository.findById(id);
+		
+		if (specialityEntity.isPresent()) {
+			
+			var speciality = specialityEntity.get();
+			
+			if (updateSpecialityDto.description() != null) {
+				speciality.setDescription( updateSpecialityDto.description() );
+			}
+			
+			specialityRepository.save(speciality);
+			
+		}
 		
 	}
 
