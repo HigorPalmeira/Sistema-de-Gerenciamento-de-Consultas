@@ -1,6 +1,7 @@
 package com.higorpalmeira.github.gerenciadorconsultas.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,6 +48,15 @@ public class AddressController {
 			return ResponseEntity.notFound().build();
 			
 		}
+		
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Address>> listAddresses() {
+		
+		var addresses = addressService.listAddresses();
+		
+		return ResponseEntity.ok(addresses);
 		
 	}
 
