@@ -1,7 +1,16 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
 
 @Service
@@ -11,6 +20,25 @@ public class PatientService {
 	
 	public PatientService(PatientRepository patientRepository) {
 		this.patientRepository = patientRepository;
+	}
+	
+	public UUID createPatient(CreatePatientDto createPatientDto) {
+		
+		var patient = new Patient(
+				createPatientDto.firstName(),
+				createPatientDto.lastName(),
+				createPatientDto.cpf(),
+				LocalDate.parse(
+						createPatientDto.birthdate(), 
+						DateTimeFormatter.ISO_LOCAL_DATE),
+				GenderType.fromType(createPatientDto.gender()),
+				StatusType.ACTIVE,
+				createPatientDto.telephone(),
+				createPatientDto.email(),
+				Instant.now(),
+				null
+				);
+		
 	}
 
 }

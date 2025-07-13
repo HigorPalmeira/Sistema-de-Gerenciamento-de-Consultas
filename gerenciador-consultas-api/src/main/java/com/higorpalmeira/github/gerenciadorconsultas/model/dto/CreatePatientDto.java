@@ -6,7 +6,6 @@ public record CreatePatientDto(
 		String cpf,
 		String birthdate,
 		String gender,
-		String status,
 		String telephone,
 		String email
 ) {

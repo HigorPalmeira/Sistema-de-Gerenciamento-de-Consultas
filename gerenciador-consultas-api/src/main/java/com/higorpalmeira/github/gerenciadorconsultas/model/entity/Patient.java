@@ -1,7 +1,11 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.entity;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
@@ -31,7 +35,7 @@ public class Patient {
 	private String cpf;
 	
 	@Column(name = "birthdate")
-	private LocalDateTime birthdate;
+	private LocalDate birthdate;
 	
 	@Column(name = "gender")
 	private GenderType gender;
@@ -44,13 +48,20 @@ public class Patient {
 	
 	@Column(name = "email")
 	private String email;
+	
+	@CreationTimestamp
+	private Instant creationTimestamp;
+	
+	@UpdateTimestamp
+	private Instant updateTimestamp;
 
 	public Patient() {
 		
 	}
 
-	public Patient(String firstName, String lastName, String cpf, LocalDateTime birthdate, GenderType gender,
-			StatusType status, String telephone, String email) {
+	public Patient(String firstName, String lastName, String cpf, LocalDate birthdate, GenderType gender,
+			StatusType status, String telephone, String email, Instant creationTimestamp, Instant updateTimestamp) {
+		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.cpf = cpf;
@@ -59,10 +70,15 @@ public class Patient {
 		this.status = status;
 		this.telephone = telephone;
 		this.email = email;
+		this.creationTimestamp = creationTimestamp;
+		this.updateTimestamp = updateTimestamp;
 	}
 
-	public Patient(UUID patientId, String firstName, String lastName, String cpf, LocalDateTime birthdate,
-			GenderType gender, StatusType status, String telephone, String email) {
+
+
+	public Patient(UUID patientId, String firstName, String lastName, String cpf, LocalDate birthdate,
+			GenderType gender, StatusType status, String telephone, String email, Instant creationTimestamp,
+			Instant updateTimestamp) {
 		super();
 		this.patientId = patientId;
 		this.firstName = firstName;
@@ -73,7 +89,11 @@ public class Patient {
 		this.status = status;
 		this.telephone = telephone;
 		this.email = email;
+		this.creationTimestamp = creationTimestamp;
+		this.updateTimestamp = updateTimestamp;
 	}
+
+
 
 	public UUID getPatientId() {
 		return patientId;
@@ -107,11 +127,11 @@ public class Patient {
 		this.cpf = cpf;
 	}
 
-	public LocalDateTime getBirthdate() {
+	public LocalDate getBirthdate() {
 		return birthdate;
 	}
 
-	public void setBirthdate(LocalDateTime birthdate) {
+	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
 	}
 
