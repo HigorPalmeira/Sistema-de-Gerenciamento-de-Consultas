@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+import javax.validation.Validation;
+
 import org.springframework.stereotype.Service;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
@@ -24,24 +26,32 @@ public class PatientService {
 	
 	public UUID createPatient(CreatePatientDto createPatientDto) {
 		
-		var patient = new Patient(
-				createPatientDto.firstName(),
-				createPatientDto.lastName(),
-				createPatientDto.cpf(),
-				LocalDate.parse(
-						createPatientDto.birthdate(), 
-						DateTimeFormatter.ISO_LOCAL_DATE),
-				GenderType.fromType(createPatientDto.gender()),
-				StatusType.ACTIVE,
-				createPatientDto.telephone(),
-				createPatientDto.email(),
-				Instant.now(),
-				null
-				);
+		var validator = Validation.buildDefaultValidatorFactory().getValidator();
+		var cpfViolations = validator.validate(createPatientDto.cpf());
 		
-		var patientSaved = patientRepository.save(patient);
+		if (cpfViolations.isEmpty()) {
 		
-		return patientSaved.getPatientId();
+			var patient = new Patient(
+					createPatientDto.firstName(),
+					createPatientDto.lastName(),
+					createPatientDto.cpf(),
+					LocalDate.parse(
+							createPatientDto.birthdate(), 
+							DateTimeFormatter.ISO_LOCAL_DATE),
+					GenderType.fromType(createPatientDto.gender()),
+					StatusType.ACTIVE,
+					createPatientDto.telephone(),
+					createPatientDto.email(),
+					Instant.now(),
+					null
+					);
+			
+			var patientSaved = patientRepository.save(patient);
+			
+			return patientSaved.getPatientId();
+		}
+		
+		return null;
 		
 	}
 
