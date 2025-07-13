@@ -36,7 +36,17 @@ public class PatientController {
 	@GetMapping ("/{patientId}")
 	public ResponseEntity<Patient> findPatientById(@PathVariable("patientId") String patientId) {
 		
-		return null;
+		var patient = patientService.findPatientById(patientId);
+		
+		if (patient.isPresent()) {
+			
+			return ResponseEntity.ok(patient.get());
+			
+		} else {
+			
+			return ResponseEntity.notFound().build();
+			
+		}
 		
 	}
 
