@@ -1,8 +1,34 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
+import java.time.Instant;
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
+
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
+import com.higorpalmeira.github.gerenciadorconsultas.model.repository.SpecialityRepository;
 
 @Service
 public class SpecialityService {
+	
+	private SpecialityRepository specialityRepository;
+	
+	public SpecialityService(SpecialityRepository specialityRepository) {
+		this.specialityRepository = specialityRepository;
+	}
+	
+	public UUID createSpeciality(CreateSpecialityDto createSpecialityDto) {
+		
+		var speciality = new Speciality(
+				createSpecialityDto.description(),
+				Instant.now(),
+				null);
+		
+		var specialitySaved = specialityRepository.save(speciality);
+		
+		return specialitySaved.getId();
+		
+	}
 
 }
