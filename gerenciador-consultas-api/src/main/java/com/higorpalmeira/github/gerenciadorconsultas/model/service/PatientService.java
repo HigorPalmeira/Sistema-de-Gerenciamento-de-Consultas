@@ -39,6 +39,10 @@ public class PatientService {
 				null
 				);
 		
+		var patientSaved = patientRepository.save(patient);
+		
+		return patientSaved.getPatientId();
+		
 	}
 
 }
