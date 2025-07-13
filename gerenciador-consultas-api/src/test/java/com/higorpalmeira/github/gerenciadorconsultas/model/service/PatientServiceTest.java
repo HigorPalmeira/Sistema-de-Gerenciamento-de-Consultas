@@ -87,7 +87,7 @@ public class PatientServiceTest {
 			assertEquals(input.firstName(), patientCaptured.getFirstName());
 			assertEquals(input.lastName(), patientCaptured.getLastName());
 			assertEquals(input.cpf(), patientCaptured.getCpf());
-			assertEquals(input.birthdate(), patientCaptured.getBirthdate());
+			assertEquals(LocalDate.parse(input.birthdate(), DateTimeFormatter.ISO_LOCAL_DATE), patientCaptured.getBirthdate());
 			assertEquals(GenderType.fromType(input.gender()), patientCaptured.getGender());
 			assertEquals(input.telephone(), patientCaptured.getTelephone());
 			assertEquals(input.email(), patientCaptured.getEmail());

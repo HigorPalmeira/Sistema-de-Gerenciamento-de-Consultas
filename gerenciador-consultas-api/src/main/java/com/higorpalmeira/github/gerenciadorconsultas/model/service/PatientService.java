@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-import javax.validation.Validation;
-
 import org.springframework.stereotype.Service;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
@@ -14,6 +12,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
 @Service
 public class PatientService {
@@ -26,10 +25,7 @@ public class PatientService {
 	
 	public UUID createPatient(CreatePatientDto createPatientDto) {
 		
-		var validator = Validation.buildDefaultValidatorFactory().getValidator();
-		var cpfViolations = validator.validate(createPatientDto.cpf());
-		
-		if (cpfViolations.isEmpty()) {
+		if (Validator.CPFValidation(createPatientDto.cpf())) {
 		
 			var patient = new Patient(
 					createPatientDto.firstName(),
