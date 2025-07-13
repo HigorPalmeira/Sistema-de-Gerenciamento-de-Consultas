@@ -25,7 +25,8 @@ public class PatientService {
 	
 	public UUID createPatient(CreatePatientDto createPatientDto) {
 		
-		if (Validator.CPFValidation(createPatientDto.cpf())) {
+		if (Validator.CPFValidation(createPatientDto.cpf()) 
+				&& Validator.EmailValidation(createPatientDto.email())) {
 		
 			var patient = new Patient(
 					createPatientDto.firstName(),
