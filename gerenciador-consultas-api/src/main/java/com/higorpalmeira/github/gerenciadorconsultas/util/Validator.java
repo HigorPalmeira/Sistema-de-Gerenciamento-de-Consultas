@@ -1,6 +1,14 @@
 package com.higorpalmeira.github.gerenciadorconsultas.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Validator {
+	
+	private static final String EMAIL_REGEX = 
+            "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
+            "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+	private static final Pattern PATTERN_EMAIL = Pattern.compile(EMAIL_REGEX);
 	
 	public static boolean CPFValidation(final String input) {
 		
@@ -48,4 +56,16 @@ public class Validator {
 		return false;
 	}
 
+	public static boolean EmailValidation(final String input) {
+		
+		if (input == null) {
+			return false;
+		}
+		
+		Matcher matcher = PATTERN_EMAIL.matcher(input);
+		
+		return matcher.matches();
+		
+	}
+	
 }
