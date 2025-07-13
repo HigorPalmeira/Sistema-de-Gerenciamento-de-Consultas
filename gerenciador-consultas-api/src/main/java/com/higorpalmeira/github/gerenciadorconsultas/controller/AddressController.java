@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,6 +67,15 @@ public class AddressController {
 	public ResponseEntity<Void> updateAddressById(@PathVariable("addressId") String addressId, @RequestBody UpdateAddressDto updateAddressDto) {
 		
 		addressService.updateAddressById(addressId, updateAddressDto);
+		
+		return ResponseEntity.noContent().build();
+		
+	}
+	
+	@DeleteMapping("/{addressId}")
+	public ResponseEntity<Void> deleteById(@PathVariable("addressId") String addressId) {
+		
+		addressService.deleteAddressById(addressId);
 		
 		return ResponseEntity.noContent().build();
 		
