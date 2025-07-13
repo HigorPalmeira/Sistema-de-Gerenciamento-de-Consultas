@@ -33,7 +33,7 @@ public class SpecialityController {
 		
 		var specialityId = specialityService.createSpeciality(createSpecialityDto);
 		
-		return ResponseEntity.created(URI.create("/v1/users/" + specialityId.toString())).build();
+		return ResponseEntity.created(URI.create("/v1/speciality/" + specialityId.toString())).build();
 		
 	}
 	
