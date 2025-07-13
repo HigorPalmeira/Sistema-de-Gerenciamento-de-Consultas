@@ -1,6 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
 
-public record CreatePatientDto(
+public record UpdatePatientDto(
 		String firstName,
 		String lastName,
 		String cpf,
