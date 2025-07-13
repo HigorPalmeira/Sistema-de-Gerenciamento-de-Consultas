@@ -3,6 +3,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -49,6 +50,12 @@ public class PatientService {
 		}
 		
 		return null;
+		
+	}
+	
+	public Optional<Patient> findPatientById(String patientId) {
+		
+		return patientRepository.findById(UUID.fromString(patientId));
 		
 	}
 
