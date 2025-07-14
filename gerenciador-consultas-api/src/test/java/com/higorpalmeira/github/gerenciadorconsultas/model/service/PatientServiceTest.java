@@ -22,7 +22,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
@@ -51,6 +53,18 @@ public class PatientServiceTest {
 		void shouldCreatePatient() {
 			
 			// Arrange
+			
+			var address = new Address(
+					"74853-330",
+					"Rua 20",
+					"900",
+					"Jardim Santo Antônio",
+					"Goiânia",
+					"GO",
+					Instant.now(),
+					null
+					);
+			
 			var patient = new Patient(
 					UUID.randomUUID(),
 					"Benedito",
@@ -61,6 +75,7 @@ public class PatientServiceTest {
 					StatusType.ACTIVE,
 					"(96) 99980-7549",
 					"benedito-nogueira77@dpi.ig.br",
+					address,
 					Instant.now(),
 					null
 					);
@@ -69,6 +84,15 @@ public class PatientServiceTest {
 				.when(patientRepository)
 				.save(patientArgumentCaptor.capture());
 			
+			var addressDto = new CreateAddressDto(
+					"74853-330",
+					"Rua 20",
+					"900",
+					"Jardim Santo Antônio",
+					"Goiânia",
+					"GO"
+					);
+			
 			var input = new CreatePatientDto(
 					"Benedito",
 					"Danilo Nogueira",
@@ -76,7 +100,8 @@ public class PatientServiceTest {
 					"1988-06-23",
 					"MALE",
 					"(96) 99980-7549",
-					"benedito-nogueira77@dpi.ig.br"
+					"benedito-nogueira77@dpi.ig.br",
+					addressDto
 					);
 			
 			// Act
@@ -106,6 +131,15 @@ public class PatientServiceTest {
 				.when(patientRepository)
 				.save(any());
 			
+			var addressDto = new CreateAddressDto(
+					"74853-330",
+					"Rua 20",
+					"900",
+					"Jardim Santo Antônio",
+					"Goiânia",
+					"GO"
+					);
+			
 			var input = new CreatePatientDto(
 					"Benedito",
 					"Danilo Nogueira",
@@ -113,7 +147,8 @@ public class PatientServiceTest {
 					"1988-06-23",
 					"MALE",
 					"(96) 99980-7549",
-					"benedito-nogueira77@dpi.ig.br"
+					"benedito-nogueira77@dpi.ig.br",
+					addressDto
 					);
 			
 			// Act & Assert
