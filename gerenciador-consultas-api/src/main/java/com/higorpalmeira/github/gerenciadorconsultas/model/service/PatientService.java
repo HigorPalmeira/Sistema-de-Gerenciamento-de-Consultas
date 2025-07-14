@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
@@ -16,7 +15,6 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
-import com.higorpalmeira.github.gerenciadorconsultas.model.repository.AddressRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
@@ -24,9 +22,6 @@ import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 public class PatientService {
 	
 	private PatientRepository patientRepository;
-	
-	@Autowired
-	private AddressRepository addressRepository;
 	
 	public PatientService(PatientRepository patientRepository) {
 		this.patientRepository = patientRepository;
@@ -125,6 +120,39 @@ public class PatientService {
 			
 			if (updatePatientDto.email() != null && Validator.EmailValidation(updatePatientDto.email())) {
 				patient.setEmail(updatePatientDto.email());
+			}
+			
+			if (updatePatientDto.address() != null) {
+				
+				var addressEntity = updatePatientDto.address();
+				var address = patient.getAddress();
+				
+				if (addressEntity.cep() != null) {
+					address.setCep(addressEntity.cep());
+				}
+				
+				if (addressEntity.street() != null) {
+					address.setStreet(addressEntity.street());
+				}
+				
+				if (addressEntity.complement() != null) {
+					address.setComplement(addressEntity.complement());
+				}
+				
+				if (addressEntity.neighborhood() != null) {
+					address.setNeighborhood(addressEntity.neighborhood());
+				}
+				
+				if (addressEntity.locality() != null) {
+					address.setLocality(addressEntity.locality());
+				}
+				
+				if (addressEntity.uf() != null) {
+					address.setUf(addressEntity.uf());
+				}
+				
+				patient.setAddress(address);
+				
 			}
 			
 			patientRepository.save(patient);
