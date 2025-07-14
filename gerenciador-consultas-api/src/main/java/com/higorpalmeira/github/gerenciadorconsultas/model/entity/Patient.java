@@ -10,11 +10,14 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -49,6 +52,10 @@ public class Patient {
 	@Column(name = "email")
 	private String email;
 	
+	@OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn (name = "address_id", referencedColumnName = "id")
+	private Address address;
+	
 	@CreationTimestamp
 	private Instant creationTimestamp;
 	
@@ -60,7 +67,7 @@ public class Patient {
 	}
 
 	public Patient(String firstName, String lastName, String cpf, LocalDate birthdate, GenderType gender,
-			StatusType status, String telephone, String email, Instant creationTimestamp, Instant updateTimestamp) {
+			StatusType status, String telephone, String email, Address address, Instant creationTimestamp, Instant updateTimestamp) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -70,6 +77,7 @@ public class Patient {
 		this.status = status;
 		this.telephone = telephone;
 		this.email = email;
+		this.address = address;
 		this.creationTimestamp = creationTimestamp;
 		this.updateTimestamp = updateTimestamp;
 	}
@@ -77,7 +85,7 @@ public class Patient {
 
 
 	public Patient(UUID patientId, String firstName, String lastName, String cpf, LocalDate birthdate,
-			GenderType gender, StatusType status, String telephone, String email, Instant creationTimestamp,
+			GenderType gender, StatusType status, String telephone, String email, Address address, Instant creationTimestamp,
 			Instant updateTimestamp) {
 		super();
 		this.patientId = patientId;
@@ -89,6 +97,7 @@ public class Patient {
 		this.status = status;
 		this.telephone = telephone;
 		this.email = email;
+		this.address = address;
 		this.creationTimestamp = creationTimestamp;
 		this.updateTimestamp = updateTimestamp;
 	}
@@ -165,6 +174,14 @@ public class Patient {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 	
 }
