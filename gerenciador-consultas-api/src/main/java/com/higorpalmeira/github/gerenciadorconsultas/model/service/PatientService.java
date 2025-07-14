@@ -59,18 +59,21 @@ public class PatientService {
 
 	}
 
+	@Transactional(readOnly = true)
 	public Optional<Patient> findPatientById(String patientId) {
 
 		return patientRepository.findById(UUID.fromString(patientId));
 
 	}
 
+	@Transactional(readOnly = true)
 	public List<Patient> listPatients() {
 
 		return patientRepository.findAll();
 
 	}
 
+	@Transactional(readOnly = false)
 	public void updatePatientById(String patientId, UpdatePatientDto updatePatientDto) {
 
 		var id = UUID.fromString(patientId);
