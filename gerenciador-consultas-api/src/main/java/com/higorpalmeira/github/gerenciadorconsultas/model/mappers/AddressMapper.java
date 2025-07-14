@@ -28,7 +28,29 @@ public class AddressMapper {
 	
 	public void updateEntityFromDto(Address address, UpdateAddressDto updateAddressDto) {
 		
+		if (updateAddressDto.cep() != null) {
+			address.setCep(updateAddressDto.cep());
+		}
 		
+		if (updateAddressDto.street() != null) {
+			address.setStreet(updateAddressDto.street());
+		}
+		
+		if (updateAddressDto.complement() != null) {
+			address.setComplement(updateAddressDto.complement());
+		}
+		
+		if (updateAddressDto.neighborhood() != null) {
+			address.setNeighborhood(updateAddressDto.neighborhood());
+		}
+		
+		if (updateAddressDto.locality() != null) {
+			address.setLocality(updateAddressDto.locality());
+		}
+		
+		if (updateAddressDto.uf() != null) {
+			address.setUf(updateAddressDto.uf());
+		}
 		
 	}
 	
