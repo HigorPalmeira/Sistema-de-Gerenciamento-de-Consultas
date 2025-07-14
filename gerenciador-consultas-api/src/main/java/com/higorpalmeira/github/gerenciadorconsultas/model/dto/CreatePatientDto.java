@@ -7,7 +7,8 @@ public record CreatePatientDto(
 		String birthdate,
 		String gender,
 		String telephone,
-		String email
+		String email,
+		CreateAddressDto address
 ) {
 
 }
