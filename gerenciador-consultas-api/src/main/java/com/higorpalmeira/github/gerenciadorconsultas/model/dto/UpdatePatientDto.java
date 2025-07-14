@@ -8,7 +8,8 @@ public record UpdatePatientDto(
 		String gender,
 		String status,
 		String telephone,
-		String email
+		String email,
+		UpdateAddressDto address
 ) {
 
 }
