@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Component;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
@@ -43,6 +44,12 @@ public class PatientMapper {
 				Instant.now(),
 				null
 				);
+		
+	}
+	
+	public void updateEntityFromDto(Patient patient, UpdatePatientDto updatePatientDto) {
+		
+		
 		
 	}
 
