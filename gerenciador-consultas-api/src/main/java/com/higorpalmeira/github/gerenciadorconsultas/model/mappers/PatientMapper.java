@@ -98,5 +98,11 @@ public class PatientMapper {
 		}
 
 	}
+	
+	public void deleteEntityFromStatus(Patient patient) {
+		
+		patient.setStatus(StatusType.INACTIVE);
+		
+	}
 
 }

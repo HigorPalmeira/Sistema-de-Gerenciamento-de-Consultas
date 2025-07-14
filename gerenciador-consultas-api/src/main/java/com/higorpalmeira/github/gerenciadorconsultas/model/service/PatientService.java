@@ -106,10 +106,13 @@ public class PatientService {
 	public void deletePatientById(String patientId) {
 
 		var id = UUID.fromString(patientId);
-		var patientExists = patientRepository.existsById(id);
+		var patientEntity = patientRepository
+				.findById(id);
 
-		if (patientExists) {
-			patientRepository.deleteById(id);
+		if (patientEntity.isPresent()) {
+			
+			patientMapper.deleteEntityFromStatus(patientEntity.get());
+			
 		}
 
 	}
