@@ -7,13 +7,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.repository.AddressRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
@@ -21,6 +24,9 @@ import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 public class PatientService {
 	
 	private PatientRepository patientRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
 	
 	public PatientService(PatientRepository patientRepository) {
 		this.patientRepository = patientRepository;
@@ -31,6 +37,18 @@ public class PatientService {
 		if (Validator.CPFValidation(createPatientDto.cpf()) 
 				&& Validator.EmailValidation(createPatientDto.email())) {
 		
+			var addressEntity = createPatientDto.address();
+			var address = new Address(
+					addressEntity.cep(),
+					addressEntity.street(),
+					addressEntity.complement(),
+					addressEntity.neighborhood(),
+					addressEntity.locality(),
+					addressEntity.uf(),
+					Instant.now(),
+					null
+					);
+			
 			var patient = new Patient(
 					createPatientDto.firstName(),
 					createPatientDto.lastName(),
@@ -42,6 +60,7 @@ public class PatientService {
 					StatusType.ACTIVE,
 					createPatientDto.telephone(),
 					createPatientDto.email(),
+					address,
 					Instant.now(),
 					null
 					);
