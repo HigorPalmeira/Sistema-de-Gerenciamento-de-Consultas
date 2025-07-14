@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,5 +26,21 @@ public interface PatientRepository extends JpaRepository<Patient, UUID> {
 	 * @return true se um paciente com este e-mail existir, caso contrário false.
 	 * */
 	boolean existsByEmail(String email);
+	
+	/*
+	 * Busca por um paciente com o CPF fornecido.
+	 * 
+	 * @param cpf O CPF a ser procurado.
+	 * @return Optional com Patient presente se o paciente for encontrado, caso contrário um Optional vazio.
+	 * */
+	Optional<Patient> findByCpf(String cpf);
+	
+	/*
+	 * Busca por um paciente com o E-mail fornecido.
+	 * 
+	 * @param email O E-mail a ser procurado.
+	 * @return Optional com Patient presente se o paciente for encontrado, caso contrário um Optional vazio.
+	 * */
+	Optional<Patient> findByEmail(String email);
 
 }
