@@ -16,6 +16,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.PatientMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
@@ -44,22 +45,19 @@ public class PatientService {
 			throw new InvalidDataException("Invalid e-mail format.");
 		}
 		
+		if (patientRepository.existsByCpf(createPatientDto.cpf())) {
+			throw new DataConflictException("CPF already registered in the system.");
+		}
 		
+		if (patientRepository.existsByEmail(createPatientDto.email())) {
+			throw new DataConflictException("E-mail already registered in the system.");
+		}
 
-		var addressEntity = createPatientDto.address();
-		var address = new Address(addressEntity.cep(), addressEntity.street(), addressEntity.complement(),
-				addressEntity.neighborhood(), addressEntity.locality(), addressEntity.uf(), Instant.now(), null);
-
-		var patient = new Patient(createPatientDto.firstName(), createPatientDto.lastName(), createPatientDto.cpf(),
-				LocalDate.parse(createPatientDto.birthdate(), DateTimeFormatter.ISO_LOCAL_DATE),
-				GenderType.fromType(createPatientDto.gender()), StatusType.ACTIVE, createPatientDto.telephone(),
-				createPatientDto.email(), address, Instant.now(), null);
+		var patient = patientMapper.toEntity(createPatientDto);
 
 		var patientSaved = patientRepository.save(patient);
 
 		return patientSaved.getPatientId();
-
-		// return null;
 
 	}
 
