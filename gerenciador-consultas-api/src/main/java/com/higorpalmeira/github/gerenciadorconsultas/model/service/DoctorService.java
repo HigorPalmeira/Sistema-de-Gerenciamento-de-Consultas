@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
@@ -67,6 +68,24 @@ public class DoctorService {
 	public Optional<Doctor> findDoctorById(String doctorId) {
 		
 		return doctorRepository.findById(UUID.fromString(doctorId));
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public OutputSimpleDoctorDto findSimpleDoctorById(String doctorId) {
+		
+		var id = UUID.fromString(doctorId);
+		var doctorEntity = doctorRepository
+				.findById(id)
+				.map(doctor -> new OutputSimpleDoctorDto(
+						doctor.getDoctorId(),
+						doctor.getFirstName(),
+						doctor.getCrm(),
+						doctor.getTelephone(),
+						doctor.getEmail()
+						)).orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + id));
+		
+		return doctorEntity;
 		
 	}
 	
