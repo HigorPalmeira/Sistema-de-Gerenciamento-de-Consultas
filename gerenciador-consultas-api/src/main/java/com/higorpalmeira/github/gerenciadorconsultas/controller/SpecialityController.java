@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleSpeciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.SpecialityService;
@@ -39,19 +40,11 @@ public class SpecialityController {
 	}
 	
 	@GetMapping ("/{specialityId}")
-	public ResponseEntity<Speciality> findSpecialityById(@PathVariable("specialityId") String specialityId) {
+	public ResponseEntity<OutputSimpleSpeciality> findSpecialityById(@PathVariable("specialityId") String specialityId) {
 		
 		var speciality = specialityService.findSpecialityById(specialityId);
 		
-		if (speciality.isPresent()) {
-			
-			return ResponseEntity.ok(speciality.get());
-			
-		} else {
-			
-			return ResponseEntity.notFound().build();
-			
-		}
+		return ResponseEntity.ok(speciality);
 		
 	}
 	
