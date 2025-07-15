@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
+import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.SpecialityMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.SpecialityRepository;
 
@@ -49,22 +50,15 @@ public class SpecialityService {
 		
 	}
 	
+	@Transactional
 	public void updateSpecialityById(String specialityId, UpdateSpecialityDto updateSpecialityDto) {
 		
 		var id = UUID.fromString(specialityId);
-		var specialityEntity = specialityRepository.findById(id);
+		var specialityEntity = specialityRepository
+				.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + id));
 		
-		if (specialityEntity.isPresent()) {
-			
-			var speciality = specialityEntity.get();
-			
-			if (updateSpecialityDto.description() != null) {
-				speciality.setDescription( updateSpecialityDto.description() );
-			}
-			
-			specialityRepository.save(speciality);
-			
-		}
+		specialityMapper.updateEntityFromDto(specialityEntity, updateSpecialityDto);
 		
 	}
 	
