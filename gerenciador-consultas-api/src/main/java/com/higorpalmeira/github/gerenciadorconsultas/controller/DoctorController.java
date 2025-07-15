@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.DoctorService;
@@ -56,6 +57,15 @@ public class DoctorController {
 	public ResponseEntity<OutputSimpleDoctorDto> findSimpleDoctorById(@PathVariable("doctorId") String doctorId) {
 		
 		var doctor = doctorService.findSimpleDoctorById(doctorId);
+		
+		return ResponseEntity.ok(doctor);
+		
+	}
+	
+	@GetMapping("/details/{doctorId}")
+	public ResponseEntity<OutputDetailedDoctorDto> findDetailedDoctorById(@PathVariable("doctorId") String doctorId) {
+		
+		var doctor = doctorService.findDetailedDoctorById(doctorId);
 		
 		return ResponseEntity.ok(doctor);
 		
