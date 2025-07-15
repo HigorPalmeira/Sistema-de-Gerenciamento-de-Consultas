@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 
 @Component
 public class DoctorMapper {
@@ -18,7 +18,7 @@ public class DoctorMapper {
 				createDoctorDto.firstName(),
 				createDoctorDto.lastName(),
 				createDoctorDto.crm(),
-				StatusType.ACTIVE,
+				StatusAccountType.ACTIVE,
 				createDoctorDto.telephone(),
 				createDoctorDto.email(),
 				speciality,

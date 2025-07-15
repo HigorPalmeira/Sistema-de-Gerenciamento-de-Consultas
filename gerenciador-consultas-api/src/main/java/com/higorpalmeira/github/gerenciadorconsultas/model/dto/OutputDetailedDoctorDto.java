@@ -2,14 +2,14 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
 
 import java.util.UUID;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 
 public record OutputDetailedDoctorDto(
 		UUID id,
 		String firstName,
 		String lastName,
 		String crm,
-		StatusType status,
+		StatusAccountType status,
 		String telephone,
 		String email,
 		String speciality

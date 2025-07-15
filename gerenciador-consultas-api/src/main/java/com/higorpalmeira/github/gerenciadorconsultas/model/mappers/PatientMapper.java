@@ -11,7 +11,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
 @Component
@@ -25,7 +25,7 @@ public class PatientMapper {
 
 		return new Patient(patientDto.firstName(), patientDto.lastName(), patientDto.cpf(),
 				LocalDate.parse(patientDto.birthdate(), DateTimeFormatter.ISO_LOCAL_DATE),
-				GenderType.fromType(patientDto.gender()), StatusType.ACTIVE, patientDto.telephone(), patientDto.email(),
+				GenderType.fromType(patientDto.gender()), StatusAccountType.ACTIVE, patientDto.telephone(), patientDto.email(),
 				address, Instant.now(), null);
 
 	}
@@ -53,7 +53,7 @@ public class PatientMapper {
 		}
 
 		if (updatePatientDto.status() != null) {
-			patient.setStatus(StatusType.fromType(updatePatientDto.status()));
+			patient.setStatus(StatusAccountType.fromType(updatePatientDto.status()));
 		}
 
 		if (updatePatientDto.telephone() != null) {
@@ -101,7 +101,7 @@ public class PatientMapper {
 	
 	public void deleteEntityFromStatus(Patient patient) {
 		
-		patient.setStatus(StatusType.INACTIVE);
+		patient.setStatus(StatusAccountType.INACTIVE);
 		
 	}
 

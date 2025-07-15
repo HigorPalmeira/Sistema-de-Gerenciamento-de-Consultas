@@ -27,7 +27,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -72,7 +72,7 @@ public class PatientServiceTest {
 					"689.254.310-33",
 					LocalDate.parse("1988-06-23", DateTimeFormatter.ISO_LOCAL_DATE),
 					GenderType.MALE,
-					StatusType.ACTIVE,
+					StatusAccountType.ACTIVE,
 					"(96) 99980-7549",
 					"benedito-nogueira77@dpi.ig.br",
 					address,

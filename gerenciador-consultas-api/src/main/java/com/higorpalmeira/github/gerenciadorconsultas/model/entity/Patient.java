@@ -8,7 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -44,7 +44,7 @@ public class Patient {
 	private GenderType gender;
 	
 	@Column(name = "status")
-	private StatusType status;
+	private StatusAccountType status;
 	
 	@Column(name = "telephone")
 	private String telephone;
@@ -67,7 +67,7 @@ public class Patient {
 	}
 
 	public Patient(String firstName, String lastName, String cpf, LocalDate birthdate, GenderType gender,
-			StatusType status, String telephone, String email, Address address, Instant creationTimestamp, Instant updateTimestamp) {
+			StatusAccountType status, String telephone, String email, Address address, Instant creationTimestamp, Instant updateTimestamp) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -85,7 +85,7 @@ public class Patient {
 
 
 	public Patient(UUID patientId, String firstName, String lastName, String cpf, LocalDate birthdate,
-			GenderType gender, StatusType status, String telephone, String email, Address address, Instant creationTimestamp,
+			GenderType gender, StatusAccountType status, String telephone, String email, Address address, Instant creationTimestamp,
 			Instant updateTimestamp) {
 		super();
 		this.patientId = patientId;
@@ -152,11 +152,11 @@ public class Patient {
 		this.gender = gender;
 	}
 
-	public StatusType getStatus() {
+	public StatusAccountType getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusType status) {
+	public void setStatus(StatusAccountType status) {
 		this.status = status;
 	}
 

@@ -2,18 +2,18 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.enums;
 
 public class Status {
 	
-	public enum StatusType {
+	public enum StatusAccountType {
 		ACTIVE("ACTIVE"),
 		INACTIVE("INACTIVE");
 		
 		private String type;
 		
-		StatusType(String aType) {
+		StatusAccountType(String aType) {
 			this.type = aType;
 		}
 		
-		public static StatusType fromType(String aType) {
-			for (StatusType status : StatusType.values()) {
+		public static StatusAccountType fromType(String aType) {
+			for (StatusAccountType status : StatusAccountType.values()) {
 				if (status.type.equalsIgnoreCase(aType)) {
 					return status;
 				}
