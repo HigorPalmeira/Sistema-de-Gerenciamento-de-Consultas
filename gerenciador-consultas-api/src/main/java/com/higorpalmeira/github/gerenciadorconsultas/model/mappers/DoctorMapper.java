@@ -18,7 +18,7 @@ public class DoctorMapper {
 				createDoctorDto.firstName(),
 				createDoctorDto.lastName(),
 				createDoctorDto.crm(),
-				StatusType.fromType(createDoctorDto.status()),
+				StatusType.ACTIVE,
 				createDoctorDto.telephone(),
 				createDoctorDto.email(),
 				speciality,

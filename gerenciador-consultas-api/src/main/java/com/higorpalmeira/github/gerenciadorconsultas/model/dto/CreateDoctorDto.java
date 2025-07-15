@@ -4,7 +4,6 @@ public record CreateDoctorDto(
 		String firstName,
 		String lastName,
 		String crm,
-		String status,
 		String telephone,
 		String email,
 		String specialityId
