@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.SpecialityMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.SpecialityRepository;
 
 @Service
@@ -17,8 +18,11 @@ public class SpecialityService {
 	
 	private SpecialityRepository specialityRepository;
 	
-	public SpecialityService(SpecialityRepository specialityRepository) {
+	private SpecialityMapper specialityMapper;
+	
+	public SpecialityService(SpecialityRepository specialityRepository, SpecialityMapper specialityMapper) {
 		this.specialityRepository = specialityRepository;
+		this.specialityMapper = specialityMapper;
 	}
 	
 	public UUID createSpeciality(CreateSpecialityDto createSpecialityDto) {

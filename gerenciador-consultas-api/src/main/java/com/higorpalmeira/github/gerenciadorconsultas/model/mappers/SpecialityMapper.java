@@ -2,10 +2,13 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.mappers;
 
 import java.time.Instant;
 
+import org.springframework.stereotype.Component;
+
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 
+@Component
 public class SpecialityMapper {
 
 	public Speciality toEntity(CreateSpecialityDto specialityDto) {
