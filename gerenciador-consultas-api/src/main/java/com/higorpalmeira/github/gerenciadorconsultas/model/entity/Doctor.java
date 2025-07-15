@@ -1,6 +1,10 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.entity;
 
+import java.time.Instant;
 import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
 
@@ -36,5 +40,122 @@ public class Doctor {
 	@ManyToOne (fetch = FetchType.LAZY)
 	@JoinColumn (name = "speciality_id")
 	private Speciality speciality;
+	
+	@CreationTimestamp
+	private Instant creationTimestamp;
+	
+	@UpdateTimestamp
+	private Instant updateTimestamp;
+
+	public Doctor() {
+	
+	}
+
+	public Doctor(UUID doctorId, String firstName, String lastName, String crm, StatusType status, String telephone,
+			String email, Speciality speciality, Instant creationTimestamp, Instant updateTimestamp) {
+		this.doctorId = doctorId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.crm = crm;
+		this.status = status;
+		this.telephone = telephone;
+		this.email = email;
+		this.speciality = speciality;
+		this.creationTimestamp = creationTimestamp;
+		this.updateTimestamp = updateTimestamp;
+	}
+
+	public Doctor(String firstName, String lastName, String crm, StatusType status, String telephone, String email,
+			Speciality speciality, Instant creationTimestamp, Instant updateTimestamp) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.crm = crm;
+		this.status = status;
+		this.telephone = telephone;
+		this.email = email;
+		this.speciality = speciality;
+		this.creationTimestamp = creationTimestamp;
+		this.updateTimestamp = updateTimestamp;
+	}
+
+	public UUID getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(UUID doctorId) {
+		this.doctorId = doctorId;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getCrm() {
+		return crm;
+	}
+
+	public void setCrm(String crm) {
+		this.crm = crm;
+	}
+
+	public StatusType getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusType status) {
+		this.status = status;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Speciality getSpeciality() {
+		return speciality;
+	}
+
+	public void setSpeciality(Speciality speciality) {
+		this.speciality = speciality;
+	}
+
+	public Instant getCreationTimestamp() {
+		return creationTimestamp;
+	}
+
+	public void setCreationTimestamp(Instant creationTimestamp) {
+		this.creationTimestamp = creationTimestamp;
+	}
+
+	public Instant getUpdateTimestamp() {
+		return updateTimestamp;
+	}
+
+	public void setUpdateTimestamp(Instant updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
+	}
 
 }
