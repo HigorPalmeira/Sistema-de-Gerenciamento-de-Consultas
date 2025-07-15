@@ -1,6 +1,8 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.entity;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +18,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -40,6 +44,9 @@ public class Doctor {
 	@ManyToOne (fetch = FetchType.LAZY)
 	@JoinColumn (name = "speciality_id")
 	private Speciality speciality;
+	
+	@OneToMany(mappedBy = "doctor", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	private List<Consultation> consultations = new ArrayList<>();
 	
 	@CreationTimestamp
 	private Instant creationTimestamp;
@@ -156,6 +163,14 @@ public class Doctor {
 
 	public void setUpdateTimestamp(Instant updateTimestamp) {
 		this.updateTimestamp = updateTimestamp;
+	}
+
+	public List<Consultation> getConsultations() {
+		return consultations;
+	}
+
+	public void setConsultations(List<Consultation> consultations) {
+		this.consultations = consultations;
 	}
 
 }
