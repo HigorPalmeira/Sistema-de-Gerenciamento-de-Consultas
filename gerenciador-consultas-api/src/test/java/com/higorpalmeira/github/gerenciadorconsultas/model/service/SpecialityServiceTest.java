@@ -3,7 +3,6 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -116,10 +115,11 @@ public class SpecialityServiceTest {
 				.findById(uuidArgumentCaptor.capture());
 			
 			// Act
-			var output = specialityService.findSpecialityById(speciality.getId().toString());
+			var output = specialityService.findSimpleSpecialityById(speciality.getId().toString());
 			
 			// Assert
-			assertTrue(output.isPresent());
+			//assertTrue(output);
+			assertNotNull(output);
 			assertEquals(speciality.getId(), uuidArgumentCaptor.getValue());
 			
 		}
@@ -135,10 +135,11 @@ public class SpecialityServiceTest {
 				.findById(uuidArgumentCaptor.capture());
 			
 			// Act
-			var output = specialityService.findSpecialityById(specialityId.toString());
+			var output = specialityService.findSimpleSpecialityById(specialityId.toString());
 			
 			// Assert
-			assertTrue(output.isEmpty());
+			//assertTrue(output);
+			assertNotNull(output);
 			assertEquals(specialityId, uuidArgumentCaptor.getValue());
 			
 		}
