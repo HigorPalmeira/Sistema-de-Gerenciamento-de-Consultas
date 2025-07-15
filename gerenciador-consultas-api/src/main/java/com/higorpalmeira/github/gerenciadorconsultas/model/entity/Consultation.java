@@ -53,4 +53,105 @@ public class Consultation {
 	@UpdateTimestamp
 	private Instant updateTimestamp;
 
+	public Consultation() {
+		
+	}
+
+	public Consultation(UUID consultationId, LocalDateTime dateTime, StatusConsultationType status, String observations,
+			float value, Doctor doctor, Patient patient, Instant creationTimestamp, Instant updateTimestamp) {
+		this.consultationId = consultationId;
+		this.dateTime = dateTime;
+		this.status = status;
+		this.observations = observations;
+		this.value = value;
+		this.doctor = doctor;
+		this.patient = patient;
+		this.creationTimestamp = creationTimestamp;
+		this.updateTimestamp = updateTimestamp;
+	}
+
+	public Consultation(LocalDateTime dateTime, StatusConsultationType status, String observations, float value,
+			Doctor doctor, Patient patient, Instant creationTimestamp, Instant updateTimestamp) {
+		this.dateTime = dateTime;
+		this.status = status;
+		this.observations = observations;
+		this.value = value;
+		this.doctor = doctor;
+		this.patient = patient;
+		this.creationTimestamp = creationTimestamp;
+		this.updateTimestamp = updateTimestamp;
+	}
+
+	public UUID getConsultationId() {
+		return consultationId;
+	}
+
+	public void setConsultationId(UUID consultationId) {
+		this.consultationId = consultationId;
+	}
+
+	public LocalDateTime getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
+	}
+
+	public StatusConsultationType getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusConsultationType status) {
+		this.status = status;
+	}
+
+	public String getObservations() {
+		return observations;
+	}
+
+	public void setObservations(String observations) {
+		this.observations = observations;
+	}
+
+	public float getValue() {
+		return value;
+	}
+
+	public void setValue(float value) {
+		this.value = value;
+	}
+
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public Instant getCreationTimestamp() {
+		return creationTimestamp;
+	}
+
+	public void setCreationTimestamp(Instant creationTimestamp) {
+		this.creationTimestamp = creationTimestamp;
+	}
+
+	public Instant getUpdateTimestamp() {
+		return updateTimestamp;
+	}
+
+	public void setUpdateTimestamp(Instant updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
+	}
+
 }
