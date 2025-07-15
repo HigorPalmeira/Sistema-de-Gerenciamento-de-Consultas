@@ -36,23 +36,6 @@ public class DoctorController {
 		
 	}
 	
-	@GetMapping("/test/{doctorId}")
-	public ResponseEntity<Doctor> findDoctorById(@PathVariable("doctorId") String doctorId) {
-		
-		var doctor = doctorService.findDoctorById(doctorId);
-		
-		if (doctor.isPresent()) {
-			
-			return ResponseEntity.ok(doctor.get());
-			
-		} else {
-			
-			return ResponseEntity.notFound().build();
-			
-		}
-		
-	}
-	
 	@GetMapping("/{doctorId}")
 	public ResponseEntity<OutputSimpleDoctorDto> findSimpleDoctorById(@PathVariable("doctorId") String doctorId) {
 		
