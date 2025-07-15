@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -66,6 +67,13 @@ public class DoctorService {
 	public Optional<Doctor> findDoctorById(String doctorId) {
 		
 		return doctorRepository.findById(UUID.fromString(doctorId));
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Doctor> listDoctors() {
+		
+		return doctorRepository.findAll();
 		
 	}
 
