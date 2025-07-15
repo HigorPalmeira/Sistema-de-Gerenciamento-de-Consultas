@@ -40,7 +40,7 @@ public class SpecialityService {
 	}
 	
 	@Transactional(readOnly = true)
-	public OutputSimpleSpeciality findSpecialityById(String specialityId) {
+	public OutputSimpleSpeciality findSimpleSpecialityById(String specialityId) {
 		
 		var id = UUID.fromString(specialityId);
 		var specialityEntity = specialityRepository

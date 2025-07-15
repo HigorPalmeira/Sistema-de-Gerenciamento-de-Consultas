@@ -40,9 +40,9 @@ public class SpecialityController {
 	}
 	
 	@GetMapping ("/{specialityId}")
-	public ResponseEntity<OutputSimpleSpeciality> findSpecialityById(@PathVariable("specialityId") String specialityId) {
+	public ResponseEntity<OutputSimpleSpeciality> findSimpleSpecialityById(@PathVariable("specialityId") String specialityId) {
 		
-		var speciality = specialityService.findSpecialityById(specialityId);
+		var speciality = specialityService.findSimpleSpecialityById(specialityId);
 		
 		return ResponseEntity.ok(speciality);
 		
