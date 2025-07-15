@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
@@ -83,6 +84,27 @@ public class DoctorService {
 						doctor.getCrm(),
 						doctor.getTelephone(),
 						doctor.getEmail()
+						)).orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + id));
+		
+		return doctorEntity;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public OutputDetailedDoctorDto findDetailedDoctorById(String doctorId) {
+		
+		var id = UUID.fromString(doctorId);
+		var doctorEntity = doctorRepository
+				.findById(id)
+				.map(doctor -> new OutputDetailedDoctorDto(
+						doctor.getDoctorId(),
+						doctor.getFirstName(),
+						doctor.getLastName(),
+						doctor.getCrm(),
+						doctor.getStatus(),
+						doctor.getTelephone(),
+						doctor.getEmail(),
+						doctor.getSpeciality().getDescription()
 						)).orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + id));
 		
 		return doctorEntity;

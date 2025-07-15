@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusType;
 
-public record OutputDetailedDoctor(
+public record OutputDetailedDoctorDto(
 		UUID id,
 		String firstName,
 		String lastName,
