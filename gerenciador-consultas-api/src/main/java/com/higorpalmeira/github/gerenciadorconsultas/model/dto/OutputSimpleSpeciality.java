@@ -4,7 +4,8 @@ import java.util.UUID;
 
 public record OutputSimpleSpeciality(
 		UUID id,
-		String description
+		String description,
+		int associateDoctors
 ) {
 
 }

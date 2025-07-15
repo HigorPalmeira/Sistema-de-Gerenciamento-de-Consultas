@@ -1,7 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -10,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleSpeciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
@@ -40,9 +40,18 @@ public class SpecialityService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Optional<Speciality> findSpecialityById(String specialityId) {
+	public OutputSimpleSpeciality findSpecialityById(String specialityId) {
 		
-		return specialityRepository.findById(UUID.fromString(specialityId));
+		var id = UUID.fromString(specialityId);
+		var specialityEntity = specialityRepository
+				.findById(id)
+				.map(speciality -> new OutputSimpleSpeciality(
+						speciality.getId(),
+						speciality.getDescription(),
+						speciality.getDoctors().size()
+						)).orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + id));
+		
+		return specialityEntity;
 		
 	}
 	
