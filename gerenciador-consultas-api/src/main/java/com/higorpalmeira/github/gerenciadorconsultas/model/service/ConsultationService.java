@@ -5,6 +5,8 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.ConsultationRepository;
 
 @Service
@@ -17,7 +19,13 @@ public class ConsultationService {
 	}
 	
 	@Transactional
-	public UUID createConsultation() {
+	public UUID createConsultation(CreateConsultationDto createConsultationDto) {
+		
+		// criar validação para o datetime
+		if (createConsultationDto.value() < 0.0f) {
+			throw new InvalidDataException("Invalid value.");
+		}
+		
 		return null;
 	}
 	
