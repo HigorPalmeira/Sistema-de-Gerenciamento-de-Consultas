@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
@@ -25,12 +26,10 @@ public class SpecialityService {
 		this.specialityMapper = specialityMapper;
 	}
 	
+	@Transactional
 	public UUID createSpeciality(CreateSpecialityDto createSpecialityDto) {
 		
-		var speciality = new Speciality(
-				createSpecialityDto.description(),
-				Instant.now(),
-				null);
+		var speciality = specialityMapper.toEntity(createSpecialityDto);
 		
 		var specialitySaved = specialityRepository.save(speciality);
 		
