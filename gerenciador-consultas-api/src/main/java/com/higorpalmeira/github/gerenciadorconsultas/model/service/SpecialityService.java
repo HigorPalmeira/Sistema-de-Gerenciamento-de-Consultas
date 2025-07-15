@@ -1,6 +1,5 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,12 +37,14 @@ public class SpecialityService {
 		
 	}
 	
+	@Transactional(readOnly = true)
 	public Optional<Speciality> findSpecialityById(String specialityId) {
 		
 		return specialityRepository.findById(UUID.fromString(specialityId));
 		
 	}
 	
+	@Transactional(readOnly = true)
 	public List<Speciality> listSpecialities() {
 		
 		return specialityRepository.findAll();
