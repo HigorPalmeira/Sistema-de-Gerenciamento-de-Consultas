@@ -1,8 +1,11 @@
 package com.higorpalmeira.github.gerenciadorconsultas.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +31,32 @@ public class DoctorController {
 		var doctorId = doctorService.createDoctor(createDoctorDto);
 		
 		return ResponseEntity.created(URI.create("/v1/doctor/" + doctorId.toString())).build();
+		
+	}
+	
+	@GetMapping("/{doctorId}")
+	public ResponseEntity<Doctor> findDoctorById(@PathVariable("doctorId") String doctorId) {
+		
+		var doctor = doctorService.findDoctorById(doctorId);
+		
+		if (doctor.isPresent()) {
+			
+			return ResponseEntity.ok(doctor.get());
+			
+		} else {
+			
+			return ResponseEntity.notFound().build();
+			
+		}
+		
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Doctor>> listDoctors() {
+		
+		var doctors = doctorService.listDoctors();
+		
+		return ResponseEntity.ok(doctors);
 		
 	}
 
