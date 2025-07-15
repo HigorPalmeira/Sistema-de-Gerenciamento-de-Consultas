@@ -12,13 +12,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusTy
 @Component
 public class DoctorMapper {
 	
-	public Doctor toEntity(CreateDoctorDto createDoctorDto) {
-		
-		var speciality = new Speciality(
-				createDoctorDto.speciality().description(),
-				Instant.now(),
-				null
-				);
+	public Doctor toEntity(CreateDoctorDto createDoctorDto, Speciality speciality) {
 		
 		return new Doctor(
 				createDoctorDto.firstName(),
