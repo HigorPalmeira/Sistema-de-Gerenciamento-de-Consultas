@@ -7,7 +7,7 @@ public record CreateDoctorDto(
 		String status,
 		String telephone,
 		String email,
-		CreateSpecialityDto speciality
+		String specialityId
 ) {
 
 }
