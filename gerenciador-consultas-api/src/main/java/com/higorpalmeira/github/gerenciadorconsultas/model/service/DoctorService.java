@@ -1,11 +1,13 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
@@ -58,6 +60,13 @@ public class DoctorService {
 		var doctorSaved = doctorRepository.save(doctor);
 		
 		return doctorSaved.getDoctorId();
+	}
+	
+	@Transactional(readOnly = true)
+	public Optional<Doctor> findDoctorById(String doctorId) {
+		
+		return doctorRepository.findById(UUID.fromString(doctorId));
+		
 	}
 
 }
