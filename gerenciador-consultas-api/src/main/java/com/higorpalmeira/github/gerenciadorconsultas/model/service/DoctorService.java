@@ -1,7 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
