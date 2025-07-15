@@ -11,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,16 +30,22 @@ public class Doctor {
 	@GeneratedValue (strategy = GenerationType.UUID)
 	private UUID doctorId;
 	
+	@Column(name = "first_name")
 	private String firstName;
 	
+	@Column(name = "last_name")
 	private String lastName;
 	
+	@Column(name = "crm")
 	private String crm;
 	
+	@Column(name = "status")
 	private StatusAccountType status;
 	
+	@Column(name = "telephone")
 	private String telephone;
 	
+	@Column(name = "email")
 	private String email;
 	
 	@ManyToOne (fetch = FetchType.LAZY)
