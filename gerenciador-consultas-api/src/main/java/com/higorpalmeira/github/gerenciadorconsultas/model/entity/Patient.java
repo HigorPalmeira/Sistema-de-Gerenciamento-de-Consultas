@@ -2,6 +2,8 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.entity;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,10 +15,12 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAc
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -55,6 +59,9 @@ public class Patient {
 	@OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn (name = "address_id", referencedColumnName = "id")
 	private Address address;
+	
+	@OneToMany(mappedBy = "patient", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	private List<Consultation> consultations = new ArrayList<>();
 	
 	@CreationTimestamp
 	private Instant creationTimestamp;
@@ -182,6 +189,30 @@ public class Patient {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public Instant getCreationTimestamp() {
+		return creationTimestamp;
+	}
+
+	public void setCreationTimestamp(Instant creationTimestamp) {
+		this.creationTimestamp = creationTimestamp;
+	}
+
+	public Instant getUpdateTimestamp() {
+		return updateTimestamp;
+	}
+
+	public void setUpdateTimestamp(Instant updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
+	}
+
+	public List<Consultation> getConsultations() {
+		return consultations;
+	}
+
+	public void setConsultations(List<Consultation> consultations) {
+		this.consultations = consultations;
 	}
 	
 }
