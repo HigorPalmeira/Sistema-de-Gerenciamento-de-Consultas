@@ -66,13 +66,6 @@ public class DoctorService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Optional<Doctor> findDoctorById(String doctorId) {
-		
-		return doctorRepository.findById(UUID.fromString(doctorId));
-		
-	}
-	
-	@Transactional(readOnly = true)
 	public OutputSimpleDoctorDto findSimpleDoctorById(String doctorId) {
 		
 		var id = UUID.fromString(doctorId);
