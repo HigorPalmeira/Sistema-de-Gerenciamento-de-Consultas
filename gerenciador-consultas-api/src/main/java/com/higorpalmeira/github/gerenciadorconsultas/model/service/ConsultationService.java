@@ -108,7 +108,7 @@ public class ConsultationService {
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Consultation not found with ID: " + id));
 		
-		if (updateConsultationDto.value() < 0.0f) {
+		if (updateConsultationDto.value() < 0.0f || Float.isNaN(updateConsultationDto.value())) {
 			throw new InvalidDataException("Invalid value.");
 		}
 		
@@ -123,6 +123,7 @@ public class ConsultationService {
 				.orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + doctorId));
 		
 		
+		consultationMapper.updateEntityFromDto(consultationEntity, updateConsultationDto, patientEntity, doctorEntity);
 		
 	}
 	
