@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consultation;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.ConsultationService;
 
