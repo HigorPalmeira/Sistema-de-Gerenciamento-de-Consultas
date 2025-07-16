@@ -5,6 +5,7 @@ import java.time.Instant;
 import org.springframework.stereotype.Component;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 
@@ -51,6 +52,20 @@ public class AddressMapper {
 		if (updateAddressDto.uf() != null) {
 			address.setUf(updateAddressDto.uf());
 		}
+		
+	}
+	
+	public OutputAddressDto toOutputAddressDto(Address address) {
+		
+		return new OutputAddressDto(
+				address.getId().toString(),
+				address.getCep(),
+				address.getStreet(),
+				address.getComplement(),
+				address.getNeighborhood(),
+				address.getLocality(),
+				address.getUf()
+				);
 		
 	}
 	

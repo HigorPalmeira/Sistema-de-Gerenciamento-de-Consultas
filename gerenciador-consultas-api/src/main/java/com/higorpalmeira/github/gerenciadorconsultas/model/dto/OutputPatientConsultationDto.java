@@ -9,4 +9,9 @@ public record OutputPatientConsultationDto(
 		OutputSimpleDoctorDto doctor
 ) {
 
+	public OutputPatientConsultationDto(String string, String string2, String type, String observations2, float value2,
+			OutputSimpleDoctorDto outputSimpleDoctorDto) {
+		// TODO Auto-generated constructor stub
+	}
+
 }

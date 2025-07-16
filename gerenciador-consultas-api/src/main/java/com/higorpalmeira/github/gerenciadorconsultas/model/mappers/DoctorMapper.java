@@ -5,6 +5,7 @@ import java.time.Instant;
 import org.springframework.stereotype.Component;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
@@ -54,6 +55,18 @@ public class DoctorMapper {
 	public void deleteEntityFromStatus(Doctor doctor) {
 		
 		doctor.setStatus(StatusAccountType.INACTIVE);
+		
+	}
+	
+	public OutputSimpleDoctorDto toOutputSimpleDoctorDto(Doctor doctor) {
+		
+		return new OutputSimpleDoctorDto(
+				doctor.getDoctorId(),
+				doctor.getFirstName(),
+				doctor.getCrm(),
+				doctor.getTelephone(),
+				doctor.getEmail()
+				);
 		
 	}
 
