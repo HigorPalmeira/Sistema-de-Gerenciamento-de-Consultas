@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.DoctorService;
 
@@ -60,6 +62,15 @@ public class DoctorController {
 		var doctors = doctorService.listDoctors();
 		
 		return ResponseEntity.ok(doctors);
+		
+	}
+	
+	@PutMapping("/{doctorId}")
+	public ResponseEntity<Void> updateDoctorById(@PathVariable("doctorId") String doctorId, @RequestBody UpdateDoctorDto updateDoctorDto) {
+		
+		doctorService.updateDoctorById(doctorId, updateDoctorDto);
+		
+		return ResponseEntity.noContent().build();
 		
 	}
 
