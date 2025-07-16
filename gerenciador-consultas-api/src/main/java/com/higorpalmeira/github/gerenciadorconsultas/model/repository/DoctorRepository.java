@@ -45,6 +45,9 @@ public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
 	 * */
 	Optional<Doctor> findByEmail(String email);
 	
-	List<Doctor> listDoctorByStatus(StatusAccountType status);
+	List<Doctor> findAllByStatus(StatusAccountType status);
+	
+	//@Query("SELECT d FROM sgc_doctor WHERE u.status = ?1")
+	//List<Doctor> listDoctorByStatus(String status);
 
 }

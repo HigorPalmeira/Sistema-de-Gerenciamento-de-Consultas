@@ -1,15 +1,14 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimplePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdatePatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
@@ -57,16 +56,41 @@ public class PatientService {
 	}
 
 	@Transactional(readOnly = true)
-	public Optional<Patient> findPatientById(String patientId) {
+	public OutputSimplePatientDto findPatientById(String patientId) {
+		
+		var id = UUID.fromString(patientId);
+		var patientEntity = patientRepository
+				.findById(id)
+				.map(patient -> new OutputSimplePatientDto(
+						patient.getPatientId().toString(),
+						patient.getFirstName(),
+						patient.getCpf(),
+						patient.getBirthdate().toString(),
+						patient.getStatus().getType(),
+						patient.getTelephone(),
+						patient.getEmail()
+				)).orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + id));
 
-		return patientRepository.findById(UUID.fromString(patientId));
+		return patientEntity;
 
 	}
 
 	@Transactional(readOnly = true)
-	public List<Patient> listPatients() {
+	public List<OutputSimplePatientDto> listPatients() {
+		
+		var patients = patientRepository
+				.findAll().stream()
+				.map(patient -> new OutputSimplePatientDto(
+						patient.getPatientId().toString(),
+						patient.getFirstName(),
+						patient.getCpf(),
+						patient.getBirthdate().toString(),
+						patient.getStatus().getType(),
+						patient.getTelephone(),
+						patient.getEmail()
+						)).toList();
 
-		return patientRepository.findAll();
+		return patients;
 
 	}
 

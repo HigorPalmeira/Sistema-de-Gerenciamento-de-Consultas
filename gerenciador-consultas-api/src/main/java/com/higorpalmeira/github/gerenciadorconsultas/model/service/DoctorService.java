@@ -11,6 +11,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedDoc
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
@@ -109,6 +110,23 @@ public class DoctorService {
 		
 		var doctors = doctorRepository
 				.findAll().stream()
+				.map(doctor -> new OutputSimpleDoctorDto(
+						doctor.getDoctorId(),
+						doctor.getFirstName(),
+						doctor.getCrm(),
+						doctor.getTelephone(),
+						doctor.getEmail()
+						)).toList();
+		
+		return doctors;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<OutputSimpleDoctorDto> listDoctorsActive() {
+		
+		var doctors = doctorRepository
+				.findAllByStatus(StatusAccountType.ACTIVE).stream()
 				.map(doctor -> new OutputSimpleDoctorDto(
 						doctor.getDoctorId(),
 						doctor.getFirstName(),

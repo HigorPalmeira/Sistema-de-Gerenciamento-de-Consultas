@@ -57,10 +57,19 @@ public class DoctorController {
 		
 	}
 	
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<OutputSimpleDoctorDto>> listDoctors() {
 		
 		var doctors = doctorService.listDoctors();
+		
+		return ResponseEntity.ok(doctors);
+		
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<OutputSimpleDoctorDto>> listDoctorsActive() {
+		
+		var doctors = doctorService.listDoctorsActive();
 		
 		return ResponseEntity.ok(doctors);
 		
