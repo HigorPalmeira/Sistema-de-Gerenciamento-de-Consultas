@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultationMapper;
@@ -96,6 +97,32 @@ public class ConsultationService {
 						)).toList();
 		
 		return consultations;
+		
+	}
+	
+	@Transactional
+	public void updateConsultation(String consultationId, UpdateConsultationDto updateConsultationDto) {
+		
+		var id = UUID.fromString(consultationId);
+		var consultationEntity = consultationRepository
+				.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Consultation not found with ID: " + id));
+		
+		if (updateConsultationDto.value() < 0.0f) {
+			throw new InvalidDataException("Invalid value.");
+		}
+		
+		var patientId = updateConsultationDto.patientId();
+		var patientEntity = patientRepository
+				.findById(UUID.fromString(patientId))
+				.orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + patientId));
+		
+		var doctorId = updateConsultationDto.doctorId();
+		var doctorEntity = doctorRepository
+				.findById(UUID.fromString(doctorId))
+				.orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + doctorId));
+		
+		
 		
 	}
 	
