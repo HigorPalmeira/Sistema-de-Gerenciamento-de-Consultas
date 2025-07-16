@@ -13,6 +13,10 @@ public class Gender {
 			this.type = aType;
 		}
 		
+		public String getType() {
+			return this.type;
+		}
+		
 		public static GenderType fromType(String aType) {
 			for (GenderType gender : GenderType.values()) {
 				if (gender.type.equalsIgnoreCase(aType)) {

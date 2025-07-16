@@ -39,18 +39,18 @@ public class PatientController {
 	}
 	
 	@GetMapping ("/{patientId}")
-	public ResponseEntity<OutputSimplePatientDto> findPatientById(@PathVariable("patientId") String patientId) {
+	public ResponseEntity<OutputSimplePatientDto> findSimplePatientById(@PathVariable("patientId") String patientId) {
 		
-		var patient = patientService.findPatientById(patientId);
+		var patient = patientService.findSimplePatientById(patientId);
 		
 		return ResponseEntity.ok(patient);
 		
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<OutputSimplePatientDto>> listPatients() {
+	public ResponseEntity<List<OutputSimplePatientDto>> listSimplePatients() {
 		
-		var patients = patientService.listPatients();
+		var patients = patientService.listSimplePatients();
 		
 		return ResponseEntity.ok(patients);
 		

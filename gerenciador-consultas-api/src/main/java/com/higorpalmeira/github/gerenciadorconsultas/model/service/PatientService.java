@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedPatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimplePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
@@ -56,7 +57,7 @@ public class PatientService {
 	}
 
 	@Transactional(readOnly = true)
-	public OutputSimplePatientDto findPatientById(String patientId) {
+	public OutputSimplePatientDto findSimplePatientById(String patientId) {
 		
 		var id = UUID.fromString(patientId);
 		var patientEntity = patientRepository
@@ -74,9 +75,26 @@ public class PatientService {
 		return patientEntity;
 
 	}
+	
+	@Transactional(readOnly = true)
+	public OutputDetailedPatientDto findDetailedPatientById(String patientId) {
+		
+		var id = UUID.fromString(patientId);
+		var patientEntity = patientRepository
+				.findById(id)
+				.map(patient -> new OutputDetailedPatientDto(
+						patient.getPatientId(),
+						patient.getFirstName(),
+						patient.getLastName(),
+						patient.getCpf(),
+						patient.getBirthdate(),
+						
+						))
+		
+	}
 
 	@Transactional(readOnly = true)
-	public List<OutputSimplePatientDto> listPatients() {
+	public List<OutputSimplePatientDto> listSimplePatients() {
 		
 		var patients = patientRepository
 				.findAll().stream()
