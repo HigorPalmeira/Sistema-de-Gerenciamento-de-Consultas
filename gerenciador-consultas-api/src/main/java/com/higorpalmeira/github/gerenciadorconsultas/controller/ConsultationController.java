@@ -1,6 +1,7 @@
 package com.higorpalmeira.github.gerenciadorconsultas.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,15 @@ public class ConsultationController {
 		var consultation = consultationService.findSimpleConsultationById(consultationId);
 		
 		return ResponseEntity.ok(consultation);
+		
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<OutputSimpleConsultationDto>> listSimpleConsultations() {
+		
+		var consultations = consultationService.listSimpleConsultations();
+		
+		return ResponseEntity.ok(consultations);
 		
 	}
 
