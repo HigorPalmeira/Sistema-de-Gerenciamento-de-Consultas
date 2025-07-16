@@ -127,4 +127,16 @@ public class ConsultationService {
 		
 	}
 	
+	@Transactional
+	public void deleteConsultationById(String consultationId) {
+		
+		var id = UUID.fromString(consultationId);
+		var consultationExists = consultationRepository.existsById(id);
+		
+		if (consultationExists) {
+			consultationRepository.deleteById(id);
+		}
+		
+	}
+	
 }
