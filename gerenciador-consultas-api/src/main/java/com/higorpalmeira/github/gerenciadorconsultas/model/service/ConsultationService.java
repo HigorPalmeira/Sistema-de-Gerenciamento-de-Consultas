@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultationMapper;
@@ -54,6 +55,27 @@ public class ConsultationService {
 		var consultationSaved = consultationRepository.save(consultation);
 		
 		return consultationSaved.getConsultationId();
+	}
+	
+	@Transactional(readOnly = true)
+	public OutputSimpleConsultationDto findSimpleConsultationById(String consultationId) {
+		
+		var id = UUID.fromString(consultationId);
+		var consultationEntity = consultationRepository
+				.findById(id)
+				.map(consultation -> new OutputSimpleConsultationDto(
+						consultation.getConsultationId().toString(),
+						consultation.getDateTime().toString(),
+						consultation.getStatus().getType(),
+						consultation.getValue(),
+						consultation.getDoctor().getFirstName(),
+						consultation.getDoctor().getCrm(),
+						consultation.getPatient().getFirstName(),
+						consultation.getPatient().getCpf()
+						)).orElseThrow(() -> new ResourceNotFoundException("Consultation not found with ID: " + id));
+		
+		return consultationEntity;
+		
 	}
 	
 }
