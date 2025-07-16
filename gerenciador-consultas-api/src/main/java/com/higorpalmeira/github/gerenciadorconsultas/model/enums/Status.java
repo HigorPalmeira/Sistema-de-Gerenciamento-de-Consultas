@@ -14,6 +14,10 @@ public class Status {
 			this.type = aType;
 		}
 		
+		public String getType() {
+			return this.type;
+		}
+		
 		public static StatusAccountType fromType(String aType) {
 			for (StatusAccountType status : StatusAccountType.values()) {
 				if (status.type.equalsIgnoreCase(aType)) {
@@ -36,6 +40,10 @@ public class Status {
 		
 		StatusConsultationType(String aType) {
 			this.type = aType;
+		}
+		
+		public String getType() {
+			return this.type;
 		}
 		
 		public static StatusConsultationType fromType(String aType) {
