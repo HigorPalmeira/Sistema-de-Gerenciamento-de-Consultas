@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
@@ -42,5 +44,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
 	 * @return Optional com Doctor presente se o médico for encontrado, caso contrário um Optional vazio.
 	 * */
 	Optional<Doctor> findByEmail(String email);
+	
+	List<Doctor> listDoctorByStatus(StatusAccountType status);
 
 }

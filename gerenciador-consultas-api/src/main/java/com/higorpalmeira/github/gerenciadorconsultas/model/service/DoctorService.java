@@ -164,5 +164,20 @@ public class DoctorService {
 		doctorMapper.updateEntityFromDto(doctorEntity, updateDoctorDto, specialityEntity);
 		
 	}
+	
+	@Transactional
+	public void deleteDoctorById(String doctorId) {
+		
+		var id = UUID.fromString(doctorId);
+		var doctorEntity = doctorRepository
+				.findById(id);
+		
+		if (doctorEntity.isPresent()) {
+			
+			doctorMapper.deleteEntityFromStatus(doctorEntity.get());
+			
+		}
+		
+	}
 
 }

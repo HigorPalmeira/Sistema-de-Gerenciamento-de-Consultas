@@ -50,5 +50,11 @@ public class DoctorMapper {
 		doctor.setSpeciality(speciality);
 		
 	}
+	
+	public void deleteEntityFromStatus(Doctor doctor) {
+		
+		doctor.setStatus(StatusAccountType.INACTIVE);
+		
+	}
 
 }
