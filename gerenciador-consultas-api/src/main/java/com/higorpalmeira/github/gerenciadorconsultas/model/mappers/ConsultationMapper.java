@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Component;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consultation;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
@@ -27,6 +28,38 @@ public class ConsultationMapper {
 				Instant.now(),
 				null
 				);
+		
+	}
+	
+	public void updateEntityFromDto(Consultation consultation, UpdateConsultationDto updateConsultationDto, Patient patient, Doctor doctor) {
+		
+		if (updateConsultationDto.dateTime() != null) {
+			consultation.setDateTime(LocalDateTime.parse(updateConsultationDto.dateTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+		}
+		
+		if (updateConsultationDto.status() != null) {
+			consultation.setStatus(StatusConsultationType.fromType(updateConsultationDto.status()));
+		}
+		
+		if (updateConsultationDto.observations() != null) {
+			consultation.setObservations(updateConsultationDto.observations());
+		}
+		
+		if (!Float.isNaN(updateConsultationDto.value())) {
+			consultation.setValue(updateConsultationDto.value());
+		}
+		
+		if (doctor != null) {
+			
+			consultation.setDoctor(doctor);
+			
+		}
+		
+		if (patient != null) {
+			
+			consultation.setPatient(patient);
+			
+		}
 		
 	}
 
