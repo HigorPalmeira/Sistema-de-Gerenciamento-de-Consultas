@@ -55,7 +55,7 @@ public class DoctorController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Doctor>> listDoctors() {
+	public ResponseEntity<List<OutputSimpleDoctorDto>> listDoctors() {
 		
 		var doctors = doctorService.listDoctors();
 		

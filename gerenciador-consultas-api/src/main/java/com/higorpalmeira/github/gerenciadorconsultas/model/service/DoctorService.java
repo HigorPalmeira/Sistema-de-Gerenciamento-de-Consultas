@@ -104,7 +104,24 @@ public class DoctorService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Doctor> listDoctors() {
+	public List<OutputSimpleDoctorDto> listDoctors() {
+		
+		var doctors = doctorRepository
+				.findAll().stream()
+				.map(doctor -> new OutputSimpleDoctorDto(
+						doctor.getDoctorId(),
+						doctor.getFirstName(),
+						doctor.getCrm(),
+						doctor.getTelephone(),
+						doctor.getEmail()
+						)).toList();
+		
+		return doctors;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Doctor> listDoctorsF() {
 		
 		return doctorRepository.findAll();
 		
