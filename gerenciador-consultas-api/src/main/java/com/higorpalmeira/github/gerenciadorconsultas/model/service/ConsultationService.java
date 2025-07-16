@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -75,6 +76,26 @@ public class ConsultationService {
 						)).orElseThrow(() -> new ResourceNotFoundException("Consultation not found with ID: " + id));
 		
 		return consultationEntity;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<OutputSimpleConsultationDto> listSimpleConsultations() {
+		
+		var consultations = consultationRepository
+				.findAll().stream()
+				.map(consultation -> new OutputSimpleConsultationDto(
+						consultation.getConsultationId().toString(),
+						consultation.getDateTime().toString(),
+						consultation.getStatus().getType(),
+						consultation.getValue(),
+						consultation.getDoctor().getFirstName(),
+						consultation.getDoctor().getCrm(),
+						consultation.getPatient().getFirstName(),
+						consultation.getPatient().getCpf()
+						)).toList();
+		
+		return consultations;
 		
 	}
 	
