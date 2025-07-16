@@ -58,7 +58,9 @@ public class ConsultationController {
 	@PutMapping("/{consultationId}")
 	public ResponseEntity<Void> updateConsultationById(@PathVariable("consultationId") String consultationId, @RequestBody UpdateConsultationDto updateConsultationDto) {
 		
-		return null;
+		consultationService.updateConsultation(consultationId, updateConsultationDto);
+		
+		return ResponseEntity.noContent().build();
 		
 	}
 
