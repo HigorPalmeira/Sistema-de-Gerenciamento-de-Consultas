@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
@@ -124,6 +125,43 @@ public class DoctorService {
 	public List<Doctor> listDoctorsF() {
 		
 		return doctorRepository.findAll();
+		
+	}
+	
+	@Transactional
+	public void updateDoctorById(String doctorId, UpdateDoctorDto updateDoctorDto) {
+		
+		var id = UUID.fromString(doctorId);
+		var doctorEntity = doctorRepository
+				.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + id));
+		
+		if (updateDoctorDto.crm() != null) {
+			doctorRepository.findByCrm(updateDoctorDto.crm()).ifPresent(existingDoctor -> {
+				if (!existingDoctor.getDoctorId().equals(doctorEntity.getDoctorId())) {
+					throw new DataConflictException("CRM is already in use by another doctor.");
+				}
+			});
+			
+			doctorEntity.setCrm(updateDoctorDto.crm());
+		}
+		
+		if (updateDoctorDto.email() != null) {
+			doctorRepository.findByEmail(updateDoctorDto.email()).ifPresent(existingDoctor -> {
+				if (!existingDoctor.getDoctorId().equals(doctorEntity.getDoctorId())) {
+					throw new DataConflictException("Email is already in use by another doctor.");
+				}
+				
+				doctorEntity.setEmail(updateDoctorDto.email());
+			});
+		}
+		
+		var specialityId = updateDoctorDto.specialityId();
+		var specialityEntity = specialityRepository
+				.findById(UUID.fromString(specialityId))
+				.orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + specialityId));
+		
+		doctorMapper.updateEntityFromDto(doctorEntity, updateDoctorDto, specialityEntity);
 		
 	}
 
