@@ -14,6 +14,12 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 @Mapper(componentModel = "spring", uses = {AddressMapper.class})
 public interface PatientMapper {
 	
+	/*
+	 * Cria uma entidade 'Patient' com os dados do DTO.
+	 * 
+	 * @param createPatientDto Objeto com os dados para criação da entidade.
+	 * @return Patient Entidade criada a partir dos dados do DTO.
+	 * */
 	@Mapping(target = "patientId", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
@@ -21,8 +27,20 @@ public interface PatientMapper {
 	@Mapping(target = "status", expression = "java(StatusAccountType.ACTIVE)")
 	Patient createToPatient(CreatePatientDto createPatientMapper);
 	
+	/*
+	 * Cria um DTO de saída simples a partir da entidade 'Patient'.
+	 * 
+	 * @param patient Entidade a ser transformada.
+	 * @return SimpleOutputPatientDto DTO de saída simples criado.
+	 * */
 	SimpleOutputPatientDto patientToSimpleOutputPatientDto(Patient patient);
 
+	/**
+     * Atualiza a entidade 'Patient' com os dados não nulos do DTO.
+     * 
+     * @param updatePatientDto O objeto com os dados para atualização.
+     * @param patient A entidade que será atualizada (carregada do banco).
+     */
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 	@Mapping(target = "patientId", ignore = true)
 	@Mapping(target = "cpf", ignore = true)
