@@ -2,6 +2,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleSpeciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleSpeciality;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SimpleOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.SpecialityService;
@@ -30,8 +33,26 @@ public class SpecialityController {
 		this.specialityService = specialityService;
 	}
 	
+	@PostMapping("/new")
+	public ResponseEntity<UUID> createSpeciality(@RequestBody CreateSpecialityDto createSpecialityDto) {
+		
+		var specialityId = specialityService.createSpeciality(createSpecialityDto);
+		
+		return ResponseEntity.created(URI.create("/v1/speciality/" + specialityId.toString())).build();
+		
+	}
+	
+	@GetMapping("/new/{specialityId}")
+	public ResponseEntity<SimpleOutputSpecialityDto> findSimpleOutputSpecialityById(@PathVariable("specialityId") String specialityId) {
+		
+		var speciality = specialityService.findSimpleOutputSpecialityById(specialityId);
+		
+		return ResponseEntity.ok(speciality);
+		
+	}
+	
 	@PostMapping
-	public ResponseEntity<Speciality> createSpeciality(@RequestBody CreateSpecialityDto createSpecialityDto) {
+	public ResponseEntity<Speciality> createSpeciality(@RequestBody OldCreateSpecialityDto createSpecialityDto) {
 		
 		var specialityId = specialityService.createSpeciality(createSpecialityDto);
 		
@@ -40,7 +61,7 @@ public class SpecialityController {
 	}
 	
 	@GetMapping ("/{specialityId}")
-	public ResponseEntity<OutputSimpleSpeciality> findSimpleSpecialityById(@PathVariable("specialityId") String specialityId) {
+	public ResponseEntity<OldOutputSimpleSpeciality> findSimpleSpecialityById(@PathVariable("specialityId") String specialityId) {
 		
 		var speciality = specialityService.findSimpleSpecialityById(specialityId);
 		

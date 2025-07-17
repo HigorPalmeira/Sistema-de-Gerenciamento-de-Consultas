@@ -7,13 +7,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleSpeciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleSpeciality;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SimpleOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldSpecialityMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.SpecialityMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.SpecialityRepository;
 
 @Service
@@ -21,17 +24,31 @@ public class SpecialityService {
 	
 	private SpecialityRepository specialityRepository;
 	
-	private OldSpecialityMapper specialityMapper;
+	private OldSpecialityMapper oldSpecialityMapper;
 	
-	public SpecialityService(SpecialityRepository specialityRepository, OldSpecialityMapper specialityMapper) {
+	private SpecialityMapper specialityMapper;
+	
+	public SpecialityService(SpecialityRepository specialityRepository, OldSpecialityMapper oldSpecialityMapper, SpecialityMapper specialityMapper) {
 		this.specialityRepository = specialityRepository;
+		this.oldSpecialityMapper = oldSpecialityMapper;
 		this.specialityMapper = specialityMapper;
 	}
 	
 	@Transactional
 	public UUID createSpeciality(CreateSpecialityDto createSpecialityDto) {
 		
-		var speciality = specialityMapper.toEntity(createSpecialityDto);
+		var speciality = specialityMapper.createToSpeciality(createSpecialityDto);
+		
+		var specialitySaved = specialityRepository.save(speciality);
+		
+		return specialitySaved.getId();
+		
+	}
+	
+	@Transactional
+	public UUID createSpeciality(OldCreateSpecialityDto createSpecialityDto) {
+		
+		var speciality = oldSpecialityMapper.toEntity(createSpecialityDto);
 		
 		var specialitySaved = specialityRepository.save(speciality);
 		
@@ -40,18 +57,31 @@ public class SpecialityService {
 	}
 	
 	@Transactional(readOnly = true)
-	public OutputSimpleSpeciality findSimpleSpecialityById(String specialityId) {
+	public OldOutputSimpleSpeciality findSimpleSpecialityById(String specialityId) {
 		
 		var id = UUID.fromString(specialityId);
 		var specialityEntity = specialityRepository
 				.findById(id)
-				.map(speciality -> new OutputSimpleSpeciality(
+				.map(speciality -> new OldOutputSimpleSpeciality(
 						speciality.getId(),
 						speciality.getDescription(),
 						speciality.getDoctors().size()
 						)).orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + id));
 		
 		return specialityEntity;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public SimpleOutputSpecialityDto findSimpleOutputSpecialityById(String specialityId) {
+		
+		var id = UUID.fromString(specialityId);
+		var specialityEntity = specialityRepository
+				.findById(id).orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + id));
+		
+		return specialityMapper.specialityToSimpleOutputSpecialityDto(specialityEntity);
+		
+		// return specialityEntity;
 		
 	}
 	
@@ -92,7 +122,7 @@ public class SpecialityService {
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + id));
 		
-		specialityMapper.updateEntityFromDto(specialityEntity, updateSpecialityDto);
+		oldSpecialityMapper.updateEntityFromDto(specialityEntity, updateSpecialityDto);
 		
 	}
 	

@@ -8,14 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedPatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputPatientConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimplePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldAddressMapper;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldDoctorMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldPatientMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
@@ -26,16 +23,10 @@ public class PatientService {
 	private PatientRepository patientRepository;
 
 	private OldPatientMapper patientMapper;
-	
-	private OldDoctorMapper doctorMapper;
-	
-	private OldAddressMapper addressMapper;
 
-	public PatientService(PatientRepository patientRepository, OldPatientMapper patientMapper, OldDoctorMapper doctorMapper, OldAddressMapper addressMapper) {
+	public PatientService(PatientRepository patientRepository, OldPatientMapper patientMapper) {
 		this.patientRepository = patientRepository;
 		this.patientMapper = patientMapper;
-		this.doctorMapper = doctorMapper;
-		this.addressMapper = addressMapper;
 	}
 
 	@Transactional
@@ -88,32 +79,7 @@ public class PatientService {
 	@Transactional(readOnly = true)
 	public OutputDetailedPatientDto findDetailedPatientById(String patientId) {
 		
-		var id = UUID.fromString(patientId);
-		var patientEntity = patientRepository
-				.findById(id)
-				.map(patient -> new OutputDetailedPatientDto(
-						patient.getPatientId().toString(),
-						patient.getFirstName(),
-						patient.getLastName(),
-						patient.getCpf(),
-						patient.getBirthdate().toString(),
-						patient.getGender().getType(),
-						patient.getStatus().getType(),
-						patient.getTelephone(),
-						patient.getEmail(),
-						addressMapper.toOutputAddressDto(patient.getAddress()),
-						patient.getConsultations().stream()
-							.map(consultation -> new OutputPatientConsultationDto(
-									consultation.getConsultationId().toString(),
-									consultation.getDateTime().toString(),
-									consultation.getStatus().getType(),
-									consultation.getObservations(),
-									consultation.getValue(),
-									doctorMapper.toOutputSimpleDoctorDto(consultation.getDoctor())
-									)).toList()
-						)).orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + id));
-		
-		return patientEntity;
+		return null;
 		
 	}
 

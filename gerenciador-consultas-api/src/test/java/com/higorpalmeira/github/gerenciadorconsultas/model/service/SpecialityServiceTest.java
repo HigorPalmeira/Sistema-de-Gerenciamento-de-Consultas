@@ -25,7 +25,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.SpecialityRepository;
@@ -64,7 +64,7 @@ public class SpecialityServiceTest {
 					.when(specialityRepository)
 					.save(specialityArgumentCaptor.capture());
 			
-			var input = new CreateSpecialityDto("description");
+			var input = new OldCreateSpecialityDto("description");
 			
 			// Act
 			var output = specialityService.createSpeciality(input);
@@ -86,7 +86,7 @@ public class SpecialityServiceTest {
 				.when(specialityRepository)
 				.save(any());
 			
-			var input = new CreateSpecialityDto("description");
+			var input = new OldCreateSpecialityDto("description");
 			
 			// Act & Assert
 			assertThrows(RuntimeException.class, () -> specialityService.createSpeciality(input));
