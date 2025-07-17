@@ -6,14 +6,14 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedPatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimplePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldPatientMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.PatientMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
@@ -22,33 +22,33 @@ public class PatientService {
 
 	private PatientRepository patientRepository;
 
-	private OldPatientMapper patientMapper;
+	private PatientMapper patientMapper;
 
-	public PatientService(PatientRepository patientRepository, OldPatientMapper patientMapper) {
+	public PatientService(PatientRepository patientRepository, PatientMapper patientMapper) {
 		this.patientRepository = patientRepository;
 		this.patientMapper = patientMapper;
 	}
 
 	@Transactional
-	public UUID createPatient(OldCreatePatientDto createPatientDto) {
+	public UUID createPatient(CreatePatientDto createPatientDto) {
 
-		if (!Validator.CPFValidation(createPatientDto.cpf())) {
+		if (!Validator.CPFValidation(createPatientDto.getCpf())) {
 			throw new InvalidDataException("Invalid CPF.");
 		}
 
-		if (!Validator.EmailValidation(createPatientDto.email())) {
+		if (!Validator.EmailValidation(createPatientDto.getEmail())) {
 			throw new InvalidDataException("Invalid e-mail format.");
 		}
 		
-		if (patientRepository.existsByCpf(createPatientDto.cpf())) {
+		if (patientRepository.existsByCpf(createPatientDto.getCpf())) {
 			throw new DataConflictException("CPF already registered in the system.");
 		}
 		
-		if (patientRepository.existsByEmail(createPatientDto.email())) {
+		if (patientRepository.existsByEmail(createPatientDto.getEmail())) {
 			throw new DataConflictException("E-mail already registered in the system.");
 		}
 
-		var patient = patientMapper.toEntity(createPatientDto);
+		var patient = patientMapper.createToPatient(createPatientDto);
 
 		var patientSaved = patientRepository.save(patient);
 

@@ -46,6 +46,7 @@ public class Patient {
 	@Column(name = "birthdate")
 	private LocalDate birthdate;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "gender")
 	private GenderType gender;
 	
