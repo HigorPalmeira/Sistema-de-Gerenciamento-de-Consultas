@@ -2,6 +2,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.DoctorService;
 
 @RestController
@@ -31,7 +31,7 @@ public class DoctorController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Doctor> createDoctor(@RequestBody OldCreateDoctorDto createDoctorDto) {
+	public ResponseEntity<UUID> createDoctor(@RequestBody CreateDoctorDto createDoctorDto) {
 		
 		var doctorId = doctorService.createDoctor(createDoctorDto);
 		
@@ -40,7 +40,7 @@ public class DoctorController {
 	}
 	
 	@GetMapping("/{doctorId}")
-	public ResponseEntity<OldOutputSimpleDoctorDto> findSimpleDoctorById(@PathVariable("doctorId") String doctorId) {
+	public ResponseEntity<SimpleOutputDoctorDto> findSimpleDoctorById(@PathVariable("doctorId") String doctorId) {
 		
 		var doctor = doctorService.findSimpleDoctorById(doctorId);
 		
@@ -58,7 +58,7 @@ public class DoctorController {
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<OldOutputSimpleDoctorDto>> listDoctors() {
+	public ResponseEntity<List<SimpleOutputDoctorDto>> listDoctors() {
 		
 		var doctors = doctorService.listDoctors();
 		
@@ -67,7 +67,7 @@ public class DoctorController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<OldOutputSimpleDoctorDto>> listDoctorsActive() {
+	public ResponseEntity<List<SimpleOutputDoctorDto>> listDoctorsActive() {
 		
 		var doctors = doctorService.listDoctorsActive();
 		
@@ -76,7 +76,7 @@ public class DoctorController {
 	}
 	
 	@PutMapping("/{doctorId}")
-	public ResponseEntity<Void> updateDoctorById(@PathVariable("doctorId") String doctorId, @RequestBody OldUpdateDoctorDto updateDoctorDto) {
+	public ResponseEntity<Void> updateDoctorById(@PathVariable("doctorId") String doctorId, @RequestBody UpdateDoctorDto updateDoctorDto) {
 		
 		doctorService.updateDoctorById(doctorId, updateDoctorDto);
 		
