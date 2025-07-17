@@ -12,7 +12,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 
 @Component
-public class DoctorMapper {
+public class OldDoctorMapper {
 	
 	public Doctor toEntity(CreateDoctorDto createDoctorDto, Speciality speciality) {
 		

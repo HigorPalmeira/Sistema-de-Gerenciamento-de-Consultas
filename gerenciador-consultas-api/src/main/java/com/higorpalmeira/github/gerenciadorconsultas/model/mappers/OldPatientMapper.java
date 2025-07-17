@@ -15,7 +15,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAc
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
 @Component
-public class PatientMapper {
+public class OldPatientMapper {
 
 	public Patient toEntity(CreatePatientDto patientDto) {
 

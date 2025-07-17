@@ -15,7 +15,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAc
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.DoctorMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldDoctorMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.DoctorRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.SpecialityRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
@@ -27,9 +27,9 @@ public class DoctorService {
 	
 	private SpecialityRepository specialityRepository;
 	
-	private DoctorMapper doctorMapper;
+	private OldDoctorMapper doctorMapper;
 	
-	public DoctorService(DoctorRepository doctorRepository, SpecialityRepository specialityRepository, DoctorMapper doctorMapper) {
+	public DoctorService(DoctorRepository doctorRepository, SpecialityRepository specialityRepository, OldDoctorMapper doctorMapper) {
 		this.doctorRepository = doctorRepository;
 		this.specialityRepository = specialityRepository;
 		this.doctorMapper = doctorMapper;

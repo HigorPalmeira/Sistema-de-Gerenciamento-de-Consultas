@@ -13,7 +13,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleSpeci
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.SpecialityMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldSpecialityMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.SpecialityRepository;
 
 @Service
@@ -21,9 +21,9 @@ public class SpecialityService {
 	
 	private SpecialityRepository specialityRepository;
 	
-	private SpecialityMapper specialityMapper;
+	private OldSpecialityMapper specialityMapper;
 	
-	public SpecialityService(SpecialityRepository specialityRepository, SpecialityMapper specialityMapper) {
+	public SpecialityService(SpecialityRepository specialityRepository, OldSpecialityMapper specialityMapper) {
 		this.specialityRepository = specialityRepository;
 		this.specialityMapper = specialityMapper;
 	}

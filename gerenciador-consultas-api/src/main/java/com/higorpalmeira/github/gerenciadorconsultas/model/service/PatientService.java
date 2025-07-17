@@ -14,9 +14,9 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.AddressMapper;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.DoctorMapper;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.PatientMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldAddressMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldDoctorMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldPatientMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
@@ -25,13 +25,13 @@ public class PatientService {
 
 	private PatientRepository patientRepository;
 
-	private PatientMapper patientMapper;
+	private OldPatientMapper patientMapper;
 	
-	private DoctorMapper doctorMapper;
+	private OldDoctorMapper doctorMapper;
 	
-	private AddressMapper addressMapper;
+	private OldAddressMapper addressMapper;
 
-	public PatientService(PatientRepository patientRepository, PatientMapper patientMapper, DoctorMapper doctorMapper, AddressMapper addressMapper) {
+	public PatientService(PatientRepository patientRepository, OldPatientMapper patientMapper, OldDoctorMapper doctorMapper, OldAddressMapper addressMapper) {
 		this.patientRepository = patientRepository;
 		this.patientMapper = patientMapper;
 		this.doctorMapper = doctorMapper;

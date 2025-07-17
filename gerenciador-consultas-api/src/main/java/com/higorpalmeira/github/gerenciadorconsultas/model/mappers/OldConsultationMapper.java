@@ -14,7 +14,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusConsultationType;
 
 @Component
-public class ConsultationMapper {
+public class OldConsultationMapper {
 	
 	public Consultation toEntity(CreateConsultationDto createConsultationDto, Doctor doctor, Patient patient) {
 		

@@ -11,7 +11,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.AddressMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldAddressMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.AddressRepository;
 
 @Service
@@ -19,9 +19,9 @@ public class AddressService {
 	
 	private AddressRepository addressRepository;
 	
-	private AddressMapper addressMapper;
+	private OldAddressMapper addressMapper;
 	
-	public AddressService(AddressRepository addressRepository, AddressMapper addressMapper) {
+	public AddressService(AddressRepository addressRepository, OldAddressMapper addressMapper) {
 		this.addressRepository = addressRepository;
 		this.addressMapper = addressMapper;
 	}

@@ -10,7 +10,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 
 @Component
-public class AddressMapper {
+public class OldAddressMapper {
 
 	public Address toEntity(CreateAddressDto addressDto) { 
 		

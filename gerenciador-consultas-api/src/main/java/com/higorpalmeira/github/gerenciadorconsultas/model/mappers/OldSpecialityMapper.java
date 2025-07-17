@@ -9,7 +9,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityD
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 
 @Component
-public class SpecialityMapper {
+public class OldSpecialityMapper {
 
 	public Speciality toEntity(CreateSpecialityDto specialityDto) {
 		

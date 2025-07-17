@@ -11,7 +11,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleConsu
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultationMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldConsultationMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.ConsultationRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.DoctorRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
@@ -25,9 +25,9 @@ public class ConsultationService {
 	
 	private PatientRepository patientRepository;
 	
-	private ConsultationMapper consultationMapper;
+	private OldConsultationMapper consultationMapper;
 	
-	public ConsultationService(ConsultationRepository consultationRepository, DoctorRepository doctorRepository, PatientRepository patientRepository, ConsultationMapper consultationMapper) {
+	public ConsultationService(ConsultationRepository consultationRepository, DoctorRepository doctorRepository, PatientRepository patientRepository, OldConsultationMapper consultationMapper) {
 		this.consultationRepository = consultationRepository;
 		this.doctorRepository = doctorRepository;
 		this.patientRepository = patientRepository;
