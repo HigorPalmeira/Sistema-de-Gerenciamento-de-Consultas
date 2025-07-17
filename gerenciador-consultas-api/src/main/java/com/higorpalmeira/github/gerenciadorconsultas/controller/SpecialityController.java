@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleSpeciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SimpleOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.SpecialityService;
 
@@ -41,7 +41,7 @@ public class SpecialityController {
 		
 	}
 	
-	@GetMapping("/new/{specialityId}")
+	@GetMapping("/{specialityId}")
 	public ResponseEntity<SimpleOutputSpecialityDto> findSimpleOutputSpecialityById(@PathVariable("specialityId") String specialityId) {
 		
 		var speciality = specialityService.findSimpleOutputSpecialityById(specialityId);
@@ -50,12 +50,12 @@ public class SpecialityController {
 		
 	}
 	
-	@GetMapping ("/{specialityId}")
-	public ResponseEntity<OldOutputSimpleSpeciality> findSimpleSpecialityById(@PathVariable("specialityId") String specialityId) {
+	@PutMapping("/new/{specialityId}")
+	public ResponseEntity<Void> updateSpecialityById(@PathVariable("specialityId") String specialityId, @RequestBody UpdateSpecialityDto updateSpecialityDto) {
 		
-		var speciality = specialityService.findSimpleSpecialityById(specialityId);
+		specialityService.updateSpecialityById(specialityId, updateSpecialityDto);
 		
-		return ResponseEntity.ok(speciality);
+		return ResponseEntity.noContent().build();
 		
 	}
 	
@@ -78,7 +78,7 @@ public class SpecialityController {
 	}
 	
 	@PutMapping("/{specialityId}")
-	public ResponseEntity<Void> updateSpecialityById(@PathVariable("specialityId") String specialityId, @RequestBody UpdateSpecialityDto updateSpecialityDto) {
+	public ResponseEntity<Void> updateSpecialityById(@PathVariable("specialityId") String specialityId, @RequestBody OldUpdateSpecialityDto updateSpecialityDto) {
 		
 		specialityService.updateSpecialityById(specialityId, updateSpecialityDto);
 		

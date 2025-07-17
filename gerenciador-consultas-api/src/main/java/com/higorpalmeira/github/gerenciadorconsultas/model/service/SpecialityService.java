@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleSpeciality;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SimpleOutputSpecialityDto;
@@ -69,8 +70,6 @@ public class SpecialityService {
 		
 		return specialityMapper.specialityToSimpleOutputSpecialityDto(specialityEntity);
 		
-		// return specialityEntity;
-		
 	}
 	
 	@Transactional(readOnly = true)
@@ -103,7 +102,7 @@ public class SpecialityService {
 	}
 	
 	@Transactional
-	public void updateSpecialityById(String specialityId, UpdateSpecialityDto updateSpecialityDto) {
+	public void updateSpecialityById(String specialityId, OldUpdateSpecialityDto updateSpecialityDto) {
 		
 		var id = UUID.fromString(specialityId);
 		var specialityEntity = specialityRepository
@@ -111,6 +110,18 @@ public class SpecialityService {
 				.orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + id));
 		
 		oldSpecialityMapper.updateEntityFromDto(specialityEntity, updateSpecialityDto);
+		
+	}
+	
+	@Transactional
+	public void updateSpecialityById(String specialityId, UpdateSpecialityDto updateSpecialityDto) {
+		
+		var id = UUID.fromString(specialityId);
+		var specialityEntity = specialityRepository
+				.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + id));
+		
+		specialityMapper.updateSpecialityFromUpdateSpecialityDto(updateSpecialityDto, specialityEntity);
 		
 	}
 	
