@@ -34,7 +34,8 @@ public class Status {
 		HELD("HELD"),
 		RESCHEDULED("RESCHEDULED"),
 		CANCELED("CANCELED"),
-		MISSING("MISSING");
+		MISSING("MISSING"),
+		INACTIVE("INACTIVE");
 		
 		private String type;
 		

@@ -6,12 +6,13 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateConsultationDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleConsultationDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusConsultationType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldConsultationMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultationMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.ConsultationRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.DoctorRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
@@ -25,9 +26,9 @@ public class ConsultationService {
 	
 	private PatientRepository patientRepository;
 	
-	private OldConsultationMapper consultationMapper;
+	private ConsultationMapper consultationMapper;
 	
-	public ConsultationService(ConsultationRepository consultationRepository, DoctorRepository doctorRepository, PatientRepository patientRepository, OldConsultationMapper consultationMapper) {
+	public ConsultationService(ConsultationRepository consultationRepository, DoctorRepository doctorRepository, PatientRepository patientRepository, ConsultationMapper consultationMapper) {
 		this.consultationRepository = consultationRepository;
 		this.doctorRepository = doctorRepository;
 		this.patientRepository = patientRepository;
@@ -35,24 +36,24 @@ public class ConsultationService {
 	}
 	
 	@Transactional
-	public UUID createConsultation(OldCreateConsultationDto createConsultationDto) {
+	public UUID createConsultation(CreateConsultationDto createConsultationDto) {
 		
 		// criar validação para o datetime
-		if (createConsultationDto.value() < 0.0f) {
+		if (createConsultationDto.getValue() < 0.0f) {
 			throw new InvalidDataException("Invalid value.");
 		}
 		
-		var doctorId = createConsultationDto.doctorId();
+		var doctorId = createConsultationDto.getDoctorId();
 		var doctorEntity = doctorRepository
-				.findById(UUID.fromString(doctorId))
+				.findById(doctorId)
 				.orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + doctorId));
 		
-		var patientId = createConsultationDto.patientId();
+		var patientId = createConsultationDto.getPatientId();
 		var patientEntity = patientRepository
-				.findById(UUID.fromString(patientId))
+				.findById(patientId)
 				.orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + patientId));
 		
-		var consultation = consultationMapper.toEntity(createConsultationDto, doctorEntity, patientEntity);
+		var consultation = consultationMapper.createToConsultation(createConsultationDto, doctorEntity, patientEntity);
 		
 		var consultationSaved = consultationRepository.save(consultation);
 		
@@ -60,70 +61,79 @@ public class ConsultationService {
 	}
 	
 	@Transactional(readOnly = true)
-	public OldOutputSimpleConsultationDto findSimpleConsultationById(String consultationId) {
+	public SimpleOutputConsultationDto findSimpleConsultationById(String consultationId) {
 		
 		var id = UUID.fromString(consultationId);
 		var consultationEntity = consultationRepository
 				.findById(id)
-				.map(consultation -> new OldOutputSimpleConsultationDto(
-						consultation.getConsultationId().toString(),
-						consultation.getDateTime().toString(),
-						consultation.getStatus().getType(),
-						consultation.getValue(),
-						consultation.getDoctor().getFirstName(),
-						consultation.getDoctor().getCrm(),
-						consultation.getPatient().getFirstName(),
-						consultation.getPatient().getCpf()
-						)).orElseThrow(() -> new ResourceNotFoundException("Consultation not found with ID: " + id));
+				.map(consultation -> consultationMapper.consultationToSimpleOutputConsultationDto(consultation)
+						).orElseThrow(() -> new ResourceNotFoundException("Consultation not found with ID: " + id));
 		
 		return consultationEntity;
 		
 	}
 	
 	@Transactional(readOnly = true)
-	public List<OldOutputSimpleConsultationDto> listSimpleConsultations() {
+	public List<SimpleOutputConsultationDto> listSimpleConsultations() {
 		
 		var consultations = consultationRepository
 				.findAll().stream()
-				.map(consultation -> new OldOutputSimpleConsultationDto(
-						consultation.getConsultationId().toString(),
-						consultation.getDateTime().toString(),
-						consultation.getStatus().getType(),
-						consultation.getValue(),
-						consultation.getDoctor().getFirstName(),
-						consultation.getDoctor().getCrm(),
-						consultation.getPatient().getFirstName(),
-						consultation.getPatient().getCpf()
-						)).toList();
+				.map(consultation -> consultationMapper.consultationToSimpleOutputConsultationDto(consultation)
+						).toList();
+		
+		return consultations;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SimpleOutputConsultationDto> listSimpleConsultationsActive() {
+		
+		var consultations = consultationRepository
+				.findAllByStatusNot(StatusConsultationType.INACTIVE).stream()
+				.map(consultation -> consultationMapper.consultationToSimpleOutputConsultationDto(consultation))
+				.toList();
+				
+		
+		return consultations;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SimpleOutputConsultationDto> listSimpleConsultationsScheduled() {
+		
+		var consultations = consultationRepository
+				.findAllByStatus(StatusConsultationType.SCHEDULED).stream()
+				.map(consultation -> consultationMapper.consultationToSimpleOutputConsultationDto(consultation))
+				.toList();
 		
 		return consultations;
 		
 	}
 	
 	@Transactional
-	public void updateConsultation(String consultationId, OldUpdateConsultationDto updateConsultationDto) {
+	public void updateConsultation(String consultationId, UpdateConsultationDto updateConsultationDto) {
 		
 		var id = UUID.fromString(consultationId);
 		var consultationEntity = consultationRepository
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Consultation not found with ID: " + id));
 		
-		if (updateConsultationDto.value() < 0.0f || Float.isNaN(updateConsultationDto.value())) {
+		if (updateConsultationDto.getValue() < 0.0f || Float.isNaN(updateConsultationDto.getValue())) {
 			throw new InvalidDataException("Invalid value.");
 		}
 		
-		var patientId = updateConsultationDto.patientId();
+		var patientId = updateConsultationDto.getPatientId();
 		var patientEntity = patientRepository
-				.findById(UUID.fromString(patientId))
+				.findById(patientId)
 				.orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + patientId));
 		
-		var doctorId = updateConsultationDto.doctorId();
+		var doctorId = updateConsultationDto.getDoctorId();
 		var doctorEntity = doctorRepository
-				.findById(UUID.fromString(doctorId))
+				.findById(doctorId)
 				.orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + doctorId));
 		
 		
-		consultationMapper.updateEntityFromDto(consultationEntity, updateConsultationDto, patientEntity, doctorEntity);
+		consultationMapper.updateConsultationFromUpdateConsultationDto(updateConsultationDto, doctorEntity, patientEntity, consultationEntity);
 		
 	}
 	
@@ -131,11 +141,12 @@ public class ConsultationService {
 	public void deleteConsultationById(String consultationId) {
 		
 		var id = UUID.fromString(consultationId);
-		var consultationExists = consultationRepository.existsById(id);
+		var consultationEntity = consultationRepository
+				.findById(id);
 		
-		if (consultationExists) {
-			consultationRepository.deleteById(id);
-		}
+		consultationEntity.ifPresent(consultation -> {
+			consultation.setStatus(StatusConsultationType.INACTIVE);
+		});
 		
 	}
 	
