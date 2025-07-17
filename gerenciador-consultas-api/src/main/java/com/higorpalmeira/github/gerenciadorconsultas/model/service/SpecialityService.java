@@ -6,12 +6,10 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.DetailedOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.SpecialityMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.SpecialityRepository;
@@ -51,31 +49,38 @@ public class SpecialityService {
 	}
 	
 	@Transactional(readOnly = true)
-	public OldOutputDetailedSpecialityDto findSpecialityDetailedById(String specialityId) {
+	public DetailedOutputSpecialityDto findSpecialityDetailedById(String specialityId) {
 		
 		var id = UUID.fromString(specialityId);
 		var specialityEntity = specialityRepository
 				.findById(id)
-				.map(speciality -> new OldOutputDetailedSpecialityDto(
-						speciality.getId(),
-						speciality.getDescription(),
-						speciality.getDoctors().stream()
-							.map(doctor -> new OldOutputSimpleDoctorDto(
-									doctor.getDoctorId(),
-									doctor.getFirstName(),
-									doctor.getCrm(),
-									doctor.getTelephone(),
-									doctor.getEmail()
-									)).toList()
-						)).orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + id));
+				.map(speciality -> specialityMapper.specialityToDetailedOutputSpecialityDto(speciality))
+				.orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + id));
 		
 		return specialityEntity;
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Speciality> listSpecialities() {
+	public List<SimpleOutputSpecialityDto> listSimpleAllSpecialities() {
 		
-		return specialityRepository.findAll();
+		var specialities = specialityRepository
+				.findAll().stream()
+				.map(speciality -> specialityMapper.specialityToSimpleOutputSpecialityDto(speciality))
+				.toList();
+		
+		return specialities;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<DetailedOutputSpecialityDto> listDetailedAllSpecialities() {
+		
+		var specialities = specialityRepository
+				.findAll().stream()
+				.map(speciality -> specialityMapper.specialityToDetailedOutputSpecialityDto(speciality))
+				.toList();
+		
+		return specialities;
 		
 	}
 	

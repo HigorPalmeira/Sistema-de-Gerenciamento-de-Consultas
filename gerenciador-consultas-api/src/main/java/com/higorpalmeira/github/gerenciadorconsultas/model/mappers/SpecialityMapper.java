@@ -7,11 +7,12 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.DetailedOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {DoctorMapper.class})
 public interface SpecialityMapper {
 	
 	/*
@@ -34,6 +35,14 @@ public interface SpecialityMapper {
 	 * */
 	@Mapping(target = "associateDoctors", expression = "java(speciality.getDoctors() != null ? speciality.getDoctors().size() : 0)")
 	SimpleOutputSpecialityDto specialityToSimpleOutputSpecialityDto(Speciality speciality);
+	
+	/*
+	 * Criar um DTO de saída detalhada a partir da entidade 'Speciality'.
+	 * 
+	 * @param speciality Entidade a ser transforamada.
+	 * @return DetailedOutputSpecialityDto DTO de saída detalhada criada.
+	 * */
+	DetailedOutputSpecialityDto specialityToDetailedOutputSpecialityDto(Speciality speciality);
 	
 	/**
      * Atualiza a entidade 'Speciality' com os dados não nulos do DTO.

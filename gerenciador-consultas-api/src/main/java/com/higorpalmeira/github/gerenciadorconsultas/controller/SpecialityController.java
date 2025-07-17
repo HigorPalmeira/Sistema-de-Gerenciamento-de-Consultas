@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.DetailedOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.SpecialityService;
 
 @RestController
@@ -49,17 +48,9 @@ public class SpecialityController {
 		
 	}
 	
-	@PutMapping("/{specialityId}")
-	public ResponseEntity<Void> updateSpecialityById(@PathVariable("specialityId") String specialityId, @RequestBody UpdateSpecialityDto updateSpecialityDto) {
-		
-		specialityService.updateSpecialityById(specialityId, updateSpecialityDto);
-		
-		return ResponseEntity.noContent().build();
-		
-	}
 	
 	@GetMapping("/details/{specialityId}")
-	public ResponseEntity<OldOutputDetailedSpecialityDto> findSpecialityDetailedById(@PathVariable("specialityId") String specialityId) {
+	public ResponseEntity<DetailedOutputSpecialityDto> findSpecialityDetailedById(@PathVariable("specialityId") String specialityId) {
 		
 		var output = specialityService.findSpecialityDetailedById(specialityId);
 		
@@ -68,14 +59,32 @@ public class SpecialityController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Speciality>> listSpecialities() {
+	public ResponseEntity<List<SimpleOutputSpecialityDto>> listSimpleAllSpecialities() {
 		
-		var specialities = specialityService.listSpecialities();
+		var specialities = specialityService.listSimpleAllSpecialities();
 		
 		return ResponseEntity.ok(specialities);
 		
 	}
 	
+	@GetMapping("/details")
+	public ResponseEntity<List<DetailedOutputSpecialityDto>> listDetailedAllSpecialities() {
+		
+		var specialities = specialityService.listDetailedAllSpecialities();
+		
+		return ResponseEntity.ok(specialities);
+		
+	}
+	
+	@PutMapping("/{specialityId}")
+	public ResponseEntity<Void> updateSpecialityById(@PathVariable("specialityId") String specialityId, @RequestBody UpdateSpecialityDto updateSpecialityDto) {
+		
+		specialityService.updateSpecialityById(specialityId, updateSpecialityDto);
+		
+		return ResponseEntity.noContent().build();
+		
+	}
+
 	@DeleteMapping("/{specialityId}")
 	public ResponseEntity<Void> deleteById(@PathVariable("specialityId") String specialityId) {
 
