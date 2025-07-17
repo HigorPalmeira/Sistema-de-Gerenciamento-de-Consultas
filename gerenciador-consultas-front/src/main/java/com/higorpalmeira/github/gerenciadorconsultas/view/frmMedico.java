@@ -4,6 +4,9 @@
  */
 package main.java.com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import javax.swing.JOptionPane;
+import main.java.com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
+
 /**
  *
  * @author higor
@@ -15,6 +18,8 @@ public class frmMedico extends frmGenerico {
      */
     public frmMedico() {
         initComponents();
+        
+        btnDetalhes.setVisible(false);
     }
 
     /**
@@ -37,12 +42,12 @@ public class frmMedico extends frmGenerico {
         rbTelefone = new javax.swing.JRadioButton();
         pnlTabela = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblMedicos = new javax.swing.JTable();
         pnlBotoes = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnDeletar = new javax.swing.JButton();
+        btnDetalhes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -75,20 +80,47 @@ public class frmMedico extends frmGenerico {
         txtPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         btnPesquisar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/zoom.png"))); // NOI18N
         btnPesquisar.setMnemonic('p');
         btnPesquisar.setText("PESQUISAR");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         rbCrm.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        rbCrm.setSelected(true);
         rbCrm.setText("CRM");
+        rbCrm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbCrmMouseClicked(evt);
+            }
+        });
 
         rbNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         rbNome.setText("Nome");
+        rbNome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbNomeMouseClicked(evt);
+            }
+        });
 
         rbEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         rbEmail.setText("E-mail");
+        rbEmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbEmailMouseClicked(evt);
+            }
+        });
 
         rbTelefone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         rbTelefone.setText("Telefone");
+        rbTelefone.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbTelefoneMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -132,7 +164,7 @@ public class frmMedico extends frmGenerico {
 
         pnlTabela.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblMedicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -155,23 +187,28 @@ public class frmMedico extends frmGenerico {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setColumnSelectionAllowed(true);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(220);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(130);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(150);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(200);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(4).setMaxWidth(230);
-            jTable1.getColumnModel().getColumn(5).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(5).setMaxWidth(200);
+        tblMedicos.setColumnSelectionAllowed(true);
+        tblMedicos.getTableHeader().setReorderingAllowed(false);
+        tblMedicos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMedicosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblMedicos);
+        tblMedicos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tblMedicos.getColumnModel().getColumnCount() > 0) {
+            tblMedicos.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblMedicos.getColumnModel().getColumn(0).setMaxWidth(0);
+            tblMedicos.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tblMedicos.getColumnModel().getColumn(1).setMaxWidth(220);
+            tblMedicos.getColumnModel().getColumn(2).setPreferredWidth(130);
+            tblMedicos.getColumnModel().getColumn(2).setMaxWidth(150);
+            tblMedicos.getColumnModel().getColumn(3).setPreferredWidth(150);
+            tblMedicos.getColumnModel().getColumn(3).setMaxWidth(200);
+            tblMedicos.getColumnModel().getColumn(4).setPreferredWidth(200);
+            tblMedicos.getColumnModel().getColumn(4).setMaxWidth(230);
+            tblMedicos.getColumnModel().getColumn(5).setPreferredWidth(200);
+            tblMedicos.getColumnModel().getColumn(5).setMaxWidth(200);
         }
 
         javax.swing.GroupLayout pnlTabelaLayout = new javax.swing.GroupLayout(pnlTabela);
@@ -197,17 +234,17 @@ public class frmMedico extends frmGenerico {
         btnNovo.setMnemonic('n');
         btnNovo.setText("NOVO");
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setMnemonic('e');
-        jButton2.setText("EDITAR");
+        btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEditar.setMnemonic('e');
+        btnEditar.setText("EDITAR");
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton3.setMnemonic('d');
-        jButton3.setText("DELETAR");
+        btnDeletar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnDeletar.setMnemonic('d');
+        btnDeletar.setText("DELETAR");
 
-        jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton4.setMnemonic('v');
-        jButton4.setText("VER DETALHES");
+        btnDetalhes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnDetalhes.setMnemonic('v');
+        btnDetalhes.setText("VER DETALHES");
 
         javax.swing.GroupLayout pnlBotoesLayout = new javax.swing.GroupLayout(pnlBotoes);
         pnlBotoes.setLayout(pnlBotoesLayout);
@@ -216,9 +253,9 @@ public class frmMedico extends frmGenerico {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotoesLayout.createSequentialGroup()
                 .addContainerGap(49, Short.MAX_VALUE)
                 .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDetalhes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDeletar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36))
         );
@@ -228,11 +265,11 @@ public class frmMedico extends frmGenerico {
                 .addGap(51, 51, 51)
                 .addComponent(btnNovo)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btnEditar)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(btnDeletar)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(btnDetalhes)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -270,6 +307,74 @@ public class frmMedico extends frmGenerico {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tblMedicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMedicosMouseClicked
+        
+        if (evt.getClickCount() == 2) {
+            JOptionPane.showMessageDialog(this, "Item na tabela selecionado?");
+        }
+        
+    }//GEN-LAST:event_tblMedicosMouseClicked
+
+    private void rbCrmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbCrmMouseClicked
+
+        rbCrm.setSelected(true);
+        rbEmail.setSelected(false);
+        rbNome.setSelected(false);
+        rbTelefone.setSelected(false);
+
+    }//GEN-LAST:event_rbCrmMouseClicked
+
+    private void rbNomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbNomeMouseClicked
+
+        rbNome.setSelected(true);
+        rbCrm.setSelected(false);
+        rbEmail.setSelected(false);
+        rbTelefone.setSelected(false);
+
+    }//GEN-LAST:event_rbNomeMouseClicked
+
+    private void rbEmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbEmailMouseClicked
+
+        rbEmail.setSelected(true);
+        rbNome.setSelected(false);
+        rbCrm.setSelected(false);
+        rbTelefone.setSelected(false);
+
+    }//GEN-LAST:event_rbEmailMouseClicked
+
+    private void rbTelefoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbTelefoneMouseClicked
+
+        rbTelefone.setSelected(true);
+        rbEmail.setSelected(false);
+        rbNome.setSelected(false);
+        rbCrm.setSelected(false);
+
+    }//GEN-LAST:event_rbTelefoneMouseClicked
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+
+        if (txtPesquisa.getText() == null || txtPesquisa.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "O campo de pesquisa não pode estar vazio!", "Não é possível pesquisar", JOptionPane.ERROR_MESSAGE);
+            txtPesquisa.requestFocus();
+            
+        } else {
+            
+            if (rbCrm.isSelected()) {
+                
+                if (Validador.isCrm(txtPesquisa.getText().trim().toUpperCase())) {
+                    JOptionPane.showMessageDialog(this, "CRM válido!", "CRM Válido", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "\"" + txtPesquisa.getText() + "\" não é um CRM válido! Informe um válido!", "CRM Inválido", JOptionPane.ERROR_MESSAGE);
+                    txtPesquisa.requestFocus();
+                }
+                
+            }
+            
+            txtPesquisa.setText("");
+        }
+
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -306,15 +411,14 @@ public class frmMedico extends frmGenerico {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeletar;
+    private javax.swing.JButton btnDetalhes;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnPesquisar;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel pnlBotoes;
     private javax.swing.JPanel pnlTabela;
     private javax.swing.JPanel pnlTitulo;
@@ -322,6 +426,7 @@ public class frmMedico extends frmGenerico {
     private javax.swing.JRadioButton rbEmail;
     private javax.swing.JRadioButton rbNome;
     private javax.swing.JRadioButton rbTelefone;
+    private javax.swing.JTable tblMedicos;
     private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
 }

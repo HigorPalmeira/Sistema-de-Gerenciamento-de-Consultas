@@ -161,6 +161,7 @@ public class frmEspecialidade extends frmGenerico {
         txtPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/zoom.png"))); // NOI18N
         jButton4.setMnemonic('p');
         jButton4.setText("PESQUISAR");
 
