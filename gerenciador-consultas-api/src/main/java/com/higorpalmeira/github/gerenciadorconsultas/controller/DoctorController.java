@@ -75,6 +75,15 @@ public class DoctorController {
 		
 	}
 	
+	@GetMapping("/inactive")
+	public ResponseEntity<List<SimpleOutputDoctorDto>> listDoctorInactive() {
+		
+		var doctors = doctorService.listDoctorsInactive();
+		
+		return ResponseEntity.ok(doctors);
+		
+	}
+	
 	@PutMapping("/{doctorId}")
 	public ResponseEntity<Void> updateDoctorById(@PathVariable("doctorId") String doctorId, @RequestBody UpdateDoctorDto updateDoctorDto) {
 		

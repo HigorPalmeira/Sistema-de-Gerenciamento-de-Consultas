@@ -122,6 +122,18 @@ public class DoctorService {
 		
 	}
 	
+	@Transactional(readOnly = true)
+	public List<SimpleOutputDoctorDto> listDoctorsInactive() {
+		
+		var doctors = doctorRepository
+				.findAllByStatus(StatusAccountType.INACTIVE).stream()
+				.map(doctor -> doctorMapper.doctorToSimpleOutputDoctorDto(doctor)
+						).toList();
+		
+		return doctors;
+		
+	}
+	
 	@Transactional
 	public void updateDoctorById(String doctorId, UpdateDoctorDto updateDoctorDto) {
 		
