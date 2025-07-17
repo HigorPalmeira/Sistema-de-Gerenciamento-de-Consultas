@@ -43,6 +43,6 @@ public interface AddressMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	void updateAddress(UpdateAddressDto updateAddressDto, @MappingTarget Address address);
+	void updateAddressFromUpdateAddressDto(UpdateAddressDto updateAddressDto, @MappingTarget Address address);
 
 }
