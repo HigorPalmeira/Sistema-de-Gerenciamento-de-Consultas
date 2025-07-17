@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleSpeciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SimpleOutputSpecialityDto;
@@ -33,7 +32,7 @@ public class SpecialityController {
 		this.specialityService = specialityService;
 	}
 	
-	@PostMapping("/new")
+	@PostMapping
 	public ResponseEntity<UUID> createSpeciality(@RequestBody CreateSpecialityDto createSpecialityDto) {
 		
 		var specialityId = specialityService.createSpeciality(createSpecialityDto);
@@ -48,15 +47,6 @@ public class SpecialityController {
 		var speciality = specialityService.findSimpleOutputSpecialityById(specialityId);
 		
 		return ResponseEntity.ok(speciality);
-		
-	}
-	
-	@PostMapping
-	public ResponseEntity<Speciality> createSpeciality(@RequestBody OldCreateSpecialityDto createSpecialityDto) {
-		
-		var specialityId = specialityService.createSpeciality(createSpecialityDto);
-		
-		return ResponseEntity.created(URI.create("/v1/speciality/" + specialityId.toString())).build();
 		
 	}
 	

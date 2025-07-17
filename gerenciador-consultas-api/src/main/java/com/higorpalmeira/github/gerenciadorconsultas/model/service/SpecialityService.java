@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleSpeciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
@@ -38,17 +37,6 @@ public class SpecialityService {
 	public UUID createSpeciality(CreateSpecialityDto createSpecialityDto) {
 		
 		var speciality = specialityMapper.createToSpeciality(createSpecialityDto);
-		
-		var specialitySaved = specialityRepository.save(speciality);
-		
-		return specialitySaved.getId();
-		
-	}
-	
-	@Transactional
-	public UUID createSpeciality(OldCreateSpecialityDto createSpecialityDto) {
-		
-		var speciality = oldSpecialityMapper.toEntity(createSpecialityDto);
 		
 		var specialitySaved = specialityRepository.save(speciality);
 		
