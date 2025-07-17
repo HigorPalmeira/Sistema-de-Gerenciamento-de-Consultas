@@ -11,6 +11,8 @@ public class UpdatePatientDto {
 	
 	private String lastName;
 	
+	private String cpf;
+	
 	private LocalDate birthdate;
 	
 	private GenderType gender;
@@ -18,6 +20,8 @@ public class UpdatePatientDto {
 	private StatusAccountType status;
 	
 	private String telephone;
+	
+	private String email;
 	
 	private UpdateAddressDto address;
 
@@ -75,6 +79,22 @@ public class UpdatePatientDto {
 
 	public void setAddress(UpdateAddressDto address) {
 		this.address = address;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 }

@@ -2,6 +2,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreatePatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimplePatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdatePatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputPatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.PatientService;
 
 @RestController
@@ -30,7 +30,7 @@ public class PatientController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Patient> createPatient(@RequestBody OldCreatePatientDto createPatientDto) {
+	public ResponseEntity<UUID> createPatient(@RequestBody CreatePatientDto createPatientDto) {
 		
 		var patientId = patientService.createPatient(createPatientDto);
 		
@@ -39,7 +39,7 @@ public class PatientController {
 	}
 	
 	@GetMapping ("/{patientId}")
-	public ResponseEntity<OldOutputSimplePatientDto> findSimplePatientById(@PathVariable("patientId") String patientId) {
+	public ResponseEntity<SimpleOutputPatientDto> findSimplePatientById(@PathVariable("patientId") String patientId) {
 		
 		var patient = patientService.findSimplePatientById(patientId);
 		
@@ -48,7 +48,7 @@ public class PatientController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<OldOutputSimplePatientDto>> listSimplePatients() {
+	public ResponseEntity<List<SimpleOutputPatientDto>> listSimplePatients() {
 		
 		var patients = patientService.listSimplePatients();
 		
@@ -57,7 +57,7 @@ public class PatientController {
 	}
 	
 	@PutMapping("/{patientId}")
-	public ResponseEntity<Void> updatePatientById(@PathVariable("patientId") String patientId, @RequestBody OldUpdatePatientDto updatePatientDto) {
+	public ResponseEntity<Void> updatePatientById(@PathVariable("patientId") String patientId, @RequestBody UpdatePatientDto updatePatientDto) {
 		
 		patientService.updatePatientById(patientId, updatePatientDto);
 		

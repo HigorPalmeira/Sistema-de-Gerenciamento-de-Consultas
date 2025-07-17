@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedPatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimplePatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputPatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
@@ -57,22 +58,14 @@ public class PatientService {
 	}
 
 	@Transactional(readOnly = true)
-	public OldOutputSimplePatientDto findSimplePatientById(String patientId) {
+	public SimpleOutputPatientDto findSimplePatientById(String patientId) {
 		
 		var id = UUID.fromString(patientId);
 		var patientEntity = patientRepository
 				.findById(id)
-				.map(patient -> new OldOutputSimplePatientDto(
-						patient.getPatientId().toString(),
-						patient.getFirstName(),
-						patient.getCpf(),
-						patient.getBirthdate().toString(),
-						patient.getStatus().getType(),
-						patient.getTelephone(),
-						patient.getEmail()
-				)).orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + id));
 
-		return patientEntity;
+		return patientMapper.patientToSimpleOutputPatientDto(patientEntity);
 
 	}
 	
@@ -84,53 +77,46 @@ public class PatientService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<OldOutputSimplePatientDto> listSimplePatients() {
+	public List<SimpleOutputPatientDto> listSimplePatients() {
 		
 		var patients = patientRepository
 				.findAll().stream()
-				.map(patient -> new OldOutputSimplePatientDto(
-						patient.getPatientId().toString(),
-						patient.getFirstName(),
-						patient.getCpf(),
-						patient.getBirthdate().toString(),
-						patient.getStatus().getType(),
-						patient.getTelephone(),
-						patient.getEmail()
-						)).toList();
+				.map(patient -> patientMapper.patientToSimpleOutputPatientDto(patient)
+						).toList();
 
 		return patients;
 
 	}
 
 	@Transactional
-	public void updatePatientById(String patientId, OldUpdatePatientDto updatePatientDto) {
+	public void updatePatientById(String patientId, UpdatePatientDto updatePatientDto) {
 
 		var id = UUID.fromString(patientId);
 		var patientEntity = patientRepository
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + id));
 		
-		if (updatePatientDto.cpf() != null) {
-			patientRepository.findByCpf(updatePatientDto.cpf()).ifPresent(existingPatient -> {
+		if (updatePatientDto.getCpf() != null) {
+			patientRepository.findByCpf(updatePatientDto.getCpf()).ifPresent(existingPatient -> {
 				if (!existingPatient.getPatientId().equals(patientEntity.getPatientId())) {
 					throw new DataConflictException("CPF is already in use by another patient.");
 				}
 			});
 			
-			patientEntity.setCpf(updatePatientDto.cpf());
+			patientEntity.setCpf(updatePatientDto.getCpf());
 		}
 		
-		if (updatePatientDto.email() != null) {
-			patientRepository.findByEmail(updatePatientDto.email()).ifPresent(existingPatient -> {
+		if (updatePatientDto.getEmail() != null) {
+			patientRepository.findByEmail(updatePatientDto.getEmail()).ifPresent(existingPatient -> {
 				if (!existingPatient.getPatientId().equals(patientEntity.getPatientId())) {
 					throw new DataConflictException("Email is already in use by another patient.");
 				}
 			});
 			
-			patientEntity.setEmail(updatePatientDto.email());
+			patientEntity.setEmail(updatePatientDto.getEmail());
 		}
 		
-		patientMapper.updateEntityFromDto(patientEntity, updatePatientDto);
+		patientMapper.updatePatientFromUpdatePatientDto(updatePatientDto, patientEntity);
 
 	}
 
@@ -141,11 +127,9 @@ public class PatientService {
 		var patientEntity = patientRepository
 				.findById(id);
 
-		if (patientEntity.isPresent()) {
-			
-			patientMapper.deleteEntityFromStatus(patientEntity.get());
-			
-		}
+		patientEntity.ifPresent(patient -> {
+			patient.setStatus(StatusAccountType.INACTIVE);
+		});
 
 	}
 
