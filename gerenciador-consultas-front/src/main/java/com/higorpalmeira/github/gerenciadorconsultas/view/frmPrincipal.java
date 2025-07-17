@@ -30,6 +30,7 @@ public class frmPrincipal extends frmGenerico {
         mitConsultas = new javax.swing.JMenu();
         mitPacientes = new javax.swing.JMenu();
         mitMedicos = new javax.swing.JMenu();
+        mitEspecialidades = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SGC - Sistema de Gerenciamento de Consultas");
@@ -47,7 +48,35 @@ public class frmPrincipal extends frmGenerico {
 
         mitMedicos.setText("Médicos");
         mitMedicos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        mitMedicos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mitMedicosMouseClicked(evt);
+            }
+        });
         menuPrincipal.add(mitMedicos);
+
+        mitEspecialidades.setText("Especialidades");
+        mitEspecialidades.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        mitEspecialidades.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
+            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
+                mitEspecialidadesMenuKeyPressed(evt);
+            }
+            public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
+            }
+            public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
+            }
+        });
+        mitEspecialidades.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mitEspecialidadesMouseClicked(evt);
+            }
+        });
+        mitEspecialidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitEspecialidadesActionPerformed(evt);
+            }
+        });
+        menuPrincipal.add(mitEspecialidades);
 
         setJMenuBar(menuPrincipal);
 
@@ -65,6 +94,29 @@ public class frmPrincipal extends frmGenerico {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mitEspecialidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitEspecialidadesActionPerformed
+        
+        
+    }//GEN-LAST:event_mitEspecialidadesActionPerformed
+
+    private void mitEspecialidadesMenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_mitEspecialidadesMenuKeyPressed
+
+    }//GEN-LAST:event_mitEspecialidadesMenuKeyPressed
+
+    private void mitEspecialidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mitEspecialidadesMouseClicked
+
+        frmEspecialidade frmEspecialidade = new frmEspecialidade();
+        frmEspecialidade.setVisible(true);
+
+    }//GEN-LAST:event_mitEspecialidadesMouseClicked
+
+    private void mitMedicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mitMedicosMouseClicked
+
+        frmMedico frmMedico = new frmMedico();
+        frmMedico.setVisible(true);
+
+    }//GEN-LAST:event_mitMedicosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -104,6 +156,7 @@ public class frmPrincipal extends frmGenerico {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar menuPrincipal;
     private javax.swing.JMenu mitConsultas;
+    private javax.swing.JMenu mitEspecialidades;
     private javax.swing.JMenu mitMedicos;
     private javax.swing.JMenu mitPacientes;
     // End of variables declaration//GEN-END:variables
