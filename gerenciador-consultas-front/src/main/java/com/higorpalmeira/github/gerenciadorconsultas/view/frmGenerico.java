@@ -23,6 +23,7 @@ public abstract class frmGenerico extends javax.swing.JFrame {
         ImageIcon imgIcon = new ImageIcon(getClass().getResource(PATH_ICON));
         
         this.setIconImage(imgIcon.getImage());
+        
     }
 
     /**
