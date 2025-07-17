@@ -1,6 +1,6 @@
-package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
+package com.higorpalmeira.github.gerenciadorconsultas.model.dto.create;
 
-public class UpdateSpecialityDto {
+public class CreateSpecialityDto {
 	
 	private String description;
 

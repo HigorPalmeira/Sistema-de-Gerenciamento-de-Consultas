@@ -1,4 +1,4 @@
-package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
+package com.higorpalmeira.github.gerenciadorconsultas.model.dto.output;
 
 import java.util.UUID;
 
