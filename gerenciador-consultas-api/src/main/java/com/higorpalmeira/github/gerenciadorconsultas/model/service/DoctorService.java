@@ -6,10 +6,10 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
@@ -36,7 +36,7 @@ public class DoctorService {
 	}
 	
 	@Transactional
-	public UUID createDoctor(CreateDoctorDto createDoctorDto) {
+	public UUID createDoctor(OldCreateDoctorDto createDoctorDto) {
 		
 		if (!Validator.CRMValidation(createDoctorDto.crm())) {
 			throw new InvalidDataException("Invalid CRM.");
@@ -67,12 +67,12 @@ public class DoctorService {
 	}
 	
 	@Transactional(readOnly = true)
-	public OutputSimpleDoctorDto findSimpleDoctorById(String doctorId) {
+	public OldOutputSimpleDoctorDto findSimpleDoctorById(String doctorId) {
 		
 		var id = UUID.fromString(doctorId);
 		var doctorEntity = doctorRepository
 				.findById(id)
-				.map(doctor -> new OutputSimpleDoctorDto(
+				.map(doctor -> new OldOutputSimpleDoctorDto(
 						doctor.getDoctorId(),
 						doctor.getFirstName(),
 						doctor.getCrm(),
@@ -85,12 +85,12 @@ public class DoctorService {
 	}
 	
 	@Transactional(readOnly = true)
-	public OutputDetailedDoctorDto findDetailedDoctorById(String doctorId) {
+	public OldOutputDetailedDoctorDto findDetailedDoctorById(String doctorId) {
 		
 		var id = UUID.fromString(doctorId);
 		var doctorEntity = doctorRepository
 				.findById(id)
-				.map(doctor -> new OutputDetailedDoctorDto(
+				.map(doctor -> new OldOutputDetailedDoctorDto(
 						doctor.getDoctorId(),
 						doctor.getFirstName(),
 						doctor.getLastName(),
@@ -106,11 +106,11 @@ public class DoctorService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<OutputSimpleDoctorDto> listDoctors() {
+	public List<OldOutputSimpleDoctorDto> listDoctors() {
 		
 		var doctors = doctorRepository
 				.findAll().stream()
-				.map(doctor -> new OutputSimpleDoctorDto(
+				.map(doctor -> new OldOutputSimpleDoctorDto(
 						doctor.getDoctorId(),
 						doctor.getFirstName(),
 						doctor.getCrm(),
@@ -123,11 +123,11 @@ public class DoctorService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<OutputSimpleDoctorDto> listDoctorsActive() {
+	public List<OldOutputSimpleDoctorDto> listDoctorsActive() {
 		
 		var doctors = doctorRepository
 				.findAllByStatus(StatusAccountType.ACTIVE).stream()
-				.map(doctor -> new OutputSimpleDoctorDto(
+				.map(doctor -> new OldOutputSimpleDoctorDto(
 						doctor.getDoctorId(),
 						doctor.getFirstName(),
 						doctor.getCrm(),
@@ -147,7 +147,7 @@ public class DoctorService {
 	}
 	
 	@Transactional
-	public void updateDoctorById(String doctorId, UpdateDoctorDto updateDoctorDto) {
+	public void updateDoctorById(String doctorId, OldUpdateDoctorDto updateDoctorDto) {
 		
 		var id = UUID.fromString(doctorId);
 		var doctorEntity = doctorRepository

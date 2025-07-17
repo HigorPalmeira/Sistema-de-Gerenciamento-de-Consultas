@@ -22,8 +22,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateAddressDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
@@ -84,7 +84,7 @@ public class PatientServiceTest {
 				.when(patientRepository)
 				.save(patientArgumentCaptor.capture());
 			
-			var addressDto = new CreateAddressDto(
+			var addressDto = new OldCreateAddressDto(
 					"74853-330",
 					"Rua 20",
 					"900",
@@ -93,7 +93,7 @@ public class PatientServiceTest {
 					"GO"
 					);
 			
-			var input = new CreatePatientDto(
+			var input = new OldCreatePatientDto(
 					"Benedito",
 					"Danilo Nogueira",
 					"689.254.310-33",
@@ -131,7 +131,7 @@ public class PatientServiceTest {
 				.when(patientRepository)
 				.save(any());
 			
-			var addressDto = new CreateAddressDto(
+			var addressDto = new OldCreateAddressDto(
 					"74853-330",
 					"Rua 20",
 					"900",
@@ -140,7 +140,7 @@ public class PatientServiceTest {
 					"GO"
 					);
 			
-			var input = new CreatePatientDto(
+			var input = new OldCreatePatientDto(
 					"Benedito",
 					"Danilo Nogueira",
 					"689.254.310-33",

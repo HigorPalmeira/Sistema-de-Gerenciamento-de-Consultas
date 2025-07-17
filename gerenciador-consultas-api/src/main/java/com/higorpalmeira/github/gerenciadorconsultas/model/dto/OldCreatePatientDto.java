@@ -1,6 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
 
-public record CreatePatientDto(
+public record OldCreatePatientDto(
 		String firstName,
 		String lastName,
 		String cpf,
@@ -8,7 +8,7 @@ public record CreatePatientDto(
 		String gender,
 		String telephone,
 		String email,
-		CreateAddressDto address
+		OldCreateAddressDto address
 ) {
 
 }

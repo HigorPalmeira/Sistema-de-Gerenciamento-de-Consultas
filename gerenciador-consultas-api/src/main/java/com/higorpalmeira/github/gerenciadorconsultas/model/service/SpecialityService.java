@@ -7,15 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleSpeciality;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SimpleOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldSpecialityMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.SpecialityMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.SpecialityRepository;
 
@@ -24,13 +21,10 @@ public class SpecialityService {
 	
 	private SpecialityRepository specialityRepository;
 	
-	private OldSpecialityMapper oldSpecialityMapper;
-	
 	private SpecialityMapper specialityMapper;
 	
-	public SpecialityService(SpecialityRepository specialityRepository, OldSpecialityMapper oldSpecialityMapper, SpecialityMapper specialityMapper) {
+	public SpecialityService(SpecialityRepository specialityRepository, SpecialityMapper specialityMapper) {
 		this.specialityRepository = specialityRepository;
-		this.oldSpecialityMapper = oldSpecialityMapper;
 		this.specialityMapper = specialityMapper;
 	}
 	
@@ -46,22 +40,6 @@ public class SpecialityService {
 	}
 	
 	@Transactional(readOnly = true)
-	public OldOutputSimpleSpeciality findSimpleSpecialityById(String specialityId) {
-		
-		var id = UUID.fromString(specialityId);
-		var specialityEntity = specialityRepository
-				.findById(id)
-				.map(speciality -> new OldOutputSimpleSpeciality(
-						speciality.getId(),
-						speciality.getDescription(),
-						speciality.getDoctors().size()
-						)).orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + id));
-		
-		return specialityEntity;
-		
-	}
-	
-	@Transactional(readOnly = true)
 	public SimpleOutputSpecialityDto findSimpleOutputSpecialityById(String specialityId) {
 		
 		var id = UUID.fromString(specialityId);
@@ -73,16 +51,16 @@ public class SpecialityService {
 	}
 	
 	@Transactional(readOnly = true)
-	public OutputDetailedSpecialityDto findSpecialityDetailedById(String specialityId) {
+	public OldOutputDetailedSpecialityDto findSpecialityDetailedById(String specialityId) {
 		
 		var id = UUID.fromString(specialityId);
 		var specialityEntity = specialityRepository
 				.findById(id)
-				.map(speciality -> new OutputDetailedSpecialityDto(
+				.map(speciality -> new OldOutputDetailedSpecialityDto(
 						speciality.getId(),
 						speciality.getDescription(),
 						speciality.getDoctors().stream()
-							.map(doctor -> new OutputSimpleDoctorDto(
+							.map(doctor -> new OldOutputSimpleDoctorDto(
 									doctor.getDoctorId(),
 									doctor.getFirstName(),
 									doctor.getCrm(),
@@ -98,18 +76,6 @@ public class SpecialityService {
 	public List<Speciality> listSpecialities() {
 		
 		return specialityRepository.findAll();
-		
-	}
-	
-	@Transactional
-	public void updateSpecialityById(String specialityId, OldUpdateSpecialityDto updateSpecialityDto) {
-		
-		var id = UUID.fromString(specialityId);
-		var specialityEntity = specialityRepository
-				.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + id));
-		
-		oldSpecialityMapper.updateEntityFromDto(specialityEntity, updateSpecialityDto);
 		
 	}
 	

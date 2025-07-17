@@ -6,10 +6,10 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedPatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimplePatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedPatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimplePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
@@ -30,7 +30,7 @@ public class PatientService {
 	}
 
 	@Transactional
-	public UUID createPatient(CreatePatientDto createPatientDto) {
+	public UUID createPatient(OldCreatePatientDto createPatientDto) {
 
 		if (!Validator.CPFValidation(createPatientDto.cpf())) {
 			throw new InvalidDataException("Invalid CPF.");
@@ -57,12 +57,12 @@ public class PatientService {
 	}
 
 	@Transactional(readOnly = true)
-	public OutputSimplePatientDto findSimplePatientById(String patientId) {
+	public OldOutputSimplePatientDto findSimplePatientById(String patientId) {
 		
 		var id = UUID.fromString(patientId);
 		var patientEntity = patientRepository
 				.findById(id)
-				.map(patient -> new OutputSimplePatientDto(
+				.map(patient -> new OldOutputSimplePatientDto(
 						patient.getPatientId().toString(),
 						patient.getFirstName(),
 						patient.getCpf(),
@@ -77,18 +77,18 @@ public class PatientService {
 	}
 	
 	@Transactional(readOnly = true)
-	public OutputDetailedPatientDto findDetailedPatientById(String patientId) {
+	public OldOutputDetailedPatientDto findDetailedPatientById(String patientId) {
 		
 		return null;
 		
 	}
 
 	@Transactional(readOnly = true)
-	public List<OutputSimplePatientDto> listSimplePatients() {
+	public List<OldOutputSimplePatientDto> listSimplePatients() {
 		
 		var patients = patientRepository
 				.findAll().stream()
-				.map(patient -> new OutputSimplePatientDto(
+				.map(patient -> new OldOutputSimplePatientDto(
 						patient.getPatientId().toString(),
 						patient.getFirstName(),
 						patient.getCpf(),
@@ -103,7 +103,7 @@ public class PatientService {
 	}
 
 	@Transactional
-	public void updatePatientById(String patientId, UpdatePatientDto updatePatientDto) {
+	public void updatePatientById(String patientId, OldUpdatePatientDto updatePatientDto) {
 
 		var id = UUID.fromString(patientId);
 		var patientEntity = patientRepository

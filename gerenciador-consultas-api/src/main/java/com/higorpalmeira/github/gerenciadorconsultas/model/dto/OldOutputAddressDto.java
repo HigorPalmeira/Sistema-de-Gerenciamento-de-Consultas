@@ -1,6 +1,7 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
 
-public record UpdateAddressDto(
+public record OldOutputAddressDto(
+		String id,
 		String cep,
 		String street,
 		String complement,

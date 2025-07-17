@@ -1,9 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
 
-import java.util.List;
-
-public record OutputDetailedPatientDto(
-		String patientId,
+public record OldUpdatePatientDto(
 		String firstName,
 		String lastName,
 		String cpf,
@@ -12,8 +9,7 @@ public record OutputDetailedPatientDto(
 		String status,
 		String telephone,
 		String email,
-		OutputAddressDto address,
-		List<OutputPatientConsultationDto> consultation
+		OldUpdateAddressDto address
 ) {
 
 }

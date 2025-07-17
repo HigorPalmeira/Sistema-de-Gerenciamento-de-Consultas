@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Component;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
@@ -17,7 +17,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 @Component
 public class OldPatientMapper {
 
-	public Patient toEntity(CreatePatientDto patientDto) {
+	public Patient toEntity(OldCreatePatientDto patientDto) {
 
 		Address address = new Address(patientDto.address().cep(), patientDto.address().street(),
 				patientDto.address().complement(), patientDto.address().neighborhood(), patientDto.address().locality(),
@@ -30,7 +30,7 @@ public class OldPatientMapper {
 
 	}
 
-	public void updateEntityFromDto(Patient patient, UpdatePatientDto updatePatientDto) {
+	public void updateEntityFromDto(Patient patient, OldUpdatePatientDto updatePatientDto) {
 
 		if (updatePatientDto.firstName() != null) {
 			patient.setFirstName(updatePatientDto.firstName());

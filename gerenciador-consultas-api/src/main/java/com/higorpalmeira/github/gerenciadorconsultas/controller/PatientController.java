@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreatePatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimplePatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimplePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.PatientService;
 
@@ -30,7 +30,7 @@ public class PatientController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Patient> createPatient(@RequestBody CreatePatientDto createPatientDto) {
+	public ResponseEntity<Patient> createPatient(@RequestBody OldCreatePatientDto createPatientDto) {
 		
 		var patientId = patientService.createPatient(createPatientDto);
 		
@@ -39,7 +39,7 @@ public class PatientController {
 	}
 	
 	@GetMapping ("/{patientId}")
-	public ResponseEntity<OutputSimplePatientDto> findSimplePatientById(@PathVariable("patientId") String patientId) {
+	public ResponseEntity<OldOutputSimplePatientDto> findSimplePatientById(@PathVariable("patientId") String patientId) {
 		
 		var patient = patientService.findSimplePatientById(patientId);
 		
@@ -48,7 +48,7 @@ public class PatientController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<OutputSimplePatientDto>> listSimplePatients() {
+	public ResponseEntity<List<OldOutputSimplePatientDto>> listSimplePatients() {
 		
 		var patients = patientService.listSimplePatients();
 		
@@ -57,7 +57,7 @@ public class PatientController {
 	}
 	
 	@PutMapping("/{patientId}")
-	public ResponseEntity<Void> updatePatientById(@PathVariable("patientId") String patientId, @RequestBody UpdatePatientDto updatePatientDto) {
+	public ResponseEntity<Void> updatePatientById(@PathVariable("patientId") String patientId, @RequestBody OldUpdatePatientDto updatePatientDto) {
 		
 		patientService.updatePatientById(patientId, updatePatientDto);
 		

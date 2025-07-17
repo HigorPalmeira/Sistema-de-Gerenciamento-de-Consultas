@@ -4,9 +4,9 @@ import java.time.Instant;
 
 import org.springframework.stereotype.Component;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
@@ -14,7 +14,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAc
 @Component
 public class OldDoctorMapper {
 	
-	public Doctor toEntity(CreateDoctorDto createDoctorDto, Speciality speciality) {
+	public Doctor toEntity(OldCreateDoctorDto createDoctorDto, Speciality speciality) {
 		
 		return new Doctor(
 				createDoctorDto.firstName(),
@@ -30,7 +30,7 @@ public class OldDoctorMapper {
 		
 	}
 	
-	public void updateEntityFromDto(Doctor doctor, UpdateDoctorDto updateDoctorDto, Speciality speciality) {
+	public void updateEntityFromDto(Doctor doctor, OldUpdateDoctorDto updateDoctorDto, Speciality speciality) {
 		
 		if (updateDoctorDto.firstName() != null) {
 			doctor.setFirstName(updateDoctorDto.firstName());
@@ -58,9 +58,9 @@ public class OldDoctorMapper {
 		
 	}
 	
-	public OutputSimpleDoctorDto toOutputSimpleDoctorDto(Doctor doctor) {
+	public OldOutputSimpleDoctorDto toOutputSimpleDoctorDto(Doctor doctor) {
 		
-		return new OutputSimpleDoctorDto(
+		return new OldOutputSimpleDoctorDto(
 				doctor.getDoctorId(),
 				doctor.getFirstName(),
 				doctor.getCrm(),

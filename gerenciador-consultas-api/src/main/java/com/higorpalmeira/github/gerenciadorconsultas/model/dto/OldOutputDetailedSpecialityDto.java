@@ -1,11 +1,12 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
 
+import java.util.List;
 import java.util.UUID;
 
-public record OldOutputSimpleSpeciality(
+public record OldOutputDetailedSpecialityDto(
 		UUID id,
 		String description,
-		int associateDoctors
+		List<OldOutputSimpleDoctorDto> doctors
 ) {
 
 }

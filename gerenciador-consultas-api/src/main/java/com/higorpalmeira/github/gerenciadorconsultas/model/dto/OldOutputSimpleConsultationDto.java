@@ -1,6 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
 
-public record OutputSimpleConsultationDto(
+public record OldOutputSimpleConsultationDto(
 		String id,
 		String dateTime,
 		String status,

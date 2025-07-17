@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Component;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateConsultationDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consultation;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
@@ -16,7 +16,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusCo
 @Component
 public class OldConsultationMapper {
 	
-	public Consultation toEntity(CreateConsultationDto createConsultationDto, Doctor doctor, Patient patient) {
+	public Consultation toEntity(OldCreateConsultationDto createConsultationDto, Doctor doctor, Patient patient) {
 		
 		return new Consultation(
 				LocalDateTime.parse(createConsultationDto.dateTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME),
@@ -31,7 +31,7 @@ public class OldConsultationMapper {
 		
 	}
 	
-	public void updateEntityFromDto(Consultation consultation, UpdateConsultationDto updateConsultationDto, Patient patient, Doctor doctor) {
+	public void updateEntityFromDto(Consultation consultation, OldUpdateConsultationDto updateConsultationDto, Patient patient, Doctor doctor) {
 		
 		if (updateConsultationDto.dateTime() != null) {
 			consultation.setDateTime(LocalDateTime.parse(updateConsultationDto.dateTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME));

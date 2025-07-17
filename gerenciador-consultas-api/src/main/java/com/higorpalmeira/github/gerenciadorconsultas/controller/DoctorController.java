@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.DoctorService;
 
@@ -31,7 +31,7 @@ public class DoctorController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Doctor> createDoctor(@RequestBody CreateDoctorDto createDoctorDto) {
+	public ResponseEntity<Doctor> createDoctor(@RequestBody OldCreateDoctorDto createDoctorDto) {
 		
 		var doctorId = doctorService.createDoctor(createDoctorDto);
 		
@@ -40,7 +40,7 @@ public class DoctorController {
 	}
 	
 	@GetMapping("/{doctorId}")
-	public ResponseEntity<OutputSimpleDoctorDto> findSimpleDoctorById(@PathVariable("doctorId") String doctorId) {
+	public ResponseEntity<OldOutputSimpleDoctorDto> findSimpleDoctorById(@PathVariable("doctorId") String doctorId) {
 		
 		var doctor = doctorService.findSimpleDoctorById(doctorId);
 		
@@ -49,7 +49,7 @@ public class DoctorController {
 	}
 	
 	@GetMapping("/details/{doctorId}")
-	public ResponseEntity<OutputDetailedDoctorDto> findDetailedDoctorById(@PathVariable("doctorId") String doctorId) {
+	public ResponseEntity<OldOutputDetailedDoctorDto> findDetailedDoctorById(@PathVariable("doctorId") String doctorId) {
 		
 		var doctor = doctorService.findDetailedDoctorById(doctorId);
 		
@@ -58,7 +58,7 @@ public class DoctorController {
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<OutputSimpleDoctorDto>> listDoctors() {
+	public ResponseEntity<List<OldOutputSimpleDoctorDto>> listDoctors() {
 		
 		var doctors = doctorService.listDoctors();
 		
@@ -67,7 +67,7 @@ public class DoctorController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<OutputSimpleDoctorDto>> listDoctorsActive() {
+	public ResponseEntity<List<OldOutputSimpleDoctorDto>> listDoctorsActive() {
 		
 		var doctors = doctorService.listDoctorsActive();
 		
@@ -76,7 +76,7 @@ public class DoctorController {
 	}
 	
 	@PutMapping("/{doctorId}")
-	public ResponseEntity<Void> updateDoctorById(@PathVariable("doctorId") String doctorId, @RequestBody UpdateDoctorDto updateDoctorDto) {
+	public ResponseEntity<Void> updateDoctorById(@PathVariable("doctorId") String doctorId, @RequestBody OldUpdateDoctorDto updateDoctorDto) {
 		
 		doctorService.updateDoctorById(doctorId, updateDoctorDto);
 		

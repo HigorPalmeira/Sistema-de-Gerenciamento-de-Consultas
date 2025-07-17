@@ -1,6 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
 
-public record OutputSimplePatientDto(
+public record OldOutputSimplePatientDto(
 		String id,
 		String firstName,
 		String cpf,

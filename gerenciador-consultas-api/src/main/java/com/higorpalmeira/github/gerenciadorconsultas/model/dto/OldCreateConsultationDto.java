@@ -1,6 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
 
-public record CreateConsultationDto(
+public record OldCreateConsultationDto(
 		String dateTime,
 		String status,
 		String observations,

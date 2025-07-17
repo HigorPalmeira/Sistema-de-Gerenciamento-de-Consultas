@@ -7,8 +7,8 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateAddressDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldAddressMapper;
@@ -27,7 +27,7 @@ public class AddressService {
 	}
 	
 	@Transactional
-	public UUID createAddress(CreateAddressDto createAddressDto) {
+	public UUID createAddress(OldCreateAddressDto createAddressDto) {
 		
 		var address = addressMapper.toEntity(createAddressDto);
 		
@@ -52,7 +52,7 @@ public class AddressService {
 	}
 	
 	@Transactional
-	public void updateAddressById(String addressId, UpdateAddressDto updateAddressDto) {
+	public void updateAddressById(String addressId, OldUpdateAddressDto updateAddressDto) {
 		
 		var id = UUID.fromString(addressId);
 		var addressEntity = addressRepository

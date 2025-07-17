@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateConsultationDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleConsultationDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consultation;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.ConsultationService;
 
@@ -30,7 +30,7 @@ public class ConsultationController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Consultation> createConsultation(@RequestBody CreateConsultationDto createConsultationDto) {
+	public ResponseEntity<Consultation> createConsultation(@RequestBody OldCreateConsultationDto createConsultationDto) {
 		
 		var consultationId = consultationService.createConsultation(createConsultationDto);
 		
@@ -39,7 +39,7 @@ public class ConsultationController {
 	}
 	
 	@GetMapping("/{consultationId}")
-	public ResponseEntity<OutputSimpleConsultationDto> findSimpleConsultationById(@PathVariable("consultationId") String consultationId) {
+	public ResponseEntity<OldOutputSimpleConsultationDto> findSimpleConsultationById(@PathVariable("consultationId") String consultationId) {
 		
 		var consultation = consultationService.findSimpleConsultationById(consultationId);
 		
@@ -48,7 +48,7 @@ public class ConsultationController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<OutputSimpleConsultationDto>> listSimpleConsultations() {
+	public ResponseEntity<List<OldOutputSimpleConsultationDto>> listSimpleConsultations() {
 		
 		var consultations = consultationService.listSimpleConsultations();
 		
@@ -57,7 +57,7 @@ public class ConsultationController {
 	}
 	
 	@PutMapping("/{consultationId}")
-	public ResponseEntity<Void> updateConsultationById(@PathVariable("consultationId") String consultationId, @RequestBody UpdateConsultationDto updateConsultationDto) {
+	public ResponseEntity<Void> updateConsultationById(@PathVariable("consultationId") String consultationId, @RequestBody OldUpdateConsultationDto updateConsultationDto) {
 		
 		consultationService.updateConsultation(consultationId, updateConsultationDto);
 		

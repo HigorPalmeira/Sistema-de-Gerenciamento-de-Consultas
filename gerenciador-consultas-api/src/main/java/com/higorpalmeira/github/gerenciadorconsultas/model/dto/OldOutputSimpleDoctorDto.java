@@ -1,12 +1,13 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
 
-public record CreateDoctorDto(
+import java.util.UUID;
+
+public record OldOutputSimpleDoctorDto(
+		UUID id,
 		String firstName,
-		String lastName,
 		String crm,
 		String telephone,
-		String email,
-		String specialityId
+		String email
 ) {
 
 }

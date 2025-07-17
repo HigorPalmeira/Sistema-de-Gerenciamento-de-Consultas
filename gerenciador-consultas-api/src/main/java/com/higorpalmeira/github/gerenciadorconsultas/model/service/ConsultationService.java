@@ -6,9 +6,9 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateConsultationDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputSimpleConsultationDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputSimpleConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.OldConsultationMapper;
@@ -35,7 +35,7 @@ public class ConsultationService {
 	}
 	
 	@Transactional
-	public UUID createConsultation(CreateConsultationDto createConsultationDto) {
+	public UUID createConsultation(OldCreateConsultationDto createConsultationDto) {
 		
 		// criar validação para o datetime
 		if (createConsultationDto.value() < 0.0f) {
@@ -60,12 +60,12 @@ public class ConsultationService {
 	}
 	
 	@Transactional(readOnly = true)
-	public OutputSimpleConsultationDto findSimpleConsultationById(String consultationId) {
+	public OldOutputSimpleConsultationDto findSimpleConsultationById(String consultationId) {
 		
 		var id = UUID.fromString(consultationId);
 		var consultationEntity = consultationRepository
 				.findById(id)
-				.map(consultation -> new OutputSimpleConsultationDto(
+				.map(consultation -> new OldOutputSimpleConsultationDto(
 						consultation.getConsultationId().toString(),
 						consultation.getDateTime().toString(),
 						consultation.getStatus().getType(),
@@ -81,11 +81,11 @@ public class ConsultationService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<OutputSimpleConsultationDto> listSimpleConsultations() {
+	public List<OldOutputSimpleConsultationDto> listSimpleConsultations() {
 		
 		var consultations = consultationRepository
 				.findAll().stream()
-				.map(consultation -> new OutputSimpleConsultationDto(
+				.map(consultation -> new OldOutputSimpleConsultationDto(
 						consultation.getConsultationId().toString(),
 						consultation.getDateTime().toString(),
 						consultation.getStatus().getType(),
@@ -101,7 +101,7 @@ public class ConsultationService {
 	}
 	
 	@Transactional
-	public void updateConsultation(String consultationId, UpdateConsultationDto updateConsultationDto) {
+	public void updateConsultation(String consultationId, OldUpdateConsultationDto updateConsultationDto) {
 		
 		var id = UUID.fromString(consultationId);
 		var consultationEntity = consultationRepository

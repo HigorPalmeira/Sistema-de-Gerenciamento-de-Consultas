@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputDetailedSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SimpleOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.SpecialityService;
 
@@ -50,7 +49,7 @@ public class SpecialityController {
 		
 	}
 	
-	@PutMapping("/new/{specialityId}")
+	@PutMapping("/{specialityId}")
 	public ResponseEntity<Void> updateSpecialityById(@PathVariable("specialityId") String specialityId, @RequestBody UpdateSpecialityDto updateSpecialityDto) {
 		
 		specialityService.updateSpecialityById(specialityId, updateSpecialityDto);
@@ -60,7 +59,7 @@ public class SpecialityController {
 	}
 	
 	@GetMapping("/details/{specialityId}")
-	public ResponseEntity<OutputDetailedSpecialityDto> findSpecialityDetailedById(@PathVariable("specialityId") String specialityId) {
+	public ResponseEntity<OldOutputDetailedSpecialityDto> findSpecialityDetailedById(@PathVariable("specialityId") String specialityId) {
 		
 		var output = specialityService.findSpecialityDetailedById(specialityId);
 		
@@ -74,15 +73,6 @@ public class SpecialityController {
 		var specialities = specialityService.listSpecialities();
 		
 		return ResponseEntity.ok(specialities);
-		
-	}
-	
-	@PutMapping("/{specialityId}")
-	public ResponseEntity<Void> updateSpecialityById(@PathVariable("specialityId") String specialityId, @RequestBody OldUpdateSpecialityDto updateSpecialityDto) {
-		
-		specialityService.updateSpecialityById(specialityId, updateSpecialityDto);
-		
-		return ResponseEntity.noContent().build();
 		
 	}
 	

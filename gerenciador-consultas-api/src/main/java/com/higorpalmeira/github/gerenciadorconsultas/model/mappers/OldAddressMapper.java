@@ -4,15 +4,15 @@ import java.time.Instant;
 
 import org.springframework.stereotype.Component;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CreateAddressDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OutputAddressDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.UpdateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldCreateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldUpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
 
 @Component
 public class OldAddressMapper {
 
-	public Address toEntity(CreateAddressDto addressDto) { 
+	public Address toEntity(OldCreateAddressDto addressDto) { 
 		
 		return new Address(
 				addressDto.cep(),
@@ -27,7 +27,7 @@ public class OldAddressMapper {
 		
 	}
 	
-	public void updateEntityFromDto(Address address, UpdateAddressDto updateAddressDto) {
+	public void updateEntityFromDto(Address address, OldUpdateAddressDto updateAddressDto) {
 		
 		if (updateAddressDto.cep() != null) {
 			address.setCep(updateAddressDto.cep());
@@ -55,9 +55,9 @@ public class OldAddressMapper {
 		
 	}
 	
-	public OutputAddressDto toOutputAddressDto(Address address) {
+	public OldOutputAddressDto toOutputAddressDto(Address address) {
 		
-		return new OutputAddressDto(
+		return new OldOutputAddressDto(
 				address.getId().toString(),
 				address.getCep(),
 				address.getStreet(),
