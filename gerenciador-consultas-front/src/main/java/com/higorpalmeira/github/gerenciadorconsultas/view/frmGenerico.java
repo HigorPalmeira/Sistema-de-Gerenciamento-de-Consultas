@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
  */
 public abstract class frmGenerico extends javax.swing.JFrame {
     
-    private final String PATH_ICON = "/resources/images/app-icon.png";
+    private final String PATH_ICON = "/main/resources/images/app-icon.png";
 
     /**
      * Creates new form frmGenerico
@@ -36,6 +36,7 @@ public abstract class frmGenerico extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SGC - Sistema de Gerenciamento de Consultas");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,7 +63,7 @@ public abstract class frmGenerico extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

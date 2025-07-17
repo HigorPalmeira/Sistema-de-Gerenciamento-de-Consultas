@@ -8,7 +8,7 @@ package main.java.com.higorpalmeira.github.gerenciadorconsultas.view;
  *
  * @author higor
  */
-public class frmEspecialidade extends javax.swing.JFrame {
+public class frmEspecialidade extends frmGenerico {
 
     /**
      * Creates new form frmEspecialidade
@@ -40,7 +40,6 @@ public class frmEspecialidade extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Especialidades");
 
         pnlTitulo.setBackground(new java.awt.Color(0, 204, 51));
 
@@ -216,6 +215,7 @@ public class frmEspecialidade extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -229,7 +229,7 @@ public class frmEspecialidade extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

@@ -8,7 +8,7 @@ package main.java.com.higorpalmeira.github.gerenciadorconsultas.view;
  *
  * @author higor
  */
-public class frmPrincipal extends javax.swing.JFrame {
+public class frmPrincipal extends frmGenerico {
 
     /**
      * Creates new form frmPrincipal
@@ -26,9 +26,30 @@ public class frmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menuPrincipal = new javax.swing.JMenuBar();
+        mitConsultas = new javax.swing.JMenu();
+        mitPacientes = new javax.swing.JMenu();
+        mitMedicos = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SGC - Sistema de Gerenciamento de Consultas");
         setResizable(false);
+
+        menuPrincipal.setPreferredSize(new java.awt.Dimension(265, 40));
+
+        mitConsultas.setText("Consultas");
+        mitConsultas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        menuPrincipal.add(mitConsultas);
+
+        mitPacientes.setText("Pacientes");
+        mitPacientes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        menuPrincipal.add(mitPacientes);
+
+        mitMedicos.setText("Médicos");
+        mitMedicos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        menuPrincipal.add(mitMedicos);
+
+        setJMenuBar(menuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -38,7 +59,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGap(0, 560, Short.MAX_VALUE)
         );
 
         pack();
@@ -56,7 +77,7 @@ public class frmPrincipal extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -81,5 +102,9 @@ public class frmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar menuPrincipal;
+    private javax.swing.JMenu mitConsultas;
+    private javax.swing.JMenu mitMedicos;
+    private javax.swing.JMenu mitPacientes;
     // End of variables declaration//GEN-END:variables
 }
