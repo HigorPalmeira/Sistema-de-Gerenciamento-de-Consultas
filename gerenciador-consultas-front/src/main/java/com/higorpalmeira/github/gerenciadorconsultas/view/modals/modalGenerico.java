@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
  */
 public abstract class modalGenerico extends javax.swing.JDialog {
     
-    private final String TITLE_DEFAULT = "Sistema de Gerenciamento de Consultas";
+    private final String TITLE_DEFAULT = "SGC";
     
     private final String PATH_ICON = "/main/resources/images/page.png";
 
@@ -28,8 +28,8 @@ public abstract class modalGenerico extends javax.swing.JDialog {
 
     }
     
-    public void settings() {
-        this.setTitle(TITLE_DEFAULT + ": " + this.getName().toUpperCase());
+    public void settings(String modalType) {
+        this.setTitle(TITLE_DEFAULT + ": " + modalType + " - " + this.getName().toUpperCase());
     }
 
     /**
