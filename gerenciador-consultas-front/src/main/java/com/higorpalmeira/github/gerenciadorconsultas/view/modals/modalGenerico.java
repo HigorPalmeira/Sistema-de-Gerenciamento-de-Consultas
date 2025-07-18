@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
  *
  * @author higor
  */
-public class modalGenerico extends javax.swing.JDialog {
+public abstract class modalGenerico extends javax.swing.JDialog {
     
     private final String TITLE_DEFAULT = "Sistema de Gerenciamento de Consultas";
     
@@ -71,7 +71,7 @@ public class modalGenerico extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -90,6 +90,7 @@ public class modalGenerico extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                /*
                 modalGenerico dialog = new modalGenerico(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
@@ -98,6 +99,7 @@ public class modalGenerico extends javax.swing.JDialog {
                     }
                 });
                 dialog.setVisible(true);
+                */
             }
         });
     }
