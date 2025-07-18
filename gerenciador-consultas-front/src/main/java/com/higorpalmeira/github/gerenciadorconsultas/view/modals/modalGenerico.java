@@ -14,7 +14,7 @@ public class modalGenerico extends javax.swing.JDialog {
     
     private final String TITLE_DEFAULT = "Sistema de Gerenciamento de Consultas";
     
-    private final String PATH_ICON = "/main/resources/images/app-icon.png";
+    private final String PATH_ICON = "/main/resources/images/page.png";
 
     /**
      * Creates new form modalGenerico
