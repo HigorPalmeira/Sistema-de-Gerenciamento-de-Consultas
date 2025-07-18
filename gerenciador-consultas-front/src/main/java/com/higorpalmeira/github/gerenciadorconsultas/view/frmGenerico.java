@@ -12,6 +12,8 @@ import javax.swing.ImageIcon;
  */
 public abstract class frmGenerico extends javax.swing.JFrame {
     
+    private final String TITLE_DEFAULT = "SGC - Sistema de Gerenciamento de Consultas";
+    
     private final String PATH_ICON = "/main/resources/images/app-icon.png";
 
     /**
@@ -21,9 +23,12 @@ public abstract class frmGenerico extends javax.swing.JFrame {
         initComponents();
         
         ImageIcon imgIcon = new ImageIcon(getClass().getResource(PATH_ICON));
-        
         this.setIconImage(imgIcon.getImage());
         
+    }
+    
+    public void settings() {
+        this.setTitle(TITLE_DEFAULT + ": " + this.getName().toUpperCase());
     }
 
     /**

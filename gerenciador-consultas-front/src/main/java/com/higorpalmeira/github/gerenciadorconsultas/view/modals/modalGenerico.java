@@ -4,11 +4,17 @@
  */
 package main.java.com.higorpalmeira.github.gerenciadorconsultas.view.modals;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author higor
  */
 public class modalGenerico extends javax.swing.JDialog {
+    
+    private final String TITLE_DEFAULT = "Sistema de Gerenciamento de Consultas";
+    
+    private final String PATH_ICON = "/main/resources/images/app-icon.png";
 
     /**
      * Creates new form modalGenerico
@@ -16,6 +22,11 @@ public class modalGenerico extends javax.swing.JDialog {
     public modalGenerico(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource(PATH_ICON));
+        this.setIconImage(imgIcon.getImage());
+        
+        this.setTitle(TITLE_DEFAULT + ": " + this.getName().toUpperCase());
     }
 
     /**
@@ -28,6 +39,8 @@ public class modalGenerico extends javax.swing.JDialog {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Sistema de Gerenciamento de Consultas");
+        setName("generico"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

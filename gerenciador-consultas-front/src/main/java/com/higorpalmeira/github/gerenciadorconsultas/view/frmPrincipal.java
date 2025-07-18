@@ -15,6 +15,8 @@ public class frmPrincipal extends frmGenerico {
      */
     public frmPrincipal() {
         initComponents();
+        
+        settings();
     }
 
     /**
@@ -34,6 +36,7 @@ public class frmPrincipal extends frmGenerico {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SGC - Sistema de Gerenciamento de Consultas");
+        setName("principal"); // NOI18N
         setResizable(false);
 
         menuPrincipal.setPreferredSize(new java.awt.Dimension(265, 40));

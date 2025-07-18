@@ -15,6 +15,8 @@ public class frmEspecialidade extends frmGenerico {
      */
     public frmEspecialidade() {
         initComponents();
+        
+        settings();
     }
 
     /**
@@ -40,6 +42,7 @@ public class frmEspecialidade extends frmGenerico {
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setName("especialidades"); // NOI18N
 
         pnlTitulo.setBackground(new java.awt.Color(0, 204, 51));
 

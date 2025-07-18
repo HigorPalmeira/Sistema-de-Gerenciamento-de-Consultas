@@ -20,6 +20,8 @@ public class frmMedico extends frmGenerico {
         initComponents();
         
         btnDetalhes.setVisible(false);
+        
+        settings();
     }
 
     /**
@@ -50,6 +52,7 @@ public class frmMedico extends frmGenerico {
         btnDetalhes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setName("medicos"); // NOI18N
         setResizable(false);
 
         pnlTitulo.setBackground(new java.awt.Color(0, 204, 51));
@@ -233,6 +236,11 @@ public class frmMedico extends frmGenerico {
         btnNovo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnNovo.setMnemonic('n');
         btnNovo.setText("NOVO");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnEditar.setMnemonic('e');
@@ -368,12 +376,30 @@ public class frmMedico extends frmGenerico {
                     txtPesquisa.requestFocus();
                 }
                 
+            } else if (rbEmail.isSelected()) {
+                
+                JOptionPane.showMessageDialog(this, "Pesquisando e-mail: " + txtPesquisa.getText(), "Buscando", JOptionPane.INFORMATION_MESSAGE);
+                
+            } else if (rbNome.isSelected()) {
+                
+                JOptionPane.showMessageDialog(this, "Pesquisando nome: " + txtPesquisa.getText(), "Buscando", JOptionPane.INFORMATION_MESSAGE);
+                
+            } else if (rbTelefone.isSelected()) {
+                
+                JOptionPane.showMessageDialog(this, "Pesquisando telefone: " + txtPesquisa.getText(), "Buscando", JOptionPane.INFORMATION_MESSAGE);
+                
             }
             
             txtPesquisa.setText("");
         }
 
     }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+
+        JOptionPane.showMessageDialog(this, "Nome: " + this.getName(), "Nome do JFrame", JOptionPane.INFORMATION_MESSAGE);
+
+    }//GEN-LAST:event_btnNovoActionPerformed
 
     /**
      * @param args the command line arguments
