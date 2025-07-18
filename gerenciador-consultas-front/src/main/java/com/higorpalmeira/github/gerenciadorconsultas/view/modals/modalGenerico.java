@@ -25,7 +25,10 @@ public class modalGenerico extends javax.swing.JDialog {
         
         ImageIcon imgIcon = new ImageIcon(getClass().getResource(PATH_ICON));
         this.setIconImage(imgIcon.getImage());
-        
+
+    }
+    
+    public void settings() {
         this.setTitle(TITLE_DEFAULT + ": " + this.getName().toUpperCase());
     }
 
