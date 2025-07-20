@@ -4,6 +4,8 @@
  */
 package main.java.com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author higor
@@ -144,6 +146,11 @@ public class frmEspecialidade extends frmGenerico {
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnDeletar.setMnemonic('d');
         btnDeletar.setText("DELETAR");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBotoesLayout = new javax.swing.GroupLayout(pnlBotoes);
         pnlBotoes.setLayout(pnlBotoesLayout);
@@ -245,6 +252,25 @@ public class frmEspecialidade extends frmGenerico {
         frmEditarEspecialidade.setVisible(true);
         
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+
+        int idx = tblEspecialidades.getSelectedRow();
+        
+        if (idx == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione uma especialidade na tabela para poder excluí-la!", "Especialidade não selecionada", JOptionPane.ERROR_MESSAGE);
+            
+        } else {
+            
+            int opcao = JOptionPane.showConfirmDialog(this, "Deseja mesmo excluir esta especialidade?", "Tem certeza?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            
+            if (opcao == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(this, "A especialidade será deletada!", "Prosseguindo...", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+        }
+
+    }//GEN-LAST:event_btnDeletarActionPerformed
 
     /**
      * @param args the command line arguments
