@@ -10,14 +10,14 @@ package main.java.com.higorpalmeira.github.gerenciadorconsultas.model.dto;
  */
 public class CriarEspecialidadeDto {
     
-    private String descricao;
+    private String description;
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescription(String description) {
+        this.description = description;
     }
     
 }
