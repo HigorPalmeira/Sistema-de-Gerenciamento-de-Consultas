@@ -5,6 +5,7 @@
 package main.java.com.higorpalmeira.github.gerenciadorconsultas.view;
 
 import java.awt.CardLayout;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,6 +27,25 @@ public class frmCriarEspecialidade extends frmGenerico {
     public void settings() {
         
         this.setTitle(super.ACRON_DEFAULT + ": " + this.getName().toUpperCase());
+        
+    }
+    
+    private void salvar_especialidade() {
+        
+        if (txtDescricao.getText().isBlank()) {
+            
+            JOptionPane.showMessageDialog(this, "A descrição da especialidade não pode estar vazia!", "Campo vazio", JOptionPane.ERROR_MESSAGE);
+            
+        } else if (txtDescricao.getText().trim().length() < 5) {
+            
+            JOptionPane.showMessageDialog(this, "A descrição deve ter pelo menos 5 caracteres!", "Tamanho inválido", JOptionPane.ERROR_MESSAGE);
+            
+        } else {
+            
+            JOptionPane.showMessageDialog(this, "Especialidade será salva: " + txtDescricao.getText().trim());
+            
+            txtDescricao.setText("");
+        }
         
     }
 
@@ -60,6 +80,14 @@ public class frmCriarEspecialidade extends frmGenerico {
         jLabel1.setText("Descrição:");
 
         txtDescricao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtDescricao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDescricaoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDescricaoKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -149,21 +177,20 @@ public class frmCriarEspecialidade extends frmGenerico {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-        if (txtDescricao.getText().isBlank()) {
-            
-            JOptionPane.showMessageDialog(this, "A descrição da especialidade não pode estar vazia!", "Campo vazio", JOptionPane.ERROR_MESSAGE);
-            
-        } else if (txtDescricao.getText().trim().length() < 5) {
-            
-            JOptionPane.showMessageDialog(this, "A descrição deve ter pelo menos 5 caracteres!", "Tamanho inválido", JOptionPane.ERROR_MESSAGE);
-            
-        } else {
-            
-            JOptionPane.showMessageDialog(this, "Especialidade será salva: " + txtDescricao.getText().trim());
-            
-        }
+        this.salvar_especialidade();
 
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void txtDescricaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescricaoKeyTyped
+
+
+    }//GEN-LAST:event_txtDescricaoKeyTyped
+
+    private void txtDescricaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescricaoKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.salvar_especialidade();
+        }
+    }//GEN-LAST:event_txtDescricaoKeyReleased
 
     /**
      * @param args the command line arguments
