@@ -4,6 +4,7 @@
  */
 package main.java.com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,6 +22,15 @@ public class frmEspecialidade extends frmGenerico {
         settings();
     }
 
+    
+    private void pesquisar_especialidade() {
+        if (txtPesquisa.getText() == null || txtPesquisa.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "É necessário a descrição da especialidade para pesquisa!", "Falha na pesquisa", JOptionPane.ERROR_MESSAGE);
+        
+        } else {
+            JOptionPane.showMessageDialog(this, "Pesquisando por '" + txtPesquisa.getText().trim() + "'.", "Pesquisando", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -179,11 +189,21 @@ public class frmEspecialidade extends frmGenerico {
         pnlPesquisa.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisa"));
 
         txtPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisaKeyReleased(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/zoom.png"))); // NOI18N
         jButton4.setMnemonic('p');
         jButton4.setText("PESQUISAR");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlPesquisaLayout = new javax.swing.GroupLayout(pnlPesquisa);
         pnlPesquisa.setLayout(pnlPesquisaLayout);
@@ -271,6 +291,20 @@ public class frmEspecialidade extends frmGenerico {
         }
 
     }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        this.pesquisar_especialidade();
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.pesquisar_especialidade();
+        }
+
+    }//GEN-LAST:event_txtPesquisaKeyReleased
 
     /**
      * @param args the command line arguments
