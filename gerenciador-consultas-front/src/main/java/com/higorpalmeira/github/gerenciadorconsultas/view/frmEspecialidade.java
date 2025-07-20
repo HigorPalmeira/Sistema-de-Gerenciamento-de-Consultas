@@ -135,6 +135,11 @@ public class frmEspecialidade extends frmGenerico {
         btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnEditar.setMnemonic('e');
         btnEditar.setText("EDITAR");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnDeletar.setMnemonic('d');
@@ -233,6 +238,13 @@ public class frmEspecialidade extends frmGenerico {
         frmCriarEspecialidade.setVisible(true);
 
     }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+
+        frmEditarEspecialidade frmEditarEspecialidade = new frmEditarEspecialidade();
+        frmEditarEspecialidade.setVisible(true);
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
