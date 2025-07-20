@@ -8,13 +8,22 @@ package main.java.com.higorpalmeira.github.gerenciadorconsultas.view;
  *
  * @author higor
  */
-public class frmCriarMedico extends javax.swing.JFrame {
+public class frmCriarMedico extends frmGenerico {
 
     /**
      * Creates new form frmCriarMedico
      */
     public frmCriarMedico() {
         initComponents();
+        
+        this.settings();
+    }
+    
+    @Override
+    public void settings() {
+        
+        this.setTitle(super.ACRON_DEFAULT + ": " + this.getName().toUpperCase());
+        
     }
 
     /**
@@ -26,17 +35,19 @@ public class frmCriarMedico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("SGC - Criar Medico");
+        setName("criar medico"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
 
         pack();
