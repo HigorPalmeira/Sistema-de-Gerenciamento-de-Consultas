@@ -23,6 +23,42 @@ public class frmMedico extends frmGenerico {
         
         settings();
     }
+    
+    private void pesquisa_medico() {
+        
+        if (txtPesquisa.getText() == null || txtPesquisa.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "O campo de pesquisa não pode estar vazio!", "Não é possível pesquisar", JOptionPane.ERROR_MESSAGE);
+            txtPesquisa.requestFocus();
+            
+        } else {
+            
+            if (rbCrm.isSelected()) {
+                
+                if (Validador.isCrm(txtPesquisa.getText().trim().toUpperCase())) {
+                    JOptionPane.showMessageDialog(this, "CRM válido!", "CRM Válido", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "\"" + txtPesquisa.getText() + "\" não é um CRM válido! Informe um válido!", "CRM Inválido", JOptionPane.ERROR_MESSAGE);
+                    txtPesquisa.requestFocus();
+                }
+                
+            } else if (rbEmail.isSelected()) {
+                
+                JOptionPane.showMessageDialog(this, "Pesquisando e-mail: " + txtPesquisa.getText(), "Buscando", JOptionPane.INFORMATION_MESSAGE);
+                
+            } else if (rbNome.isSelected()) {
+                
+                JOptionPane.showMessageDialog(this, "Pesquisando nome: " + txtPesquisa.getText(), "Buscando", JOptionPane.INFORMATION_MESSAGE);
+                
+            } else if (rbTelefone.isSelected()) {
+                
+                JOptionPane.showMessageDialog(this, "Pesquisando telefone: " + txtPesquisa.getText(), "Buscando", JOptionPane.INFORMATION_MESSAGE);
+                
+            }
+            
+            txtPesquisa.setText("");
+        }
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -81,6 +117,11 @@ public class frmMedico extends frmGenerico {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisa"));
 
         txtPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisaKeyReleased(evt);
+            }
+        });
 
         btnPesquisar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/zoom.png"))); // NOI18N
@@ -361,37 +402,7 @@ public class frmMedico extends frmGenerico {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
 
-        if (txtPesquisa.getText() == null || txtPesquisa.getText().isBlank()) {
-            JOptionPane.showMessageDialog(this, "O campo de pesquisa não pode estar vazio!", "Não é possível pesquisar", JOptionPane.ERROR_MESSAGE);
-            txtPesquisa.requestFocus();
-            
-        } else {
-            
-            if (rbCrm.isSelected()) {
-                
-                if (Validador.isCrm(txtPesquisa.getText().trim().toUpperCase())) {
-                    JOptionPane.showMessageDialog(this, "CRM válido!", "CRM Válido", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this, "\"" + txtPesquisa.getText() + "\" não é um CRM válido! Informe um válido!", "CRM Inválido", JOptionPane.ERROR_MESSAGE);
-                    txtPesquisa.requestFocus();
-                }
-                
-            } else if (rbEmail.isSelected()) {
-                
-                JOptionPane.showMessageDialog(this, "Pesquisando e-mail: " + txtPesquisa.getText(), "Buscando", JOptionPane.INFORMATION_MESSAGE);
-                
-            } else if (rbNome.isSelected()) {
-                
-                JOptionPane.showMessageDialog(this, "Pesquisando nome: " + txtPesquisa.getText(), "Buscando", JOptionPane.INFORMATION_MESSAGE);
-                
-            } else if (rbTelefone.isSelected()) {
-                
-                JOptionPane.showMessageDialog(this, "Pesquisando telefone: " + txtPesquisa.getText(), "Buscando", JOptionPane.INFORMATION_MESSAGE);
-                
-            }
-            
-            txtPesquisa.setText("");
-        }
+        this.pesquisa_medico();
 
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
@@ -400,6 +411,12 @@ public class frmMedico extends frmGenerico {
         JOptionPane.showMessageDialog(this, "Nome: " + this.getName(), "Nome do JFrame", JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
+
+        this.pesquisa_medico();
+
+    }//GEN-LAST:event_txtPesquisaKeyReleased
 
     /**
      * @param args the command line arguments
