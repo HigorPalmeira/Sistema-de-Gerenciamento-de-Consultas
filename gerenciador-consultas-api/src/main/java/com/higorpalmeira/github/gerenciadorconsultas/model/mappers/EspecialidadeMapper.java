@@ -18,14 +18,14 @@ public interface EspecialidadeMapper {
 	/*
 	 * Cria uma entidade 'Especialidade' com os dados do DTO.
 	 * 
-	 * @param createSpecialityDto Objeto com os dados para criação da entidade.
-	 * @return Speciality Entidade criada a partir dos dados do DTO.
+	 * @param criarEspecialidadeDto Objeto com os dados para criação da entidade.
+	 * @return Especialidade Entidade criada a partir dos dados do DTO.
 	 * */
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "medicos", ignore = true)
-	Especialidade createToSpeciality(CriarEspecialidadeDto createSpecialityDto);
+	Especialidade criarEspecialidadeDtoParaEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto);
 	
 	/*
 	 * Cria um DTO de saída simples a partir da entidade 'Speciality'.

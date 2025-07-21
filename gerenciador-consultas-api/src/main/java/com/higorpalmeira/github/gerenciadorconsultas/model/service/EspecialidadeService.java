@@ -29,7 +29,7 @@ public class EspecialidadeService {
 	@Transactional
 	public UUID criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) {
 		
-		var especialidade = specialityMapper.createToSpeciality(criarEspecialidadeDto);
+		var especialidade = specialityMapper.criarEspecialidadeDtoParaEspecialidade(criarEspecialidadeDto);
 		
 		var especialidadeSalva = especialidadeRepository.save(especialidade);
 		
