@@ -17,22 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplePacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarPacienteDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.service.PatientService;
+import com.higorpalmeira.github.gerenciadorconsultas.model.service.PacienteService;
 
 @RestController
 @RequestMapping("/v1/patient")
 public class PatientController {
 	
-	private PatientService patientService;
+	private PacienteService patientService;
 	
-	public PatientController(PatientService patientService) {
+	public PatientController(PacienteService patientService) {
 		this.patientService = patientService;
 	}
 	
 	@PostMapping
 	public ResponseEntity<UUID> createPatient(@RequestBody CriarPacienteDto createPatientDto) {
 		
-		var patientId = patientService.createPatient(createPatientDto);
+		var patientId = patientService.criarPaciente(createPatientDto);
 		
 		return ResponseEntity.created(URI.create("/v1/patient/" + patientId.toString())).build();
 		
@@ -41,7 +41,7 @@ public class PatientController {
 	@GetMapping ("/{patientId}")
 	public ResponseEntity<SaidaSimplePacienteDto> findSimplePatientById(@PathVariable("patientId") String patientId) {
 		
-		var patient = patientService.findSimplePatientById(patientId);
+		var patient = patientService.buscarSaidaSimplesPacientePorId(patientId);
 		
 		return ResponseEntity.ok(patient);
 		
@@ -50,7 +50,7 @@ public class PatientController {
 	@GetMapping
 	public ResponseEntity<List<SaidaSimplePacienteDto>> listSimplePatients() {
 		
-		var patients = patientService.listSimplePatients();
+		var patients = patientService.listarTodosSaidaSimplesPaciente();
 		
 		return ResponseEntity.ok(patients);
 		
@@ -59,7 +59,7 @@ public class PatientController {
 	@PutMapping("/{patientId}")
 	public ResponseEntity<Void> updatePatientById(@PathVariable("patientId") String patientId, @RequestBody AtualizarPacienteDto updatePatientDto) {
 		
-		patientService.updatePatientById(patientId, updatePatientDto);
+		patientService.atualizarPacientePorId(patientId, updatePatientDto);
 		
 		return ResponseEntity.noContent().build();
 		
@@ -68,7 +68,7 @@ public class PatientController {
 	@DeleteMapping("/{patientId}")
 	public ResponseEntity<Void> deleteById(@PathVariable("patientId") String patientId) {
 		
-		patientService.deletePatientById(patientId);
+		patientService.deletarPacientePorId(patientId);
 		
 		return ResponseEntity.noContent().build();
 		
