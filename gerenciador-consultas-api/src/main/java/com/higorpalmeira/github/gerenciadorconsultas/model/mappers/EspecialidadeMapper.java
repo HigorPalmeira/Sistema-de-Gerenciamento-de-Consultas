@@ -28,13 +28,13 @@ public interface EspecialidadeMapper {
 	Especialidade criarEspecialidadeDtoParaEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto);
 	
 	/*
-	 * Cria um DTO de saída simples a partir da entidade 'Speciality'.
+	 * Cria um DTO de saída simples a partir da entidade 'Especialidade'.
 	 * 
-	 * @param speciality Entidade a ser transformada.
-	 * @return SimpleOutputSpecialityDto DTO de saída simples criado.
+	 * @param especialidade Entidade a ser transformada.
+	 * @return SaidaSimplesEspecialidadeDto DTO de saída simples criado.
 	 * */
-	@Mapping(target = "associateDoctors", expression = "java(speciality.getDoctors() != null ? speciality.getDoctors().size() : 0)")
-	SaidaSimplesEspecialidadeDto specialityToSimpleOutputSpecialityDto(Especialidade speciality);
+	@Mapping(target = "medicosAssociados", expression = "java(especialidade.getMedicos() != null ? especialidade.getMedicos().size() : 0)")
+	SaidaSimplesEspecialidadeDto specialityToSimpleOutputSpecialityDto(Especialidade especialidade);
 	
 	/*
 	 * Criar um DTO de saída detalhada a partir da entidade 'Speciality'.
