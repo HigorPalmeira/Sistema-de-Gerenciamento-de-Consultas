@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Endereco;
 
 @Repository
-public interface AddressRepository extends JpaRepository<Endereco, UUID> {
+public interface EnderecoRepository extends JpaRepository<Endereco, UUID> {
 
 }

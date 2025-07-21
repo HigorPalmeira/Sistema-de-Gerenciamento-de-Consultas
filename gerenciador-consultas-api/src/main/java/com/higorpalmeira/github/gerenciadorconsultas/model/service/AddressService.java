@@ -11,16 +11,16 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.OutputAddr
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.AddressMapper;
-import com.higorpalmeira.github.gerenciadorconsultas.model.repository.AddressRepository;
+import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EnderecoRepository;
 
 @Service
 public class AddressService {
 	
-	private AddressRepository addressRepository;
+	private EnderecoRepository addressRepository;
 	
 	private AddressMapper addressMapper;
 	
-	public AddressService(AddressRepository addressRepository, AddressMapper addressMapper) {
+	public AddressService(EnderecoRepository addressRepository, AddressMapper addressMapper) {
 		this.addressRepository = addressRepository;
 		this.addressMapper = addressMapper;
 	}
