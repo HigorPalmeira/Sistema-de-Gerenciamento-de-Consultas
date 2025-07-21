@@ -16,7 +16,7 @@ public class SimpleOutputConsultationDto {
 	
 	private SimpleOutputDoctorDto doctor;
 	
-	private SaidaSimplePacienteDto patient;
+	private SaidaSimplesPacienteDto patient;
 
 	public LocalDateTime getDateTime() {
 		return dateTime;
@@ -58,11 +58,11 @@ public class SimpleOutputConsultationDto {
 		this.doctor = doctor;
 	}
 
-	public SaidaSimplePacienteDto getPatient() {
+	public SaidaSimplesPacienteDto getPatient() {
 		return patient;
 	}
 
-	public void setPatient(SaidaSimplePacienteDto patient) {
+	public void setPatient(SaidaSimplesPacienteDto patient) {
 		this.patient = patient;
 	}
 	

@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 
-public class SaidaSimplePacienteDto {
+public class SaidaSimplesPacienteDto {
 	
 	private UUID id;
 	
