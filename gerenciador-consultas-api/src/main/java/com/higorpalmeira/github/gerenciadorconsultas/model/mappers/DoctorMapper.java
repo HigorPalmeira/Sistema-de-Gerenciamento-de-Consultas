@@ -8,7 +8,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 
@@ -32,6 +32,6 @@ public interface DoctorMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultations", ignore = true)
-	void updateDoctorFromUpdateDoctorDto(UpdateDoctorDto updateDoctorDto, Especialidade speciality, @MappingTarget Medico doctor);
+	void updateDoctorFromUpdateDoctorDto(AtualizarMedicoDto updateDoctorDto, Especialidade speciality, @MappingTarget Medico doctor);
 	
 }

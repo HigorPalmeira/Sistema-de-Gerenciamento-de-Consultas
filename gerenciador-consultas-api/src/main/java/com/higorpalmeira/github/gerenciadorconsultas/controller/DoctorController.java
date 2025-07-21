@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.DoctorService;
 
 @RestController
@@ -85,7 +85,7 @@ public class DoctorController {
 	}
 	
 	@PutMapping("/{doctorId}")
-	public ResponseEntity<Void> updateDoctorById(@PathVariable("doctorId") String doctorId, @RequestBody UpdateDoctorDto updateDoctorDto) {
+	public ResponseEntity<Void> updateDoctorById(@PathVariable("doctorId") String doctorId, @RequestBody AtualizarMedicoDto updateDoctorDto) {
 		
 		doctorService.updateDoctorById(doctorId, updateDoctorDto);
 		

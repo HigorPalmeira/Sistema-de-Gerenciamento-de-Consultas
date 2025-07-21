@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
@@ -135,7 +135,7 @@ public class DoctorService {
 	}
 	
 	@Transactional
-	public void updateDoctorById(String doctorId, UpdateDoctorDto updateDoctorDto) {
+	public void updateDoctorById(String doctorId, AtualizarMedicoDto updateDoctorDto) {
 		
 		var id = UUID.fromString(doctorId);
 		var doctorEntity = doctorRepository
