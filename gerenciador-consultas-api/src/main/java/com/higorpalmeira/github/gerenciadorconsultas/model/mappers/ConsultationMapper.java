@@ -13,7 +13,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consultation;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
 
-@Mapper(componentModel = "spring", uses = {DoctorMapper.class, PacienteMapper.class})
+@Mapper(componentModel = "spring", uses = {MedicoMapper.class, PacienteMapper.class})
 public interface ConsultationMapper {
 	
 	@Mapping(target = "consultationId", ignore = true)

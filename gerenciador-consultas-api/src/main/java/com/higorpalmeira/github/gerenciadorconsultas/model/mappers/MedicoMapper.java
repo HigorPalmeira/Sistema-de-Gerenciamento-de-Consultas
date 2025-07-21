@@ -13,25 +13,25 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 
 @Mapper(componentModel = "spring", uses = {EspecialidadeMapper.class})
-public interface DoctorMapper {
+public interface MedicoMapper {
 	
-	@Mapping(target = "doctorId", ignore = true)
+	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	@Mapping(target = "consultations", ignore = true)
-	@Mapping(target = "status", expression = "java(StatusAccountType.ACTIVE)")
-	Medico createToDoctor(CriarMedicoDto createDoctorDto, Especialidade speciality);
+	@Mapping(target = "consultas", ignore = true)
+	@Mapping(target = "status", expression = "java(StatusAccountType.ATIVO)")
+	Medico criarMedicoDtoParaMedico(CriarMedicoDto criarMedicoDto, Especialidade especialidade);
 
-	@Mapping(target = "consultations", expression = "java(doctor.getConsultations() != null ? doctor.getConsultations().size() : 0)")
-	SaidaSimplesMedicoDto doctorToSimpleOutputDoctorDto(Medico doctor);
+	@Mapping(target = "consultas", expression = "java(doctor.getConsultas() != null ? doctor.getConsultas().size() : 0)")
+	SaidaSimplesMedicoDto medicoParaSaidaSimplesMedicoDto(Medico medico);
 	
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-	@Mapping(target = "doctorId", ignore = true)
+	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "crm", ignore = true)
 	@Mapping(target = "email", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	@Mapping(target = "consultations", ignore = true)
-	void updateDoctorFromUpdateDoctorDto(AtualizarMedicoDto updateDoctorDto, Especialidade speciality, @MappingTarget Medico doctor);
+	@Mapping(target = "consultas", ignore = true)
+	void atualizarMedicoDeAtualizarMedicoDto(AtualizarMedicoDto atualizarMedicoDto, Especialidade especialidade, @MappingTarget Medico medico);
 	
 }

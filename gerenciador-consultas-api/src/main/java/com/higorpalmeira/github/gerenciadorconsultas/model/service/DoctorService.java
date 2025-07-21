@@ -14,7 +14,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStat
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.DoctorMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.MedicoMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.MedicoRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EspecialidadeRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
@@ -26,9 +26,9 @@ public class DoctorService {
 	
 	private EspecialidadeRepository specialityRepository;
 	
-	private DoctorMapper doctorMapper;
+	private MedicoMapper doctorMapper;
 	
-	public DoctorService(MedicoRepository doctorRepository, EspecialidadeRepository specialityRepository, DoctorMapper doctorMapper) {
+	public DoctorService(MedicoRepository doctorRepository, EspecialidadeRepository specialityRepository, MedicoMapper doctorMapper) {
 		this.doctorRepository = doctorRepository;
 		this.specialityRepository = specialityRepository;
 		this.doctorMapper = doctorMapper;
@@ -58,7 +58,7 @@ public class DoctorService {
 				.findById(specialityId)
 				.orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + specialityId));
 		
-		var doctor = doctorMapper.createToDoctor(createDoctorDto, specialityEntity);
+		var doctor = doctorMapper.criarMedicoDtoParaMedico(createDoctorDto, specialityEntity);
 		
 		var doctorSaved = doctorRepository.save(doctor);
 		
@@ -73,7 +73,7 @@ public class DoctorService {
 				.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + id));
 		
-		return doctorMapper.doctorToSimpleOutputDoctorDto(doctorEntity);
+		return doctorMapper.medicoParaSaidaSimplesMedicoDto(doctorEntity);
 		
 	}
 	
@@ -103,7 +103,7 @@ public class DoctorService {
 		
 		var doctors = doctorRepository
 				.findAll().stream()
-				.map(doctor -> doctorMapper.doctorToSimpleOutputDoctorDto(doctor)
+				.map(doctor -> doctorMapper.medicoParaSaidaSimplesMedicoDto(doctor)
 						).toList();
 		
 		return doctors;
@@ -115,7 +115,7 @@ public class DoctorService {
 		
 		var doctors = doctorRepository
 				.findAllByStatus(TipoStatusConta.ATIVO).stream()
-				.map(doctor -> doctorMapper.doctorToSimpleOutputDoctorDto(doctor)
+				.map(doctor -> doctorMapper.medicoParaSaidaSimplesMedicoDto(doctor)
 						).toList();
 		
 		return doctors;
@@ -127,7 +127,7 @@ public class DoctorService {
 		
 		var doctors = doctorRepository
 				.findAllByStatus(TipoStatusConta.INATIVO).stream()
-				.map(doctor -> doctorMapper.doctorToSimpleOutputDoctorDto(doctor)
+				.map(doctor -> doctorMapper.medicoParaSaidaSimplesMedicoDto(doctor)
 						).toList();
 		
 		return doctors;
@@ -167,7 +167,7 @@ public class DoctorService {
 				.findById(specialityId)
 				.orElseThrow(() -> new ResourceNotFoundException("Speciality not found with ID: " + specialityId));
 		
-		doctorMapper.updateDoctorFromUpdateDoctorDto(updateDoctorDto, specialityEntity, doctorEntity);
+		doctorMapper.atualizarMedicoDeAtualizarMedicoDto(updateDoctorDto, specialityEntity, doctorEntity);
 		
 	}
 	

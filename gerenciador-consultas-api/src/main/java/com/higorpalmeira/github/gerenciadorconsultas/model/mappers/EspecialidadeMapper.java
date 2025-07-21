@@ -12,7 +12,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimpl
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 
-@Mapper(componentModel = "spring", uses = {DoctorMapper.class})
+@Mapper(componentModel = "spring", uses = {MedicoMapper.class})
 public interface EspecialidadeMapper {
 	
 	/*
