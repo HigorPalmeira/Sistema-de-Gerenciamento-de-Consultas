@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.DoctorService;
 
@@ -40,7 +40,7 @@ public class DoctorController {
 	}
 	
 	@GetMapping("/{doctorId}")
-	public ResponseEntity<SimpleOutputDoctorDto> findSimpleDoctorById(@PathVariable("doctorId") String doctorId) {
+	public ResponseEntity<SaidaSimplesMedicoDto> findSimpleDoctorById(@PathVariable("doctorId") String doctorId) {
 		
 		var doctor = doctorService.findSimpleDoctorById(doctorId);
 		
@@ -58,7 +58,7 @@ public class DoctorController {
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<SimpleOutputDoctorDto>> listDoctors() {
+	public ResponseEntity<List<SaidaSimplesMedicoDto>> listDoctors() {
 		
 		var doctors = doctorService.listDoctors();
 		
@@ -67,7 +67,7 @@ public class DoctorController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<SimpleOutputDoctorDto>> listDoctorsActive() {
+	public ResponseEntity<List<SaidaSimplesMedicoDto>> listDoctorsActive() {
 		
 		var doctors = doctorService.listDoctorsActive();
 		
@@ -76,7 +76,7 @@ public class DoctorController {
 	}
 	
 	@GetMapping("/inactive")
-	public ResponseEntity<List<SimpleOutputDoctorDto>> listDoctorInactive() {
+	public ResponseEntity<List<SaidaSimplesMedicoDto>> listDoctorInactive() {
 		
 		var doctors = doctorService.listDoctorsInactive();
 		

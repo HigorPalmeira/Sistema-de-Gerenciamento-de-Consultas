@@ -9,7 +9,7 @@ public class SaidaDetalhadaEspecialidadeDto {
 	
 	private String descricao;
 	
-	private List<SimpleOutputDoctorDto> medicos;
+	private List<SaidaSimplesMedicoDto> medicos;
 
 	public UUID getId() {
 		return id;
@@ -27,11 +27,11 @@ public class SaidaDetalhadaEspecialidadeDto {
 		this.descricao = descricao;
 	}
 
-	public List<SimpleOutputDoctorDto> getMedicos() {
+	public List<SaidaSimplesMedicoDto> getMedicos() {
 		return medicos;
 	}
 
-	public void setMedicos(List<SimpleOutputDoctorDto> medicos) {
+	public void setMedicos(List<SaidaSimplesMedicoDto> medicos) {
 		this.medicos = medicos;
 	}
 	

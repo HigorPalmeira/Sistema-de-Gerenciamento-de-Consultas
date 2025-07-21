@@ -14,7 +14,7 @@ public class SimpleOutputConsultationDto {
 	
 	private float value;
 	
-	private SimpleOutputDoctorDto doctor;
+	private SaidaSimplesMedicoDto doctor;
 	
 	private SaidaSimplesPacienteDto patient;
 
@@ -50,11 +50,11 @@ public class SimpleOutputConsultationDto {
 		this.value = value;
 	}
 
-	public SimpleOutputDoctorDto getDoctor() {
+	public SaidaSimplesMedicoDto getDoctor() {
 		return doctor;
 	}
 
-	public void setDoctor(SimpleOutputDoctorDto doctor) {
+	public void setDoctor(SaidaSimplesMedicoDto doctor) {
 		this.doctor = doctor;
 	}
 

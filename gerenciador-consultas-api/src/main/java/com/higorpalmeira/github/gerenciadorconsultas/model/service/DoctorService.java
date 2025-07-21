@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
@@ -66,7 +66,7 @@ public class DoctorService {
 	}
 	
 	@Transactional(readOnly = true)
-	public SimpleOutputDoctorDto findSimpleDoctorById(String doctorId) {
+	public SaidaSimplesMedicoDto findSimpleDoctorById(String doctorId) {
 		
 		var id = UUID.fromString(doctorId);
 		var doctorEntity = doctorRepository
@@ -99,7 +99,7 @@ public class DoctorService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SimpleOutputDoctorDto> listDoctors() {
+	public List<SaidaSimplesMedicoDto> listDoctors() {
 		
 		var doctors = doctorRepository
 				.findAll().stream()
@@ -111,7 +111,7 @@ public class DoctorService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SimpleOutputDoctorDto> listDoctorsActive() {
+	public List<SaidaSimplesMedicoDto> listDoctorsActive() {
 		
 		var doctors = doctorRepository
 				.findAllByStatus(TipoStatusConta.ATIVO).stream()
@@ -123,7 +123,7 @@ public class DoctorService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SimpleOutputDoctorDto> listDoctorsInactive() {
+	public List<SaidaSimplesMedicoDto> listDoctorsInactive() {
 		
 		var doctors = doctorRepository
 				.findAllByStatus(TipoStatusConta.INATIVO).stream()
