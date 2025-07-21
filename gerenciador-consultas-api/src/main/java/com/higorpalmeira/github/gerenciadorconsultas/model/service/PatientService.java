@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedPatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarPacienteDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputPatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplePacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
@@ -58,7 +58,7 @@ public class PatientService {
 	}
 
 	@Transactional(readOnly = true)
-	public SimpleOutputPatientDto findSimplePatientById(String patientId) {
+	public SaidaSimplePacienteDto findSimplePatientById(String patientId) {
 		
 		var id = UUID.fromString(patientId);
 		var patientEntity = patientRepository
@@ -77,7 +77,7 @@ public class PatientService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<SimpleOutputPatientDto> listSimplePatients() {
+	public List<SaidaSimplePacienteDto> listSimplePatients() {
 		
 		var patients = patientRepository
 				.findAll().stream()

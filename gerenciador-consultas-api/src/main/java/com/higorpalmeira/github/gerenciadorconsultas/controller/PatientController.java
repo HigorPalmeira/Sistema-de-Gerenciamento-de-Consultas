@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarPacienteDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputPatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplePacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.PatientService;
 
@@ -39,7 +39,7 @@ public class PatientController {
 	}
 	
 	@GetMapping ("/{patientId}")
-	public ResponseEntity<SimpleOutputPatientDto> findSimplePatientById(@PathVariable("patientId") String patientId) {
+	public ResponseEntity<SaidaSimplePacienteDto> findSimplePatientById(@PathVariable("patientId") String patientId) {
 		
 		var patient = patientService.findSimplePatientById(patientId);
 		
@@ -48,7 +48,7 @@ public class PatientController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<SimpleOutputPatientDto>> listSimplePatients() {
+	public ResponseEntity<List<SaidaSimplePacienteDto>> listSimplePatients() {
 		
 		var patients = patientService.listSimplePatients();
 		
