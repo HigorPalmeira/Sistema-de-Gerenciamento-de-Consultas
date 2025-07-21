@@ -26,7 +26,7 @@ public class SimpleOutputPatientDto {
 	
 	private String email;
 	
-	private OutputAddressDto address;
+	private SaidaEnderecoDto address;
 
 	public UUID getPatientId() {
 		return patientId;
@@ -100,11 +100,11 @@ public class SimpleOutputPatientDto {
 		this.email = email;
 	}
 
-	public OutputAddressDto getAddress() {
+	public SaidaEnderecoDto getAddress() {
 		return address;
 	}
 
-	public void setAddress(OutputAddressDto address) {
+	public void setAddress(SaidaEnderecoDto address) {
 		this.address = address;
 	}
 	

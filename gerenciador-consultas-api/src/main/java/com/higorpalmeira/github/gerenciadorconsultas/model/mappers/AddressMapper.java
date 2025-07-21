@@ -7,7 +7,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEnderecoDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.OutputAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Endereco;
 
@@ -31,7 +31,7 @@ public interface AddressMapper {
 	 * @param address Entidade a ser transformada.
 	 * @return OutputAddressDto DTO de saída criado.
 	 * */
-	OutputAddressDto addressToOutputAddressDto(Endereco address);
+	SaidaEnderecoDto addressToOutputAddressDto(Endereco address);
 	
 	/*
 	 * Atualiza a entidade 'Address' com os dados não nulos do DTO.

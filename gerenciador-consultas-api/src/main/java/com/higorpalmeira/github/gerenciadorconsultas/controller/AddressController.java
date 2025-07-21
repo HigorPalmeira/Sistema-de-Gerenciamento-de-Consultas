@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEnderecoDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.OutputAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.EnderecoService;
 
@@ -39,7 +39,7 @@ public class AddressController {
 	}
 	
 	@GetMapping("/{addressId}")
-	public ResponseEntity<OutputAddressDto> findAddressById(@PathVariable("addressId") String addressId) {
+	public ResponseEntity<SaidaEnderecoDto> findAddressById(@PathVariable("addressId") String addressId) {
 		
 		var address = addressService.buscarEnderecoPorId(addressId);
 		
@@ -47,7 +47,7 @@ public class AddressController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<OutputAddressDto>> listAddresses() {
+	public ResponseEntity<List<SaidaEnderecoDto>> listAddresses() {
 		
 		var addresses = addressService.listarTodosEnderecos();
 		

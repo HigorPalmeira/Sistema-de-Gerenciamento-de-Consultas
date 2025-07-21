@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEnderecoDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.OutputAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.AddressMapper;
@@ -37,7 +37,7 @@ public class EnderecoService {
 	}
 	
 	@Transactional(readOnly = true)
-	public OutputAddressDto buscarEnderecoPorId(String enderecoId) {
+	public SaidaEnderecoDto buscarEnderecoPorId(String enderecoId) {
 		
 		var id = UUID.fromString(enderecoId);
 		var enderecoEntidade = enderecoRepository
@@ -49,7 +49,7 @@ public class EnderecoService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<OutputAddressDto> listarTodosEnderecos() {
+	public List<SaidaEnderecoDto> listarTodosEnderecos() {
 		
 		var enderecos = enderecoRepository
 				.findAll().stream()
