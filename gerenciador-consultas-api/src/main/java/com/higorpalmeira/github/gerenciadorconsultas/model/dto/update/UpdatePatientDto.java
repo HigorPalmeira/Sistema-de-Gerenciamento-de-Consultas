@@ -2,7 +2,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.dto.update;
 
 import java.time.LocalDate;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 
 public class UpdatePatientDto {
@@ -15,7 +15,7 @@ public class UpdatePatientDto {
 	
 	private LocalDate birthdate;
 	
-	private GenderType gender;
+	private TipoGenero gender;
 	
 	private StatusAccountType status;
 	
@@ -49,11 +49,11 @@ public class UpdatePatientDto {
 		this.birthdate = birthdate;
 	}
 
-	public GenderType getGender() {
+	public TipoGenero getGender() {
 		return gender;
 	}
 
-	public void setGender(GenderType gender) {
+	public void setGender(TipoGenero gender) {
 		this.gender = gender;
 	}
 

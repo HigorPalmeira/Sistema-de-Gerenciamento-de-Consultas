@@ -10,7 +10,7 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
 
 import jakarta.persistence.CascadeType;
@@ -49,7 +49,7 @@ public class Paciente {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "genero")
-	private GenderType genero;
+	private TipoGenero genero;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
@@ -78,7 +78,7 @@ public class Paciente {
 		
 	}
 
-	public Paciente(UUID id, String nome, String sobrenome, String cpf, LocalDate dataNascimento, GenderType genero,
+	public Paciente(UUID id, String nome, String sobrenome, String cpf, LocalDate dataNascimento, TipoGenero genero,
 			StatusAccountType status, String telefone, String email, Endereco endereco, List<Consultation> consultas,
 			Instant creationTimestamp, Instant updateTimestamp) {
 		this.id = id;
@@ -96,7 +96,7 @@ public class Paciente {
 		this.updateTimestamp = updateTimestamp;
 	}
 
-	public Paciente(String nome, String sobrenome, String cpf, LocalDate dataNascimento, GenderType genero,
+	public Paciente(String nome, String sobrenome, String cpf, LocalDate dataNascimento, TipoGenero genero,
 			StatusAccountType status, String telefone, String email, Endereco endereco, List<Consultation> consultas,
 			Instant creationTimestamp, Instant updateTimestamp) {
 		this.nome = nome;
@@ -153,11 +153,11 @@ public class Paciente {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public GenderType getGenero() {
+	public TipoGenero getGenero() {
 		return genero;
 	}
 
-	public void setGenero(GenderType genero) {
+	public void setGenero(TipoGenero genero) {
 		this.genero = genero;
 	}
 

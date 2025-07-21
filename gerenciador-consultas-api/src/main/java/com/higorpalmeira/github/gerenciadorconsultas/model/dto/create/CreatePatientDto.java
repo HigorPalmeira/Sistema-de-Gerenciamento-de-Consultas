@@ -2,7 +2,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.dto.create;
 
 import java.time.LocalDate;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Gender.GenderType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 
 public class CreatePatientDto {
 	
@@ -14,7 +14,7 @@ public class CreatePatientDto {
 	
 	private LocalDate birthdate;
 	
-	private GenderType gender;
+	private TipoGenero gender;
 	
 	private String telephone;
 	
@@ -65,10 +65,10 @@ public class CreatePatientDto {
 	public void setAddress(CriarEnderecoDto address) {
 		this.address = address;
 	}
-	public GenderType getGender() {
+	public TipoGenero getGender() {
 		return gender;
 	}
-	public void setGender(GenderType gender) {
+	public void setGender(TipoGenero gender) {
 		this.gender = gender;
 	}
 	
