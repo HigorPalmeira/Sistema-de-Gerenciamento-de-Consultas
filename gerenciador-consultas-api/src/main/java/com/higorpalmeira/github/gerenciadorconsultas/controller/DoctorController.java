@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.DoctorService;
@@ -31,7 +31,7 @@ public class DoctorController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<UUID> createDoctor(@RequestBody CreateDoctorDto createDoctorDto) {
+	public ResponseEntity<UUID> createDoctor(@RequestBody CriarMedicoDto createDoctorDto) {
 		
 		var doctorId = doctorService.createDoctor(createDoctorDto);
 		

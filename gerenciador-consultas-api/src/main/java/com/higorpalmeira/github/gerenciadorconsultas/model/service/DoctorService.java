@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
@@ -35,7 +35,7 @@ public class DoctorService {
 	}
 	
 	@Transactional
-	public UUID createDoctor(CreateDoctorDto createDoctorDto) {
+	public UUID createDoctor(CriarMedicoDto createDoctorDto) {
 		
 		if (!Validator.CRMValidation(createDoctorDto.getCrm())) {
 			throw new InvalidDataException("Invalid CRM.");

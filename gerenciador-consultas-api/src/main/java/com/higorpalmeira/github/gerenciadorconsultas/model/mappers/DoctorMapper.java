@@ -6,7 +6,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateDoctorDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
@@ -20,7 +20,7 @@ public interface DoctorMapper {
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultations", ignore = true)
 	@Mapping(target = "status", expression = "java(StatusAccountType.ACTIVE)")
-	Medico createToDoctor(CreateDoctorDto createDoctorDto, Especialidade speciality);
+	Medico createToDoctor(CriarMedicoDto createDoctorDto, Especialidade speciality);
 
 	@Mapping(target = "consultations", expression = "java(doctor.getConsultations() != null ? doctor.getConsultations().size() : 0)")
 	SimpleOutputDoctorDto doctorToSimpleOutputDoctorDto(Medico doctor);
