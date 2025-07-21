@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaEnderecoDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.EnderecoService;
 
 @RestController
@@ -56,7 +56,7 @@ public class AddressController {
 	}
 	
 	@PutMapping("/{addressId}")
-	public ResponseEntity<Void> updateAddressById(@PathVariable("addressId") String addressId, @RequestBody UpdateAddressDto updateAddressDto) {
+	public ResponseEntity<Void> updateAddressById(@PathVariable("addressId") String addressId, @RequestBody AtualizarEnderecoDto updateAddressDto) {
 		
 		addressService.atualizarEnderecoPorId(addressId, updateAddressDto);
 		

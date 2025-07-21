@@ -8,7 +8,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaEnderecoDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Endereco;
 
 @Mapper(componentModel = "spring")
@@ -43,6 +43,6 @@ public interface AddressMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	void updateAddressFromUpdateAddressDto(UpdateAddressDto updateAddressDto, @MappingTarget Endereco address);
+	void updateAddressFromUpdateAddressDto(AtualizarEnderecoDto updateAddressDto, @MappingTarget Endereco address);
 
 }

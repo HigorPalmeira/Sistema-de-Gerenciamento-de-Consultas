@@ -23,7 +23,7 @@ public class UpdatePatientDto {
 	
 	private String email;
 	
-	private UpdateAddressDto address;
+	private AtualizarEnderecoDto address;
 
 	public String getFirstName() {
 		return firstName;
@@ -73,11 +73,11 @@ public class UpdatePatientDto {
 		this.telephone = telephone;
 	}
 
-	public UpdateAddressDto getAddress() {
+	public AtualizarEnderecoDto getAddress() {
 		return address;
 	}
 
-	public void setAddress(UpdateAddressDto address) {
+	public void setAddress(AtualizarEnderecoDto address) {
 		this.address = address;
 	}
 

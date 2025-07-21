@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaEnderecoDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.AddressMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EnderecoRepository;
@@ -61,7 +61,7 @@ public class EnderecoService {
 	}
 	
 	@Transactional
-	public void atualizarEnderecoPorId(String enderecoId, UpdateAddressDto atualizarEnderecoDto) {
+	public void atualizarEnderecoPorId(String enderecoId, AtualizarEnderecoDto atualizarEnderecoDto) {
 		
 		var id = UUID.fromString(enderecoId);
 		var enderecoEntidade = enderecoRepository
