@@ -7,11 +7,12 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 
 @Repository
-public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
+public interface MedicoRepository extends JpaRepository<Medico, UUID> {
 	
 	/*
 	 * Verifica se existe um médico com o CRM fornecido.
@@ -35,7 +36,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
 	 * @param crm O CRM a ser procurado.
 	 * @return Optional com Doctor presente se o médico for encontrado, caso contrário um Optional vazio.
 	 * */
-	Optional<Doctor> findByCrm(String crm);
+	Optional<Medico> findByCrm(String crm);
 	
 	/*
 	 * Busca por um médico com o E-mail fornecido.
@@ -43,8 +44,10 @@ public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
 	 * @param email O E-mail a ser procurado.
 	 * @return Optional com Doctor presente se o médico for encontrado, caso contrário um Optional vazio.
 	 * */
-	Optional<Doctor> findByEmail(String email);
+	Optional<Medico> findByEmail(String email);
 	
-	List<Doctor> findAllByStatus(TipoStatusConta status);
+	List<Medico> findAllByStatus(TipoStatusConta status);
+	
+	List<Medico> findAllByStatusNot(TipoStatusConsulta status);
 	
 }

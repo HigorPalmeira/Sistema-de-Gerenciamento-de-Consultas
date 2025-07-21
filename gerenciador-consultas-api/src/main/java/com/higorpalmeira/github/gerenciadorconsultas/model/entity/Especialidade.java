@@ -3,6 +3,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.entity;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,7 +31,7 @@ public class Especialidade {
 	private String descricao;
 	
 	@OneToMany(mappedBy = "especialidade", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-	private List<Doctor> medicos = new ArrayList<>();
+	private List<Medico> medicos = new ArrayList<>();
 	
 	@CreationTimestamp
 	private Instant creationTimestamp;
@@ -89,12 +90,31 @@ public class Especialidade {
 		this.updateTimestamp = updateTimestamp;
 	}
 
-	public List<Doctor> getMedicos() {
+	public List<Medico> getMedicos() {
 		return medicos;
 	}
 
-	public void setMedicos(List<Doctor> medicos) {
+	public void setMedicos(List<Medico> medicos) {
 		this.medicos = medicos;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(creationTimestamp, descricao, id, medicos, updateTimestamp);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Especialidade other = (Especialidade) obj;
+		return Objects.equals(creationTimestamp, other.creationTimestamp) && Objects.equals(descricao, other.descricao)
+				&& Objects.equals(id, other.id) && Objects.equals(medicos, other.medicos)
+				&& Objects.equals(updateTimestamp, other.updateTimestamp);
 	}
 
 }

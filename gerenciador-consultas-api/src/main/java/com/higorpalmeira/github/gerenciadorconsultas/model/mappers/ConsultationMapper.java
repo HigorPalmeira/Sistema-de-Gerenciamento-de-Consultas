@@ -10,7 +10,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateCons
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consultation;
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
 
 @Mapper(componentModel = "spring", uses = {DoctorMapper.class, PacienteMapper.class})
@@ -22,7 +22,7 @@ public interface ConsultationMapper {
 	@Mapping(target = "status", expression = "java(StatusConsultationType.SCHEDULED)")
 	@Mapping(target = "doctor", expression = "java(doctor != null ? doctor : null)")
 	@Mapping(target = "patient", expression = "java(patient != null ? patient : null)")
-	Consultation createToConsultation(CreateConsultationDto createConsultationDto, Doctor doctor, Paciente patient);
+	Consultation createToConsultation(CreateConsultationDto createConsultationDto, Medico doctor, Paciente patient);
 	
 	SimpleOutputConsultationDto consultationToSimpleOutputConsultationDto(Consultation consultation);
 
@@ -33,6 +33,6 @@ public interface ConsultationMapper {
 	@Mapping(target = "doctor", expression = "java(doctor != null ? doctor : null)")
 	@Mapping(target = "patient", expression = "java(patient != null ? patient : null)")
 	@Mapping(target = "status", expression = "java(consultation.setStatus(updateConsultationDto.getStatus()))")
-	void updateConsultationFromUpdateConsultationDto(UpdateConsultationDto updateConsultationDto, Doctor doctor, Paciente patient, @MappingTarget Consultation consultation);
+	void updateConsultationFromUpdateConsultationDto(UpdateConsultationDto updateConsultationDto, Medico doctor, Paciente patient, @MappingTarget Consultation consultation);
 	
 }

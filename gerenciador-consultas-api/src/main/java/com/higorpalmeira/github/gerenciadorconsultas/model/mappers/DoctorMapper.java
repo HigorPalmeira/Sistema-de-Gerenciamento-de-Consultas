@@ -9,7 +9,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 
 @Mapper(componentModel = "spring", uses = {EspecialidadeMapper.class})
@@ -20,10 +20,10 @@ public interface DoctorMapper {
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultations", ignore = true)
 	@Mapping(target = "status", expression = "java(StatusAccountType.ACTIVE)")
-	Doctor createToDoctor(CreateDoctorDto createDoctorDto, Especialidade speciality);
+	Medico createToDoctor(CreateDoctorDto createDoctorDto, Especialidade speciality);
 
 	@Mapping(target = "consultations", expression = "java(doctor.getConsultations() != null ? doctor.getConsultations().size() : 0)")
-	SimpleOutputDoctorDto doctorToSimpleOutputDoctorDto(Doctor doctor);
+	SimpleOutputDoctorDto doctorToSimpleOutputDoctorDto(Medico doctor);
 	
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 	@Mapping(target = "doctorId", ignore = true)
@@ -32,6 +32,6 @@ public interface DoctorMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultations", ignore = true)
-	void updateDoctorFromUpdateDoctorDto(UpdateDoctorDto updateDoctorDto, Especialidade speciality, @MappingTarget Doctor doctor);
+	void updateDoctorFromUpdateDoctorDto(UpdateDoctorDto updateDoctorDto, Especialidade speciality, @MappingTarget Medico doctor);
 	
 }
