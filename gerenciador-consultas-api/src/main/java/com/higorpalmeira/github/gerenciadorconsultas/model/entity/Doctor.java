@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -43,7 +43,7 @@ public class Doctor {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
-	private StatusAccountType status;
+	private TipoStatusConta status;
 	
 	@Column(name = "telephone")
 	private String telephone;
@@ -68,7 +68,7 @@ public class Doctor {
 	
 	}
 
-	public Doctor(UUID doctorId, String firstName, String lastName, String crm, StatusAccountType status, String telephone,
+	public Doctor(UUID doctorId, String firstName, String lastName, String crm, TipoStatusConta status, String telephone,
 			String email, Especialidade speciality, Instant creationTimestamp, Instant updateTimestamp) {
 		this.doctorId = doctorId;
 		this.firstName = firstName;
@@ -82,7 +82,7 @@ public class Doctor {
 		this.updateTimestamp = updateTimestamp;
 	}
 
-	public Doctor(String firstName, String lastName, String crm, StatusAccountType status, String telephone, String email,
+	public Doctor(String firstName, String lastName, String crm, TipoStatusConta status, String telephone, String email,
 			Especialidade speciality, Instant creationTimestamp, Instant updateTimestamp) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -127,11 +127,11 @@ public class Doctor {
 		this.crm = crm;
 	}
 
-	public StatusAccountType getStatus() {
+	public TipoStatusConta getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusAccountType status) {
+	public void setStatus(TipoStatusConta status) {
 		this.status = status;
 	}
 

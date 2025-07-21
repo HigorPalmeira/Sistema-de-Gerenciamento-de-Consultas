@@ -3,7 +3,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.dto.update;
 import java.time.LocalDate;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 
 public class UpdatePatientDto {
 
@@ -17,7 +17,7 @@ public class UpdatePatientDto {
 	
 	private TipoGenero gender;
 	
-	private StatusAccountType status;
+	private TipoStatusConta status;
 	
 	private String telephone;
 	
@@ -57,11 +57,11 @@ public class UpdatePatientDto {
 		this.gender = gender;
 	}
 
-	public StatusAccountType getStatus() {
+	public TipoStatusConta getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusAccountType status) {
+	public void setStatus(TipoStatusConta status) {
 		this.status = status;
 	}
 

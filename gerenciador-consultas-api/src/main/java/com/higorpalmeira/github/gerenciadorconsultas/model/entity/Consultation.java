@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusConsultationType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,7 +34,7 @@ public class Consultation {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
-	private StatusConsultationType status;
+	private TipoStatusConsulta status;
 	
 	@Column(name = "observations")
 	private String observations;
@@ -60,7 +60,7 @@ public class Consultation {
 		
 	}
 
-	public Consultation(UUID consultationId, LocalDateTime dateTime, StatusConsultationType status, String observations,
+	public Consultation(UUID consultationId, LocalDateTime dateTime, TipoStatusConsulta status, String observations,
 			float value, Doctor doctor, Paciente patient, Instant creationTimestamp, Instant updateTimestamp) {
 		this.consultationId = consultationId;
 		this.dateTime = dateTime;
@@ -73,7 +73,7 @@ public class Consultation {
 		this.updateTimestamp = updateTimestamp;
 	}
 
-	public Consultation(LocalDateTime dateTime, StatusConsultationType status, String observations, float value,
+	public Consultation(LocalDateTime dateTime, TipoStatusConsulta status, String observations, float value,
 			Doctor doctor, Paciente patient, Instant creationTimestamp, Instant updateTimestamp) {
 		this.dateTime = dateTime;
 		this.status = status;
@@ -101,11 +101,11 @@ public class Consultation {
 		this.dateTime = dateTime;
 	}
 
-	public StatusConsultationType getStatus() {
+	public TipoStatusConsulta getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusConsultationType status) {
+	public void setStatus(TipoStatusConsulta status) {
 		this.status = status;
 	}
 

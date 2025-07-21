@@ -11,7 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -53,7 +53,7 @@ public class Paciente {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
-	private StatusAccountType status;
+	private TipoStatusConta status;
 	
 	@Column(name = "telefone")
 	private String telefone;
@@ -79,7 +79,7 @@ public class Paciente {
 	}
 
 	public Paciente(UUID id, String nome, String sobrenome, String cpf, LocalDate dataNascimento, TipoGenero genero,
-			StatusAccountType status, String telefone, String email, Endereco endereco, List<Consultation> consultas,
+			TipoStatusConta status, String telefone, String email, Endereco endereco, List<Consultation> consultas,
 			Instant creationTimestamp, Instant updateTimestamp) {
 		this.id = id;
 		this.nome = nome;
@@ -97,7 +97,7 @@ public class Paciente {
 	}
 
 	public Paciente(String nome, String sobrenome, String cpf, LocalDate dataNascimento, TipoGenero genero,
-			StatusAccountType status, String telefone, String email, Endereco endereco, List<Consultation> consultas,
+			TipoStatusConta status, String telefone, String email, Endereco endereco, List<Consultation> consultas,
 			Instant creationTimestamp, Instant updateTimestamp) {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -161,11 +161,11 @@ public class Paciente {
 		this.genero = genero;
 	}
 
-	public StatusAccountType getStatus() {
+	public TipoStatusConta getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusAccountType status) {
+	public void setStatus(TipoStatusConta status) {
 		this.status = status;
 	}
 

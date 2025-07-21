@@ -2,7 +2,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.dto.output;
 
 import java.util.UUID;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 
 public class SimpleOutputDoctorDto {
 	
@@ -14,7 +14,7 @@ public class SimpleOutputDoctorDto {
 	
 	private String crm;
 	
-	private StatusAccountType status;
+	private TipoStatusConta status;
 	
 	private String telephone;
 	
@@ -56,11 +56,11 @@ public class SimpleOutputDoctorDto {
 		this.crm = crm;
 	}
 
-	public StatusAccountType getStatus() {
+	public TipoStatusConta getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusAccountType status) {
+	public void setStatus(TipoStatusConta status) {
 		this.status = status;
 	}
 

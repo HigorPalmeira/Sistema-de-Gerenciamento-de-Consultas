@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateConsultationDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusConsultationType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultationMapper;
@@ -89,7 +89,7 @@ public class ConsultationService {
 	public List<SimpleOutputConsultationDto> listSimpleConsultationsActive() {
 		
 		var consultations = consultationRepository
-				.findAllByStatusNot(StatusConsultationType.INACTIVE).stream()
+				.findAllByStatusNot(TipoStatusConsulta.INATIVA).stream()
 				.map(consultation -> consultationMapper.consultationToSimpleOutputConsultationDto(consultation))
 				.toList();
 				
@@ -102,7 +102,7 @@ public class ConsultationService {
 	public List<SimpleOutputConsultationDto> listSimpleConsultationsScheduled() {
 		
 		var consultations = consultationRepository
-				.findAllByStatus(StatusConsultationType.SCHEDULED).stream()
+				.findAllByStatus(TipoStatusConsulta.AGENDADA).stream()
 				.map(consultation -> consultationMapper.consultationToSimpleOutputConsultationDto(consultation))
 				.toList();
 		
@@ -145,7 +145,7 @@ public class ConsultationService {
 				.findById(id);
 		
 		consultationEntity.ifPresent(consultation -> {
-			consultation.setStatus(StatusConsultationType.INACTIVE);
+			consultation.setStatus(TipoStatusConsulta.INATIVA);
 		});
 		
 	}

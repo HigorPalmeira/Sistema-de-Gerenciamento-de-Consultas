@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
@@ -45,6 +45,6 @@ public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
 	 * */
 	Optional<Doctor> findByEmail(String email);
 	
-	List<Doctor> findAllByStatus(StatusAccountType status);
+	List<Doctor> findAllByStatus(TipoStatusConta status);
 	
 }

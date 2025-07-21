@@ -10,7 +10,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailed
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateDoctorDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
@@ -114,7 +114,7 @@ public class DoctorService {
 	public List<SimpleOutputDoctorDto> listDoctorsActive() {
 		
 		var doctors = doctorRepository
-				.findAllByStatus(StatusAccountType.ACTIVE).stream()
+				.findAllByStatus(TipoStatusConta.ATIVO).stream()
 				.map(doctor -> doctorMapper.doctorToSimpleOutputDoctorDto(doctor)
 						).toList();
 		
@@ -126,7 +126,7 @@ public class DoctorService {
 	public List<SimpleOutputDoctorDto> listDoctorsInactive() {
 		
 		var doctors = doctorRepository
-				.findAllByStatus(StatusAccountType.INACTIVE).stream()
+				.findAllByStatus(TipoStatusConta.INATIVO).stream()
 				.map(doctor -> doctorMapper.doctorToSimpleOutputDoctorDto(doctor)
 						).toList();
 		
@@ -179,7 +179,7 @@ public class DoctorService {
 				.findById(id);
 		
 		doctorEntity.ifPresent(doctor -> {
-			doctor.setStatus(StatusAccountType.INACTIVE);
+			doctor.setStatus(TipoStatusConta.INATIVO);
 		});
 		
 	}

@@ -7,13 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consultation;
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusConsultationType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
 
 @Repository
 public interface ConsultationRepository extends JpaRepository<Consultation, UUID> {
 	
-	List<Consultation> findAllByStatus(StatusConsultationType status);
+	List<Consultation> findAllByStatus(TipoStatusConsulta status);
 	
-	List<Consultation> findAllByStatusNot(StatusConsultationType status);
+	List<Consultation> findAllByStatusNot(TipoStatusConsulta status);
 
 }

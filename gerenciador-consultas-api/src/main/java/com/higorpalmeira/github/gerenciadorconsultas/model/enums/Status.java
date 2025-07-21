@@ -4,57 +4,57 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDat
 
 public class Status {
 	
-	public enum StatusAccountType {
-		ACTIVE("ACTIVE"),
-		INACTIVE("INACTIVE");
+	public enum TipoStatusConta {
+		ATIVO("ATIVO"),
+		INATIVO("INATIVO");
 		
-		private String type;
+		private String tipo;
 		
-		StatusAccountType(String aType) {
-			this.type = aType;
+		TipoStatusConta(String tipo) {
+			this.tipo = tipo;
 		}
 		
-		public String getType() {
-			return this.type;
+		public String getTipo() {
+			return this.tipo;
 		}
 		
-		public static StatusAccountType fromType(String aType) {
-			for (StatusAccountType status : StatusAccountType.values()) {
-				if (status.type.equalsIgnoreCase(aType)) {
+		public static TipoStatusConta fromTipo(String tipo) {
+			for (TipoStatusConta status : TipoStatusConta.values()) {
+				if (status.tipo.equalsIgnoreCase(tipo)) {
 					return status;
 				}
 			}
 			
-			throw new InvalidDataException("The type is not supported!");
+			throw new InvalidDataException("O tipo não é compatível!");
 		}
 	}
 	
-	public enum StatusConsultationType {
-		SCHEDULED("SCHEDULED"),
-		HELD("HELD"),
-		RESCHEDULED("RESCHEDULED"),
-		CANCELED("CANCELED"),
-		MISSING("MISSING"),
-		INACTIVE("INACTIVE");
+	public enum TipoStatusConsulta {
+		AGENDADA("AGENDADA"),
+		REALIZADA("REALIZADA"),
+		REAGENDADA("REAGENDADA"),
+		CANCELADA("CANCELADA"),
+		FALTA("FALTA"),
+		INATIVA("INATIVA");
 		
-		private String type;
+		private String tipo;
 		
-		StatusConsultationType(String aType) {
-			this.type = aType;
+		TipoStatusConsulta(String tipo) {
+			this.tipo = tipo;
 		}
 		
-		public String getType() {
-			return this.type;
+		public String getTipo() {
+			return this.tipo;
 		}
 		
-		public static StatusConsultationType fromType(String aType) {
-			for (StatusConsultationType status : StatusConsultationType.values()) {
-				if (status.type.equalsIgnoreCase(aType)) {
+		public static TipoStatusConsulta fromTipo(String tipo) {
+			for (TipoStatusConsulta status : TipoStatusConsulta.values()) {
+				if (status.tipo.equalsIgnoreCase(tipo)) {
 					return status;
 				}
 			}
 			
-			throw new InvalidDataException("The type is not supported!");
+			throw new InvalidDataException("O tipo não é compatível!");
 		}
 	}
 

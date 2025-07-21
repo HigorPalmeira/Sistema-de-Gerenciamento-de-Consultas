@@ -10,7 +10,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailed
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputPatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdatePatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusAccountType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
@@ -128,7 +128,7 @@ public class PatientService {
 				.findById(id);
 
 		patientEntity.ifPresent(patient -> {
-			patient.setStatus(StatusAccountType.INACTIVE);
+			patient.setStatus(TipoStatusConta.INATIVO);
 		});
 
 	}

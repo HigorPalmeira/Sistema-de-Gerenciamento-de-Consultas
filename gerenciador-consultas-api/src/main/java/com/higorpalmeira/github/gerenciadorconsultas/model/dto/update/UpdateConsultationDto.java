@@ -3,13 +3,13 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.dto.update;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.StatusConsultationType;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
 
 public class UpdateConsultationDto {
 
 	private LocalDateTime dateTime;
 	
-	private StatusConsultationType status;
+	private TipoStatusConsulta status;
 	
 	private String observations;
 	
@@ -27,11 +27,11 @@ public class UpdateConsultationDto {
 		this.dateTime = dateTime;
 	}
 
-	public StatusConsultationType getStatus() {
+	public TipoStatusConsulta getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusConsultationType status) {
+	public void setStatus(TipoStatusConsulta status) {
 		this.status = status;
 	}
 
