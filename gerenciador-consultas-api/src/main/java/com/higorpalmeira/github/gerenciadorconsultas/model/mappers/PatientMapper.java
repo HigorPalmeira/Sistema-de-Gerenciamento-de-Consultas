@@ -11,7 +11,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutp
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
 
-@Mapper(componentModel = "spring", uses = {AddressMapper.class})
+@Mapper(componentModel = "spring", uses = {EnderecoMapper.class})
 public interface PatientMapper {
 	
 	/*

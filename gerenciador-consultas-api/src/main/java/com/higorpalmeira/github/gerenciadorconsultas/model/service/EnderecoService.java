@@ -10,7 +10,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEnder
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.AddressMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.EnderecoMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EnderecoRepository;
 
 @Service
@@ -18,9 +18,9 @@ public class EnderecoService {
 	
 	private EnderecoRepository enderecoRepository;
 	
-	private AddressMapper addressMapper;
+	private EnderecoMapper addressMapper;
 	
-	public EnderecoService(EnderecoRepository enderecoRepository, AddressMapper addressMapper) {
+	public EnderecoService(EnderecoRepository enderecoRepository, EnderecoMapper addressMapper) {
 		this.enderecoRepository = enderecoRepository;
 		this.addressMapper = addressMapper;
 	}
@@ -28,7 +28,7 @@ public class EnderecoService {
 	@Transactional
 	public UUID criarEndereco(CriarEnderecoDto criarEnderecoDto) {
 		
-		var endereco = addressMapper.createToAddress(criarEnderecoDto);
+		var endereco = addressMapper.criarEnderecoDtoParaEndereco(criarEnderecoDto);
 		
 		var enderecoSalvo = enderecoRepository.save(endereco);
 		
@@ -44,7 +44,7 @@ public class EnderecoService {
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado com ID: " + id));
 		
-		return addressMapper.addressToOutputAddressDto(enderecoEntidade);
+		return addressMapper.EnderecoParaSaidaEnderecoDto(enderecoEntidade);
 		
 	}
 	
@@ -53,7 +53,7 @@ public class EnderecoService {
 		
 		var enderecos = enderecoRepository
 				.findAll().stream()
-				.map(endereco -> addressMapper.addressToOutputAddressDto(endereco))
+				.map(endereco -> addressMapper.EnderecoParaSaidaEnderecoDto(endereco))
 				.toList();
 		
 		return enderecos;

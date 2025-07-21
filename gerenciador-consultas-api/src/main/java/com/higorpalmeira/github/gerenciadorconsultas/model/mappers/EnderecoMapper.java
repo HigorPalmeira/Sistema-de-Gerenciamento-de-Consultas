@@ -12,37 +12,37 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarE
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Endereco;
 
 @Mapper(componentModel = "spring")
-public interface AddressMapper {
+public interface EnderecoMapper {
 	
 	/*
-	 * Cria uma entidade 'Address' com os dados do DTO.
+	 * Cria uma entidade 'Endereco' com os dados do DTO.
 	 * 
-	 * @param createAddressDto O objeto com os dados.
-	 * @return Address A entidade criada.
+	 * @param criarEnderecoDto O objeto com os dados.
+	 * @return Endereco A entidade criada.
 	 * */
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	Endereco createToAddress(CriarEnderecoDto createAddressDto);
+	Endereco criarEnderecoDtoParaEndereco(CriarEnderecoDto criarEnderecoDto);
 	
 	/*
-	 * Cria um DTO de saída a partir da entidade 'Address'.
+	 * Cria um DTO de saída a partir da entidade 'Endereco'.
 	 * 
-	 * @param address Entidade a ser transformada.
-	 * @return OutputAddressDto DTO de saída criado.
+	 * @param endereco Entidade a ser transformada.
+	 * @return EnderecoParaSaidaEnderecoDto DTO de saída criado.
 	 * */
-	SaidaEnderecoDto addressToOutputAddressDto(Endereco address);
+	SaidaEnderecoDto EnderecoParaSaidaEnderecoDto(Endereco endereco);
 	
 	/*
-	 * Atualiza a entidade 'Address' com os dados não nulos do DTO.
+	 * Atualiza a entidade 'Endereco' com os dados não nulos do DTO.
 	 * 
-	 * @param updateAddressDto O objeto com os dados para atualização.
-	 * @param address A entidade que será atualizada (carregada do banco de dados).
+	 * @param atualizarEnderecoDto O objeto com os dados para atualização.
+	 * @param endereco A entidade que será atualizada (carregada do banco de dados).
 	 * */
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	void updateAddressFromUpdateAddressDto(AtualizarEnderecoDto updateAddressDto, @MappingTarget Endereco address);
+	void updateAddressFromUpdateAddressDto(AtualizarEnderecoDto atualizarEnderecoDto, @MappingTarget Endereco endereco);
 
 }
