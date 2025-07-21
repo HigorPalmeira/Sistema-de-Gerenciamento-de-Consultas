@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedPatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreatePatientDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputPatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
@@ -31,7 +31,7 @@ public class PatientService {
 	}
 
 	@Transactional
-	public UUID createPatient(CreatePatientDto createPatientDto) {
+	public UUID createPatient(CriarPacienteDto createPatientDto) {
 
 		if (!Validator.CPFValidation(createPatientDto.getCpf())) {
 			throw new InvalidDataException("Invalid CPF.");
