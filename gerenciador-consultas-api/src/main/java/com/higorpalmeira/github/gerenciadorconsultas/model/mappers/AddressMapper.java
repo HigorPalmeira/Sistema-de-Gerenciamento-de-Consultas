@@ -9,7 +9,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.OutputAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateAddressDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Address;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Endereco;
 
 @Mapper(componentModel = "spring")
 public interface AddressMapper {
@@ -23,7 +23,7 @@ public interface AddressMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	Address createToAddress(CreateAddressDto createAddressDto);
+	Endereco createToAddress(CreateAddressDto createAddressDto);
 	
 	/*
 	 * Cria um DTO de saída a partir da entidade 'Address'.
@@ -31,7 +31,7 @@ public interface AddressMapper {
 	 * @param address Entidade a ser transformada.
 	 * @return OutputAddressDto DTO de saída criado.
 	 * */
-	OutputAddressDto addressToOutputAddressDto(Address address);
+	OutputAddressDto addressToOutputAddressDto(Endereco address);
 	
 	/*
 	 * Atualiza a entidade 'Address' com os dados não nulos do DTO.
@@ -43,6 +43,6 @@ public interface AddressMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	void updateAddressFromUpdateAddressDto(UpdateAddressDto updateAddressDto, @MappingTarget Address address);
+	void updateAddressFromUpdateAddressDto(UpdateAddressDto updateAddressDto, @MappingTarget Endereco address);
 
 }

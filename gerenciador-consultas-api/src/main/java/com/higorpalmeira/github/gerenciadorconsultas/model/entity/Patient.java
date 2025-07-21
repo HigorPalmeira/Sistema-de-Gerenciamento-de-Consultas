@@ -62,7 +62,7 @@ public class Patient {
 	
 	@OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn (name = "address_id", referencedColumnName = "id")
-	private Address address;
+	private Endereco address;
 	
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private List<Consultation> consultations = new ArrayList<>();
@@ -78,7 +78,7 @@ public class Patient {
 	}
 
 	public Patient(String firstName, String lastName, String cpf, LocalDate birthdate, GenderType gender,
-			StatusAccountType status, String telephone, String email, Address address, Instant creationTimestamp, Instant updateTimestamp) {
+			StatusAccountType status, String telephone, String email, Endereco address, Instant creationTimestamp, Instant updateTimestamp) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -96,7 +96,7 @@ public class Patient {
 
 
 	public Patient(UUID patientId, String firstName, String lastName, String cpf, LocalDate birthdate,
-			GenderType gender, StatusAccountType status, String telephone, String email, Address address, Instant creationTimestamp,
+			GenderType gender, StatusAccountType status, String telephone, String email, Endereco address, Instant creationTimestamp,
 			Instant updateTimestamp) {
 		super();
 		this.patientId = patientId;
@@ -187,11 +187,11 @@ public class Patient {
 		this.email = email;
 	}
 
-	public Address getAddress() {
+	public Endereco getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(Endereco address) {
 		this.address = address;
 	}
 
