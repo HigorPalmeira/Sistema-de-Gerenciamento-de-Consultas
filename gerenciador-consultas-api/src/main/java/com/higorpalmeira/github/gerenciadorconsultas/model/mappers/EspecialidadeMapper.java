@@ -8,7 +8,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.DetailedOutputSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 
@@ -34,7 +34,7 @@ public interface EspecialidadeMapper {
 	 * @return SimpleOutputSpecialityDto DTO de saída simples criado.
 	 * */
 	@Mapping(target = "associateDoctors", expression = "java(speciality.getDoctors() != null ? speciality.getDoctors().size() : 0)")
-	SimpleOutputSpecialityDto specialityToSimpleOutputSpecialityDto(Especialidade speciality);
+	SaidaSimplesEspecialidadeDto specialityToSimpleOutputSpecialityDto(Especialidade speciality);
 	
 	/*
 	 * Criar um DTO de saída detalhada a partir da entidade 'Speciality'.

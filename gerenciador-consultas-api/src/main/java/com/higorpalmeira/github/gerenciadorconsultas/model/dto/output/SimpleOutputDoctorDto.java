@@ -20,7 +20,7 @@ public class SimpleOutputDoctorDto {
 	
 	private String email;
 
-	private SimpleOutputSpecialityDto speciality;
+	private SaidaSimplesEspecialidadeDto speciality;
 	
 	private int consultations;
 
@@ -80,11 +80,11 @@ public class SimpleOutputDoctorDto {
 		this.email = email;
 	}
 
-	public SimpleOutputSpecialityDto getSpeciality() {
+	public SaidaSimplesEspecialidadeDto getSpeciality() {
 		return speciality;
 	}
 
-	public void setSpeciality(SimpleOutputSpecialityDto speciality) {
+	public void setSpeciality(SaidaSimplesEspecialidadeDto speciality) {
 		this.speciality = speciality;
 	}
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.DetailedOutputSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.EspecialidadeService;
 
@@ -40,7 +40,7 @@ public class SpecialityController {
 	}
 	
 	@GetMapping("/{specialityId}")
-	public ResponseEntity<SimpleOutputSpecialityDto> findSimpleOutputSpecialityById(@PathVariable("specialityId") String specialityId) {
+	public ResponseEntity<SaidaSimplesEspecialidadeDto> findSimpleOutputSpecialityById(@PathVariable("specialityId") String specialityId) {
 		
 		var speciality = specialityService.buscarSaidaSimplesEspecialidadePorId(specialityId);
 		
@@ -59,7 +59,7 @@ public class SpecialityController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<SimpleOutputSpecialityDto>> listSimpleAllSpecialities() {
+	public ResponseEntity<List<SaidaSimplesEspecialidadeDto>> listSimpleAllSpecialities() {
 		
 		var specialities = specialityService.listarTodasSaidaSimplesEspecialidade();
 		

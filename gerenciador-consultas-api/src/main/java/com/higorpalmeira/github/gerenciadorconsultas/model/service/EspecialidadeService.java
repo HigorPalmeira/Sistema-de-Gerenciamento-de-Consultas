@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.DetailedOutputSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.EspecialidadeMapper;
@@ -38,7 +38,7 @@ public class EspecialidadeService {
 	}
 	
 	@Transactional(readOnly = true)
-	public SimpleOutputSpecialityDto buscarSaidaSimplesEspecialidadePorId(String especialidadeId) {
+	public SaidaSimplesEspecialidadeDto buscarSaidaSimplesEspecialidadePorId(String especialidadeId) {
 		
 		var id = UUID.fromString(especialidadeId);
 		var especialidadeEntidade = especialidadeRepository
@@ -62,7 +62,7 @@ public class EspecialidadeService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SimpleOutputSpecialityDto> listarTodasSaidaSimplesEspecialidade() {
+	public List<SaidaSimplesEspecialidadeDto> listarTodasSaidaSimplesEspecialidade() {
 		
 		var especialidades = especialidadeRepository
 				.findAll().stream()
