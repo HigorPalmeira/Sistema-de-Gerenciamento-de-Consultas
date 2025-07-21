@@ -93,7 +93,7 @@ public class EspecialidadeService {
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado com ID: " + id));
 		
-		specialityMapper.updateSpecialityFromUpdateSpecialityDto(atualizarEspecialidadeDto, especialidadeEntidade);
+		specialityMapper.atualizarEspecialidadeDeAtualizarEspecialidadeDto(atualizarEspecialidadeDto, especialidadeEntidade);
 		
 	}
 	

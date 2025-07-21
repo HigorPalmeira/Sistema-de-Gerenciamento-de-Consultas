@@ -47,14 +47,14 @@ public interface EspecialidadeMapper {
 	/**
      * Atualiza a entidade 'Especialidade' com os dados não nulos do DTO.
      * 
-     * @param updateSpecialityDto O objeto com os dados para atualização.
+     * @param atualizarEspecialidadeDto O objeto com os dados para atualização.
      * @param especialidade A entidade que será atualizada (carregada do banco).
      */
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	@Mapping(target = "doctors", ignore = true)
-	void updateSpecialityFromUpdateSpecialityDto(AtualizarEspecialidadeDto updateSpecialityDto, @MappingTarget Especialidade speciality);
+	@Mapping(target = "medicos", ignore = true)
+	void atualizarEspecialidadeDeAtualizarEspecialidadeDto(AtualizarEspecialidadeDto atualizarEspecialidadeDto, @MappingTarget Especialidade especialidade);
 
 }
