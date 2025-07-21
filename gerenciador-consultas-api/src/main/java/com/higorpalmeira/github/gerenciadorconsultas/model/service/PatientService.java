@@ -14,7 +14,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStat
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.PatientMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.PacienteMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
@@ -23,9 +23,9 @@ public class PatientService {
 
 	private PatientRepository patientRepository;
 
-	private PatientMapper patientMapper;
+	private PacienteMapper patientMapper;
 
-	public PatientService(PatientRepository patientRepository, PatientMapper patientMapper) {
+	public PatientService(PatientRepository patientRepository, PacienteMapper patientMapper) {
 		this.patientRepository = patientRepository;
 		this.patientMapper = patientMapper;
 	}
@@ -49,7 +49,7 @@ public class PatientService {
 			throw new DataConflictException("E-mail already registered in the system.");
 		}
 
-		var patient = patientMapper.createToPatient(createPatientDto);
+		var patient = patientMapper.criarPacienteDtoParePaciente(createPatientDto);
 
 		var patientSaved = patientRepository.save(patient);
 
@@ -65,7 +65,7 @@ public class PatientService {
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + id));
 
-		return patientMapper.patientToSimpleOutputPatientDto(patientEntity);
+		return patientMapper.pacienteParaSaidaSimplesPacienteDto(patientEntity);
 
 	}
 	
@@ -81,7 +81,7 @@ public class PatientService {
 		
 		var patients = patientRepository
 				.findAll().stream()
-				.map(patient -> patientMapper.patientToSimpleOutputPatientDto(patient)
+				.map(patient -> patientMapper.pacienteParaSaidaSimplesPacienteDto(patient)
 						).toList();
 
 		return patients;
@@ -116,7 +116,7 @@ public class PatientService {
 			patientEntity.setEmail(updatePatientDto.getEmail());
 		}
 		
-		patientMapper.updatePatientFromUpdatePatientDto(updatePatientDto, patientEntity);
+		patientMapper.atualizarPacienteDeAtualizarPacienteDto(updatePatientDto, patientEntity);
 
 	}
 
