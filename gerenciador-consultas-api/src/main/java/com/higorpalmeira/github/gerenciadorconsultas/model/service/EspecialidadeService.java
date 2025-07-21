@@ -11,7 +11,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.DetailedOu
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.SpecialityMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.EspecialidadeMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EspecialidadeRepository;
 
 @Service
@@ -19,9 +19,9 @@ public class EspecialidadeService {
 	
 	private EspecialidadeRepository especialidadeRepository;
 	
-	private SpecialityMapper specialityMapper;
+	private EspecialidadeMapper specialityMapper;
 	
-	public EspecialidadeService(EspecialidadeRepository especialidadeRepository, SpecialityMapper specialityMapper) {
+	public EspecialidadeService(EspecialidadeRepository especialidadeRepository, EspecialidadeMapper specialityMapper) {
 		this.especialidadeRepository = especialidadeRepository;
 		this.specialityMapper = specialityMapper;
 	}

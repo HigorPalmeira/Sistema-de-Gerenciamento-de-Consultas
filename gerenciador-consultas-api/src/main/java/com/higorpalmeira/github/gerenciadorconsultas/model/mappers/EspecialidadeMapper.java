@@ -13,10 +13,10 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpec
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 
 @Mapper(componentModel = "spring", uses = {DoctorMapper.class})
-public interface SpecialityMapper {
+public interface EspecialidadeMapper {
 	
 	/*
-	 * Cria uma entidade 'Speciality' com os dados do DTO.
+	 * Cria uma entidade 'Especialidade' com os dados do DTO.
 	 * 
 	 * @param createSpecialityDto Objeto com os dados para criação da entidade.
 	 * @return Speciality Entidade criada a partir dos dados do DTO.
@@ -24,7 +24,7 @@ public interface SpecialityMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	@Mapping(target = "doctors", ignore = true)
+	@Mapping(target = "medicos", ignore = true)
 	Especialidade createToSpeciality(CreateSpecialityDto createSpecialityDto);
 	
 	/*
