@@ -91,7 +91,7 @@ public class DoctorService {
 						doctor.getStatus(),
 						doctor.getTelephone(),
 						doctor.getEmail(),
-						doctor.getSpeciality().getDescription()
+						doctor.getSpeciality().getDescricao()
 						)).orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + id));
 		
 		return doctorEntity;

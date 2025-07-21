@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.DetailedOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
@@ -27,7 +27,7 @@ public class EspecialidadeService {
 	}
 	
 	@Transactional
-	public UUID criarEspecialidade(CreateSpecialityDto criarEspecialidadeDto) {
+	public UUID criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) {
 		
 		var especialidade = specialityMapper.createToSpeciality(criarEspecialidadeDto);
 		

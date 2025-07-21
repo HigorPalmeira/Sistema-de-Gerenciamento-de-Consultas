@@ -6,7 +6,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.DetailedOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
@@ -25,7 +25,7 @@ public interface EspecialidadeMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "medicos", ignore = true)
-	Especialidade createToSpeciality(CreateSpecialityDto createSpecialityDto);
+	Especialidade createToSpeciality(CriarEspecialidadeDto createSpecialityDto);
 	
 	/*
 	 * Cria um DTO de saída simples a partir da entidade 'Speciality'.
