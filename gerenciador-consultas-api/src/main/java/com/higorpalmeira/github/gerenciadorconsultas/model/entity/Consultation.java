@@ -48,7 +48,7 @@ public class Consultation {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patient_id")
-	private Patient patient;
+	private Paciente patient;
 	
 	@CreationTimestamp
 	private Instant creationTimestamp;
@@ -61,7 +61,7 @@ public class Consultation {
 	}
 
 	public Consultation(UUID consultationId, LocalDateTime dateTime, StatusConsultationType status, String observations,
-			float value, Doctor doctor, Patient patient, Instant creationTimestamp, Instant updateTimestamp) {
+			float value, Doctor doctor, Paciente patient, Instant creationTimestamp, Instant updateTimestamp) {
 		this.consultationId = consultationId;
 		this.dateTime = dateTime;
 		this.status = status;
@@ -74,7 +74,7 @@ public class Consultation {
 	}
 
 	public Consultation(LocalDateTime dateTime, StatusConsultationType status, String observations, float value,
-			Doctor doctor, Patient patient, Instant creationTimestamp, Instant updateTimestamp) {
+			Doctor doctor, Paciente patient, Instant creationTimestamp, Instant updateTimestamp) {
 		this.dateTime = dateTime;
 		this.status = status;
 		this.observations = observations;
@@ -133,11 +133,11 @@ public class Consultation {
 		this.doctor = doctor;
 	}
 
-	public Patient getPatient() {
+	public Paciente getPatient() {
 		return patient;
 	}
 
-	public void setPatient(Patient patient) {
+	public void setPatient(Paciente patient) {
 		this.patient = patient;
 	}
 

@@ -9,7 +9,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreatePatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputPatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdatePatientDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
 
 @Mapper(componentModel = "spring", uses = {EnderecoMapper.class})
 public interface PatientMapper {
@@ -25,7 +25,7 @@ public interface PatientMapper {
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultations", ignore = true)
 	@Mapping(target = "status", expression = "java(StatusAccountType.ACTIVE)")
-	Patient createToPatient(CreatePatientDto createPatientMapper);
+	Paciente createToPatient(CreatePatientDto createPatientMapper);
 	
 	/*
 	 * Cria um DTO de saída simples a partir da entidade 'Patient'.
@@ -33,7 +33,7 @@ public interface PatientMapper {
 	 * @param patient Entidade a ser transformada.
 	 * @return SimpleOutputPatientDto DTO de saída simples criado.
 	 * */
-	SimpleOutputPatientDto patientToSimpleOutputPatientDto(Patient patient);
+	SimpleOutputPatientDto patientToSimpleOutputPatientDto(Paciente patient);
 
 	/**
      * Atualiza a entidade 'Patient' com os dados não nulos do DTO.
@@ -48,6 +48,6 @@ public interface PatientMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultations", ignore = true)
-	void updatePatientFromUpdatePatientDto(UpdatePatientDto updatePatientDto, @MappingTarget Patient patient);
+	void updatePatientFromUpdatePatientDto(UpdatePatientDto updatePatientDto, @MappingTarget Paciente patient);
 	
 }

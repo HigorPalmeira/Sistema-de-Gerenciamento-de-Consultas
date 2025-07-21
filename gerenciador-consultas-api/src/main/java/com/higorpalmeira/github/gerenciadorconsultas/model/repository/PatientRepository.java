@@ -6,10 +6,10 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Patient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
 
 @Repository
-public interface PatientRepository extends JpaRepository<Patient, UUID> {
+public interface PatientRepository extends JpaRepository<Paciente, UUID> {
 	
 	/*
 	 * Verifica se existe um paciente com o CPF fornecido.
@@ -33,7 +33,7 @@ public interface PatientRepository extends JpaRepository<Patient, UUID> {
 	 * @param cpf O CPF a ser procurado.
 	 * @return Optional com Patient presente se o paciente for encontrado, caso contrário um Optional vazio.
 	 * */
-	Optional<Patient> findByCpf(String cpf);
+	Optional<Paciente> findByCpf(String cpf);
 	
 	/*
 	 * Busca por um paciente com o E-mail fornecido.
@@ -41,6 +41,6 @@ public interface PatientRepository extends JpaRepository<Patient, UUID> {
 	 * @param email O E-mail a ser procurado.
 	 * @return Optional com Patient presente se o paciente for encontrado, caso contrário um Optional vazio.
 	 * */
-	Optional<Patient> findByEmail(String email);
+	Optional<Paciente> findByEmail(String email);
 
 }
