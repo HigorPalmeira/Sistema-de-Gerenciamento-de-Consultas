@@ -15,7 +15,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNo
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultationMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.ConsultationRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.DoctorRepository;
-import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
+import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PacienteRepository;
 
 @Service
 public class ConsultationService {
@@ -24,11 +24,11 @@ public class ConsultationService {
 	
 	private DoctorRepository doctorRepository;
 	
-	private PatientRepository patientRepository;
+	private PacienteRepository patientRepository;
 	
 	private ConsultationMapper consultationMapper;
 	
-	public ConsultationService(ConsultationRepository consultationRepository, DoctorRepository doctorRepository, PatientRepository patientRepository, ConsultationMapper consultationMapper) {
+	public ConsultationService(ConsultationRepository consultationRepository, DoctorRepository doctorRepository, PacienteRepository patientRepository, ConsultationMapper consultationMapper) {
 		this.consultationRepository = consultationRepository;
 		this.doctorRepository = doctorRepository;
 		this.patientRepository = patientRepository;

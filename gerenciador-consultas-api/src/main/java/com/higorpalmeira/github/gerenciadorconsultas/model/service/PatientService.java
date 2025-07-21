@@ -15,17 +15,17 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConfli
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.PacienteMapper;
-import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PatientRepository;
+import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PacienteRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
 @Service
 public class PatientService {
 
-	private PatientRepository patientRepository;
+	private PacienteRepository patientRepository;
 
 	private PacienteMapper patientMapper;
 
-	public PatientService(PatientRepository patientRepository, PacienteMapper patientMapper) {
+	public PatientService(PacienteRepository patientRepository, PacienteMapper patientMapper) {
 		this.patientRepository = patientRepository;
 		this.patientMapper = patientMapper;
 	}

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
 
 @Repository
-public interface PatientRepository extends JpaRepository<Paciente, UUID> {
+public interface PacienteRepository extends JpaRepository<Paciente, UUID> {
 	
 	/*
 	 * Verifica se existe um paciente com o CPF fornecido.
