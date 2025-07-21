@@ -18,22 +18,22 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateSpec
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.DetailedOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.service.SpecialityService;
+import com.higorpalmeira.github.gerenciadorconsultas.model.service.EspecialidadeService;
 
 @RestController
 @RequestMapping ("/v1/speciality")
 public class SpecialityController {
 	
-	private SpecialityService specialityService;
+	private EspecialidadeService specialityService;
 	
-	public SpecialityController(SpecialityService specialityService) {
+	public SpecialityController(EspecialidadeService specialityService) {
 		this.specialityService = specialityService;
 	}
 	
 	@PostMapping
 	public ResponseEntity<UUID> createSpeciality(@RequestBody CreateSpecialityDto createSpecialityDto) {
 		
-		var specialityId = specialityService.createSpeciality(createSpecialityDto);
+		var specialityId = specialityService.criarEspecialidade(createSpecialityDto);
 		
 		return ResponseEntity.created(URI.create("/v1/speciality/" + specialityId.toString())).build();
 		
@@ -42,7 +42,7 @@ public class SpecialityController {
 	@GetMapping("/{specialityId}")
 	public ResponseEntity<SimpleOutputSpecialityDto> findSimpleOutputSpecialityById(@PathVariable("specialityId") String specialityId) {
 		
-		var speciality = specialityService.findSimpleOutputSpecialityById(specialityId);
+		var speciality = specialityService.buscarSaidaSimplesEspecialidadePorId(specialityId);
 		
 		return ResponseEntity.ok(speciality);
 		
@@ -52,7 +52,7 @@ public class SpecialityController {
 	@GetMapping("/details/{specialityId}")
 	public ResponseEntity<DetailedOutputSpecialityDto> findSpecialityDetailedById(@PathVariable("specialityId") String specialityId) {
 		
-		var output = specialityService.findSpecialityDetailedById(specialityId);
+		var output = specialityService.buscarSaidaDetalhadaEspecialidadePorId(specialityId);
 		
 		return ResponseEntity.ok(output);
 		
@@ -61,7 +61,7 @@ public class SpecialityController {
 	@GetMapping
 	public ResponseEntity<List<SimpleOutputSpecialityDto>> listSimpleAllSpecialities() {
 		
-		var specialities = specialityService.listSimpleAllSpecialities();
+		var specialities = specialityService.listarTodasSaidaSimplesEspecialidade();
 		
 		return ResponseEntity.ok(specialities);
 		
@@ -70,7 +70,7 @@ public class SpecialityController {
 	@GetMapping("/details")
 	public ResponseEntity<List<DetailedOutputSpecialityDto>> listDetailedAllSpecialities() {
 		
-		var specialities = specialityService.listDetailedAllSpecialities();
+		var specialities = specialityService.listarTodasSaidaDetalhadaEspecialidade();
 		
 		return ResponseEntity.ok(specialities);
 		
@@ -79,7 +79,7 @@ public class SpecialityController {
 	@PutMapping("/{specialityId}")
 	public ResponseEntity<Void> updateSpecialityById(@PathVariable("specialityId") String specialityId, @RequestBody UpdateSpecialityDto updateSpecialityDto) {
 		
-		specialityService.updateSpecialityById(specialityId, updateSpecialityDto);
+		specialityService.atualizarEspecialidadePorId(specialityId, updateSpecialityDto);
 		
 		return ResponseEntity.noContent().build();
 		
@@ -88,7 +88,7 @@ public class SpecialityController {
 	@DeleteMapping("/{specialityId}")
 	public ResponseEntity<Void> deleteById(@PathVariable("specialityId") String specialityId) {
 
-		specialityService.deleteSpecialityById(specialityId);
+		specialityService.deletarEspecialidadePorId(specialityId);
 		
 		return ResponseEntity.noContent().build();
 
