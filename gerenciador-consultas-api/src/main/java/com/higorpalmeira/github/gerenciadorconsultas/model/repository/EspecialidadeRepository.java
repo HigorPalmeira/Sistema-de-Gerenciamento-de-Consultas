@@ -8,14 +8,14 @@ import org.springframework.stereotype.Repository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 
 @Repository
-public interface SpecialityRepository extends JpaRepository<Especialidade, UUID> {
+public interface EspecialidadeRepository extends JpaRepository<Especialidade, UUID> {
 	
 	/*
 	 * Verifica se existe uma especialidade com a descrição fornecida.
 	 * 
-	 * @param description A descrição da especialidade a ser verificado.
+	 * @param descricao A descrição da especialidade a ser verificado.
 	 * @return true se uma especialidade com esta descrição existir, caso contrário false.
 	 * */
-	boolean existsByDescription(String description);
+	boolean existsByDescricao(String descricao);
 
 }

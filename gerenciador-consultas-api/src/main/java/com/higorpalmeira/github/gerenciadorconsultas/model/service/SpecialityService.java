@@ -12,16 +12,16 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutp
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.SpecialityMapper;
-import com.higorpalmeira.github.gerenciadorconsultas.model.repository.SpecialityRepository;
+import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EspecialidadeRepository;
 
 @Service
 public class SpecialityService {
 	
-	private SpecialityRepository specialityRepository;
+	private EspecialidadeRepository specialityRepository;
 	
 	private SpecialityMapper specialityMapper;
 	
-	public SpecialityService(SpecialityRepository specialityRepository, SpecialityMapper specialityMapper) {
+	public SpecialityService(EspecialidadeRepository specialityRepository, SpecialityMapper specialityMapper) {
 		this.specialityRepository = specialityRepository;
 		this.specialityMapper = specialityMapper;
 	}
