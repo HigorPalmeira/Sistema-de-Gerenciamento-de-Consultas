@@ -45,7 +45,7 @@ public class EspecialidadeService {
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado com ID: " + id));
 		
-		return specialityMapper.specialityToSimpleOutputSpecialityDto(especialidadeEntidade);
+		return specialityMapper.especialidadeParaSaidaSimplesEspecialidadeDto(especialidadeEntidade);
 		
 	}
 	
@@ -55,7 +55,7 @@ public class EspecialidadeService {
 		var id = UUID.fromString(especialidadeId);
 		var especialidadeEntidade = especialidadeRepository
 				.findById(id)
-				.map(especialidade -> specialityMapper.specialityToDetailedOutputSpecialityDto(especialidade))
+				.map(especialidade -> specialityMapper.especialidadeParaSaidaDetalhadaEspecialidadeDto(especialidade))
 				.orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado com ID: " + id));
 		
 		return especialidadeEntidade;
@@ -66,7 +66,7 @@ public class EspecialidadeService {
 		
 		var especialidades = especialidadeRepository
 				.findAll().stream()
-				.map(especialidade -> specialityMapper.specialityToSimpleOutputSpecialityDto(especialidade))
+				.map(especialidade -> specialityMapper.especialidadeParaSaidaSimplesEspecialidadeDto(especialidade))
 				.toList();
 		
 		return especialidades;
@@ -78,7 +78,7 @@ public class EspecialidadeService {
 		
 		var especialidades = especialidadeRepository
 				.findAll().stream()
-				.map(especialidade -> specialityMapper.specialityToDetailedOutputSpecialityDto(especialidade))
+				.map(especialidade -> specialityMapper.especialidadeParaSaidaDetalhadaEspecialidadeDto(especialidade))
 				.toList();
 		
 		return especialidades;

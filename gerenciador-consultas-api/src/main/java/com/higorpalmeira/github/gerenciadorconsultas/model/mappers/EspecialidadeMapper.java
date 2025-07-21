@@ -34,21 +34,21 @@ public interface EspecialidadeMapper {
 	 * @return SaidaSimplesEspecialidadeDto DTO de saída simples criado.
 	 * */
 	@Mapping(target = "medicosAssociados", expression = "java(especialidade.getMedicos() != null ? especialidade.getMedicos().size() : 0)")
-	SaidaSimplesEspecialidadeDto specialityToSimpleOutputSpecialityDto(Especialidade especialidade);
+	SaidaSimplesEspecialidadeDto especialidadeParaSaidaSimplesEspecialidadeDto(Especialidade especialidade);
 	
 	/*
-	 * Criar um DTO de saída detalhada a partir da entidade 'Speciality'.
+	 * Criar um DTO de saída detalhada a partir da entidade 'Especialidade'.
 	 * 
-	 * @param speciality Entidade a ser transforamada.
-	 * @return DetailedOutputSpecialityDto DTO de saída detalhada criada.
+	 * @param especialidade Entidade a ser transforamada.
+	 * @return SaidaDetalhadaEspecialidadeDto DTO de saída detalhada criada.
 	 * */
-	SaidaDetalhadaEspecialidadeDto specialityToDetailedOutputSpecialityDto(Especialidade speciality);
+	SaidaDetalhadaEspecialidadeDto especialidadeParaSaidaDetalhadaEspecialidadeDto(Especialidade especialidade);
 	
 	/**
-     * Atualiza a entidade 'Speciality' com os dados não nulos do DTO.
+     * Atualiza a entidade 'Especialidade' com os dados não nulos do DTO.
      * 
      * @param updateSpecialityDto O objeto com os dados para atualização.
-     * @param speciality A entidade que será atualizada (carregada do banco).
+     * @param especialidade A entidade que será atualizada (carregada do banco).
      */
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 	@Mapping(target = "id", ignore = true)
