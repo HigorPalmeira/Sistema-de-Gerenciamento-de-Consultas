@@ -7,7 +7,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEspecialidadeDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.DetailedOutputSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
@@ -42,7 +42,7 @@ public interface EspecialidadeMapper {
 	 * @param speciality Entidade a ser transforamada.
 	 * @return DetailedOutputSpecialityDto DTO de saída detalhada criada.
 	 * */
-	DetailedOutputSpecialityDto specialityToDetailedOutputSpecialityDto(Especialidade speciality);
+	SaidaDetalhadaEspecialidadeDto specialityToDetailedOutputSpecialityDto(Especialidade speciality);
 	
 	/**
      * Atualiza a entidade 'Speciality' com os dados não nulos do DTO.
