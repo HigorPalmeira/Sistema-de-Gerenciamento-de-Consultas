@@ -6,7 +6,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.OutputAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Endereco;
@@ -23,7 +23,7 @@ public interface AddressMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	Endereco createToAddress(CreateAddressDto createAddressDto);
+	Endereco createToAddress(CriarEnderecoDto createAddressDto);
 	
 	/*
 	 * Cria um DTO de saída a partir da entidade 'Address'.

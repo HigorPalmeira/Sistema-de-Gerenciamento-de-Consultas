@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.OutputAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.EnderecoService;
@@ -30,7 +30,7 @@ public class AddressController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<UUID> createAddress(@RequestBody CreateAddressDto createAddressDto) {
+	public ResponseEntity<UUID> createAddress(@RequestBody CriarEnderecoDto createAddressDto) {
 		
 		var addressId = addressService.criarEndereco(createAddressDto);
 		

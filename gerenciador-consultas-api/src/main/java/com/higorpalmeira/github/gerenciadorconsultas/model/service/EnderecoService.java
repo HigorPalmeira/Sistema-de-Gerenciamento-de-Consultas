@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateAddressDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.OutputAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
@@ -26,7 +26,7 @@ public class EnderecoService {
 	}
 	
 	@Transactional
-	public UUID criarEndereco(CreateAddressDto criarEnderecoDto) {
+	public UUID criarEndereco(CriarEnderecoDto criarEnderecoDto) {
 		
 		var endereco = addressMapper.createToAddress(criarEnderecoDto);
 		

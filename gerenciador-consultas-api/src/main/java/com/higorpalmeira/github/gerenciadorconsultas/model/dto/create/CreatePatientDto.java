@@ -20,7 +20,7 @@ public class CreatePatientDto {
 	
 	private String email;
 	
-	private CreateAddressDto address;
+	private CriarEnderecoDto address;
 	
 	public String getFirstName() {
 		return firstName;
@@ -59,10 +59,10 @@ public class CreatePatientDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public CreateAddressDto getAddress() {
+	public CriarEnderecoDto getAddress() {
 		return address;
 	}
-	public void setAddress(CreateAddressDto address) {
+	public void setAddress(CriarEnderecoDto address) {
 		this.address = address;
 	}
 	public GenderType getGender() {
