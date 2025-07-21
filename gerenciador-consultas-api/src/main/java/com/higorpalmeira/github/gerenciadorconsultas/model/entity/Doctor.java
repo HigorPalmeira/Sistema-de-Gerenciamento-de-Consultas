@@ -53,7 +53,7 @@ public class Doctor {
 	
 	@ManyToOne (fetch = FetchType.LAZY)
 	@JoinColumn (name = "speciality_id")
-	private Speciality speciality;
+	private Especialidade speciality;
 	
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private List<Consultation> consultations = new ArrayList<>();
@@ -69,7 +69,7 @@ public class Doctor {
 	}
 
 	public Doctor(UUID doctorId, String firstName, String lastName, String crm, StatusAccountType status, String telephone,
-			String email, Speciality speciality, Instant creationTimestamp, Instant updateTimestamp) {
+			String email, Especialidade speciality, Instant creationTimestamp, Instant updateTimestamp) {
 		this.doctorId = doctorId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -83,7 +83,7 @@ public class Doctor {
 	}
 
 	public Doctor(String firstName, String lastName, String crm, StatusAccountType status, String telephone, String email,
-			Speciality speciality, Instant creationTimestamp, Instant updateTimestamp) {
+			Especialidade speciality, Instant creationTimestamp, Instant updateTimestamp) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.crm = crm;
@@ -151,11 +151,11 @@ public class Doctor {
 		this.email = email;
 	}
 
-	public Speciality getSpeciality() {
+	public Especialidade getSpeciality() {
 		return speciality;
 	}
 
-	public void setSpeciality(Speciality speciality) {
+	public void setSpeciality(Especialidade speciality) {
 		this.speciality = speciality;
 	}
 

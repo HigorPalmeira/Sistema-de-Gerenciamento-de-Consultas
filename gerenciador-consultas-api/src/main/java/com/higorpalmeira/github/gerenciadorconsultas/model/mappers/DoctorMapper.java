@@ -10,7 +10,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateDoct
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Doctor;
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 
 @Mapper(componentModel = "spring", uses = {SpecialityMapper.class})
 public interface DoctorMapper {
@@ -20,7 +20,7 @@ public interface DoctorMapper {
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultations", ignore = true)
 	@Mapping(target = "status", expression = "java(StatusAccountType.ACTIVE)")
-	Doctor createToDoctor(CreateDoctorDto createDoctorDto, Speciality speciality);
+	Doctor createToDoctor(CreateDoctorDto createDoctorDto, Especialidade speciality);
 
 	@Mapping(target = "consultations", expression = "java(doctor.getConsultations() != null ? doctor.getConsultations().size() : 0)")
 	SimpleOutputDoctorDto doctorToSimpleOutputDoctorDto(Doctor doctor);
@@ -32,6 +32,6 @@ public interface DoctorMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultations", ignore = true)
-	void updateDoctorFromUpdateDoctorDto(UpdateDoctorDto updateDoctorDto, Speciality speciality, @MappingTarget Doctor doctor);
+	void updateDoctorFromUpdateDoctorDto(UpdateDoctorDto updateDoctorDto, Especialidade speciality, @MappingTarget Doctor doctor);
 	
 }

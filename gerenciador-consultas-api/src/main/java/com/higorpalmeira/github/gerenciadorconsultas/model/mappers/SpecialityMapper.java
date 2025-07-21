@@ -10,7 +10,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateSpec
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.DetailedOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputSpecialityDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 
 @Mapper(componentModel = "spring", uses = {DoctorMapper.class})
 public interface SpecialityMapper {
@@ -25,7 +25,7 @@ public interface SpecialityMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "doctors", ignore = true)
-	Speciality createToSpeciality(CreateSpecialityDto createSpecialityDto);
+	Especialidade createToSpeciality(CreateSpecialityDto createSpecialityDto);
 	
 	/*
 	 * Cria um DTO de saída simples a partir da entidade 'Speciality'.
@@ -34,7 +34,7 @@ public interface SpecialityMapper {
 	 * @return SimpleOutputSpecialityDto DTO de saída simples criado.
 	 * */
 	@Mapping(target = "associateDoctors", expression = "java(speciality.getDoctors() != null ? speciality.getDoctors().size() : 0)")
-	SimpleOutputSpecialityDto specialityToSimpleOutputSpecialityDto(Speciality speciality);
+	SimpleOutputSpecialityDto specialityToSimpleOutputSpecialityDto(Especialidade speciality);
 	
 	/*
 	 * Criar um DTO de saída detalhada a partir da entidade 'Speciality'.
@@ -42,7 +42,7 @@ public interface SpecialityMapper {
 	 * @param speciality Entidade a ser transforamada.
 	 * @return DetailedOutputSpecialityDto DTO de saída detalhada criada.
 	 * */
-	DetailedOutputSpecialityDto specialityToDetailedOutputSpecialityDto(Speciality speciality);
+	DetailedOutputSpecialityDto specialityToDetailedOutputSpecialityDto(Especialidade speciality);
 	
 	/**
      * Atualiza a entidade 'Speciality' com os dados não nulos do DTO.
@@ -55,6 +55,6 @@ public interface SpecialityMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "doctors", ignore = true)
-	void updateSpecialityFromUpdateSpecialityDto(UpdateSpecialityDto updateSpecialityDto, @MappingTarget Speciality speciality);
+	void updateSpecialityFromUpdateSpecialityDto(UpdateSpecialityDto updateSpecialityDto, @MappingTarget Especialidade speciality);
 
 }

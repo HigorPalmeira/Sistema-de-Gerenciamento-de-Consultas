@@ -19,18 +19,18 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table (name = "sgc_speciality")
-public class Speciality {
+@Table (name = "sgc_especialidade")
+public class Especialidade {
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.UUID)
 	private UUID id;
 	
-	@Column (name = "description")
-	private String description;
+	@Column (name = "descricao")
+	private String descricao;
 	
-	@OneToMany(mappedBy = "speciality", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-	private List<Doctor> doctors = new ArrayList<>();
+	@OneToMany(mappedBy = "especialidade", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	private List<Doctor> medicos = new ArrayList<>();
 	
 	@CreationTimestamp
 	private Instant creationTimestamp;
@@ -38,21 +38,21 @@ public class Speciality {
 	@UpdateTimestamp
 	private Instant updateTimestamp;
 
-	public Speciality() {
+	public Especialidade() {
 		
 	}
 
-	public Speciality(String description, Instant creationTimestamp, Instant updateTimestamp) {
+	public Especialidade(String descricao, Instant creationTimestamp, Instant updateTimestamp) {
 		super();
-		this.description = description;
+		this.descricao = descricao;
 		this.creationTimestamp = creationTimestamp;
 		this.updateTimestamp = updateTimestamp;
 	}
 
-	public Speciality(UUID id, String description, Instant creationTimestamp, Instant updateTimestamp) {
+	public Especialidade(UUID id, String descricao, Instant creationTimestamp, Instant updateTimestamp) {
 		super();
 		this.id = id;
-		this.description = description;
+		this.descricao = descricao;
 		this.creationTimestamp = creationTimestamp;
 		this.updateTimestamp = updateTimestamp;
 	}
@@ -65,12 +65,12 @@ public class Speciality {
 		this.id = id;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public Instant getCreationTimestamp() {
@@ -89,12 +89,12 @@ public class Speciality {
 		this.updateTimestamp = updateTimestamp;
 	}
 
-	public List<Doctor> getDoctors() {
-		return doctors;
+	public List<Doctor> getMedicos() {
+		return medicos;
 	}
 
-	public void setDoctors(List<Doctor> doctors) {
-		this.doctors = doctors;
+	public void setMedicos(List<Doctor> medicos) {
+		this.medicos = medicos;
 	}
 
 }

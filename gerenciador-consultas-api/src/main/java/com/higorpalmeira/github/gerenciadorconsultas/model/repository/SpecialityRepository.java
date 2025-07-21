@@ -5,10 +5,10 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Speciality;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 
 @Repository
-public interface SpecialityRepository extends JpaRepository<Speciality, UUID> {
+public interface SpecialityRepository extends JpaRepository<Especialidade, UUID> {
 	
 	/*
 	 * Verifica se existe uma especialidade com a descrição fornecida.
