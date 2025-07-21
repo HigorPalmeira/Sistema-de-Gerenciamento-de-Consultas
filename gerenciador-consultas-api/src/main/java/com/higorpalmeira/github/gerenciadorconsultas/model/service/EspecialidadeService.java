@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesEspecialidadeDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.EspecialidadeMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EspecialidadeRepository;
@@ -86,7 +86,7 @@ public class EspecialidadeService {
 	}
 	
 	@Transactional
-	public void atualizarEspecialidadePorId(String especialidadeId, UpdateSpecialityDto atualizarEspecialidadeDto) {
+	public void atualizarEspecialidadePorId(String especialidadeId, AtualizarEspecialidadeDto atualizarEspecialidadeDto) {
 		
 		var id = UUID.fromString(especialidadeId);
 		var especialidadeEntidade = especialidadeRepository

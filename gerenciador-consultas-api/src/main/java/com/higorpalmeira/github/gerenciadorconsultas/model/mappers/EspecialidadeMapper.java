@@ -9,7 +9,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesEspecialidadeDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 
 @Mapper(componentModel = "spring", uses = {DoctorMapper.class})
@@ -55,6 +55,6 @@ public interface EspecialidadeMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "doctors", ignore = true)
-	void updateSpecialityFromUpdateSpecialityDto(UpdateSpecialityDto updateSpecialityDto, @MappingTarget Especialidade speciality);
+	void updateSpecialityFromUpdateSpecialityDto(AtualizarEspecialidadeDto updateSpecialityDto, @MappingTarget Especialidade speciality);
 
 }

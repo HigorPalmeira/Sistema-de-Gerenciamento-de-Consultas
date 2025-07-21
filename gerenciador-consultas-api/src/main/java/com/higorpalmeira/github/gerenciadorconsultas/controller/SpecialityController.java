@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesEspecialidadeDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateSpecialityDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.EspecialidadeService;
 
 @RestController
@@ -77,7 +77,7 @@ public class SpecialityController {
 	}
 	
 	@PutMapping("/{specialityId}")
-	public ResponseEntity<Void> updateSpecialityById(@PathVariable("specialityId") String specialityId, @RequestBody UpdateSpecialityDto updateSpecialityDto) {
+	public ResponseEntity<Void> updateSpecialityById(@PathVariable("specialityId") String specialityId, @RequestBody AtualizarEspecialidadeDto updateSpecialityDto) {
 		
 		specialityService.atualizarEspecialidadePorId(specialityId, updateSpecialityDto);
 		
