@@ -17,22 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.OutputAddressDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateAddressDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.service.AddressService;
+import com.higorpalmeira.github.gerenciadorconsultas.model.service.EnderecoService;
 
 @RestController
 @RequestMapping("/v1/address")
 public class AddressController {
 	
-	private AddressService addressService;
+	private EnderecoService addressService;
 	
-	public AddressController(AddressService addressService) {
+	public AddressController(EnderecoService addressService) {
 		this.addressService = addressService;
 	}
 	
 	@PostMapping
 	public ResponseEntity<UUID> createAddress(@RequestBody CreateAddressDto createAddressDto) {
 		
-		var addressId = addressService.createAddress(createAddressDto);
+		var addressId = addressService.criarEndereco(createAddressDto);
 		
 		return ResponseEntity.created(URI.create("/v1/address/" + addressId.toString())).build();
 		
@@ -41,7 +41,7 @@ public class AddressController {
 	@GetMapping("/{addressId}")
 	public ResponseEntity<OutputAddressDto> findAddressById(@PathVariable("addressId") String addressId) {
 		
-		var address = addressService.findAddressById(addressId);
+		var address = addressService.buscarEnderecoPorId(addressId);
 		
 		return ResponseEntity.ok(address);
 	}
@@ -49,7 +49,7 @@ public class AddressController {
 	@GetMapping
 	public ResponseEntity<List<OutputAddressDto>> listAddresses() {
 		
-		var addresses = addressService.listAddresses();
+		var addresses = addressService.listarTodosEnderecos();
 		
 		return ResponseEntity.ok(addresses);
 		
@@ -58,7 +58,7 @@ public class AddressController {
 	@PutMapping("/{addressId}")
 	public ResponseEntity<Void> updateAddressById(@PathVariable("addressId") String addressId, @RequestBody UpdateAddressDto updateAddressDto) {
 		
-		addressService.updateAddressById(addressId, updateAddressDto);
+		addressService.atualizarEnderecoPorId(addressId, updateAddressDto);
 		
 		return ResponseEntity.noContent().build();
 		
@@ -67,7 +67,7 @@ public class AddressController {
 	@DeleteMapping("/{addressId}")
 	public ResponseEntity<Void> deleteById(@PathVariable("addressId") String addressId) {
 		
-		addressService.deleteAddressById(addressId);
+		addressService.deletarEnderecoPorId(addressId);
 		
 		return ResponseEntity.noContent().build();
 		
