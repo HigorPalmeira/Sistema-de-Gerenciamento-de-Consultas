@@ -21,59 +21,60 @@ import java.util.UUID;
  * @author higor
  */
 public class EspecialidadeService {
-    
+
     private final String URL_API = "http://localhost:8080/v1/especialidade";
-    
+
     public SaidaSimplesEspecialidadeDto getSaidaSimplesEspecialidadeDto(UUID id) {
-        
+
         SaidaSimplesEspecialidadeDto especialidadeDto = new SaidaSimplesEspecialidadeDto();
-        
+
         try {
-            
+
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(URL_API + "/" + id.toString()))
                     .GET()
                     .build();
-            
+
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            
+
             ObjectMapper mapper = new ObjectMapper();
-            
+
             especialidadeDto = mapper.readValue(response.body(), SaidaSimplesEspecialidadeDto.class);
-            
-        } catch(IOException | InterruptedException e) {
+
+        } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
         }
-        
+
         return especialidadeDto;
-        
+
     }
-    
+
     public List<SaidaSimplesEspecialidadeDto> listarSaidaSimplesEspecialidadeDto() {
-        
+
         List<SaidaSimplesEspecialidadeDto> especialidades = new ArrayList<>();
-        
+
         try {
-            
+
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(URL_API))
                     .GET()
                     .build();
-            
+
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            
+
             ObjectMapper mapper = new ObjectMapper();
-            
-            especialidades = mapper.readValues(response.body(), new TypeReference<List<SaidaSimplesEspecialidadeDto>>(){ });
-            
-        } catch(Exception e) {
+
+            especialidades = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesEspecialidadeDto>>() {
+            });
+
+        } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
         }
-        
+
         return especialidades;
         
     }
-    
+
 }
