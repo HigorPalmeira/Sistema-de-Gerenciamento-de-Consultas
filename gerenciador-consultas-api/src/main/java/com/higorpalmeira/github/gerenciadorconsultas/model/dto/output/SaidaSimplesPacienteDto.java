@@ -27,6 +27,8 @@ public class SaidaSimplesPacienteDto {
 	private String email;
 	
 	private SaidaEnderecoDto endereco;
+	
+	private int consultas;
 
 	public UUID getId() {
 		return id;
@@ -106,6 +108,14 @@ public class SaidaSimplesPacienteDto {
 
 	public void setEndereco(SaidaEnderecoDto endereco) {
 		this.endereco = endereco;
+	}
+
+	public int getConsultas() {
+		return consultas;
+	}
+
+	public void setConsultas(int consultas) {
+		this.consultas = consultas;
 	}
 
 }
