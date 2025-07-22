@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -105,6 +106,18 @@ public class PacienteService {
 		
 		var pacientes = pacienteRepository
 				.findAllByStatus(TipoStatusConta.INATIVO).stream()
+				.map(paciente -> pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente))
+				.toList();
+		
+		return pacientes;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacientePorDataNascimento(LocalDate dataNascimento) {
+		
+		var pacientes = pacienteRepository
+				.findAllByDataNascimento(dataNascimento).stream()
 				.map(paciente -> pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente))
 				.toList();
 		
