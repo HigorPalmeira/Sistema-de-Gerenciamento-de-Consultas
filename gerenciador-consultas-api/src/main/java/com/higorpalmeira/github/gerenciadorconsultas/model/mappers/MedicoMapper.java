@@ -18,7 +18,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 
-@Mapper(componentModel = "spring", uses = {EspecialidadeMapper.class, ConsultaMapper.class})
+@Mapper(componentModel = "spring", uses = {ConsultaMapper.class})
 public abstract class MedicoMapper {
 	
 	@Autowired
