@@ -269,6 +269,23 @@ public class frmCriarMedico extends frmGenerico {
             JOptionPane.showMessageDialog(this, "O campo 'Telefone' não pode estar vazio!", "Telefone Inválido", JOptionPane.ERROR_MESSAGE);
             return;
             
+        } else if (!Validador.isTelefone(txtTelefone.getText().trim())) {
+            
+            JOptionPane.showMessageDialog(this, "Formato de telefone inválido!", "Telefone Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+            
+        }
+        
+        if (txtCrm.getText() == null || txtCrm.getText().isBlank()) {
+            
+            JOptionPane.showMessageDialog(this, "O campo 'CRM' não pode estar vazio!", "CRM Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+            
+        } else if (!Validador.isCrm(txtCrm.getText().trim())) {
+            
+            JOptionPane.showMessageDialog(this, "Formato de CRM inválido!", "CRM Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+            
         }
         
     }//GEN-LAST:event_btnSalvarActionPerformed
