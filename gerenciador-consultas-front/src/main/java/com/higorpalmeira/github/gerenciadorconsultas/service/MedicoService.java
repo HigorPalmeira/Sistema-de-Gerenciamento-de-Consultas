@@ -20,7 +20,7 @@ import java.util.UUID;
  */
 public class MedicoService {
     
-    private final String URL_API = "localhost:8080/v1/medico";
+    private final String URL_API = "http://localhost:8080/v1/medico";
     
     public UUID criarMedico(CriarMedicoDto criarMedicoDto) {
         
