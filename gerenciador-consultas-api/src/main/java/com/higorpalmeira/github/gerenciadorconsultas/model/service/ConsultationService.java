@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
@@ -36,7 +36,7 @@ public class ConsultationService {
 	}
 	
 	@Transactional
-	public UUID createConsultation(CreateConsultationDto createConsultationDto) {
+	public UUID createConsultation(CriarConsultaDto createConsultationDto) {
 		
 		// criar validação para o datetime
 		if (createConsultationDto.getValue() < 0.0f) {

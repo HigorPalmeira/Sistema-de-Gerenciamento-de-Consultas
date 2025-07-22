@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.ConsultationService;
@@ -30,7 +30,7 @@ public class ConsultationController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<UUID> createConsultation(@RequestBody CreateConsultationDto createConsultationDto) {
+	public ResponseEntity<UUID> createConsultation(@RequestBody CriarConsultaDto createConsultationDto) {
 		
 		var consultationId = consultationService.createConsultation(createConsultationDto);
 		
