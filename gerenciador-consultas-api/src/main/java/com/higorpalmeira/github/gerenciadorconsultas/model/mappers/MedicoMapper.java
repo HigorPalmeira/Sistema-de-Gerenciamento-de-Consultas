@@ -16,6 +16,12 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 @Mapper(componentModel = "spring", uses = {EspecialidadeMapper.class, ConsultaMapper.class})
 public interface MedicoMapper {
 	
+	/*
+	 * Cria uma entidade 'Medico' com os dados do DTO.
+	 * 
+	 * @param criarMedicoDto Objeto com os dados para criação da entidade.
+	 * @return Medico Entidade criada a partir dos dados do DTO.
+	 * */
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
@@ -23,11 +29,29 @@ public interface MedicoMapper {
 	@Mapping(target = "status", expression = "java(StatusAccountType.ATIVO)")
 	Medico criarMedicoDtoParaMedico(CriarMedicoDto criarMedicoDto, Especialidade especialidade);
 
+	/*
+	 * Cria um DTO de saída simples a partir da entidade 'Medico'.
+	 * 
+	 * @param medico Entidade a ser transformada.
+	 * @return SaidaSimplesMedicoDto DTO de saída simples criado.
+	 * */
 	@Mapping(target = "consultas", expression = "java(doctor.getConsultas() != null ? doctor.getConsultas().size() : 0)")
 	SaidaSimplesMedicoDto medicoParaSaidaSimplesMedicoDto(Medico medico);
 	
+	/*
+	 * Cria um DTO de saída detalhada a paritr da entidade 'Medico'.
+	 * 
+	 * @param medico Entidade a ser transformada.
+	 * @return SaidaDetalhadaMedicoDto DTO de saída detalhada criado.
+	 * */
 	SaidaDetalhadaMedicoDto medicoParaSaidaDetalhadaMedicoDto(Medico medico);
 	
+	/**
+     * Atualiza a entidade 'Medico' com os dados não nulos do DTO.
+     * 
+     * @param atualizarMedicoDto O objeto com os dados para atualização.
+     * @param medico A entidade que será atualizada (carregada do banco).
+     */
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "crm", ignore = true)
