@@ -10,7 +10,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
 
 @Repository
-public interface ConsultationRepository extends JpaRepository<Consulta, UUID> {
+public interface ConsultaRepository extends JpaRepository<Consulta, UUID> {
 	
 	List<Consulta> findAllByStatus(TipoStatusConsulta status);
 	

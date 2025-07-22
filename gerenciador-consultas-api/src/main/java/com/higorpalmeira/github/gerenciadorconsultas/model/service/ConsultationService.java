@@ -13,14 +13,14 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStat
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultationMapper;
-import com.higorpalmeira.github.gerenciadorconsultas.model.repository.ConsultationRepository;
+import com.higorpalmeira.github.gerenciadorconsultas.model.repository.ConsultaRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.MedicoRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PacienteRepository;
 
 @Service
 public class ConsultationService {
 
-	private ConsultationRepository consultationRepository;
+	private ConsultaRepository consultationRepository;
 	
 	private MedicoRepository doctorRepository;
 	
@@ -28,7 +28,7 @@ public class ConsultationService {
 	
 	private ConsultationMapper consultationMapper;
 	
-	public ConsultationService(ConsultationRepository consultationRepository, MedicoRepository doctorRepository, PacienteRepository patientRepository, ConsultationMapper consultationMapper) {
+	public ConsultationService(ConsultaRepository consultationRepository, MedicoRepository doctorRepository, PacienteRepository patientRepository, ConsultationMapper consultationMapper) {
 		this.consultationRepository = consultationRepository;
 		this.doctorRepository = doctorRepository;
 		this.patientRepository = patientRepository;
