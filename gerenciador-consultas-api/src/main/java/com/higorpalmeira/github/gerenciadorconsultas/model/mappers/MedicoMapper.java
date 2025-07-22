@@ -5,6 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaMedicoDto;
@@ -14,7 +15,10 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 
 @Mapper(componentModel = "spring", uses = {EspecialidadeMapper.class, ConsultaMapper.class})
-public interface MedicoMapper {
+public abstract class MedicoMapper {
+	
+	@Autowired
+	protected EspecialidadeMapper especialidadeMapper;
 	
 	/*
 	 * Cria uma entidade 'Medico' com os dados do DTO.
@@ -27,7 +31,7 @@ public interface MedicoMapper {
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultas", ignore = true)
 	@Mapping(target = "status", expression = "java(TipoStatusConta.ATIVO)")
-	Medico criarMedicoDtoParaMedico(CriarMedicoDto criarMedicoDto, Especialidade especialidade);
+	abstract Medico criarMedicoDtoParaMedico(CriarMedicoDto criarMedicoDto, Especialidade especialidade);
 
 	/*
 	 * Cria um DTO de saída simples a partir da entidade 'Medico'.
@@ -36,7 +40,7 @@ public interface MedicoMapper {
 	 * @return SaidaSimplesMedicoDto DTO de saída simples criado.
 	 * */
 	@Mapping(target = "consultas", expression = "java(medico.getConsultas() != null ? medico.getConsultas().size() : 0)")
-	SaidaSimplesMedicoDto medicoParaSaidaSimplesMedicoDto(Medico medico);
+	abstract SaidaSimplesMedicoDto medicoParaSaidaSimplesMedicoDto(Medico medico);
 	
 	/*
 	 * Cria um DTO de saída detalhada a paritr da entidade 'Medico'.
@@ -44,7 +48,7 @@ public interface MedicoMapper {
 	 * @param medico Entidade a ser transformada.
 	 * @return SaidaDetalhadaMedicoDto DTO de saída detalhada criado.
 	 * */
-	SaidaDetalhadaMedicoDto medicoParaSaidaDetalhadaMedicoDto(Medico medico);
+	abstract SaidaDetalhadaMedicoDto medicoParaSaidaDetalhadaMedicoDto(Medico medico);
 	
 	/**
      * Atualiza a entidade 'Medico' com os dados não nulos do DTO.
@@ -59,6 +63,6 @@ public interface MedicoMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultas", ignore = true)
-	void atualizarMedicoDeAtualizarMedicoDto(AtualizarMedicoDto atualizarMedicoDto, Especialidade especialidade, @MappingTarget Medico medico);
+	abstract void atualizarMedicoDeAtualizarMedicoDto(AtualizarMedicoDto atualizarMedicoDto, Especialidade especialidade, @MappingTarget Medico medico);
 	
 }
