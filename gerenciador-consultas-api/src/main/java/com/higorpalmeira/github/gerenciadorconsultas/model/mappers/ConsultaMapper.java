@@ -32,7 +32,7 @@ public interface ConsultaMapper {
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "medico", expression = "java(medico != null ? medico : null)")
 	@Mapping(target = "paciente", expression = "java(paciente != null ? paciente : null)")
-	@Mapping(target = "status", expression = "java(consulta.setStatus(atualizarConsultaDto.getStatus()))")
+	@Mapping(target = "status", expression = "java(atualizarConsultaDto.getStatus())")
 	void atualizarConsultaDeAtualizarConsultaDto(AtualizarConsultaDto atualizarConsultaDto, Medico medico, Paciente paciente, @MappingTarget Consulta consulta);
 	
 }
