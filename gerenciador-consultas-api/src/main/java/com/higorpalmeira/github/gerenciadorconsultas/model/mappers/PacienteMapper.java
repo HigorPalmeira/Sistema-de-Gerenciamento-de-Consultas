@@ -34,6 +34,7 @@ public interface PacienteMapper {
 	 * @param paciente Entidade a ser transformada.
 	 * @return SaidaSimplePacienteDto DTO de saída simples criado.
 	 * */
+	@Mapping(target = "consultas", expression = "java(paciente.getConsultas() != null ? paciente.getConsultas().size() : 0)")
 	SaidaSimplesPacienteDto pacienteParaSaidaSimplesPacienteDto(Paciente paciente);
 	
 	/*
