@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedPatientDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarPacienteDto;
@@ -70,13 +69,6 @@ public class PacienteService {
 
 	}
 	
-	@Transactional(readOnly = true)
-	public OldOutputDetailedPatientDto findDetailedPatientById(String patientId) {
-		
-		return null;
-		
-	}
-
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPaciente() {
 		
