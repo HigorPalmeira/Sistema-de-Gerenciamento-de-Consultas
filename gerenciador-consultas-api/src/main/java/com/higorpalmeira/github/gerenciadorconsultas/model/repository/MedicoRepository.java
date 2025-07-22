@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
@@ -46,8 +47,28 @@ public interface MedicoRepository extends JpaRepository<Medico, UUID> {
 	 * */
 	Optional<Medico> findByEmail(String email);
 	
+	/*
+	 * Busca por todos os médicos com o Status fornecido.
+	 * 
+	 * @param status O Status a ser procurado.
+	 * @return Lista com todos os médicos com o status fornecido, ou uma lista vazia.
+	 * */
 	List<Medico> findAllByStatus(TipoStatusConta status);
 	
+	/*
+	 * Busca por todos os médicos que não tenham o Status fornecido.
+	 * 
+	 * @param status O Status a ser evitado.
+	 * @return Lista com todos os médicos com o status fornecido, ou uma lista vazia.
+	 * */
 	List<Medico> findAllByStatusNot(TipoStatusConsulta status);
+	
+	/*
+	 * Busca por todos os médicos que possuam a Especialidade fornecida.
+	 * 
+	 * @param especialidade A Especialidade a ser procurada.
+	 * @return Lista com todos os médicos com a especialidade fornecida, ou uma lista vazia.
+	 * */
+	List<Medico> findAllByEspecialidade(Especialidade especialidade);
 	
 }
