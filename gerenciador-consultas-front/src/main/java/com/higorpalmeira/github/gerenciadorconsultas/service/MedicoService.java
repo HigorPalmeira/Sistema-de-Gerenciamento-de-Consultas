@@ -5,11 +5,13 @@
 package com.higorpalmeira.github.gerenciadorconsultas.service;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublisher;
 import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 /**
@@ -22,18 +24,28 @@ public class MedicoService {
     
     public UUID criarMedico(CriarMedicoDto criarMedicoDto) {
         
+        UUID id = null;
+        
         try {
             
             HttpClient client = HttpClient.newHttpClient();
             
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(""))
-                    .POST(BodyPublishers.ofString(criarMedicoDto))
+                    .uri(URI.create(URL_API))
+                    .header("Content-Type", "application/json")
+                    .POST(BodyPublishers.ofString(criarMedicoDto.toString()))
                     .build();
             
-        } catch(Exception e) {
+            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
             
+            String[] path = response.uri().getPath().split("/");
+            id = UUID.fromString(path[path.length-1]);
+            
+        } catch(IOException | InterruptedException e) {
+            System.out.println(e.getMessage());
         }
+        
+        return id;
         
     }
     
