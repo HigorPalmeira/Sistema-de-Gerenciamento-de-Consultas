@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.MedicoService;
@@ -47,7 +48,7 @@ public class MedicoController {
 		
 	}
 	
-	@GetMapping("/todos")
+	@GetMapping
 	public ResponseEntity<List<SaidaSimplesMedicoDto>> listarTodosSaidaSimplesMedico() {
 		
 		var doctors = medicoService.listarTodosSaidaSimplesMedico();
@@ -56,7 +57,7 @@ public class MedicoController {
 		
 	}
 	
-	@GetMapping
+	@GetMapping("/status/ativos")
 	public ResponseEntity<List<SaidaSimplesMedicoDto>> listarTodosSaidaSimplesMedicoAtivos() {
 		
 		var medicos = medicoService.listarTodosSaidaSimplesMedicoAtivos();
@@ -65,10 +66,46 @@ public class MedicoController {
 		
 	}
 	
-	@GetMapping("/inativos")
+	@GetMapping("/status/inativos")
 	public ResponseEntity<List<SaidaSimplesMedicoDto>> listarTodosSaidaSimplesMedicoInativos() {
 		
 		var medicos = medicoService.listarTodosSaidaSimplesMedicoInativos();
+		
+		return ResponseEntity.ok(medicos);
+		
+	}
+	
+	@GetMapping("/detalhes/{medicoId}")
+	public ResponseEntity<SaidaDetalhadaMedicoDto> buscarSaidaDetalhadaMedicoPorId(@PathVariable("medicoId") String medicoId) {
+		
+		var medico = medicoService.buscarSaidaDetalhadaMedicoPorId(medicoId);
+		
+		return ResponseEntity.ok(medico);
+		
+	}
+	
+	@GetMapping("/detalhes")
+	public ResponseEntity<List<SaidaDetalhadaMedicoDto>> listarTodosSaidaDetalhadaMedico() {
+	
+		var medicos = medicoService.listarTodosSaidaDetalhadaMedico();
+		
+		return ResponseEntity.ok(medicos);
+		
+	}
+	
+	@GetMapping("/detalhes/status/ativos")
+	public ResponseEntity<List<SaidaDetalhadaMedicoDto>> listarTodosSaidaDetalhadaMedicoAtivos() {
+		
+		var medicos = medicoService.listarTodosSaidaDetalhadaMedicoAtivos();
+		
+		return ResponseEntity.ok(medicos);
+		
+	}
+	
+	@GetMapping("/detalhes/status/inativos")
+	public ResponseEntity<List<SaidaDetalhadaMedicoDto>> listarTodosSaidaDetalhadaMedicoInativos() {
+		
+		var medicos = medicoService.listarTodosSaidaDetalhadaMedicoInativos();
 		
 		return ResponseEntity.ok(medicos);
 		
