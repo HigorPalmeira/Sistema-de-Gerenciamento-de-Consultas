@@ -7,6 +7,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.view;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
+import java.util.UUID;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,6 +33,15 @@ public class frmCriarMedico extends frmGenerico {
         
         this.setTitle(super.ACRON_DEFAULT + ": " + this.getName().toUpperCase());
         
+    }
+    
+    private void limparCampos() {
+        txtNome.setText("");
+        txtSobrenome.setText("");
+        txtEmail.setText("");
+        txtTelefone.setText("");
+        txtCrm.setText("");
+        cbEspecialidade.setSelectedIndex(0);
     }
 
     /**
@@ -290,7 +300,20 @@ public class frmCriarMedico extends frmGenerico {
         }
         
         
-        CriarMedicoDto criarMedicoDto = new CriarMedicoDto();
+        CriarMedicoDto criarMedicoDto = new CriarMedicoDto(
+                txtNome.getText().trim(),
+                txtSobrenome.getText().trim(),
+                txtCrm.getText().trim(),
+                txtTelefone.getText().trim(),
+                txtEmail.getText().trim(),
+                UUID.randomUUID()
+        );
+        
+        UUID medicoId = medicoService.criarMedico(criarMedicoDto);
+        
+        JOptionPane.showMessageDialog(this, "Médico criado com sucesso!\nID: " + medicoId, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        
+        this.limparCampos();
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
