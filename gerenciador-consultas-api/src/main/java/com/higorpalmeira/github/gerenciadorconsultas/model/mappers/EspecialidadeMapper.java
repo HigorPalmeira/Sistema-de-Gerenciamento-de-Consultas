@@ -5,6 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaEspecialidadeDto;
@@ -12,8 +13,11 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimpl
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 
-@Mapper(componentModel = "spring", uses = {MedicoMapper.class})
-public interface EspecialidadeMapper {
+@Mapper(componentModel = "spring")
+public abstract class EspecialidadeMapper {
+	
+	@Autowired
+	protected MedicoMapper medicoMapper;
 	
 	/*
 	 * Cria uma entidade 'Especialidade' com os dados do DTO.
@@ -25,7 +29,7 @@ public interface EspecialidadeMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "medicos", ignore = true)
-	Especialidade criarEspecialidadeDtoParaEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto);
+	abstract Especialidade criarEspecialidadeDtoParaEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto);
 	
 	/*
 	 * Cria um DTO de saída simples a partir da entidade 'Especialidade'.
@@ -34,7 +38,7 @@ public interface EspecialidadeMapper {
 	 * @return SaidaSimplesEspecialidadeDto DTO de saída simples criado.
 	 * */
 	@Mapping(target = "medicosAssociados", expression = "java(especialidade.getMedicos() != null ? especialidade.getMedicos().size() : 0)")
-	SaidaSimplesEspecialidadeDto especialidadeParaSaidaSimplesEspecialidadeDto(Especialidade especialidade);
+	abstract SaidaSimplesEspecialidadeDto especialidadeParaSaidaSimplesEspecialidadeDto(Especialidade especialidade);
 	
 	/*
 	 * Criar um DTO de saída detalhada a partir da entidade 'Especialidade'.
@@ -42,7 +46,7 @@ public interface EspecialidadeMapper {
 	 * @param especialidade Entidade a ser transforamada.
 	 * @return SaidaDetalhadaEspecialidadeDto DTO de saída detalhada criada.
 	 * */
-	SaidaDetalhadaEspecialidadeDto especialidadeParaSaidaDetalhadaEspecialidadeDto(Especialidade especialidade);
+	abstract SaidaDetalhadaEspecialidadeDto especialidadeParaSaidaDetalhadaEspecialidadeDto(Especialidade especialidade);
 	
 	/**
      * Atualiza a entidade 'Especialidade' com os dados não nulos do DTO.
@@ -55,6 +59,6 @@ public interface EspecialidadeMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "medicos", ignore = true)
-	void atualizarEspecialidadeDeAtualizarEspecialidadeDto(AtualizarEspecialidadeDto atualizarEspecialidadeDto, @MappingTarget Especialidade especialidade);
+	abstract void atualizarEspecialidadeDeAtualizarEspecialidadeDto(AtualizarEspecialidadeDto atualizarEspecialidadeDto, @MappingTarget Especialidade especialidade);
 
 }
