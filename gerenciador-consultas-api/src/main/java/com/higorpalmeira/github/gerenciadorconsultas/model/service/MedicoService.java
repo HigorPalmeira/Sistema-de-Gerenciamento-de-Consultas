@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
@@ -107,6 +108,42 @@ public class MedicoService {
 				.findAllByStatus(TipoStatusConta.INATIVO).stream()
 				.map(medico -> medicoMapper.medicoParaSaidaSimplesMedicoDto(medico)
 						).toList();
+		
+		return medicos;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaidaDetalhadaMedicoDto> listarTodosSaidaDetalhadaMedico() {
+		
+		var medicos = medicoRepository
+				.findAll().stream()
+				.map(medico -> medicoMapper.medicoParaSaidaDetalhadaMedicoDto(medico))
+				.toList();
+		
+		return medicos;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaidaDetalhadaMedicoDto> listarTodosSaidaDetalhadaMedicoAtivos() {
+		
+		var medicos = medicoRepository
+				.findAllByStatus(TipoStatusConta.ATIVO).stream()
+				.map(medico -> medicoMapper.medicoParaSaidaDetalhadaMedicoDto(medico))
+				.toList();
+		
+		return medicos;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaidaDetalhadaMedicoDto> listarTodosSaidaDetalhadaMedicoInativos() {
+		
+		var medicos = medicoRepository
+				.findAllByStatus(TipoStatusConta.INATIVO).stream()
+				.map(medico -> medicoMapper.medicoParaSaidaDetalhadaMedicoDto(medico))
+				.toList();
 		
 		return medicos;
 		
