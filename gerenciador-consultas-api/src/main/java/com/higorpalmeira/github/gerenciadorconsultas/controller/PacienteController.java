@@ -1,6 +1,8 @@
 package com.higorpalmeira.github.gerenciadorconsultas.controller;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.PacienteService;
@@ -52,6 +55,77 @@ public class PacienteController {
 		
 		var pacientes = pacienteService.listarTodosSaidaSimplesPaciente();
 		
+		return ResponseEntity.ok(pacientes);
+		
+	}
+	
+	@GetMapping("/status/ativo")
+	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPacienteAtivos() {
+		
+		var pacientes = pacienteService.listarTodosSaidaSimplesPacienteAtivos();
+		
+		return ResponseEntity.ok(pacientes);
+		
+	}
+	
+	@GetMapping("/status/inativo")
+	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPacienteInativos() {
+		
+		var pacientes = pacienteService.listarTodosSaidaSimplesPacienteInativos();
+		
+		return ResponseEntity.ok(pacientes);
+		
+	}
+	
+	@GetMapping("/datanascimento/{dataNascimento}")
+	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPacientePorDataNascimento(@PathVariable("dataNascimento") 
+		String dataNascimento) {
+		
+		var pacientes = pacienteService
+				.listarTodosSaidaSimplesPacientePorDataNascimento(
+						LocalDate.parse(dataNascimento, 
+								DateTimeFormatter.ISO_LOCAL_DATE));
+		
+		return ResponseEntity.ok(pacientes);
+		
+	}
+	
+	@GetMapping("/detalhes")
+	public ResponseEntity<List<SaidaDetalhadaPacienteDto>> listarTodosSaidaDetalhadaPaciente() {
+		
+		var pacientes = pacienteService.listarTodosSaidaDetalhadaPaciente();
+		
+		return ResponseEntity.ok(pacientes);
+		
+	}
+	
+	@GetMapping("/detalhes/status/ativo")
+	public ResponseEntity<List<SaidaDetalhadaPacienteDto>> listarTodosSaidaDetalhadaPacienteAtivos() {
+		
+		var pacientes = pacienteService.listarTodosSaidaDetalhadaPacienteAtivos();
+		
+		return ResponseEntity.ok(pacientes);
+		
+	}
+	
+	@GetMapping("/detalhes/status/inativo")
+	public ResponseEntity<List<SaidaDetalhadaPacienteDto>> listarTodosSaidaDetalhadaPacienteInativo() {
+	
+		var pacientes = pacienteService.listarTodosSaidaDetalhadaPacienteInativos();
+		
+		return ResponseEntity.ok(pacientes);
+		
+	}
+	
+	@GetMapping("/detalhes/datanascimento/{dataNascimento}")
+	public ResponseEntity<List<SaidaDetalhadaPacienteDto>> listarTodosSaidaDetalhadaPacientePorDataNascimento(@PathVariable("dataNascimento") 
+		String dataNascimento) {
+		
+		var pacientes = pacienteService
+				.listarTodosSaidaDetalhadaPacientePorDataNascimento(
+						LocalDate.parse(dataNascimento, 
+								DateTimeFormatter.ISO_LOCAL_DATE));
+
 		return ResponseEntity.ok(pacientes);
 		
 	}
