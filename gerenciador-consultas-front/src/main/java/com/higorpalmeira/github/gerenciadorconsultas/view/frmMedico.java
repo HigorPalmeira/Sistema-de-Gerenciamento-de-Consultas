@@ -408,7 +408,8 @@ public class frmMedico extends frmGenerico {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
 
-        JOptionPane.showMessageDialog(this, "Nome: " + this.getName(), "Nome do JFrame", JOptionPane.INFORMATION_MESSAGE);
+        frmCriarMedico frmCriarMedico = new frmCriarMedico();
+        frmCriarMedico.setVisible(true);
 
     }//GEN-LAST:event_btnNovoActionPerformed
 
