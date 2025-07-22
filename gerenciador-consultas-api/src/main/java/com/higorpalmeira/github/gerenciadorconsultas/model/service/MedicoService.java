@@ -114,6 +114,18 @@ public class MedicoService {
 	}
 	
 	@Transactional(readOnly = true)
+	public SaidaDetalhadaMedicoDto buscarSaidaDetalhadaMedicoPorId(String medicoId) {
+	
+		var id = UUID.fromString(medicoId);
+		var medicoEntidade = medicoRepository
+				.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com ID: " + id));
+		
+		return medicoMapper.medicoParaSaidaDetalhadaMedicoDto(medicoEntidade);
+		
+	}
+	
+	@Transactional(readOnly = true)
 	public List<SaidaDetalhadaMedicoDto> listarTodosSaidaDetalhadaMedico() {
 		
 		var medicos = medicoRepository
