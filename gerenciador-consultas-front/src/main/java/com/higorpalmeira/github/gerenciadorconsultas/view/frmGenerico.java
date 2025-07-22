@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package main.java.com.higorpalmeira.github.gerenciadorconsultas.view;
+package com.higorpalmeira.github.gerenciadorconsultas.view;
 
 import javax.swing.ImageIcon;
 
@@ -15,7 +15,7 @@ public abstract class frmGenerico extends javax.swing.JFrame {
     public final String ACRON_DEFAULT = "SGC";
     public final String TITLE_DEFAULT = "Sistema de Gerenciamento de Consultas";
     
-    private final String PATH_ICON = "/main/resources/images/app-icon.png";
+    private final String PATH_ICON = "/images/app-icon.png";
 
     /**
      * Creates new form frmGenerico

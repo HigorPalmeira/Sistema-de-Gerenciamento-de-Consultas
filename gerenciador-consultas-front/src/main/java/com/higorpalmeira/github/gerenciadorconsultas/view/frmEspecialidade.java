@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package main.java.com.higorpalmeira.github.gerenciadorconsultas.view;
+package com.higorpalmeira.github.gerenciadorconsultas.view;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
@@ -196,7 +196,7 @@ public class frmEspecialidade extends frmGenerico {
         });
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/zoom.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/zoom.png"))); // NOI18N
         jButton4.setMnemonic('p');
         jButton4.setText("PESQUISAR");
         jButton4.addActionListener(new java.awt.event.ActionListener() {

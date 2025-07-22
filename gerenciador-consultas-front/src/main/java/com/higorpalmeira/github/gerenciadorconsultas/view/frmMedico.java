@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package main.java.com.higorpalmeira.github.gerenciadorconsultas.view;
+package com.higorpalmeira.github.gerenciadorconsultas.view;
 
 import javax.swing.JOptionPane;
-import main.java.com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 
 /**
  *
@@ -124,7 +124,7 @@ public class frmMedico extends frmGenerico {
         });
 
         btnPesquisar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/zoom.png"))); // NOI18N
+        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/zoom.png"))); // NOI18N
         btnPesquisar.setMnemonic('p');
         btnPesquisar.setText("PESQUISAR");
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
