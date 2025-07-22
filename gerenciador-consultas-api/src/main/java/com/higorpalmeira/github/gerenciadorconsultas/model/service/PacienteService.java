@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
@@ -94,7 +95,7 @@ public class PacienteService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacientesInativos() {
+	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacienteInativos() {
 		
 		var pacientes = pacienteRepository
 				.findAllByStatus(TipoStatusConta.INATIVO).stream()
@@ -117,6 +118,54 @@ public class PacienteService {
 		
 	}
 
+	@Transactional(readOnly = true)
+	public List<SaidaDetalhadaPacienteDto> listarTodosSaidaDetalhadaPaciente() {
+		
+		var pacientes = pacienteRepository
+				.findAll().stream()
+				.map(paciente -> pacienteMapper.pacienteParaSaidaDetalhadaPacienteDto(paciente))
+				.toList();
+		
+		return pacientes;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaidaDetalhadaPacienteDto> listarTodosSaidaDetalhadaPacienteAtivos() {
+
+		var pacientes = pacienteRepository
+				.findAllByStatus(TipoStatusConta.ATIVO).stream()
+				.map(paciente -> pacienteMapper.pacienteParaSaidaDetalhadaPacienteDto(paciente))
+				.toList();
+		
+		return pacientes;
+
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaidaDetalhadaPacienteDto> listarTodosSaidaDetalhadaPacienteInativos() {
+		
+		var pacientes = pacienteRepository
+				.findAllByStatus(TipoStatusConta.INATIVO).stream()
+				.map(paciente -> pacienteMapper.pacienteParaSaidaDetalhadaPacienteDto(paciente))
+				.toList();
+		
+		return pacientes;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaidaDetalhadaPacienteDto> listarTodosSaidaDetalhadaPacientePorDataNascimento(LocalDate dataNascimento) {
+		
+		var pacientes = pacienteRepository
+				.findAllByDataNascimento(dataNascimento).stream()
+				.map(paciente -> pacienteMapper.pacienteParaSaidaDetalhadaPacienteDto(paciente))
+				.toList();
+		
+		return pacientes;
+		
+	}
+	
 	@Transactional
 	public void atualizarPacientePorId(String pacienteId, AtualizarPacienteDto atualizarPacienteDto) {
 
