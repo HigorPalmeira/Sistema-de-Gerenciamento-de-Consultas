@@ -4,6 +4,7 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import javax.swing.JOptionPane;
@@ -287,6 +288,9 @@ public class frmCriarMedico extends frmGenerico {
             return;
             
         }
+        
+        
+        CriarMedicoDto criarMedicoDto = new CriarMedicoDto();
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
