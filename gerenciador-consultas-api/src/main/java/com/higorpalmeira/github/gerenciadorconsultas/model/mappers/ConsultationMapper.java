@@ -9,7 +9,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CreateConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputConsultationDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateConsultationDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consultation;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
 
@@ -22,9 +22,9 @@ public interface ConsultationMapper {
 	@Mapping(target = "status", expression = "java(StatusConsultationType.SCHEDULED)")
 	@Mapping(target = "doctor", expression = "java(doctor != null ? doctor : null)")
 	@Mapping(target = "patient", expression = "java(patient != null ? patient : null)")
-	Consultation createToConsultation(CreateConsultationDto createConsultationDto, Medico doctor, Paciente patient);
+	Consulta createToConsultation(CreateConsultationDto createConsultationDto, Medico doctor, Paciente patient);
 	
-	SimpleOutputConsultationDto consultationToSimpleOutputConsultationDto(Consultation consultation);
+	SimpleOutputConsultationDto consultationToSimpleOutputConsultationDto(Consulta consultation);
 
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 	@Mapping(target = "consultationId", ignore = true)
@@ -33,6 +33,6 @@ public interface ConsultationMapper {
 	@Mapping(target = "doctor", expression = "java(doctor != null ? doctor : null)")
 	@Mapping(target = "patient", expression = "java(patient != null ? patient : null)")
 	@Mapping(target = "status", expression = "java(consultation.setStatus(updateConsultationDto.getStatus()))")
-	void updateConsultationFromUpdateConsultationDto(UpdateConsultationDto updateConsultationDto, Medico doctor, Paciente patient, @MappingTarget Consultation consultation);
+	void updateConsultationFromUpdateConsultationDto(UpdateConsultationDto updateConsultationDto, Medico doctor, Paciente patient, @MappingTarget Consulta consultation);
 	
 }

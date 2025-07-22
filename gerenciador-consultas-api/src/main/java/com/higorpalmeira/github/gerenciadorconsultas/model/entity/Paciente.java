@@ -66,7 +66,7 @@ public class Paciente {
 	private Endereco endereco;
 	
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-	private List<Consultation> consultas = new ArrayList<>();
+	private List<Consulta> consultas = new ArrayList<>();
 	
 	@CreationTimestamp
 	private Instant creationTimestamp;
@@ -79,7 +79,7 @@ public class Paciente {
 	}
 
 	public Paciente(UUID id, String nome, String sobrenome, String cpf, LocalDate dataNascimento, TipoGenero genero,
-			TipoStatusConta status, String telefone, String email, Endereco endereco, List<Consultation> consultas,
+			TipoStatusConta status, String telefone, String email, Endereco endereco, List<Consulta> consultas,
 			Instant creationTimestamp, Instant updateTimestamp) {
 		this.id = id;
 		this.nome = nome;
@@ -97,7 +97,7 @@ public class Paciente {
 	}
 
 	public Paciente(String nome, String sobrenome, String cpf, LocalDate dataNascimento, TipoGenero genero,
-			TipoStatusConta status, String telefone, String email, Endereco endereco, List<Consultation> consultas,
+			TipoStatusConta status, String telefone, String email, Endereco endereco, List<Consulta> consultas,
 			Instant creationTimestamp, Instant updateTimestamp) {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -193,11 +193,11 @@ public class Paciente {
 		this.endereco = endereco;
 	}
 
-	public List<Consultation> getConsultas() {
+	public List<Consulta> getConsultas() {
 		return consultas;
 	}
 
-	public void setConsultas(List<Consultation> consultas) {
+	public void setConsultas(List<Consulta> consultas) {
 		this.consultas = consultas;
 	}
 

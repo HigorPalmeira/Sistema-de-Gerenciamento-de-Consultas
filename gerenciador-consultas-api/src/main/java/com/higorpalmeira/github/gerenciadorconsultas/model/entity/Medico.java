@@ -57,7 +57,7 @@ public class Medico {
 	private Especialidade especialidade;
 	
 	@OneToMany(mappedBy = "medico", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-	private List<Consultation> consultas = new ArrayList<>();
+	private List<Consulta> consultas = new ArrayList<>();
 	
 	@CreationTimestamp
 	private Instant creationTimestamp;
@@ -70,7 +70,7 @@ public class Medico {
 	}
 
 	public Medico(UUID id, String nome, String sobrenome, String crm, TipoStatusConta status, String telefone,
-			String email, Especialidade especialidade, List<Consultation> consultas, Instant creationTimestamp,
+			String email, Especialidade especialidade, List<Consulta> consultas, Instant creationTimestamp,
 			Instant updateTimestamp) {
 		this.id = id;
 		this.nome = nome;
@@ -86,7 +86,7 @@ public class Medico {
 	}
 
 	public Medico(String nome, String sobrenome, String crm, TipoStatusConta status, String telefone, String email,
-			Especialidade especialidade, List<Consultation> consultas, Instant creationTimestamp,
+			Especialidade especialidade, List<Consulta> consultas, Instant creationTimestamp,
 			Instant updateTimestamp) {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -164,11 +164,11 @@ public class Medico {
 		this.especialidade = especialidade;
 	}
 
-	public List<Consultation> getConsultas() {
+	public List<Consulta> getConsultas() {
 		return consultas;
 	}
 
-	public void setConsultas(List<Consultation> consultas) {
+	public void setConsultas(List<Consulta> consultas) {
 		this.consultas = consultas;
 	}
 
