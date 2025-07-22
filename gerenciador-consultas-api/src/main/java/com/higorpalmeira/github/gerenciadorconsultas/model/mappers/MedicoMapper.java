@@ -26,7 +26,7 @@ public interface MedicoMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultas", ignore = true)
-	@Mapping(target = "status", expression = "java(StatusAccountType.ATIVO)")
+	@Mapping(target = "status", expression = "java(TipoStatusConta.ATIVO)")
 	Medico criarMedicoDtoParaMedico(CriarMedicoDto criarMedicoDto, Especialidade especialidade);
 
 	/*
@@ -35,7 +35,7 @@ public interface MedicoMapper {
 	 * @param medico Entidade a ser transformada.
 	 * @return SaidaSimplesMedicoDto DTO de saída simples criado.
 	 * */
-	@Mapping(target = "consultas", expression = "java(doctor.getConsultas() != null ? doctor.getConsultas().size() : 0)")
+	@Mapping(target = "consultas", expression = "java(medico.getConsultas() != null ? medico.getConsultas().size() : 0)")
 	SaidaSimplesMedicoDto medicoParaSaidaSimplesMedicoDto(Medico medico);
 	
 	/*

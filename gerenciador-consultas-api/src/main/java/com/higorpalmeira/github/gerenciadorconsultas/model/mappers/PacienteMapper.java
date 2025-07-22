@@ -25,7 +25,7 @@ public interface PacienteMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultas", ignore = true)
-	@Mapping(target = "status", expression = "java(StatusAccountType.ATIVO)")
+	@Mapping(target = "status", expression = "java(TipoStatusConta.ATIVO)")
 	Paciente criarPacienteDtoParePaciente(CriarPacienteDto criarPacienteDto);
 	
 	/*
