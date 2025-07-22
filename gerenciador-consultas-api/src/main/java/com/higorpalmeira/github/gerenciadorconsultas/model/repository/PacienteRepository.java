@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente, UUID> {
@@ -43,4 +45,19 @@ public interface PacienteRepository extends JpaRepository<Paciente, UUID> {
 	 * */
 	Optional<Paciente> findByEmail(String email);
 
+	/*
+	 * Busca por todos os pacientes com o Status fornecido.
+	 * 
+	 * @param status O Status a ser procurado.
+	 * @return Lista com todos os pacientes com o status fornecido, ou uma lista vazia.
+	 * */
+	List<Paciente> findAllByStatus(TipoStatusConta status);
+	
+	/*
+	 * Busca por todos os pacientes que não tenham o Status fornecido.
+	 * 
+	 * @param status O Status a ser evitado.
+	 * @return Lista com todos os pacientes com o status fornecido, ou uma lista vazia.
+	 * */
+	List<Paciente> findAllByStatusNot(TipoStatusConta status);
 }
