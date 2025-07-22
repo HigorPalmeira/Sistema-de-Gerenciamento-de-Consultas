@@ -24,6 +24,11 @@ public class Validador {
             "RR", "SC", "SP", "SE", "TO"
     );
 
+    private static final String EMAIL_REGEX
+            = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@"
+            + "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    private static final Pattern PATTERN_EMAIL = Pattern.compile(EMAIL_REGEX);
+
     public static boolean isCrm(final String crm) {
 
         if (crm == null || crm.isBlank()) {
@@ -50,6 +55,18 @@ public class Validador {
         }
 
         return true;
+
+    }
+
+    public static boolean isEmail(final String input) {
+
+        if (input == null) {
+            return false;
+        }
+
+        Matcher matcher = PATTERN_EMAIL.matcher(input);
+
+        return matcher.matches();
 
     }
 
