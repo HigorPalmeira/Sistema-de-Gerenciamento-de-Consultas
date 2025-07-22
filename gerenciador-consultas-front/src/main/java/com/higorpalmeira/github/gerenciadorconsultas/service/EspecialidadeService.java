@@ -4,6 +4,7 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesEspecialidadeDto;
 import java.io.IOException;
@@ -11,6 +12,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -33,7 +36,7 @@ public class EspecialidadeService {
                     .GET()
                     .build();
             
-            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             
             ObjectMapper mapper = new ObjectMapper();
             
@@ -44,6 +47,32 @@ public class EspecialidadeService {
         }
         
         return especialidadeDto;
+        
+    }
+    
+    public List<SaidaSimplesEspecialidadeDto> listarSaidaSimplesEspecialidadeDto() {
+        
+        List<SaidaSimplesEspecialidadeDto> especialidades = new ArrayList<>();
+        
+        try {
+            
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(URL_API))
+                    .GET()
+                    .build();
+            
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            
+            ObjectMapper mapper = new ObjectMapper();
+            
+            especialidades = mapper.readValues(response.body(), new TypeReference<List<SaidaSimplesEspecialidadeDto>>(){ });
+            
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return especialidades;
         
     }
     
