@@ -19,7 +19,7 @@ public interface ConsultaMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	@Mapping(target = "status", expression = "java(StatusConsultationType.AGENDADA)")
+	@Mapping(target = "status", expression = "java(TipoStatusConsulta.AGENDADA)")
 	@Mapping(target = "medico", expression = "java(medico != null ? medico : null)")
 	@Mapping(target = "paciente", expression = "java(paciente != null ? paciente : null)")
 	Consulta criarConsultaDtoParaConsulta(CriarConsultaDto criarConsultaDto, Medico medico, Paciente paciente);
