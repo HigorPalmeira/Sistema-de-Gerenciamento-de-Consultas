@@ -12,9 +12,10 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarC
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
 
-@Mapper(componentModel = "spring", uses = {MedicoMapper.class, PacienteMapper.class})
-public interface ConsultaMapper {
+@Mapper(componentModel = "spring", uses = {MedicoMapper.class, PacienteMapper.class}, imports = {TipoStatusConsulta.class})
+public abstract class ConsultaMapper {
 	
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
@@ -22,9 +23,9 @@ public interface ConsultaMapper {
 	@Mapping(target = "status", expression = "java(TipoStatusConsulta.AGENDADA)")
 	@Mapping(target = "medico", expression = "java(medico != null ? medico : null)")
 	@Mapping(target = "paciente", expression = "java(paciente != null ? paciente : null)")
-	Consulta criarConsultaDtoParaConsulta(CriarConsultaDto criarConsultaDto, Medico medico, Paciente paciente);
+	public abstract Consulta criarConsultaDtoParaConsulta(CriarConsultaDto criarConsultaDto, Medico medico, Paciente paciente);
 	
-	SaidaSimplesConsultaDto consultaParaSaidaSimplesConsultaDto(Consulta consulta);
+	public abstract SaidaSimplesConsultaDto consultaParaSaidaSimplesConsultaDto(Consulta consulta);
 
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 	@Mapping(target = "id", ignore = true)
@@ -33,6 +34,6 @@ public interface ConsultaMapper {
 	@Mapping(target = "medico", expression = "java(medico != null ? medico : null)")
 	@Mapping(target = "paciente", expression = "java(paciente != null ? paciente : null)")
 	@Mapping(target = "status", expression = "java(atualizarConsultaDto.getStatus())")
-	void atualizarConsultaDeAtualizarConsultaDto(AtualizarConsultaDto atualizarConsultaDto, Medico medico, Paciente paciente, @MappingTarget Consulta consulta);
+	public abstract void atualizarConsultaDeAtualizarConsultaDto(AtualizarConsultaDto atualizarConsultaDto, Medico medico, Paciente paciente, @MappingTarget Consulta consulta);
 	
 }

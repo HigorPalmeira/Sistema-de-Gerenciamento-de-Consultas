@@ -12,7 +12,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarE
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Endereco;
 
 @Mapper(componentModel = "spring")
-public interface EnderecoMapper {
+public abstract class EnderecoMapper {
 	
 	/*
 	 * Cria uma entidade 'Endereco' com os dados do DTO.
@@ -23,7 +23,7 @@ public interface EnderecoMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	Endereco criarEnderecoDtoParaEndereco(CriarEnderecoDto criarEnderecoDto);
+	public abstract Endereco criarEnderecoDtoParaEndereco(CriarEnderecoDto criarEnderecoDto);
 	
 	/*
 	 * Cria um DTO de saída a partir da entidade 'Endereco'.
@@ -31,7 +31,7 @@ public interface EnderecoMapper {
 	 * @param endereco Entidade a ser transformada.
 	 * @return EnderecoParaSaidaEnderecoDto DTO de saída criado.
 	 * */
-	SaidaEnderecoDto EnderecoParaSaidaEnderecoDto(Endereco endereco);
+	public abstract SaidaEnderecoDto EnderecoParaSaidaEnderecoDto(Endereco endereco);
 	
 	/*
 	 * Atualiza a entidade 'Endereco' com os dados não nulos do DTO.
@@ -43,6 +43,6 @@ public interface EnderecoMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	void updateAddressFromUpdateAddressDto(AtualizarEnderecoDto atualizarEnderecoDto, @MappingTarget Endereco endereco);
+	public abstract void updateAddressFromUpdateAddressDto(AtualizarEnderecoDto atualizarEnderecoDto, @MappingTarget Endereco endereco);
 
 }

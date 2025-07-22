@@ -17,8 +17,9 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarM
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 
-@Mapper(componentModel = "spring", uses = {ConsultaMapper.class})
+@Mapper(componentModel = "spring", uses = {ConsultaMapper.class}, imports = {TipoStatusConta.class})
 public abstract class MedicoMapper {
 	
 	@Autowired
@@ -67,6 +68,7 @@ public abstract class MedicoMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultas", ignore = true)
+	@Mapping(target = "especialidade", source = "especialidade")
 	public abstract void atualizarMedicoDeAtualizarMedicoDto(AtualizarMedicoDto atualizarMedicoDto, Especialidade especialidade, @MappingTarget Medico medico);
 	
 	@Named("mapConsultasToCount")

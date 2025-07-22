@@ -1,19 +1,24 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.mappers;
 
+import java.util.List;
+
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 
-@Mapper(componentModel = "spring", uses = {EnderecoMapper.class, ConsultaMapper.class})
-public interface PacienteMapper {
+@Mapper(componentModel = "spring", uses = {EnderecoMapper.class, ConsultaMapper.class}, imports = {TipoStatusConta.class})
+public abstract class PacienteMapper {
 	
 	/*
 	 * Cria uma entidade 'Paciente' com os dados do DTO.
@@ -26,7 +31,7 @@ public interface PacienteMapper {
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultas", ignore = true)
 	@Mapping(target = "status", expression = "java(TipoStatusConta.ATIVO)")
-	Paciente criarPacienteDtoParePaciente(CriarPacienteDto criarPacienteDto);
+	public abstract Paciente criarPacienteDtoParePaciente(CriarPacienteDto criarPacienteDto);
 	
 	/*
 	 * Cria um DTO de saída simples a partir da entidade 'Paciente'.
@@ -34,8 +39,8 @@ public interface PacienteMapper {
 	 * @param paciente Entidade a ser transformada.
 	 * @return SaidaSimplePacienteDto DTO de saída simples criado.
 	 * */
-	@Mapping(target = "consultas", expression = "java(paciente.getConsultas() != null ? paciente.getConsultas().size() : 0)")
-	SaidaSimplesPacienteDto pacienteParaSaidaSimplesPacienteDto(Paciente paciente);
+	@Mapping(source = "consultas", target = "consultas", qualifiedByName = "mapConsultasToCount")
+	public abstract SaidaSimplesPacienteDto pacienteParaSaidaSimplesPacienteDto(Paciente paciente);
 	
 	/*
 	 * Cria um DTO de saída detalhada a paritr da entidade 'Paciente'.
@@ -43,7 +48,7 @@ public interface PacienteMapper {
 	 * @param paciente Entidade a ser transformada.
 	 * @return SaidaDetalhadaPacienteDto DTO de saída detalhada criado.
 	 * */
-	SaidaDetalhadaPacienteDto pacienteParaSaidaDetalhadaPacienteDto(Paciente paciente);
+	public abstract SaidaDetalhadaPacienteDto pacienteParaSaidaDetalhadaPacienteDto(Paciente paciente);
 
 	/**
      * Atualiza a entidade 'Paciente' com os dados não nulos do DTO.
@@ -58,6 +63,13 @@ public interface PacienteMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultas", ignore = true)
-	void atualizarPacienteDeAtualizarPacienteDto(AtualizarPacienteDto atualizarPacienteDto, @MappingTarget Paciente paciente);
+	public abstract void atualizarPacienteDeAtualizarPacienteDto(AtualizarPacienteDto atualizarPacienteDto, @MappingTarget Paciente paciente);
+	
+	@Named("mapConsultasToCount")
+	public int mapConsultasToCount(List<Consulta> consultas) {
+		
+		return consultas != null ? consultas.size() : 0;
+		
+	}
 	
 }
