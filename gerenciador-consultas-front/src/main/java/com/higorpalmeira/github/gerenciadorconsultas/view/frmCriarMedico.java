@@ -4,12 +4,17 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author higor
  */
 public class frmCriarMedico extends frmGenerico {
 
+    private final MedicoService medicoService;
     /**
      * Creates new form frmCriarMedico
      */
@@ -17,6 +22,8 @@ public class frmCriarMedico extends frmGenerico {
         initComponents();
         
         this.settings();
+        
+        medicoService = new MedicoService();
     }
     
     @Override
@@ -50,7 +57,7 @@ public class frmCriarMedico extends frmGenerico {
         txtSobrenome = new javax.swing.JTextField();
         cbEspecialidade = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SGC - Criar Medico");
@@ -117,8 +124,13 @@ public class frmCriarMedico extends frmGenerico {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Especialidade:");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("Salvar");
+        btnSalvar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlInformacoesGeraisLayout = new javax.swing.GroupLayout(pnlInformacoesGerais);
         pnlInformacoesGerais.setLayout(pnlInformacoesGeraisLayout);
@@ -151,7 +163,7 @@ public class frmCriarMedico extends frmGenerico {
                                 .addGroup(pnlInformacoesGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
                                     .addComponent(txtSobrenome)))))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
         pnlInformacoesGeraisLayout.setVerticalGroup(
@@ -186,7 +198,7 @@ public class frmCriarMedico extends frmGenerico {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCrm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(44, 44, 44)
-                .addComponent(jButton1)
+                .addComponent(btnSalvar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -208,6 +220,50 @@ public class frmCriarMedico extends frmGenerico {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+
+        if (txtNome.getText() == null || txtNome.getText().isBlank()) {
+            
+            JOptionPane.showMessageDialog(this, "O campo do 'Nome' não pode estar vazio!", "Nome Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+            
+        } else if (txtNome.getText().trim().length() < 3) {
+            
+            JOptionPane.showMessageDialog(this, "O nome deve ter pelo menos três caracteres!", "Nome Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+            
+        }
+
+        if (txtSobrenome.getText() == null || txtSobrenome.getText().isBlank()) {
+            
+            JOptionPane.showMessageDialog(this, "O campo do 'Sobrenome' não pode estar vazio!", "Sobrenome Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+            
+        } else if (txtSobrenome.getText().trim().length() < 3) {
+            
+            JOptionPane.showMessageDialog(this, "O sobrenome deve ter pelo menos três caracteres!", "Sobrenome Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+            
+        }
+        
+        if (txtEmail.getText() == null || txtEmail.getText().isBlank()) {
+            
+            JOptionPane.showMessageDialog(this, "O campo 'E-mail' não pode estar vazio!", "E-mail Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+            
+        } else if (txtEmail.getText().trim().length() < 7) {
+            
+            JOptionPane.showMessageDialog(this, "O e-mail deve ter pelo menos sete caracteres!", "E-mail Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+            
+        } else if (true) {
+            
+            JOptionPane.showMessageDialog(this, "Formato de e-mail inválido!", "E-mail Inválido", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,8 +301,8 @@ public class frmCriarMedico extends frmGenerico {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbEspecialidade;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
