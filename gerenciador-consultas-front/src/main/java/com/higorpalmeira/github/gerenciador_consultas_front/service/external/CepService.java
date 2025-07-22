@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciador_consultas_front.service.external;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -10,7 +11,7 @@ import com.higorpalmeira.github.gerenciador_consultas_front.model.dto.external.E
 
 public class CepService {
 	
-	public EnderecoDto getEndereco(String cep) {
+	public EnderecoDto getEndereco(String cep) throws IOException, InterruptedException {
 		
 		EnderecoDto enderecoDto = new EnderecoDto();
 		
