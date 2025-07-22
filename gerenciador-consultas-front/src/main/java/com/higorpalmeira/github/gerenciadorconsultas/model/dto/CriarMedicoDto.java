@@ -71,6 +71,16 @@ public class CriarMedicoDto {
     public void setEspecialidadeId(UUID especialidadeId) {
         this.especialidadeId = especialidadeId;
     }
+
+    @Override
+    public String toString() {
+        return "{\"nome\": \"" + this.nome 
+                + "\", \"sobrenome\": \"" + this.sobrenome 
+                + "\", \"crm\": \"" + this.crm 
+                + "\", \"telefone\": \"" + this.telefone 
+                + "\", \"email\": \"" + this.email 
+                + "\", \"especialidadeId\": \"" + this.especialidadeId + "\"}";
+    }
     
     
 }
