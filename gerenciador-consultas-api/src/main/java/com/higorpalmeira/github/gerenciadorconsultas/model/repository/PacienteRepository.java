@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -60,4 +61,12 @@ public interface PacienteRepository extends JpaRepository<Paciente, UUID> {
 	 * @return Lista com todos os pacientes com o status fornecido, ou uma lista vazia.
 	 * */
 	List<Paciente> findAllByStatusNot(TipoStatusConta status);
+	
+	/*
+	 * Busca por todos os pacientes com a Data de Nascimento fornecida.
+	 * 
+	 * @param dataNascimento A Data de Nascimento a ser procurado.
+	 * @return Lista com todos os pacientes com a data de nascimento fornecida, ou uma lista vazia.
+	 * */
+	List<Paciente> findAllByDataNascimento(LocalDate dataNascimento);
 }
