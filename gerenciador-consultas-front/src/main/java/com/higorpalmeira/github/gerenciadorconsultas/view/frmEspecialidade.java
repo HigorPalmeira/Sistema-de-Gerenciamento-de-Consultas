@@ -4,8 +4,12 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesEspecialidadeDto;
+import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,6 +17,8 @@ import javax.swing.JOptionPane;
  */
 public class frmEspecialidade extends frmGenerico {
 
+    private final EspecialidadeService especialidadeService;
+    
     /**
      * Creates new form frmEspecialidade
      */
@@ -20,6 +26,10 @@ public class frmEspecialidade extends frmGenerico {
         initComponents();
         
         settings();
+        
+        this.especialidadeService = new EspecialidadeService();
+        
+        this.listarEspecialidade();
     }
 
     
@@ -31,6 +41,28 @@ public class frmEspecialidade extends frmGenerico {
             JOptionPane.showMessageDialog(this, "Pesquisando por '" + txtPesquisa.getText().trim() + "'.", "Pesquisando", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+    
+    private void listarEspecialidade() {
+        
+        List<SaidaSimplesEspecialidadeDto> listaEspecialidade = especialidadeService.listarSaidaSimplesEspecialidadeDto();
+        
+        if (!listaEspecialidade.isEmpty()) {
+            
+            DefaultTableModel dtm = (DefaultTableModel) tblEspecialidades.getModel();
+            dtm.setNumRows(0);
+            
+            for (SaidaSimplesEspecialidadeDto especialidadeDto : listaEspecialidade) {
+                
+                Object[] obj = { especialidadeDto.getId(), especialidadeDto.getDescricao(), especialidadeDto.getMedicosAssociados() };
+                
+                dtm.addRow(obj);
+                
+            }
+            
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
