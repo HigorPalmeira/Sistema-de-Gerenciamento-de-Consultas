@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarConsultaDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.ConsultationService;
 
@@ -39,7 +39,7 @@ public class ConsultationController {
 	}
 	
 	@GetMapping("/{consultationId}")
-	public ResponseEntity<SimpleOutputConsultationDto> findSimpleConsultationById(@PathVariable("consultationId") String consultationId) {
+	public ResponseEntity<SaidaSimplesConsultaDto> findSimpleConsultationById(@PathVariable("consultationId") String consultationId) {
 		
 		var consultation = consultationService.findSimpleConsultationById(consultationId);
 		
@@ -48,7 +48,7 @@ public class ConsultationController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<SimpleOutputConsultationDto>> listSimpleConsultationsActive() {
+	public ResponseEntity<List<SaidaSimplesConsultaDto>> listSimpleConsultationsActive() {
 		
 		var consultations = consultationService.listSimpleConsultationsActive();
 		
@@ -57,7 +57,7 @@ public class ConsultationController {
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<SimpleOutputConsultationDto>> listSimpleConsultations() {
+	public ResponseEntity<List<SaidaSimplesConsultaDto>> listSimpleConsultations() {
 		
 		var consultations = consultationService.listSimpleConsultations();
 		
@@ -66,7 +66,7 @@ public class ConsultationController {
 	}
 	
 	@GetMapping("/scheduled")
-	public ResponseEntity<List<SimpleOutputConsultationDto>> listSimpleConsultationsScheduled() {
+	public ResponseEntity<List<SaidaSimplesConsultaDto>> listSimpleConsultationsScheduled() {
 		
 		var consultations = consultationService.listSimpleConsultationsScheduled();
 		

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarConsultaDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
@@ -61,7 +61,7 @@ public class ConsultationService {
 	}
 	
 	@Transactional(readOnly = true)
-	public SimpleOutputConsultationDto findSimpleConsultationById(String consultationId) {
+	public SaidaSimplesConsultaDto findSimpleConsultationById(String consultationId) {
 		
 		var id = UUID.fromString(consultationId);
 		var consultationEntity = consultationRepository
@@ -74,7 +74,7 @@ public class ConsultationService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SimpleOutputConsultationDto> listSimpleConsultations() {
+	public List<SaidaSimplesConsultaDto> listSimpleConsultations() {
 		
 		var consultations = consultationRepository
 				.findAll().stream()
@@ -86,7 +86,7 @@ public class ConsultationService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SimpleOutputConsultationDto> listSimpleConsultationsActive() {
+	public List<SaidaSimplesConsultaDto> listSimpleConsultationsActive() {
 		
 		var consultations = consultationRepository
 				.findAllByStatusNot(TipoStatusConsulta.INATIVA).stream()
@@ -99,7 +99,7 @@ public class ConsultationService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SimpleOutputConsultationDto> listSimpleConsultationsScheduled() {
+	public List<SaidaSimplesConsultaDto> listSimpleConsultationsScheduled() {
 		
 		var consultations = consultationRepository
 				.findAllByStatus(TipoStatusConsulta.AGENDADA).stream()

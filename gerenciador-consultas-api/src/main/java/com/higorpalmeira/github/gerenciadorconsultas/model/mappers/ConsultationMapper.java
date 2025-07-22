@@ -7,7 +7,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarConsultaDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
@@ -24,7 +24,7 @@ public interface ConsultationMapper {
 	@Mapping(target = "patient", expression = "java(patient != null ? patient : null)")
 	Consulta createToConsultation(CriarConsultaDto createConsultationDto, Medico doctor, Paciente patient);
 	
-	SimpleOutputConsultationDto consultationToSimpleOutputConsultationDto(Consulta consultation);
+	SaidaSimplesConsultaDto consultationToSimpleOutputConsultationDto(Consulta consultation);
 
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 	@Mapping(target = "consultationId", ignore = true)
