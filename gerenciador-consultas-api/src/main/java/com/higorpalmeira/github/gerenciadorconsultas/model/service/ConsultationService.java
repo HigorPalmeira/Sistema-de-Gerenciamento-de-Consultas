@@ -12,7 +12,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarC
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
-import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultationMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultaMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.ConsultaRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.MedicoRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PacienteRepository;
@@ -26,9 +26,9 @@ public class ConsultationService {
 	
 	private PacienteRepository patientRepository;
 	
-	private ConsultationMapper consultationMapper;
+	private ConsultaMapper consultationMapper;
 	
-	public ConsultationService(ConsultaRepository consultationRepository, MedicoRepository doctorRepository, PacienteRepository patientRepository, ConsultationMapper consultationMapper) {
+	public ConsultationService(ConsultaRepository consultationRepository, MedicoRepository doctorRepository, PacienteRepository patientRepository, ConsultaMapper consultationMapper) {
 		this.consultationRepository = consultationRepository;
 		this.doctorRepository = doctorRepository;
 		this.patientRepository = patientRepository;
@@ -53,7 +53,7 @@ public class ConsultationService {
 				.findById(patientId)
 				.orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + patientId));
 		
-		var consultation = consultationMapper.createToConsultation(createConsultationDto, doctorEntity, patientEntity);
+		var consultation = consultationMapper.criarConsultaDtoParaConsulta(createConsultationDto, doctorEntity, patientEntity);
 		
 		var consultationSaved = consultationRepository.save(consultation);
 		
@@ -66,7 +66,7 @@ public class ConsultationService {
 		var id = UUID.fromString(consultationId);
 		var consultationEntity = consultationRepository
 				.findById(id)
-				.map(consultation -> consultationMapper.consultationToSimpleOutputConsultationDto(consultation)
+				.map(consultation -> consultationMapper.consultaParaSaidaSimplesConsultaDto(consultation)
 						).orElseThrow(() -> new ResourceNotFoundException("Consultation not found with ID: " + id));
 		
 		return consultationEntity;
@@ -78,7 +78,7 @@ public class ConsultationService {
 		
 		var consultations = consultationRepository
 				.findAll().stream()
-				.map(consultation -> consultationMapper.consultationToSimpleOutputConsultationDto(consultation)
+				.map(consultation -> consultationMapper.consultaParaSaidaSimplesConsultaDto(consultation)
 						).toList();
 		
 		return consultations;
@@ -90,7 +90,7 @@ public class ConsultationService {
 		
 		var consultations = consultationRepository
 				.findAllByStatusNot(TipoStatusConsulta.INATIVA).stream()
-				.map(consultation -> consultationMapper.consultationToSimpleOutputConsultationDto(consultation))
+				.map(consultation -> consultationMapper.consultaParaSaidaSimplesConsultaDto(consultation))
 				.toList();
 				
 		
@@ -103,7 +103,7 @@ public class ConsultationService {
 		
 		var consultations = consultationRepository
 				.findAllByStatus(TipoStatusConsulta.AGENDADA).stream()
-				.map(consultation -> consultationMapper.consultationToSimpleOutputConsultationDto(consultation))
+				.map(consultation -> consultationMapper.consultaParaSaidaSimplesConsultaDto(consultation))
 				.toList();
 		
 		return consultations;
@@ -133,7 +133,7 @@ public class ConsultationService {
 				.orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + doctorId));
 		
 		
-		consultationMapper.updateConsultationFromUpdateConsultationDto(updateConsultationDto, doctorEntity, patientEntity, consultationEntity);
+		consultationMapper.atualizarConsultaDeAtualizarConsultaDto(updateConsultationDto, doctorEntity, patientEntity, consultationEntity);
 		
 	}
 	

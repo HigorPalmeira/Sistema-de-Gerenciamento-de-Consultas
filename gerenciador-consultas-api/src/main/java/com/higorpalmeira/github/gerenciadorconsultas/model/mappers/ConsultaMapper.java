@@ -14,25 +14,25 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
 
 @Mapper(componentModel = "spring", uses = {MedicoMapper.class, PacienteMapper.class})
-public interface ConsultationMapper {
+public interface ConsultaMapper {
 	
-	@Mapping(target = "consultationId", ignore = true)
+	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "status", expression = "java(StatusConsultationType.SCHEDULED)")
-	@Mapping(target = "doctor", expression = "java(doctor != null ? doctor : null)")
-	@Mapping(target = "patient", expression = "java(patient != null ? patient : null)")
-	Consulta createToConsultation(CriarConsultaDto createConsultationDto, Medico doctor, Paciente patient);
+	@Mapping(target = "medico", expression = "java(medico != null ? medico : null)")
+	@Mapping(target = "paciente", expression = "java(paciente != null ? paciente : null)")
+	Consulta criarConsultaDtoParaConsulta(CriarConsultaDto criarConsultaDto, Medico medico, Paciente paciente);
 	
-	SaidaSimplesConsultaDto consultationToSimpleOutputConsultationDto(Consulta consultation);
+	SaidaSimplesConsultaDto consultaParaSaidaSimplesConsultaDto(Consulta consulta);
 
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-	@Mapping(target = "consultationId", ignore = true)
+	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	@Mapping(target = "doctor", expression = "java(doctor != null ? doctor : null)")
-	@Mapping(target = "patient", expression = "java(patient != null ? patient : null)")
-	@Mapping(target = "status", expression = "java(consultation.setStatus(updateConsultationDto.getStatus()))")
-	void updateConsultationFromUpdateConsultationDto(AtualizarConsultaDto updateConsultationDto, Medico doctor, Paciente patient, @MappingTarget Consulta consultation);
+	@Mapping(target = "medico", expression = "java(medico != null ? medico : null)")
+	@Mapping(target = "paciente", expression = "java(paciente != null ? paciente : null)")
+	@Mapping(target = "status", expression = "java(consulta.setStatus(atualizarConsultaDto.getStatus()))")
+	void atualizarConsultaDeAtualizarConsultaDto(AtualizarConsultaDto atualizarConsultaDto, Medico medico, Paciente paciente, @MappingTarget Consulta consulta);
 	
 }
