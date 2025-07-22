@@ -28,6 +28,9 @@ public class Validador {
             = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@"
             + "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     private static final Pattern PATTERN_EMAIL = Pattern.compile(EMAIL_REGEX);
+    
+    private static final String TELEFONE_REGEX = "^\\(?[1-9]{2}\\)? ?(?:[2-8]|9[0-9])[0-9]{3}\\-?[0-9]{4}$";
+    private static final Pattern PATTERN_TELEFONE = Pattern.compile(TELEFONE_REGEX);
 
     public static boolean isCrm(final String crm) {
 
@@ -68,6 +71,18 @@ public class Validador {
 
         return matcher.matches();
 
+    }
+    
+    public static boolean isTelefone(final String input) {
+        
+        if (input == null) {
+            return false;
+        }
+        
+        Matcher matcher = PATTERN_TELEFONE.matcher(input);
+        
+        return matcher.matches();
+        
     }
 
 }
