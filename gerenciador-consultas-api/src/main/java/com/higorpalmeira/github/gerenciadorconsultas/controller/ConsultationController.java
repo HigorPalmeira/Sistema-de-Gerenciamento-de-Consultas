@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputConsultationDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.service.ConsultationService;
 
 @RestController
@@ -75,7 +75,7 @@ public class ConsultationController {
 	}
 	
 	@PutMapping("/{consultationId}")
-	public ResponseEntity<Void> updateConsultationById(@PathVariable("consultationId") String consultationId, @RequestBody UpdateConsultationDto updateConsultationDto) {
+	public ResponseEntity<Void> updateConsultationById(@PathVariable("consultationId") String consultationId, @RequestBody AtualizarConsultaDto updateConsultationDto) {
 		
 		consultationService.updateConsultation(consultationId, updateConsultationDto);
 		

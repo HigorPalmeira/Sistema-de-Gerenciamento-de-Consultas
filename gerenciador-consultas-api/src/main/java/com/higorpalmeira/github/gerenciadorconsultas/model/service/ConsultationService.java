@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputConsultationDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
@@ -111,7 +111,7 @@ public class ConsultationService {
 	}
 	
 	@Transactional
-	public void updateConsultation(String consultationId, UpdateConsultationDto updateConsultationDto) {
+	public void updateConsultation(String consultationId, AtualizarConsultaDto updateConsultationDto) {
 		
 		var id = UUID.fromString(consultationId);
 		var consultationEntity = consultationRepository

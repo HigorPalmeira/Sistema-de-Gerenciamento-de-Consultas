@@ -8,7 +8,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SimpleOutputConsultationDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.UpdateConsultationDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
@@ -33,6 +33,6 @@ public interface ConsultationMapper {
 	@Mapping(target = "doctor", expression = "java(doctor != null ? doctor : null)")
 	@Mapping(target = "patient", expression = "java(patient != null ? patient : null)")
 	@Mapping(target = "status", expression = "java(consultation.setStatus(updateConsultationDto.getStatus()))")
-	void updateConsultationFromUpdateConsultationDto(UpdateConsultationDto updateConsultationDto, Medico doctor, Paciente patient, @MappingTarget Consulta consultation);
+	void updateConsultationFromUpdateConsultationDto(AtualizarConsultaDto updateConsultationDto, Medico doctor, Paciente patient, @MappingTarget Consulta consultation);
 	
 }
