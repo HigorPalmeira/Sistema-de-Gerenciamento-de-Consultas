@@ -23,7 +23,20 @@ public class CriarMedicoDto {
     private String email;
 
     private UUID especialidadeId;
+    
+    public CriarMedicoDto() {
+        
+    }
 
+    public CriarMedicoDto(String nome, String sobrenome, String crm, String telefone, String email, UUID especialidadeId) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.crm = crm;
+        this.telefone = telefone;
+        this.email = email;
+        this.especialidadeId = especialidadeId;
+    }
+    
     public String getNome() {
         return nome;
     }
