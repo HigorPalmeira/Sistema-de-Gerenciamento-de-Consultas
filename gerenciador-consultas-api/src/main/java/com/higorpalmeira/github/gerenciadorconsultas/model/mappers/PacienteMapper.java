@@ -7,6 +7,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
@@ -34,6 +35,14 @@ public interface PacienteMapper {
 	 * @return SaidaSimplePacienteDto DTO de saída simples criado.
 	 * */
 	SaidaSimplesPacienteDto pacienteParaSaidaSimplesPacienteDto(Paciente paciente);
+	
+	/*
+	 * Cria um DTO de saída detalhada a paritr da entidade 'Paciente'.
+	 * 
+	 * @param paciente Entidade a ser transformada.
+	 * @return SaidaDetalhadaPacienteDto DTO de saída detalhada criado.
+	 * */
+	SaidaDetalhadaPacienteDto pacienteParaSaidaDetalhadaPacienteDto(Paciente paciente);
 
 	/**
      * Atualiza a entidade 'Paciente' com os dados não nulos do DTO.
