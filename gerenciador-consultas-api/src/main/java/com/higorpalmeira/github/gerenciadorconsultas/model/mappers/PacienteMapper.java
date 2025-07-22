@@ -12,7 +12,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimpl
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
 
-@Mapper(componentModel = "spring", uses = {EnderecoMapper.class})
+@Mapper(componentModel = "spring", uses = {EnderecoMapper.class, ConsultaMapper.class})
 public interface PacienteMapper {
 	
 	/*
