@@ -17,6 +17,10 @@ public class SaidaSimplesEspecialidadeDto {
     private String descricao;
 
     private int medicosAssociados;
+    
+    public SaidaSimplesEspecialidadeDto() {
+        
+    }
 
     public UUID getId() {
         return id;
