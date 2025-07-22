@@ -17,22 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarConsultaDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.service.ConsultationService;
+import com.higorpalmeira.github.gerenciadorconsultas.model.service.ConsultaService;
 
 @RestController
 @RequestMapping("/v1/consultation")
 public class ConsultationController {
 	
-	private ConsultationService consultationService;
+	private ConsultaService consultationService;
 	
-	public ConsultationController(ConsultationService consultationService) {
+	public ConsultationController(ConsultaService consultationService) {
 		this.consultationService = consultationService;
 	}
 	
 	@PostMapping
 	public ResponseEntity<UUID> createConsultation(@RequestBody CriarConsultaDto createConsultationDto) {
 		
-		var consultationId = consultationService.createConsultation(createConsultationDto);
+		var consultationId = consultationService.criarConsulta(createConsultationDto);
 		
 		return ResponseEntity.created(URI.create("/v1/consultation/" + consultationId.toString())).build();
 		
@@ -41,7 +41,7 @@ public class ConsultationController {
 	@GetMapping("/{consultationId}")
 	public ResponseEntity<SaidaSimplesConsultaDto> findSimpleConsultationById(@PathVariable("consultationId") String consultationId) {
 		
-		var consultation = consultationService.findSimpleConsultationById(consultationId);
+		var consultation = consultationService.buscarSaidaSimplesConsultaPorId(consultationId);
 		
 		return ResponseEntity.ok(consultation);
 		
@@ -50,7 +50,7 @@ public class ConsultationController {
 	@GetMapping
 	public ResponseEntity<List<SaidaSimplesConsultaDto>> listSimpleConsultationsActive() {
 		
-		var consultations = consultationService.listSimpleConsultationsActive();
+		var consultations = consultationService.listarTodasSaidaSimplesConsultaAtiva();
 		
 		return ResponseEntity.ok(consultations);
 		
@@ -59,7 +59,7 @@ public class ConsultationController {
 	@GetMapping("/all")
 	public ResponseEntity<List<SaidaSimplesConsultaDto>> listSimpleConsultations() {
 		
-		var consultations = consultationService.listSimpleConsultations();
+		var consultations = consultationService.listarTodasSaidaSimplesConsulta();
 		
 		return ResponseEntity.ok(consultations);
 		
@@ -68,7 +68,7 @@ public class ConsultationController {
 	@GetMapping("/scheduled")
 	public ResponseEntity<List<SaidaSimplesConsultaDto>> listSimpleConsultationsScheduled() {
 		
-		var consultations = consultationService.listSimpleConsultationsScheduled();
+		var consultations = consultationService.listarTodasSaidaSimplesConsultaAgendada();
 		
 		return ResponseEntity.ok(consultations);
 		
@@ -77,7 +77,7 @@ public class ConsultationController {
 	@PutMapping("/{consultationId}")
 	public ResponseEntity<Void> updateConsultationById(@PathVariable("consultationId") String consultationId, @RequestBody AtualizarConsultaDto updateConsultationDto) {
 		
-		consultationService.updateConsultation(consultationId, updateConsultationDto);
+		consultationService.atualizarConsultaPorId(consultationId, updateConsultationDto);
 		
 		return ResponseEntity.noContent().build();
 		
@@ -86,7 +86,7 @@ public class ConsultationController {
 	@DeleteMapping("/{consultationId}")
 	public ResponseEntity<Void> deleteConsultationById(@PathVariable("consultationId") String consultationId) {
 		
-		consultationService.deleteConsultationById(consultationId);
+		consultationService.deletarConsultaPorId(consultationId);
 		
 		return ResponseEntity.noContent().build();
 		
