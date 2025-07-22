@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailedDoctorDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarMedicoDto;
@@ -74,13 +73,6 @@ public class MedicoService {
 					.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com ID: " + id));
 		
 		return medicoMapper.medicoParaSaidaSimplesMedicoDto(medicoEntidade);
-		
-	}
-	
-	@Transactional(readOnly = true)
-	public OldOutputDetailedDoctorDto findDetailedDoctorById(String doctorId) {
-		
-		return null;
 		
 	}
 	
