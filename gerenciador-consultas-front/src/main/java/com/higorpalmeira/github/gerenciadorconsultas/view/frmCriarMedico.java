@@ -257,9 +257,17 @@ public class frmCriarMedico extends frmGenerico {
             JOptionPane.showMessageDialog(this, "O e-mail deve ter pelo menos sete caracteres!", "E-mail Inválido", JOptionPane.ERROR_MESSAGE);
             return;
             
-        } else if (true) {
+        } else if (!Validador.isEmail(txtEmail.getText().trim())) {
             
             JOptionPane.showMessageDialog(this, "Formato de e-mail inválido!", "E-mail Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+            
+        }
+        
+        if (txtTelefone.getText() == null || txtTelefone.getText().isBlank()) {
+            
+            JOptionPane.showMessageDialog(this, "O campo 'Telefone' não pode estar vazio!", "Telefone Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
             
         }
         
