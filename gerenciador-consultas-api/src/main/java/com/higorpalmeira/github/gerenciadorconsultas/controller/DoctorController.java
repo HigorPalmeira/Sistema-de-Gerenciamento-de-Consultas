@@ -18,22 +18,22 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.OldOutputDetailed
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarMedicoDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.service.DoctorService;
+import com.higorpalmeira.github.gerenciadorconsultas.model.service.MedicoService;
 
 @RestController
 @RequestMapping("/v1/doctor")
 public class DoctorController {
 	
-	private DoctorService doctorService;
+	private MedicoService doctorService;
 	
-	public DoctorController(DoctorService doctorService) {
+	public DoctorController(MedicoService doctorService) {
 		this.doctorService = doctorService;
 	}
 	
 	@PostMapping
 	public ResponseEntity<UUID> createDoctor(@RequestBody CriarMedicoDto createDoctorDto) {
 		
-		var doctorId = doctorService.createDoctor(createDoctorDto);
+		var doctorId = doctorService.criarMedico(createDoctorDto);
 		
 		return ResponseEntity.created(URI.create("/v1/doctor/" + doctorId.toString())).build();
 		
@@ -42,7 +42,7 @@ public class DoctorController {
 	@GetMapping("/{doctorId}")
 	public ResponseEntity<SaidaSimplesMedicoDto> findSimpleDoctorById(@PathVariable("doctorId") String doctorId) {
 		
-		var doctor = doctorService.findSimpleDoctorById(doctorId);
+		var doctor = doctorService.buscarSaidaSimplesMedicoPorId(doctorId);
 		
 		return ResponseEntity.ok(doctor);
 		
@@ -60,7 +60,7 @@ public class DoctorController {
 	@GetMapping("/all")
 	public ResponseEntity<List<SaidaSimplesMedicoDto>> listDoctors() {
 		
-		var doctors = doctorService.listDoctors();
+		var doctors = doctorService.listarTodosSaidaSimplesMedico();
 		
 		return ResponseEntity.ok(doctors);
 		
@@ -69,7 +69,7 @@ public class DoctorController {
 	@GetMapping
 	public ResponseEntity<List<SaidaSimplesMedicoDto>> listDoctorsActive() {
 		
-		var doctors = doctorService.listDoctorsActive();
+		var doctors = doctorService.listarTodosSaidaSimplesMedicoAtivos();
 		
 		return ResponseEntity.ok(doctors);
 		
@@ -78,7 +78,7 @@ public class DoctorController {
 	@GetMapping("/inactive")
 	public ResponseEntity<List<SaidaSimplesMedicoDto>> listDoctorInactive() {
 		
-		var doctors = doctorService.listDoctorsInactive();
+		var doctors = doctorService.listarTodosSaidaSimplesMedicoInativos();
 		
 		return ResponseEntity.ok(doctors);
 		
@@ -87,7 +87,7 @@ public class DoctorController {
 	@PutMapping("/{doctorId}")
 	public ResponseEntity<Void> updateDoctorById(@PathVariable("doctorId") String doctorId, @RequestBody AtualizarMedicoDto updateDoctorDto) {
 		
-		doctorService.updateDoctorById(doctorId, updateDoctorDto);
+		doctorService.atualizarMedicoPorId(doctorId, updateDoctorDto);
 		
 		return ResponseEntity.noContent().build();
 		
@@ -96,7 +96,7 @@ public class DoctorController {
 	@DeleteMapping("/{doctorId}")
 	public ResponseEntity<Void> deleteDoctorById(@PathVariable("doctorId") String doctorId) {
 		
-		doctorService.deleteDoctorById(doctorId);
+		doctorService.deletarMedicoPorId(doctorId);
 		
 		return ResponseEntity.noContent().build();
 		
