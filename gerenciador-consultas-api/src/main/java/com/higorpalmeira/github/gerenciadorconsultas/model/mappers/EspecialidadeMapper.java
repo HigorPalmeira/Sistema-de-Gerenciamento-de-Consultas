@@ -29,7 +29,7 @@ public abstract class EspecialidadeMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "medicos", ignore = true)
-	abstract Especialidade criarEspecialidadeDtoParaEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto);
+	public abstract Especialidade criarEspecialidadeDtoParaEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto);
 	
 	/*
 	 * Cria um DTO de saída simples a partir da entidade 'Especialidade'.
@@ -38,7 +38,7 @@ public abstract class EspecialidadeMapper {
 	 * @return SaidaSimplesEspecialidadeDto DTO de saída simples criado.
 	 * */
 	@Mapping(target = "medicosAssociados", expression = "java(especialidade.getMedicos() != null ? especialidade.getMedicos().size() : 0)")
-	abstract SaidaSimplesEspecialidadeDto especialidadeParaSaidaSimplesEspecialidadeDto(Especialidade especialidade);
+	public abstract SaidaSimplesEspecialidadeDto especialidadeParaSaidaSimplesEspecialidadeDto(Especialidade especialidade);
 	
 	/*
 	 * Criar um DTO de saída detalhada a partir da entidade 'Especialidade'.
@@ -46,7 +46,7 @@ public abstract class EspecialidadeMapper {
 	 * @param especialidade Entidade a ser transforamada.
 	 * @return SaidaDetalhadaEspecialidadeDto DTO de saída detalhada criada.
 	 * */
-	abstract SaidaDetalhadaEspecialidadeDto especialidadeParaSaidaDetalhadaEspecialidadeDto(Especialidade especialidade);
+	public abstract SaidaDetalhadaEspecialidadeDto especialidadeParaSaidaDetalhadaEspecialidadeDto(Especialidade especialidade);
 	
 	/**
      * Atualiza a entidade 'Especialidade' com os dados não nulos do DTO.
@@ -59,6 +59,6 @@ public abstract class EspecialidadeMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "medicos", ignore = true)
-	abstract void atualizarEspecialidadeDeAtualizarEspecialidadeDto(AtualizarEspecialidadeDto atualizarEspecialidadeDto, @MappingTarget Especialidade especialidade);
+	public abstract void atualizarEspecialidadeDeAtualizarEspecialidadeDto(AtualizarEspecialidadeDto atualizarEspecialidadeDto, @MappingTarget Especialidade especialidade);
 
 }
