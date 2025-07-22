@@ -87,6 +87,18 @@ public class PacienteService {
 		return pacientes;
 
 	}
+	
+	@Transactional(readOnly = true)
+	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacienteAtivos() {
+		
+		var pacientes = pacienteRepository
+				.findAllByStatus(TipoStatusConta.ATIVO).stream()
+				.map(paciente -> pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente))
+				.toList();
+		
+		return pacientes;
+		
+	}
 
 	@Transactional
 	public void atualizarPacientePorId(String pacienteId, AtualizarPacienteDto atualizarPacienteDto) {
