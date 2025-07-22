@@ -99,6 +99,18 @@ public class PacienteService {
 		return pacientes;
 		
 	}
+	
+	@Transactional(readOnly = true)
+	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacientesInativos() {
+		
+		var pacientes = pacienteRepository
+				.findAllByStatus(TipoStatusConta.INATIVO).stream()
+				.map(paciente -> pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente))
+				.toList();
+		
+		return pacientes;
+		
+	}
 
 	@Transactional
 	public void atualizarPacientePorId(String pacienteId, AtualizarPacienteDto atualizarPacienteDto) {
