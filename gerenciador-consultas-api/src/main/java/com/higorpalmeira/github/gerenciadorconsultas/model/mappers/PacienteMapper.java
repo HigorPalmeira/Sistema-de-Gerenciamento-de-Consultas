@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaPacienteDto;
@@ -19,6 +20,12 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStat
 
 @Mapper(componentModel = "spring", uses = {EnderecoMapper.class, ConsultaMapper.class}, imports = {TipoStatusConta.class})
 public abstract class PacienteMapper {
+	
+	@Autowired
+	protected ConsultaMapper consultaMapper;
+	
+	@Autowired
+	protected EnderecoMapper enderecoMapper;
 	
 	/*
 	 * Cria uma entidade 'Paciente' com os dados do DTO.
