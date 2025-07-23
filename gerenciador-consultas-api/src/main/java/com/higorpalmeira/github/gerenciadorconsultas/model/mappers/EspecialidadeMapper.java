@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaEspecialidadeDto;
@@ -17,15 +16,8 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarE
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 
-@Mapper(componentModel = "spring", uses = {MedicoMapper.class})
+@Mapper(componentModel = "spring")
 public abstract class EspecialidadeMapper {
-	
-	private MedicoMapper medicoMapper;
-	
-	@Autowired
-	public void setMedicoMapper(MedicoMapper medicoMapper) {
-		this.medicoMapper = medicoMapper;
-	}
 	
 	/*
 	 * Cria uma entidade 'Especialidade' com os dados do DTO.
@@ -54,6 +46,7 @@ public abstract class EspecialidadeMapper {
 	 * @param especialidade Entidade a ser transforamada.
 	 * @return SaidaDetalhadaEspecialidadeDto DTO de saída detalhada criada.
 	 * */
+	@Mapping(target = "medicos", ignore = true)
 	public abstract SaidaDetalhadaEspecialidadeDto especialidadeParaSaidaDetalhadaEspecialidadeDto(Especialidade especialidade);
 	
 	/**

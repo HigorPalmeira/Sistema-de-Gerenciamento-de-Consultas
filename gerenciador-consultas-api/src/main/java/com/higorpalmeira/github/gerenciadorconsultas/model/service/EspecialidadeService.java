@@ -2,6 +2,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,9 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesEspecialidadeDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarEspecialidadeDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.EspecialidadeMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.MedicoMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EspecialidadeRepository;
 
 @Service
@@ -19,17 +23,20 @@ public class EspecialidadeService {
 	
 	private EspecialidadeRepository especialidadeRepository;
 	
-	private EspecialidadeMapper specialityMapper;
+	private EspecialidadeMapper especialidadeMapper;
 	
-	public EspecialidadeService(EspecialidadeRepository especialidadeRepository, EspecialidadeMapper specialityMapper) {
+	private MedicoMapper medicoMapper;
+	
+	public EspecialidadeService(EspecialidadeRepository especialidadeRepository, EspecialidadeMapper especialidadeMapper, MedicoMapper medicoMapper) {
 		this.especialidadeRepository = especialidadeRepository;
-		this.specialityMapper = specialityMapper;
+		this.especialidadeMapper = especialidadeMapper;
+		this.medicoMapper = medicoMapper;
 	}
 	
 	@Transactional
 	public UUID criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) {
 		
-		var especialidade = specialityMapper.criarEspecialidadeDtoParaEspecialidade(criarEspecialidadeDto);
+		var especialidade = especialidadeMapper.criarEspecialidadeDtoParaEspecialidade(criarEspecialidadeDto);
 		
 		var especialidadeSalva = especialidadeRepository.save(especialidade);
 		
@@ -45,7 +52,7 @@ public class EspecialidadeService {
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado com ID: " + id));
 		
-		return specialityMapper.especialidadeParaSaidaSimplesEspecialidadeDto(especialidadeEntidade);
+		return especialidadeMapper.especialidadeParaSaidaSimplesEspecialidadeDto(especialidadeEntidade);
 		
 	}
 	
@@ -55,10 +62,18 @@ public class EspecialidadeService {
 		var id = UUID.fromString(especialidadeId);
 		var especialidadeEntidade = especialidadeRepository
 				.findById(id)
-				.map(especialidade -> specialityMapper.especialidadeParaSaidaDetalhadaEspecialidadeDto(especialidade))
 				.orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado com ID: " + id));
 		
-		return especialidadeEntidade;
+		SaidaDetalhadaEspecialidadeDto especialidadeDto = especialidadeMapper
+				.especialidadeParaSaidaDetalhadaEspecialidadeDto(especialidadeEntidade);
+		
+		List<SaidaSimplesMedicoDto> listaMedicosDto = especialidadeEntidade.getMedicos().stream()
+				.map(medicoMapper::medicoParaSaidaSimplesMedicoDto)
+				.collect(Collectors.toList());
+		
+		especialidadeDto.setMedicos(listaMedicosDto);
+		
+		return especialidadeDto;
 	}
 	
 	@Transactional(readOnly = true)
@@ -66,7 +81,7 @@ public class EspecialidadeService {
 		
 		var especialidades = especialidadeRepository
 				.findAll().stream()
-				.map(especialidade -> specialityMapper.especialidadeParaSaidaSimplesEspecialidadeDto(especialidade))
+				.map(especialidade -> especialidadeMapper.especialidadeParaSaidaSimplesEspecialidadeDto(especialidade))
 				.toList();
 		
 		return especialidades;
@@ -76,12 +91,25 @@ public class EspecialidadeService {
 	@Transactional(readOnly = true)
 	public List<SaidaDetalhadaEspecialidadeDto> listarTodasSaidaDetalhadaEspecialidade() {
 		
-		var especialidades = especialidadeRepository
-				.findAll().stream()
-				.map(especialidade -> specialityMapper.especialidadeParaSaidaDetalhadaEspecialidadeDto(especialidade))
-				.toList();
+		List<Especialidade> listaEspecialidades = especialidadeRepository
+				.findAll();
 		
-		return especialidades;
+		var listaEspecialidadesDto = listaEspecialidades.stream()
+				.map(especialidade -> {
+					
+					SaidaDetalhadaEspecialidadeDto dto = especialidadeMapper.especialidadeParaSaidaDetalhadaEspecialidadeDto(especialidade);
+					
+					List<SaidaSimplesMedicoDto> medicosDto = especialidade.getMedicos().stream()
+							.map(medicoMapper::medicoParaSaidaSimplesMedicoDto)
+							.collect(Collectors.toList());
+					
+					dto.setMedicos(medicosDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaEspecialidadesDto;
 		
 	}
 	
@@ -93,7 +121,7 @@ public class EspecialidadeService {
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado com ID: " + id));
 		
-		specialityMapper.atualizarEspecialidadeDeAtualizarEspecialidadeDto(atualizarEspecialidadeDto, especialidadeEntidade);
+		especialidadeMapper.atualizarEspecialidadeDeAtualizarEspecialidadeDto(atualizarEspecialidadeDto, especialidadeEntidade);
 		
 	}
 	
