@@ -20,8 +20,12 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 @Mapper(componentModel = "spring", uses = {MedicoMapper.class})
 public abstract class EspecialidadeMapper {
 	
+	private MedicoMapper medicoMapper;
+	
 	@Autowired
-	protected MedicoMapper medicoMapper;
+	public void setMedicoMapper(MedicoMapper medicoMapper) {
+		this.medicoMapper = medicoMapper;
+	}
 	
 	/*
 	 * Cria uma entidade 'Especialidade' com os dados do DTO.

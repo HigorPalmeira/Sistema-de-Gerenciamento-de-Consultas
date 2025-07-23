@@ -18,11 +18,19 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStat
 @Mapper(componentModel = "spring", uses = {MedicoMapper.class, PacienteMapper.class}, imports = {TipoStatusConsulta.class})
 public abstract class ConsultaMapper {
 	
-	@Autowired
-	protected MedicoMapper medicoMapper;
+	private MedicoMapper medicoMapper;
+	
+	private PacienteMapper pacienteMapper;
 	
 	@Autowired
-	protected PacienteMapper pacienteMapper;
+	public void setMedicoMapper(MedicoMapper medicoMapper) {
+		this.medicoMapper = medicoMapper;
+	}
+	
+	@Autowired
+	public void setPacienteMapper(PacienteMapper pacienteMapper) {
+		this.pacienteMapper = pacienteMapper;
+	}
 	
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)

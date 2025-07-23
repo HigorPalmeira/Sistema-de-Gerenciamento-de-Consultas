@@ -22,11 +22,19 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStat
 @Mapper(componentModel = "spring", uses = {EspecialidadeMapper.class, ConsultaMapper.class}, imports = {TipoStatusConta.class})
 public abstract class MedicoMapper {
 	
-	@Autowired
-	protected EspecialidadeMapper especialidadeMapper;
+	private EspecialidadeMapper especialidadeMapper;
+	
+	private ConsultaMapper consultaMapper;
 	
 	@Autowired
-	protected ConsultaMapper consultaMapper;
+	public void setEspecialidadeMapper(EspecialidadeMapper especialidadeMapper) {
+		this.especialidadeMapper = especialidadeMapper;
+	}
+	
+	@Autowired
+	public void setConsultaMapper(ConsultaMapper consultaMapper) {
+		this.consultaMapper = consultaMapper;
+	}
 	
 	/*
 	 * Cria uma entidade 'Medico' com os dados do DTO.
