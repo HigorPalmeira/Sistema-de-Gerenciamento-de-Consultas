@@ -7,7 +7,10 @@ package com.higorpalmeira.github.gerenciadorconsultas.view;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -52,12 +55,21 @@ public class frmCriarEspecialidade extends frmGenerico {
             CriarEspecialidadeDto especialidadeDto = new CriarEspecialidadeDto();
             especialidadeDto.setDescricao(txtDescricao.getText().trim());
             
-            UUID id = especialidadeService.criarEspecialidade(especialidadeDto);
+            UUID id = null;
+            try {
+                id = especialidadeService.criarEspecialidade(especialidadeDto);
+            } catch (IOException | InterruptedException ex) {
+                Logger.getLogger(frmCriarEspecialidade.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             if (id != null) {
                 
                 JOptionPane.showMessageDialog(this, "Especialidade salva com o ID: " + id, "Especialidade Salva", JOptionPane.INFORMATION_MESSAGE);
             
+            } else {
+                
+                JOptionPane.showMessageDialog(this, "Não foi possível criar a especialidade!", "Falha", JOptionPane.ERROR_MESSAGE);
+                
             }
             
         }

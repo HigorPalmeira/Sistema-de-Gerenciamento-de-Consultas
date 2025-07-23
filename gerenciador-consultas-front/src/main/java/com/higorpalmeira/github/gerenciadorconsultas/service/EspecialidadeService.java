@@ -26,34 +26,28 @@ public class EspecialidadeService {
 
     private final String URL_API = "http://localhost:8080/v1/especialidade";
 
-    public UUID criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) {
-        
-        UUID id = null;
-        
-        try {
-            
-            HttpClient client = HttpClient.newHttpClient();
-            
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(URL_API))
-                    .header("Content-Type", "application/json")
-                    .POST(BodyPublishers.ofString(criarEspecialidadeDto.toString()))
-                    .build();
-            
-            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            
-            String[] path = response.uri().getPath().split("/");
-            
-            id = UUID.fromString(path[path.length-1]);
-            
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
-        
+    public UUID criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) throws IOException, InterruptedException {
+
+        UUID id;
+
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API))
+                .header("Content-Type", "application/json")
+                .POST(BodyPublishers.ofString(criarEspecialidadeDto.toString()))
+                .build();
+
+        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        String[] path = response.uri().getPath().split("/");
+
+        id = UUID.fromString(path[path.length - 1]);
+
         return id;
-        
+
     }
-    
+
     public SaidaSimplesEspecialidadeDto getSaidaSimplesEspecialidadeDto(UUID id) {
 
         SaidaSimplesEspecialidadeDto especialidadeDto = new SaidaSimplesEspecialidadeDto();
@@ -104,7 +98,7 @@ public class EspecialidadeService {
         }
 
         return especialidades;
-        
+
     }
 
 }
