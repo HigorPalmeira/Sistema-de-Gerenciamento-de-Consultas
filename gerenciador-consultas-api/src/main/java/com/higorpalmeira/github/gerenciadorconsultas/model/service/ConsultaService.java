@@ -2,17 +2,23 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesConsultaDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarConsultaDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultaMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.MedicoMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.PacienteMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.ConsultaRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.MedicoRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PacienteRepository;
@@ -28,12 +34,18 @@ public class ConsultaService {
 	
 	private ConsultaMapper consultaMapper;
 	
+	private MedicoMapper medicoMapper;
+	
+	private PacienteMapper pacienteMapper;
+	
 	public ConsultaService(ConsultaRepository consultaRepository, MedicoRepository medicoRepository, 
-			PacienteRepository pacienteRepository, ConsultaMapper consultaMapper) {
+			PacienteRepository pacienteRepository, ConsultaMapper consultaMapper, MedicoMapper medicoMapper,
+			PacienteMapper pacienteMapper) {
 		this.consultaRepository = consultaRepository;
 		this.medicoRepository = medicoRepository;
 		this.pacienteRepository = pacienteRepository;
 		this.consultaMapper = consultaMapper;
+		this.pacienteMapper = pacienteMapper;
 	}
 	
 	@Transactional
@@ -54,7 +66,9 @@ public class ConsultaService {
 				.findById(pacienteId)
 				.orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com ID: " + pacienteId));
 		
-		var consulta = consultaMapper.criarConsultaDtoParaConsulta(criarConsultaDto, medicoEntidade, pacienteEntidade);
+		var consulta = consultaMapper.criarConsultaDtoParaConsulta(criarConsultaDto);
+		consulta.setMedico(medicoEntidade);
+		consulta.setPaciente(pacienteEntidade);
 		
 		var consultaSalva = consultaRepository.save(consulta);
 		
@@ -65,49 +79,110 @@ public class ConsultaService {
 	public SaidaSimplesConsultaDto buscarSaidaSimplesConsultaPorId(String consultaId) {
 		
 		var id = UUID.fromString(consultaId);
-		var consultaEntidade = consultaRepository
-				.findById(id)
-				.map(consulta -> consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta)
-						).orElseThrow(() -> new ResourceNotFoundException("Consulta não encontrada com ID: " + id));
 		
-		return consultaEntidade;
+		Consulta consulta = consultaRepository
+				.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Consulta não encontrada com ID: " + id));
+		
+		SaidaSimplesConsultaDto consultaDto = consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta);
+		
+		SaidaSimplesMedicoDto medicoDto = medicoMapper
+				.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+		
+		SaidaSimplesPacienteDto pacienteDto = pacienteMapper
+				.pacienteParaSaidaSimplesPacienteDto(consulta.getPaciente());
+		
+		consultaDto.setMedico(medicoDto);
+		consultaDto.setPaciente(pacienteDto);
+		
+		return consultaDto;
 		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsulta() {
 		
-		var consultas = consultaRepository
-				.findAll().stream()
-				.map(consulta -> consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta)
-						).toList();
+		List<Consulta> listaConsultas = consultaRepository
+				.findAll();
 		
-		return consultas;
+		var listaConsultaDto = listaConsultas.stream()
+				.map(consulta -> {
+					
+					SaidaSimplesConsultaDto dto = consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta);
+					
+					SaidaSimplesMedicoDto medicoDto = medicoMapper
+							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					dto.setMedico(medicoDto);
+					
+					SaidaSimplesPacienteDto pacienteDto = pacienteMapper
+							.pacienteParaSaidaSimplesPacienteDto(consulta.getPaciente());
+					
+					dto.setPaciente(pacienteDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaConsultaDto;
 		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaAtiva() {
 		
-		var consultas = consultaRepository
-				.findAllByStatusNot(TipoStatusConsulta.INATIVA).stream()
-				.map(consulta -> consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta))
-				.toList();
-				
+		List<Consulta> listaConsultas = consultaRepository
+				.findAllByStatusNot(TipoStatusConsulta.INATIVA);
 		
-		return consultas;
+		var listaConsultaDto = listaConsultas.stream()
+				.map(consulta -> {
+					
+					SaidaSimplesConsultaDto dto = consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta);
+					
+					SaidaSimplesMedicoDto medicoDto = medicoMapper
+							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					dto.setMedico(medicoDto);
+					
+					SaidaSimplesPacienteDto pacienteDto = pacienteMapper
+							.pacienteParaSaidaSimplesPacienteDto(consulta.getPaciente());
+					
+					dto.setPaciente(pacienteDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaConsultaDto;
 		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaAgendada() {
 		
-		var consultas = consultaRepository
-				.findAllByStatus(TipoStatusConsulta.AGENDADA).stream()
-				.map(consultation -> consultaMapper.consultaParaSaidaSimplesConsultaDto(consultation))
-				.toList();
+		List<Consulta> listaConsultas = consultaRepository
+				.findAllByStatus(TipoStatusConsulta.AGENDADA);
 		
-		return consultas;
+		var listaConsultaDto = listaConsultas.stream()
+				.map(consulta -> {
+					
+					SaidaSimplesConsultaDto dto = consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta);
+					
+					SaidaSimplesMedicoDto medicoDto = medicoMapper
+							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					dto.setMedico(medicoDto);
+					
+					SaidaSimplesPacienteDto pacienteDto = pacienteMapper
+							.pacienteParaSaidaSimplesPacienteDto(consulta.getPaciente());
+					
+					dto.setPaciente(pacienteDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaConsultaDto;
 		
 	}
 	
@@ -134,8 +209,10 @@ public class ConsultaService {
 				.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com ID: " + medicoId));
 		
 		
-		consultaMapper.atualizarConsultaDeAtualizarConsultaDto(atualizarConsultaDto, medicoEntidade, pacienteEntidade, consultaEntidade);
+		consultaMapper.atualizarConsultaDeAtualizarConsultaDto(atualizarConsultaDto, consultaEntidade);
 		
+		consultaEntidade.setMedico(medicoEntidade);
+		consultaEntidade.setPaciente(pacienteEntidade);
 	}
 	
 	@Transactional

@@ -189,6 +189,11 @@ public class frmPaciente extends frmGenerico {
         btnNovo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnNovo.setMnemonic('n');
         btnNovo.setText("NOVO");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnEditar.setMnemonic('e');
@@ -268,6 +273,13 @@ public class frmPaciente extends frmGenerico {
     private void btnDetalhesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalhesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDetalhesActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+
+        frmCriarPaciente frmCriarPaciente = new frmCriarPaciente();
+        frmCriarPaciente.setVisible(true);
+
+    }//GEN-LAST:event_btnNovoActionPerformed
 
     /**
      * @param args the command line arguments
