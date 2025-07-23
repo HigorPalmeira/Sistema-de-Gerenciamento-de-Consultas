@@ -47,6 +47,11 @@ public class frmPrincipal extends frmGenerico {
 
         mitPacientes.setText("Pacientes");
         mitPacientes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        mitPacientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mitPacientesMouseClicked(evt);
+            }
+        });
         menuPrincipal.add(mitPacientes);
 
         mitMedicos.setText("Médicos");
@@ -120,6 +125,13 @@ public class frmPrincipal extends frmGenerico {
         frmMedico.setVisible(true);
 
     }//GEN-LAST:event_mitMedicosMouseClicked
+
+    private void mitPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mitPacientesMouseClicked
+
+        frmPaciente frmPaciente = new frmPaciente();
+        frmPaciente.setVisible(true);
+
+    }//GEN-LAST:event_mitPacientesMouseClicked
 
     /**
      * @param args the command line arguments
