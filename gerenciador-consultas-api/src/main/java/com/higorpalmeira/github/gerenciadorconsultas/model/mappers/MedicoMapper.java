@@ -8,33 +8,17 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
-import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Especialidade;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 
-@Mapper(componentModel = "spring", uses = {EspecialidadeMapper.class, ConsultaMapper.class}, imports = {TipoStatusConta.class})
+@Mapper(componentModel = "spring", imports = {TipoStatusConta.class})
 public abstract class MedicoMapper {
-	
-	private EspecialidadeMapper especialidadeMapper;
-	
-	private ConsultaMapper consultaMapper;
-	
-	@Autowired
-	public void setEspecialidadeMapper(EspecialidadeMapper especialidadeMapper) {
-		this.especialidadeMapper = especialidadeMapper;
-	}
-	
-	@Autowired
-	public void setConsultaMapper(ConsultaMapper consultaMapper) {
-		this.consultaMapper = consultaMapper;
-	}
 	
 	/*
 	 * Cria uma entidade 'Medico' com os dados do DTO.
@@ -46,8 +30,9 @@ public abstract class MedicoMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultas", ignore = true)
+	@Mapping(target = "especialidade", ignore = true)
 	@Mapping(target = "status", expression = "java(TipoStatusConta.ATIVO)")
-	public abstract Medico criarMedicoDtoParaMedico(CriarMedicoDto criarMedicoDto, Especialidade especialidade);
+	public abstract Medico criarMedicoDtoParaMedico(CriarMedicoDto criarMedicoDto);
 
 	/*
 	 * Cria um DTO de saída simples a partir da entidade 'Medico'.
@@ -56,6 +41,7 @@ public abstract class MedicoMapper {
 	 * @return SaidaSimplesMedicoDto DTO de saída simples criado.
 	 * */
 	@Mapping(source = "consultas", target = "consultas", qualifiedByName = "mapConsultasToCount")
+	@Mapping(target = "especialidade", ignore = true)
 	public abstract SaidaSimplesMedicoDto medicoParaSaidaSimplesMedicoDto(Medico medico);
 	
 	/*
@@ -64,6 +50,8 @@ public abstract class MedicoMapper {
 	 * @param medico Entidade a ser transformada.
 	 * @return SaidaDetalhadaMedicoDto DTO de saída detalhada criado.
 	 * */
+	@Mapping(target = "consultas", ignore = true)
+	@Mapping(target = "especialidade", ignore = true)
 	public abstract SaidaDetalhadaMedicoDto medicoParaSaidaDetalhadaMedicoDto(Medico medico);
 	
 	/**
@@ -79,8 +67,8 @@ public abstract class MedicoMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultas", ignore = true)
-	@Mapping(target = "especialidade", source = "especialidade")
-	public abstract void atualizarMedicoDeAtualizarMedicoDto(AtualizarMedicoDto atualizarMedicoDto, Especialidade especialidade, @MappingTarget Medico medico);
+	@Mapping(target = "especialidade", ignore = true)
+	public abstract void atualizarMedicoDeAtualizarMedicoDto(AtualizarMedicoDto atualizarMedicoDto, @MappingTarget Medico medico);
 	
 	@Named("mapConsultasToCount")
 	public int mapConsultasToCount(List<Consulta> consultas) {

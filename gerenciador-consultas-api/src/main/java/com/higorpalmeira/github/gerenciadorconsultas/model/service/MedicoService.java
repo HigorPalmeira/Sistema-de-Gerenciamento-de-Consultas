@@ -2,21 +2,27 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesConsultaDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultaMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.EspecialidadeMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.MedicoMapper;
-import com.higorpalmeira.github.gerenciadorconsultas.model.repository.MedicoRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EspecialidadeRepository;
+import com.higorpalmeira.github.gerenciadorconsultas.model.repository.MedicoRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
 @Service
@@ -28,10 +34,16 @@ public class MedicoService {
 	
 	private MedicoMapper medicoMapper;
 	
-	public MedicoService(MedicoRepository medicoRepository, EspecialidadeRepository especialidadeRepository, MedicoMapper medicoMapper) {
+	private EspecialidadeMapper especialidadeMapper;
+	
+	private ConsultaMapper consultaMapper;
+	
+	public MedicoService(MedicoRepository medicoRepository, EspecialidadeRepository especialidadeRepository, MedicoMapper medicoMapper, EspecialidadeMapper especialidadeMapper, ConsultaMapper consultaMapper) {
 		this.medicoRepository = medicoRepository;
 		this.especialidadeRepository = especialidadeRepository;
 		this.medicoMapper = medicoMapper;
+		this.especialidadeMapper = especialidadeMapper;
+		this.consultaMapper = consultaMapper;
 	}
 	
 	@Transactional
@@ -58,7 +70,9 @@ public class MedicoService {
 				.findById(especialidadeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrada no ID: " + especialidadeId));
 		
-		var medico = medicoMapper.criarMedicoDtoParaMedico(criarMedicoDto, especialidadeEntidade);
+		var medico = medicoMapper.criarMedicoDtoParaMedico(criarMedicoDto);
+		
+		medico.setEspecialidade(especialidadeEntidade);
 		
 		var medicoSalvo = medicoRepository.save(medico);
 		
@@ -73,43 +87,86 @@ public class MedicoService {
 				.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com ID: " + id));
 		
-		return medicoMapper.medicoParaSaidaSimplesMedicoDto(medicoEntidade);
+		SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+				.especialidadeParaSaidaSimplesEspecialidadeDto(medicoEntidade.getEspecialidade());
+		
+		var medicoDto = medicoMapper.medicoParaSaidaSimplesMedicoDto(medicoEntidade);
+		
+		medicoDto.setEspecialidade(especialidadeDto);
+		
+		return medicoDto;
 		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesMedicoDto> listarTodosSaidaSimplesMedico() {
 		
-		var medicos = medicoRepository
-				.findAll().stream()
-				.map(medico -> medicoMapper.medicoParaSaidaSimplesMedicoDto(medico)
-						).toList();
+		List<Medico> listaMedicos = medicoRepository
+				.findAll();
 		
-		return medicos;
+		var listaMedicosDto = listaMedicos.stream()
+				.map(medico -> {
+					
+					SaidaSimplesMedicoDto dto = medicoMapper.medicoParaSaidaSimplesMedicoDto(medico);
+					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(medico.getEspecialidade());
+					
+					dto.setEspecialidade(especialidadeDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaMedicosDto;
 		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesMedicoDto> listarTodosSaidaSimplesMedicoAtivos() {
 		
-		var medicos = medicoRepository
-				.findAllByStatus(TipoStatusConta.ATIVO).stream()
-				.map(medico -> medicoMapper.medicoParaSaidaSimplesMedicoDto(medico)
-						).toList();
+		var listaMedicos = medicoRepository
+				.findAllByStatus(TipoStatusConta.ATIVO);
 		
-		return medicos;
+		var listaMedicosDto = listaMedicos.stream()
+				.map(medico -> {
+					
+					SaidaSimplesMedicoDto dto = medicoMapper.medicoParaSaidaSimplesMedicoDto(medico);
+					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(medico.getEspecialidade());
+					
+					dto.setEspecialidade(especialidadeDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaMedicosDto;
 		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesMedicoDto> listarTodosSaidaSimplesMedicoInativos() {
 		
-		var medicos = medicoRepository
-				.findAllByStatus(TipoStatusConta.INATIVO).stream()
-				.map(medico -> medicoMapper.medicoParaSaidaSimplesMedicoDto(medico)
-						).toList();
+		var listaMedicos = medicoRepository
+				.findAllByStatus(TipoStatusConta.INATIVO);
 		
-		return medicos;
+		var listaMedicosDto = listaMedicos.stream()
+				.map(medico -> {
+					
+					SaidaSimplesMedicoDto dto = medicoMapper.medicoParaSaidaSimplesMedicoDto(medico);
+					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(medico.getEspecialidade());
+					
+					dto.setEspecialidade(especialidadeDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaMedicosDto;
 		
 	}
 	
@@ -121,43 +178,111 @@ public class MedicoService {
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com ID: " + id));
 		
-		return medicoMapper.medicoParaSaidaDetalhadaMedicoDto(medicoEntidade);
+		SaidaDetalhadaMedicoDto medicoDto = medicoMapper.medicoParaSaidaDetalhadaMedicoDto(medicoEntidade);
+		
+		SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+				.especialidadeParaSaidaSimplesEspecialidadeDto(medicoEntidade.getEspecialidade());
+		
+		medicoDto.setEspecialidade(especialidadeDto);
+		
+		List<SaidaSimplesConsultaDto> listaConsultasDto = medicoEntidade.getConsultas().stream()
+				.map(consultaMapper::consultaParaSaidaSimplesConsultaDto)
+				.collect(Collectors.toList());
+		
+		medicoDto.setConsultas(listaConsultasDto);
+		
+		return medicoDto;
 		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaDetalhadaMedicoDto> listarTodosSaidaDetalhadaMedico() {
 		
-		var medicos = medicoRepository
-				.findAll().stream()
-				.map(medico -> medicoMapper.medicoParaSaidaDetalhadaMedicoDto(medico))
-				.toList();
+		List<Medico> listaMedicos = medicoRepository
+				.findAll();
 		
-		return medicos;
+		var listaMedicosDto = listaMedicos.stream()
+				.map(medico -> {
+					
+					SaidaDetalhadaMedicoDto dto = medicoMapper.medicoParaSaidaDetalhadaMedicoDto(medico);
+					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(medico.getEspecialidade());
+					
+					dto.setEspecialidade(especialidadeDto);
+					
+					List<SaidaSimplesConsultaDto> consultasDto = medico.getConsultas().stream()
+							.map(consultaMapper::consultaParaSaidaSimplesConsultaDto)
+							.collect(Collectors.toList());
+					
+					dto.setConsultas(consultasDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaMedicosDto;
+		
 		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaDetalhadaMedicoDto> listarTodosSaidaDetalhadaMedicoAtivos() {
 		
-		var medicos = medicoRepository
-				.findAllByStatus(TipoStatusConta.ATIVO).stream()
-				.map(medico -> medicoMapper.medicoParaSaidaDetalhadaMedicoDto(medico))
-				.toList();
+		List<Medico> listaMedicos = medicoRepository
+				.findAllByStatus(TipoStatusConta.ATIVO);
 		
-		return medicos;
+		var listaMedicosDto = listaMedicos.stream()
+				.map(medico -> {
+					
+					SaidaDetalhadaMedicoDto dto = medicoMapper.medicoParaSaidaDetalhadaMedicoDto(medico);
+					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(medico.getEspecialidade());
+					
+					dto.setEspecialidade(especialidadeDto);
+					
+					List<SaidaSimplesConsultaDto> consultasDto = medico.getConsultas().stream()
+							.map(consultaMapper::consultaParaSaidaSimplesConsultaDto)
+							.collect(Collectors.toList());
+					
+					dto.setConsultas(consultasDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaMedicosDto;
 		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaDetalhadaMedicoDto> listarTodosSaidaDetalhadaMedicoInativos() {
 		
-		var medicos = medicoRepository
-				.findAllByStatus(TipoStatusConta.INATIVO).stream()
-				.map(medico -> medicoMapper.medicoParaSaidaDetalhadaMedicoDto(medico))
-				.toList();
+		List<Medico> listaMedicos = medicoRepository
+				.findAllByStatus(TipoStatusConta.INATIVO);
 		
-		return medicos;
+		var listaMedicosDto = listaMedicos.stream()
+				.map(medico -> {
+					
+					SaidaDetalhadaMedicoDto dto = medicoMapper.medicoParaSaidaDetalhadaMedicoDto(medico);
+					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(medico.getEspecialidade());
+					
+					dto.setEspecialidade(especialidadeDto);
+					
+					List<SaidaSimplesConsultaDto> consultasDto = medico.getConsultas().stream()
+							.map(consultaMapper::consultaParaSaidaSimplesConsultaDto)
+							.collect(Collectors.toList());
+					
+					dto.setConsultas(consultasDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaMedicosDto;
 		
 	}
 	
@@ -165,27 +290,27 @@ public class MedicoService {
 	public void atualizarMedicoPorId(String medicoId, AtualizarMedicoDto atualizarMedicoDto) {
 		
 		var id = UUID.fromString(medicoId);
-		var doctorEntity = medicoRepository
+		var medicoEntidade = medicoRepository
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com ID: " + id));
 		
 		if (atualizarMedicoDto.getCrm() != null) {
 			medicoRepository.findByCrm(atualizarMedicoDto.getCrm()).ifPresent(existingDoctor -> {
-				if (!existingDoctor.getId().equals(doctorEntity.getId())) {
+				if (!existingDoctor.getId().equals(medicoEntidade.getId())) {
 					throw new DataConflictException("O CRM já está sendo usado por outro médico.");
 				}
 			});
 			
-			doctorEntity.setCrm(atualizarMedicoDto.getCrm());
+			medicoEntidade.setCrm(atualizarMedicoDto.getCrm());
 		}
 		
 		if (atualizarMedicoDto.getEmail() != null) {
 			medicoRepository.findByEmail(atualizarMedicoDto.getEmail()).ifPresent(existingDoctor -> {
-				if (!existingDoctor.getId().equals(doctorEntity.getId())) {
+				if (!existingDoctor.getId().equals(medicoEntidade.getId())) {
 					throw new DataConflictException("O e-mail já está sendo usado por outro médico.");
 				}
 				
-				doctorEntity.setEmail(atualizarMedicoDto.getEmail());
+				medicoEntidade.setEmail(atualizarMedicoDto.getEmail());
 			});
 		}
 		
@@ -194,7 +319,9 @@ public class MedicoService {
 				.findById(especialidadeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrada no ID: " + especialidadeId));
 		
-		medicoMapper.atualizarMedicoDeAtualizarMedicoDto(atualizarMedicoDto, especialidadeEntidade, doctorEntity);
+		medicoEntidade.setEspecialidade(especialidadeEntidade);
+
+		medicoMapper.atualizarMedicoDeAtualizarMedicoDto(atualizarMedicoDto, medicoEntidade);
 		
 	}
 	
