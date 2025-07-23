@@ -4,7 +4,10 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEspecialidadeDto;
+import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import java.awt.event.KeyEvent;
+import java.util.UUID;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,6 +15,8 @@ import javax.swing.JOptionPane;
  * @author higor
  */
 public class frmCriarEspecialidade extends frmGenerico {
+    
+    private final EspecialidadeService especialidadeService;
 
     /**
      * Creates new form frmCriarEspecialidade
@@ -20,6 +25,9 @@ public class frmCriarEspecialidade extends frmGenerico {
         initComponents();
         
         this.settings();
+        
+        especialidadeService = new EspecialidadeService();
+        
     }
     
     @Override
@@ -41,9 +49,17 @@ public class frmCriarEspecialidade extends frmGenerico {
             
         } else {
             
-            JOptionPane.showMessageDialog(this, "Especialidade será salva: " + txtDescricao.getText().trim());
+            CriarEspecialidadeDto especialidadeDto = new CriarEspecialidadeDto();
+            especialidadeDto.setDescricao(txtDescricao.getText().trim());
             
-            txtDescricao.setText("");
+            UUID id = especialidadeService.criarEspecialidade(especialidadeDto);
+            
+            if (id != null) {
+                
+                JOptionPane.showMessageDialog(this, "Especialidade salva com o ID: " + id, "Especialidade Salva", JOptionPane.INFORMATION_MESSAGE);
+            
+            }
+            
         }
         
     }
