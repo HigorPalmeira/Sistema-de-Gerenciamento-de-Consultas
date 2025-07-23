@@ -3,19 +3,27 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaEnderecoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Endereco;
+import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultaMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.EnderecoMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.PacienteMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EnderecoRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PacienteRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
@@ -23,12 +31,21 @@ import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 public class PacienteService {
 
 	private PacienteRepository pacienteRepository;
+	
+	private EnderecoRepository enderecoRepository;
 
 	private PacienteMapper pacienteMapper;
+	
+	private ConsultaMapper consultaMapper;
+	
+	private EnderecoMapper enderecoMapper;
 
-	public PacienteService(PacienteRepository pacienteRepository, PacienteMapper pacienteMapper) {
+	public PacienteService(PacienteRepository pacienteRepository, EnderecoRepository enderecoRepository, PacienteMapper pacienteMapper, EnderecoMapper enderecoMapper, ConsultaMapper consultaMapper) {
 		this.pacienteRepository = pacienteRepository;
+		this.enderecoRepository = enderecoRepository;
 		this.pacienteMapper = pacienteMapper;
+		this.enderecoMapper = enderecoMapper;
+		this.consultaMapper = consultaMapper;
 	}
 
 	@Transactional
@@ -50,7 +67,12 @@ public class PacienteService {
 			throw new DataConflictException("E-mail já registrado no sistema.");
 		}
 
-		var paciente = pacienteMapper.criarPacienteDtoParePaciente(criarPacienteDto);
+		Paciente paciente = pacienteMapper.criarPacienteDtoParePaciente(criarPacienteDto);
+		
+		Endereco endereco = enderecoMapper
+				.criarEnderecoDtoParaEndereco(criarPacienteDto.getEndereco());
+		
+		paciente.setEndereco(endereco);
 
 		var pacienteSalvo = pacienteRepository.save(paciente);
 
@@ -62,107 +84,235 @@ public class PacienteService {
 	public SaidaSimplesPacienteDto buscarSaidaSimplesPacientePorId(String pacienteId) {
 		
 		var id = UUID.fromString(pacienteId);
-		var pacienteEntidade = pacienteRepository
+		Paciente pacienteEntidade = pacienteRepository
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com ID: " + id));
 
-		return pacienteMapper.pacienteParaSaidaSimplesPacienteDto(pacienteEntidade);
+		SaidaSimplesPacienteDto pacienteDto = pacienteMapper
+				.pacienteParaSaidaSimplesPacienteDto(pacienteEntidade);
+		
+		SaidaEnderecoDto enderecoDto = enderecoMapper
+				.EnderecoParaSaidaEnderecoDto(pacienteEntidade.getEndereco());
+		
+		pacienteDto.setEndereco(enderecoDto);
+		
+		return pacienteDto;
 
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPaciente() {
 		
-		var pacientes = pacienteRepository
-				.findAll().stream()
-				.map(paciente -> pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente)
-						).toList();
-
-		return pacientes;
+		List<Paciente> listaPacientes = pacienteRepository
+				.findAll();
+		
+		var listaPacientesDto = listaPacientes.stream()
+				.map(paciente -> {
+					
+					SaidaSimplesPacienteDto dto = pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente);
+					
+					SaidaEnderecoDto enderecoDto = enderecoMapper
+							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
+					
+					dto.setEndereco(enderecoDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaPacientesDto;
 
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacienteAtivos() {
 		
-		var pacientes = pacienteRepository
-				.findAllByStatus(TipoStatusConta.ATIVO).stream()
-				.map(paciente -> pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente))
-				.toList();
+		List<Paciente> listaPacientes = pacienteRepository
+				.findAllByStatus(TipoStatusConta.ATIVO);
 		
-		return pacientes;
+		var listaPacientesDto = listaPacientes.stream()
+				.map(paciente -> {
+					
+					SaidaSimplesPacienteDto dto = pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente);
+					
+					SaidaEnderecoDto enderecoDto = enderecoMapper
+							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
+					
+					dto.setEndereco(enderecoDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaPacientesDto;
 		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacienteInativos() {
 		
-		var pacientes = pacienteRepository
-				.findAllByStatus(TipoStatusConta.INATIVO).stream()
-				.map(paciente -> pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente))
-				.toList();
+		List<Paciente> listaPacientes = pacienteRepository
+				.findAllByStatus(TipoStatusConta.INATIVO);
 		
-		return pacientes;
+		var listaPacientesDto = listaPacientes.stream()
+				.map(paciente -> {
+					
+					SaidaSimplesPacienteDto dto = pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente);
+					
+					SaidaEnderecoDto enderecoDto = enderecoMapper
+							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
+					
+					dto.setEndereco(enderecoDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaPacientesDto;
 		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacientePorDataNascimento(LocalDate dataNascimento) {
 		
-		var pacientes = pacienteRepository
-				.findAllByDataNascimento(dataNascimento).stream()
-				.map(paciente -> pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente))
-				.toList();
+		List<Paciente> listaPacientes = pacienteRepository
+				.findAllByDataNascimento(dataNascimento);
 		
-		return pacientes;
+		var listaPacientesDto = listaPacientes.stream()
+				.map(paciente -> {
+					
+					SaidaSimplesPacienteDto dto = pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente);
+					
+					SaidaEnderecoDto enderecoDto = enderecoMapper
+							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
+					
+					dto.setEndereco(enderecoDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaPacientesDto;
 		
 	}
 
 	@Transactional(readOnly = true)
 	public List<SaidaDetalhadaPacienteDto> listarTodosSaidaDetalhadaPaciente() {
 		
-		var pacientes = pacienteRepository
-				.findAll().stream()
-				.map(paciente -> pacienteMapper.pacienteParaSaidaDetalhadaPacienteDto(paciente))
-				.toList();
+		List<Paciente> listaPacientes = pacienteRepository
+				.findAll();
 		
-		return pacientes;
+		var listaPacientesDto = listaPacientes.stream()
+				.map(paciente -> {
+					
+					SaidaDetalhadaPacienteDto dto = pacienteMapper.pacienteParaSaidaDetalhadaPacienteDto(paciente);
+					
+					SaidaEnderecoDto enderecoDto = enderecoMapper
+							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
+					
+					dto.setEndereco(enderecoDto);
+					
+					List<SaidaSimplesConsultaDto> consultaDto = paciente.getConsultas().stream()
+							.map(consultaMapper::consultaParaSaidaSimplesConsultaDto)
+							.collect(Collectors.toList());
+					
+					dto.setConsultas(consultaDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaPacientesDto;
 		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaDetalhadaPacienteDto> listarTodosSaidaDetalhadaPacienteAtivos() {
 
-		var pacientes = pacienteRepository
-				.findAllByStatus(TipoStatusConta.ATIVO).stream()
-				.map(paciente -> pacienteMapper.pacienteParaSaidaDetalhadaPacienteDto(paciente))
-				.toList();
+		List<Paciente> listaPacientes = pacienteRepository
+				.findAllByStatus(TipoStatusConta.ATIVO);
 		
-		return pacientes;
+		var listaPacientesDto = listaPacientes.stream()
+				.map(paciente -> {
+					
+					SaidaDetalhadaPacienteDto dto = pacienteMapper.pacienteParaSaidaDetalhadaPacienteDto(paciente);
+					
+					SaidaEnderecoDto enderecoDto = enderecoMapper
+							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
+					
+					dto.setEndereco(enderecoDto);
+					
+					List<SaidaSimplesConsultaDto> consultaDto = paciente.getConsultas().stream()
+							.map(consultaMapper::consultaParaSaidaSimplesConsultaDto)
+							.collect(Collectors.toList());
+					
+					dto.setConsultas(consultaDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaPacientesDto;
 
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaDetalhadaPacienteDto> listarTodosSaidaDetalhadaPacienteInativos() {
 		
-		var pacientes = pacienteRepository
-				.findAllByStatus(TipoStatusConta.INATIVO).stream()
-				.map(paciente -> pacienteMapper.pacienteParaSaidaDetalhadaPacienteDto(paciente))
-				.toList();
+		List<Paciente> listaPacientes = pacienteRepository
+				.findAllByStatus(TipoStatusConta.INATIVO);
 		
-		return pacientes;
+		var listaPacientesDto = listaPacientes.stream()
+				.map(paciente -> {
+					
+					SaidaDetalhadaPacienteDto dto = pacienteMapper.pacienteParaSaidaDetalhadaPacienteDto(paciente);
+					
+					SaidaEnderecoDto enderecoDto = enderecoMapper
+							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
+					
+					dto.setEndereco(enderecoDto);
+					
+					List<SaidaSimplesConsultaDto> consultaDto = paciente.getConsultas().stream()
+							.map(consultaMapper::consultaParaSaidaSimplesConsultaDto)
+							.collect(Collectors.toList());
+					
+					dto.setConsultas(consultaDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaPacientesDto;
 		
 	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaDetalhadaPacienteDto> listarTodosSaidaDetalhadaPacientePorDataNascimento(LocalDate dataNascimento) {
 		
-		var pacientes = pacienteRepository
-				.findAllByDataNascimento(dataNascimento).stream()
-				.map(paciente -> pacienteMapper.pacienteParaSaidaDetalhadaPacienteDto(paciente))
-				.toList();
+		List<Paciente> listaPacientes = pacienteRepository
+				.findAllByDataNascimento(dataNascimento);
 		
-		return pacientes;
+		var listaPacientesDto = listaPacientes.stream()
+				.map(paciente -> {
+					
+					SaidaDetalhadaPacienteDto dto = pacienteMapper.pacienteParaSaidaDetalhadaPacienteDto(paciente);
+					
+					SaidaEnderecoDto enderecoDto = enderecoMapper
+							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
+					
+					dto.setEndereco(enderecoDto);
+					
+					List<SaidaSimplesConsultaDto> consultaDto = paciente.getConsultas().stream()
+							.map(consultaMapper::consultaParaSaidaSimplesConsultaDto)
+							.collect(Collectors.toList());
+					
+					dto.setConsultas(consultaDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaPacientesDto;
 		
 	}
 	
@@ -193,6 +343,10 @@ public class PacienteService {
 			
 			pacienteEntidade.setEmail(atualizarPacienteDto.getEmail());
 		}
+		
+		var enderecoDto = atualizarPacienteDto.getEndereco();
+		
+		
 		
 		pacienteMapper.atualizarPacienteDeAtualizarPacienteDto(atualizarPacienteDto, pacienteEntidade);
 

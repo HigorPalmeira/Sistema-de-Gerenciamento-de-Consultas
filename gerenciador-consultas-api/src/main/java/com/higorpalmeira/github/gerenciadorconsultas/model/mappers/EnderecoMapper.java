@@ -43,6 +43,6 @@ public abstract class EnderecoMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	public abstract void updateAddressFromUpdateAddressDto(AtualizarEnderecoDto atualizarEnderecoDto, @MappingTarget Endereco endereco);
+	public abstract void atualizarEnderecoDeAtualizarEnderecoDto(AtualizarEnderecoDto atualizarEnderecoDto, @MappingTarget Endereco endereco);
 
 }

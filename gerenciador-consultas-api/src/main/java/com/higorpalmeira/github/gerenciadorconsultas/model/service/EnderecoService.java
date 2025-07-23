@@ -68,7 +68,7 @@ public class EnderecoService {
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado com ID: " + id));
 		
-		addressMapper.updateAddressFromUpdateAddressDto(atualizarEnderecoDto, enderecoEntidade);
+		addressMapper.atualizarEnderecoDeAtualizarEnderecoDto(atualizarEnderecoDto, enderecoEntidade);
 		
 	}
 	

@@ -2,7 +2,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.dto.update;
 
 public class AtualizarEnderecoDto {
 
-private String cep;
+	private String cep;
 	
 	private String rua;
 	

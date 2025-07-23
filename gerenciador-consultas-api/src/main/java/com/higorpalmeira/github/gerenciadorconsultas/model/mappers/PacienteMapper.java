@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetalhadaPacienteDto;
@@ -18,15 +17,8 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 
-@Mapper(componentModel = "spring", uses = {EnderecoMapper.class, ConsultaMapper.class}, imports = {TipoStatusConta.class})
+@Mapper(componentModel = "spring", imports = {TipoStatusConta.class})
 public abstract class PacienteMapper {
-	
-	private ConsultaMapper consultaMapper;
-	
-	@Autowired
-	public void setConsultaMapper(ConsultaMapper consultaMapper) {
-		this.consultaMapper = consultaMapper;
-	}
 	
 	/*
 	 * Cria uma entidade 'Paciente' com os dados do DTO.
@@ -38,6 +30,7 @@ public abstract class PacienteMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultas", ignore = true)
+	@Mapping(target = "endereco", ignore = true)
 	@Mapping(target = "status", expression = "java(TipoStatusConta.ATIVO)")
 	public abstract Paciente criarPacienteDtoParePaciente(CriarPacienteDto criarPacienteDto);
 	
@@ -56,6 +49,8 @@ public abstract class PacienteMapper {
 	 * @param paciente Entidade a ser transformada.
 	 * @return SaidaDetalhadaPacienteDto DTO de saída detalhada criado.
 	 * */
+	@Mapping(target = "endereco", ignore = true)
+	@Mapping(target = "consultas", ignore = true)
 	public abstract SaidaDetalhadaPacienteDto pacienteParaSaidaDetalhadaPacienteDto(Paciente paciente);
 
 	/**
@@ -71,6 +66,7 @@ public abstract class PacienteMapper {
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultas", ignore = true)
+	@Mapping(target = "endereco", ignore = true)
 	public abstract void atualizarPacienteDeAtualizarPacienteDto(AtualizarPacienteDto atualizarPacienteDto, @MappingTarget Paciente paciente);
 	
 	@Named("mapConsultasToCount")
