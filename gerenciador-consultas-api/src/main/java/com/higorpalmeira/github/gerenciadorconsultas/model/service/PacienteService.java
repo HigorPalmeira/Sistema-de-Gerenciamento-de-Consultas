@@ -13,6 +13,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetal
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Endereco;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
@@ -344,9 +345,13 @@ public class PacienteService {
 			pacienteEntidade.setEmail(atualizarPacienteDto.getEmail());
 		}
 		
-		var enderecoDto = atualizarPacienteDto.getEndereco();
+		AtualizarEnderecoDto enderecoDto = atualizarPacienteDto.getEndereco();
 		
-		asd
+		Endereco enderecoEntidade = enderecoRepository
+			.findByCep(enderecoDto.getCep())
+			.orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado com CEP: " + enderecoDto.getCep()));
+		
+		enderecoMapper.atualizarEnderecoDeAtualizarEnderecoDto(enderecoDto, enderecoEntidade);
 		
 		pacienteMapper.atualizarPacienteDeAtualizarPacienteDto(atualizarPacienteDto, pacienteEntidade);
 
