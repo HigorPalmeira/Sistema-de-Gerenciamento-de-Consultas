@@ -6,6 +6,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesEspecialidadeDto;
 import java.io.IOException;
@@ -19,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,11 +31,59 @@ import java.util.UUID;
 public class EspecialidadeService {
 
     private final String URL_API = "http://localhost:8080/v1/especialidade";
-
-    public void criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) {
-
+    private final String LOCATION = "Location";
+    
+    private final EspecialidadeClient client;
+    
+    public EspecialidadeService(EspecialidadeClient especialidadeClient) {
         
+        client = especialidadeClient;
+        
+    }
 
+    public boolean criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) {
+
+        try {
+            
+            HttpResponse response = client.criarEspecialidade(criarEspecialidadeDto);
+            
+            if (response.statusCode() == 201) {
+                
+                Optional<String> locationHeader = response.headers().firstValue(LOCATION);
+                
+                if (locationHeader.isPresent()) {
+                    
+                    String locationUrl = locationHeader.get();
+                    
+                    URI uri = new URI(locationUrl);
+                    String path = uri.getPath();
+                    
+                    String idPath = path.substring(path.lastIndexOf("/") + 1);
+                    
+                    try {
+                        UUID.fromString(idPath);
+                    } catch (Exception e) {
+                        return false;
+                    }
+                    
+                }
+                
+                return true;
+                
+            } else {
+                
+                return false;
+                
+            }
+            
+        } catch (IOException | InterruptedException | URISyntaxException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar criar uma nova Especialidade!\nErro: " + ex.getMessage(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+
+        return false;
+        
     }
 
     public SaidaSimplesEspecialidadeDto getSaidaSimplesEspecialidadeDto(UUID id) {
