@@ -4,6 +4,7 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import java.awt.event.KeyEvent;
@@ -27,7 +28,7 @@ public class frmEspecialidade extends frmGenerico {
         
         settings();
         
-        this.especialidadeService = new EspecialidadeService();
+        this.especialidadeService = new EspecialidadeService(new EspecialidadeClient());
         
         this.listarEspecialidade();
     }

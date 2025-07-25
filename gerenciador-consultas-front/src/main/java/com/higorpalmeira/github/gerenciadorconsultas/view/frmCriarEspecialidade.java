@@ -4,6 +4,7 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import java.awt.event.KeyEvent;
@@ -29,7 +30,7 @@ public class frmCriarEspecialidade extends frmGenerico {
         
         this.settings();
         
-        especialidadeService = new EspecialidadeService();
+        especialidadeService = new EspecialidadeService(new EspecialidadeClient());
         
     }
     
@@ -55,16 +56,11 @@ public class frmCriarEspecialidade extends frmGenerico {
             CriarEspecialidadeDto especialidadeDto = new CriarEspecialidadeDto();
             especialidadeDto.setDescricao(txtDescricao.getText().trim());
             
-            UUID id = null;
-            try {
-                id = especialidadeService.criarEspecialidade(especialidadeDto);
-            } catch (IOException | InterruptedException ex) {
-                Logger.getLogger(frmCriarEspecialidade.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            boolean operacao = especialidadeService.criarEspecialidade(especialidadeDto);
             
-            if (id != null) {
+            if (operacao) {
                 
-                JOptionPane.showMessageDialog(this, "Especialidade salva com o ID: " + id, "Especialidade Salva", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Especialidade salva com sucesso!", "Especialidade Salva", JOptionPane.INFORMATION_MESSAGE);
             
             } else {
                 
