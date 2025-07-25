@@ -114,28 +114,32 @@ public class EspecialidadeService {
 
     public List<SaidaSimplesEspecialidadeDto> listarSaidaSimplesEspecialidadeDto() {
 
-        List<SaidaSimplesEspecialidadeDto> especialidades = new ArrayList<>();
-
+        List<SaidaSimplesEspecialidadeDto> listaEspecialidades = new ArrayList<>();
+        
         try {
+            HttpResponse response = client.listarSaidaSimplesEspecialidadeDto();
+            
+            if (response.statusCode() == 201) {
+                ObjectMapper mapper = new ObjectMapper();
+            
+                listaEspecialidades = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesEspecialidadeDto>>() {});
 
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(URL_API))
-                    .GET()
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            ObjectMapper mapper = new ObjectMapper();
-
-            especialidades = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesEspecialidadeDto>>() {
-            });
-
-        } catch (IOException | InterruptedException e) {
-            System.out.println(e.getMessage());
+                return listaEspecialidades;
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição das Especialidades! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar listar todas as especialidades!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
         }
-
-        return especialidades;
+        
+        return listaEspecialidades;
 
     }
 
