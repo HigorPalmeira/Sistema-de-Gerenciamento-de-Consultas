@@ -10,12 +10,14 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEspecialidad
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesEspecialidadeDto;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -26,9 +28,9 @@ public class EspecialidadeService {
 
     private final String URL_API = "http://localhost:8080/v1/especialidade";
 
-    public UUID criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) throws IOException, InterruptedException {
+    public UUID criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) throws IOException, InterruptedException, URISyntaxException {
 
-        UUID id;
+        UUID id = null;
 
         HttpClient client = HttpClient.newHttpClient();
 
@@ -40,10 +42,21 @@ public class EspecialidadeService {
 
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        String[] path = response.uri().getPath().split("/");
-
-        id = UUID.fromString(path[path.length - 1]);
-
+        Optional<String> locationHeader = response.headers().firstValue("Location");
+        
+        if (locationHeader.isPresent()) {
+            
+            String locationUrl = locationHeader.get();
+            
+            URI uri = new URI(locationUrl);
+            String path = uri.getPath();
+            
+            String idPath = path.substring(path.lastIndexOf("/") + 1);
+            
+            id = UUID.fromString(idPath);
+            
+        }
+        
         return id;
 
     }
