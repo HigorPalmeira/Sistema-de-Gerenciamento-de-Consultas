@@ -62,10 +62,6 @@ public class frmCriarEspecialidade extends frmGenerico {
                 
                 JOptionPane.showMessageDialog(this, "Especialidade salva com sucesso!", "Especialidade Salva", JOptionPane.INFORMATION_MESSAGE);
             
-            } else {
-                
-                JOptionPane.showMessageDialog(this, "Não foi possível criar a especialidade!", "Falha", JOptionPane.ERROR_MESSAGE);
-                
             }
             
         }
