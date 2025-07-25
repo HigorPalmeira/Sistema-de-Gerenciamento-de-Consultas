@@ -78,7 +78,7 @@ public class EspecialidadeService {
             
         } catch (IOException | InterruptedException | URISyntaxException ex) {
             
-            JOptionPane.showMessageDialog(null, "Erro ao tentar criar uma nova Especialidade!\nErro: " + ex.getMessage(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao tentar criar uma nova Especialidade!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
             
         }
 
