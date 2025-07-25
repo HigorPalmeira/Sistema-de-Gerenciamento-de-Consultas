@@ -47,10 +47,10 @@ public class frmEspecialidade extends frmGenerico {
         
         List<SaidaSimplesEspecialidadeDto> listaEspecialidade = especialidadeService.listarSaidaSimplesEspecialidadeDto();
         
+        DefaultTableModel dtm = (DefaultTableModel) tblEspecialidades.getModel();
+        dtm.setNumRows(0);
+        
         if (!listaEspecialidade.isEmpty()) {
-            
-            DefaultTableModel dtm = (DefaultTableModel) tblEspecialidades.getModel();
-            dtm.setNumRows(0);
             
             for (SaidaSimplesEspecialidadeDto especialidadeDto : listaEspecialidade) {
                 
