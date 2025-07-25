@@ -28,36 +28,9 @@ public class EspecialidadeService {
 
     private final String URL_API = "http://localhost:8080/v1/especialidade";
 
-    public UUID criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) throws IOException, InterruptedException, URISyntaxException {
+    public void criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) {
 
-        UUID id = null;
-
-        HttpClient client = HttpClient.newHttpClient();
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(URL_API))
-                .header("Content-Type", "application/json")
-                .POST(BodyPublishers.ofString(criarEspecialidadeDto.toString()))
-                .build();
-
-        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        Optional<String> locationHeader = response.headers().firstValue("Location");
         
-        if (locationHeader.isPresent()) {
-            
-            String locationUrl = locationHeader.get();
-            
-            URI uri = new URI(locationUrl);
-            String path = uri.getPath();
-            
-            String idPath = path.substring(path.lastIndexOf("/") + 1);
-            
-            id = UUID.fromString(idPath);
-            
-        }
-        
-        return id;
 
     }
 
