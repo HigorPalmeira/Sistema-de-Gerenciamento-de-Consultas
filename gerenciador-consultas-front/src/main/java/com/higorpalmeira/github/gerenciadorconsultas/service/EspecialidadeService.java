@@ -114,9 +114,9 @@ public class EspecialidadeService {
         List<SaidaSimplesEspecialidadeDto> listaEspecialidades = new ArrayList<>();
         
         try {
-            HttpResponse response = client.listarSaidaSimplesEspecialidadeDto();
+            HttpResponse<String> response = client.listarSaidaSimplesEspecialidadeDto();
             
-            if (response.statusCode() == 201) {
+            if (response.statusCode() == 200) {
                 ObjectMapper mapper = new ObjectMapper();
             
                 listaEspecialidades = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesEspecialidadeDto>>() {});
