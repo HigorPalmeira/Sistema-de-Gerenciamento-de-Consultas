@@ -21,6 +21,8 @@ public class frmEspecialidade extends frmGenerico {
 
     private final EspecialidadeService especialidadeService;
     
+    private boolean carregarTabela;
+    
     /**
      * Creates new form frmEspecialidade
      */
@@ -30,6 +32,7 @@ public class frmEspecialidade extends frmGenerico {
         settings();
         
         this.especialidadeService = new EspecialidadeService(new EspecialidadeClient());
+        this.carregarTabela = true;
         
         this.listarEspecialidade();
     }
@@ -46,22 +49,29 @@ public class frmEspecialidade extends frmGenerico {
     
     private void listarEspecialidade() {
         
-        List<SaidaSimplesEspecialidadeDto> listaEspecialidade = especialidadeService.listarSaidaSimplesEspecialidadeDto();
-        
-        DefaultTableModel dtm = (DefaultTableModel) tblEspecialidades.getModel();
-        dtm.setNumRows(0);
-        
-        if (!listaEspecialidade.isEmpty()) {
+        if (this.carregarTabela) {
             
-            for (SaidaSimplesEspecialidadeDto especialidadeDto : listaEspecialidade) {
-                
-                Object[] obj = { especialidadeDto.getId(), especialidadeDto.getDescricao(), especialidadeDto.getMedicosAssociados() };
-                
-                dtm.addRow(obj);
+            this.carregarTabela = false;
+            
+            List<SaidaSimplesEspecialidadeDto> listaEspecialidade = especialidadeService.listarSaidaSimplesEspecialidadeDto();
+
+            DefaultTableModel dtm = (DefaultTableModel) tblEspecialidades.getModel();
+            dtm.setNumRows(0);
+
+            if (!listaEspecialidade.isEmpty()) {
+
+                for (SaidaSimplesEspecialidadeDto especialidadeDto : listaEspecialidade) {
+
+                    Object[] obj = { especialidadeDto.getId(), especialidadeDto.getDescricao(), especialidadeDto.getMedicosAssociados() };
+
+                    dtm.addRow(obj);
+
+                }
                 
             }
             
         }
+        
         
     }
     
@@ -89,6 +99,14 @@ public class frmEspecialidade extends frmGenerico {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("especialidades"); // NOI18N
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+                formWindowLostFocus(evt);
+            }
+        });
 
         pnlTitulo.setBackground(new java.awt.Color(0, 204, 51));
 
@@ -349,6 +367,18 @@ public class frmEspecialidade extends frmGenerico {
         }
 
     }//GEN-LAST:event_txtPesquisaKeyReleased
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+
+        this.listarEspecialidade();
+
+    }//GEN-LAST:event_formWindowGainedFocus
+
+    private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
+
+        this.carregarTabela = true;
+
+    }//GEN-LAST:event_formWindowLostFocus
 
     /**
      * @param args the command line arguments

@@ -80,7 +80,8 @@ public class frmEditarEspecialidade extends frmGenerico {
                 JOptionPane.showMessageDialog(this, "Especialidade atualizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
             
-            txtDescricao.setText("");
+            //txtDescricao.setText("");
+            this.dispose();
         }
         
     }
