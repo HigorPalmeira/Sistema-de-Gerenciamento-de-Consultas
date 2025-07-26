@@ -116,6 +116,31 @@ public class EspecialidadeService {
         return false;
     }
     
+    public boolean deletarEspecialidade(UUID idEspecialidade) {
+        
+        if (idEspecialidade == null) {
+            return false;
+        }
+        
+        try {
+            HttpResponse<String> response = client.deletarEspecialidade(idEspecialidade.toString());
+            
+            if (response.statusCode() == 200) {
+                
+                return true;
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar deletar a especialidade.\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return false;
+        
+    }
+    
     public List<SaidaSimplesEspecialidadeDto> buscarSaidaSimplesEspecialidadeDto(String descricao) {
         
         List<SaidaSimplesEspecialidadeDto> especialidadeDto = new ArrayList<>();
