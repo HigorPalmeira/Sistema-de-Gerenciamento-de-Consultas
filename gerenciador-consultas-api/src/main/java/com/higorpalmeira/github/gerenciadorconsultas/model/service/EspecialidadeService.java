@@ -45,12 +45,23 @@ public class EspecialidadeService {
 	}
 	
 	@Transactional(readOnly = true)
+	public SaidaSimplesEspecialidadeDto buscarSaidaSimplesEspecialidadePorDescricao(String descricao) {
+		
+		var especialidadeEntidade = especialidadeRepository
+				.finByDescricao(descricao)
+				.orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrada com Descrição: " + descricao));
+		
+		return especialidadeMapper.especialidadeParaSaidaSimplesEspecialidadeDto(especialidadeEntidade);
+		
+	}
+	
+	@Transactional(readOnly = true)
 	public SaidaSimplesEspecialidadeDto buscarSaidaSimplesEspecialidadePorId(String especialidadeId) {
 		
 		var id = UUID.fromString(especialidadeId);
 		var especialidadeEntidade = especialidadeRepository
 				.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado com ID: " + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrada com ID: " + id));
 		
 		return especialidadeMapper.especialidadeParaSaidaSimplesEspecialidadeDto(especialidadeEntidade);
 		
@@ -62,7 +73,7 @@ public class EspecialidadeService {
 		var id = UUID.fromString(especialidadeId);
 		var especialidadeEntidade = especialidadeRepository
 				.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado com ID: " + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrado com ID: " + id));
 		
 		SaidaDetalhadaEspecialidadeDto especialidadeDto = especialidadeMapper
 				.especialidadeParaSaidaDetalhadaEspecialidadeDto(especialidadeEntidade);
@@ -119,7 +130,7 @@ public class EspecialidadeService {
 		var id = UUID.fromString(especialidadeId);
 		var especialidadeEntidade = especialidadeRepository
 				.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado com ID: " + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrado com ID: " + id));
 		
 		especialidadeMapper.atualizarEspecialidadeDeAtualizarEspecialidadeDto(atualizarEspecialidadeDto, especialidadeEntidade);
 		
