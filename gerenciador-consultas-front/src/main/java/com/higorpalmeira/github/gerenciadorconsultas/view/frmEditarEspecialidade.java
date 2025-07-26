@@ -72,7 +72,9 @@ public class frmEditarEspecialidade extends frmGenerico {
             
         } else {
             
-            JOptionPane.showMessageDialog(this, "Especialidade será editada: " + txtDescricao.getText().trim());
+            if (this.especialidadeService.editarEspecialidade(idEspecialidade, txtDescricao.getText().trim())) {
+                JOptionPane.showMessageDialog(this, "Especialidade atualizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            }
             
             txtDescricao.setText("");
         }
