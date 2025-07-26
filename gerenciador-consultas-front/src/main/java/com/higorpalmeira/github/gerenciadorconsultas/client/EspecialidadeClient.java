@@ -23,15 +23,16 @@ public class EspecialidadeClient {
 
     private final String URL_API = "http://localhost:8080/v1/especialidade";
     
+    private final HttpClient client;
+    
     private final ObjectMapper mapper;
     
     public EspecialidadeClient() {
+        this.client = HttpClient.newHttpClient();
         this.mapper = new ObjectMapper();
     }
 
     public HttpResponse criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) throws IOException, InterruptedException, URISyntaxException {
-
-        HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API))
@@ -61,7 +62,6 @@ public class EspecialidadeClient {
     
     public HttpResponse deletarEspecialidade(String idEspecialidade) throws IOException, InterruptedException {
         
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API + "/" + idEspecialidade))
                 .DELETE()
@@ -75,7 +75,6 @@ public class EspecialidadeClient {
     
     public HttpResponse<String> buscarSaidaSimplesEspecialidadeDtoPorDescricao(String descricao) throws IOException, InterruptedException {
         
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API + "/descricao/" + descricao))
                 .GET()
@@ -89,7 +88,6 @@ public class EspecialidadeClient {
     
     public HttpResponse<String> listarSaidaSimplesEspecialidadeDto() throws IOException, InterruptedException {
 
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API))
                 .GET()
