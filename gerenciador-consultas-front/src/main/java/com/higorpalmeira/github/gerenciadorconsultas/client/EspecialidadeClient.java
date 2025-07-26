@@ -4,6 +4,9 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEspecialidadeDto;
 import java.io.IOException;
 import java.net.URI;
@@ -19,6 +22,12 @@ import java.net.http.HttpResponse;
 public class EspecialidadeClient {
 
     private final String URL_API = "http://localhost:8080/v1/especialidade";
+    
+    private final ObjectMapper mapper;
+    
+    public EspecialidadeClient() {
+        this.mapper = new ObjectMapper();
+    }
 
     public HttpResponse criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) throws IOException, InterruptedException, URISyntaxException {
 
@@ -35,6 +44,21 @@ public class EspecialidadeClient {
         return response;
     }
 
+    public HttpResponse editarEspecialdiade(String idEspecialidade, AtualizarEspecialidadeDto atualizarEspecialidadeDto) throws JsonProcessingException, IOException, InterruptedException {
+        
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/" + idEspecialidade))
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString( mapper.writeValueAsString(atualizarEspecialidadeDto) ))
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
     public HttpResponse<String> listarSaidaSimplesEspecialidadeDto() throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
