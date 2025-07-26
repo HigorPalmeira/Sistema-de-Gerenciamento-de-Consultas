@@ -70,6 +70,10 @@ public class frmEditarEspecialidade extends frmGenerico {
             
             JOptionPane.showMessageDialog(this, "A descrição deve ter pelo menos 5 caracteres!", "Tamanho inválido", JOptionPane.ERROR_MESSAGE);
             
+        } else if (txtDescricao.getText().trim().equals(descricaoEspecialidade)) {
+            
+            JOptionPane.showMessageDialog(this, "A descrição não pode ser a mesma!", "Substitua a descrição", JOptionPane.INFORMATION_MESSAGE);
+            
         } else {
             
             if (this.especialidadeService.editarEspecialidade(idEspecialidade, txtDescricao.getText().trim())) {
