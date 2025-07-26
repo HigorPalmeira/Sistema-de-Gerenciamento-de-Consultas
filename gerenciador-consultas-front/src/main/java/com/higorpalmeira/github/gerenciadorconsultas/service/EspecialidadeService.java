@@ -11,6 +11,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesEspecialidadeDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -21,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -51,7 +50,7 @@ public class EspecialidadeService {
             
             HttpResponse response = client.criarEspecialidade(criarEspecialidadeDto);
             
-            if (response.statusCode() == 201) {
+            if (response.statusCode() == StatusOperacao.SUCESSO_CRIACAO.getTipo()) {
                 
                 Optional<String> locationHeader = response.headers().firstValue(LOCATION);
                 
@@ -103,7 +102,7 @@ public class EspecialidadeService {
             
             HttpResponse<String> response = client.editarEspecialdiade(idEspecialidade.toString(), especialidadeDto);
             
-            if (response.statusCode() == 200) {
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA_EDICAO.getTipo()) {
                 return true;
             }
             
@@ -125,7 +124,7 @@ public class EspecialidadeService {
         try {
             HttpResponse<String> response = client.deletarEspecialidade(idEspecialidade.toString());
             
-            if (response.statusCode() == 204) {
+            if (response.statusCode() == StatusOperacao.SUCESSO_DELECAO.getTipo()) {
                 
                 return true;
                 
@@ -149,7 +148,7 @@ public class EspecialidadeService {
             
             HttpResponse<String> response = client.buscarSaidaSimplesEspecialidadeDtoPorDescricao(descricao);
             
-            if (response.statusCode() == 200) {
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA_EDICAO.getTipo()) {
                 
                 especialidadeDto = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesEspecialidadeDto>>() { });
                 
@@ -204,9 +203,8 @@ public class EspecialidadeService {
         try {
             HttpResponse<String> response = client.listarSaidaSimplesEspecialidadeDto();
             
-            if (response.statusCode() == 200) {
-                ObjectMapper mapper = new ObjectMapper();
-            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA_EDICAO.getTipo()) {
+                
                 listaEspecialidades = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesEspecialidadeDto>>() {});
 
                 return listaEspecialidades;
