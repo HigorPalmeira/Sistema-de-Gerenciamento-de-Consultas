@@ -125,7 +125,7 @@ public class EspecialidadeService {
         try {
             HttpResponse<String> response = client.deletarEspecialidade(idEspecialidade.toString());
             
-            if (response.statusCode() == 200) {
+            if (response.statusCode() == 204) {
                 
                 return true;
                 
