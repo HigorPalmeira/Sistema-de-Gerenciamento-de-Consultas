@@ -49,7 +49,7 @@ public class EspecialidadeController {
 	}
 	
 	
-	@GetMapping("/detalhes/{especialidadeId}")
+	@GetMapping("/detalhes/id/{especialidadeId}")
 	public ResponseEntity<SaidaDetalhadaEspecialidadeDto> buscarSaidaDetalhadaEspecialidadePorId(@PathVariable("especialidadeId") String especialidadeId) {
 		
 		var saida = especialidadeService.buscarSaidaDetalhadaEspecialidadePorId(especialidadeId);
@@ -85,7 +85,7 @@ public class EspecialidadeController {
 		
 	}
 	
-	@PutMapping("/{especialidadeId}")
+	@PutMapping("/id/{especialidadeId}")
 	public ResponseEntity<Void> atualizarEspecialidadePorId(@PathVariable("especialidadeId") String especialidadeId, @RequestBody AtualizarEspecialidadeDto atualizarEspecialidadeDto) {
 		
 		especialidadeService.atualizarEspecialidadePorId(especialidadeId, atualizarEspecialidadeDto);
