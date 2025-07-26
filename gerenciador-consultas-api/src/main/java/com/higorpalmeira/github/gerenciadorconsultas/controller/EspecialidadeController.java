@@ -58,12 +58,21 @@ public class EspecialidadeController {
 		
 	}
 	
-	@GetMapping("/descricao/{especialidadeDescricao}")
+	@GetMapping("/descricao/exata/{especialidadeDescricao}")
 	public ResponseEntity<SaidaSimplesEspecialidadeDto> buscarSaidaSimplesEspecialidadePorDescricao(@PathVariable("especialidadeDescricao") String especialidadeDescricao) {
 		
 		var especialidade = especialidadeService.buscarSaidaSimplesEspecialidadePorDescricao(especialidadeDescricao);
 		
 		return ResponseEntity.ok(especialidade);
+		
+	}
+	
+	@GetMapping("/descricao/{especialidadeDescricao}") 
+	public ResponseEntity<List<SaidaSimplesEspecialidadeDto>> buscarSaidasSimplesEspecialidadePorDescricao(@PathVariable("especialidadeDescricao") String especialidadeDescricao) {
+		
+		var especialidades = especialidadeService.buscarSaidasSimplesEspecialidadePorDescricao(especialidadeDescricao);
+		
+		return ResponseEntity.ok(especialidades);
 		
 	}
 	
