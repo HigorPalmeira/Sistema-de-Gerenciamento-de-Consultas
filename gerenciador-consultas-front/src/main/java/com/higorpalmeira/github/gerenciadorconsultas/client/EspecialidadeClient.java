@@ -44,13 +44,27 @@ public class EspecialidadeClient {
         return response;
     }
 
-    public HttpResponse editarEspecialdiade(String idEspecialidade, AtualizarEspecialidadeDto atualizarEspecialidadeDto) throws JsonProcessingException, IOException, InterruptedException {
+    public HttpResponse editarEspecialdiade(String idEspecialidade, AtualizarEspecialidadeDto atualizarEspecialidadeDto) throws IOException, InterruptedException, JsonProcessingException {
         
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API + "/" + idEspecialidade))
                 .header("Content-Type", "application/json")
                 .PUT(HttpRequest.BodyPublishers.ofString( mapper.writeValueAsString(atualizarEspecialidadeDto) ))
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
+    public HttpResponse<String> buscarSaidaSimplesEspecialidadeDtoPorDescricao(String descricao) throws IOException, InterruptedException {
+        
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/descricao/" + descricao))
+                .GET()
                 .build();
         
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
