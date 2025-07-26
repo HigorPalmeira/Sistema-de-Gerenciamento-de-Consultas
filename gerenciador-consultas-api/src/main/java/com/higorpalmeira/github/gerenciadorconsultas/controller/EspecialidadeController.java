@@ -104,7 +104,7 @@ public class EspecialidadeController {
 	}
 
 	@DeleteMapping("/{especialidadeId}")
-	public ResponseEntity<Void> deletarEspecialidadePorId(@PathVariable("specialityId") String especialidadeId) {
+	public ResponseEntity<Void> deletarEspecialidadePorId(@PathVariable("especialidadeId") String especialidadeId) {
 
 		especialidadeService.deletarEspecialidadePorId(especialidadeId);
 		
