@@ -5,6 +5,7 @@
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
 import java.awt.event.KeyEvent;
+import java.util.UUID;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,12 +13,20 @@ import javax.swing.JOptionPane;
  * @author higor
  */
 public class frmEditarEspecialidade extends frmGenerico {
+    
+    private UUID idEspecialidade;
+    
+    private String descricaoEspecialidade;
+    
+    private int focusCount;
 
     /**
      * Creates new form frmCriarEspecialidade
      */
     public frmEditarEspecialidade() {
         initComponents();
+        
+        this.focusCount = 0;
         
         this.settings();
     }
@@ -27,6 +36,22 @@ public class frmEditarEspecialidade extends frmGenerico {
         
         this.setTitle(super.ACRON_DEFAULT + ": " + this.getName().toUpperCase());
         
+    }
+
+    public UUID getIdEspecialidade() {
+        return idEspecialidade;
+    }
+
+    public void setIdEspecialidade(UUID idEspecialidade) {
+        this.idEspecialidade = idEspecialidade;
+    }
+
+    public String getDescricaoEspecialidade() {
+        return descricaoEspecialidade;
+    }
+
+    public void setDescricaoEspecialidade(String descricaoEspecialidade) {
+        this.descricaoEspecialidade = descricaoEspecialidade;
     }
     
     private void editar_especialidade() {
@@ -67,6 +92,13 @@ public class frmEditarEspecialidade extends frmGenerico {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SGC - Criar Especialidade");
         setName("editar especialidade"); // NOI18N
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
@@ -191,6 +223,16 @@ public class frmEditarEspecialidade extends frmGenerico {
             this.editar_especialidade();
         }
     }//GEN-LAST:event_txtDescricaoKeyReleased
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+
+        if (this.focusCount == 0) {
+            this.focusCount += 1;
+            
+            txtDescricao.setText(this.descricaoEspecialidade);
+        }
+
+    }//GEN-LAST:event_formWindowGainedFocus
 
     /**
      * @param args the command line arguments

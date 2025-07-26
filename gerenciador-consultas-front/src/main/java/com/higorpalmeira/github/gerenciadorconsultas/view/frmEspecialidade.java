@@ -9,6 +9,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesEspec
 import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.UUID;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -301,8 +302,18 @@ public class frmEspecialidade extends frmGenerico {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
-        frmEditarEspecialidade frmEditarEspecialidade = new frmEditarEspecialidade();
-        frmEditarEspecialidade.setVisible(true);
+        int idx = tblEspecialidades.getSelectedRow();
+        
+        if (idx > -1) {
+            
+            UUID idEspecialidade = UUID.fromString(String.valueOf(tblEspecialidades.getValueAt(idx, 0)));
+            String descricaoEspecialidade = String.valueOf(tblEspecialidades.getValueAt(idx, 1));
+            
+            frmEditarEspecialidade frmEditarEspecialidade = new frmEditarEspecialidade();
+            frmEditarEspecialidade.setIdEspecialidade(idEspecialidade);
+            frmEditarEspecialidade.setDescricaoEspecialidade(descricaoEspecialidade);
+            frmEditarEspecialidade.setVisible(true);
+        }
         
     }//GEN-LAST:event_btnEditarActionPerformed
 
