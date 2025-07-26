@@ -39,7 +39,7 @@ public class EspecialidadeController {
 		
 	}
 	
-	@GetMapping("/{especialidadeId}")
+	@GetMapping("/id/{especialidadeId}")
 	public ResponseEntity<SaidaSimplesEspecialidadeDto> buscarSaidaSimplesEspecialidadePorId(@PathVariable("especialidadeId") String especialidadeId) {
 		
 		var especialidade = especialidadeService.buscarSaidaSimplesEspecialidadePorId(especialidadeId);
