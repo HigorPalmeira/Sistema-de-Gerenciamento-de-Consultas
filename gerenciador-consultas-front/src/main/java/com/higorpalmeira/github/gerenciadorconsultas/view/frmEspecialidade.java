@@ -364,7 +364,19 @@ public class frmEspecialidade extends frmGenerico {
             int opcao = JOptionPane.showConfirmDialog(this, "Deseja mesmo excluir esta especialidade?", "Tem certeza?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             
             if (opcao == JOptionPane.YES_OPTION) {
-                JOptionPane.showMessageDialog(this, "A especialidade será deletada!", "Prosseguindo...", JOptionPane.INFORMATION_MESSAGE);
+                
+                UUID idEspecialidade = UUID.fromString( String.valueOf(tblEspecialidades.getValueAt(idx, 0)) );
+                
+                if (this.especialidadeService.deletarEspecialidade( idEspecialidade )) {
+                    
+                    JOptionPane.showMessageDialog(this, "A especialidade foi deletada com sucesso!", "Sucesso na deleção", JOptionPane.INFORMATION_MESSAGE);
+                    
+                } else {
+                    
+                    JOptionPane.showMessageDialog(this, "A especialidade não foi deletada!", "Falha na deleção", JOptionPane.ERROR_MESSAGE);
+                    
+                }
+            
             }
             
         }
