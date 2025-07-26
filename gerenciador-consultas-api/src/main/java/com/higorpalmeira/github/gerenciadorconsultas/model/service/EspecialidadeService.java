@@ -48,7 +48,7 @@ public class EspecialidadeService {
 	public SaidaSimplesEspecialidadeDto buscarSaidaSimplesEspecialidadePorDescricao(String descricao) {
 		
 		var especialidadeEntidade = especialidadeRepository
-				.finByDescricao(descricao)
+				.findByDescricao(descricao)
 				.orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrada com Descrição: " + descricao));
 		
 		return especialidadeMapper.especialidadeParaSaidaSimplesEspecialidadeDto(especialidadeEntidade);

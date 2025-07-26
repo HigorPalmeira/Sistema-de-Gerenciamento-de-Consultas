@@ -25,6 +25,6 @@ public interface EspecialidadeRepository extends JpaRepository<Especialidade, UU
 	 * @param descricao A descrição da especialidade a ser procurada.
 	 * @return Optional com Especialidade se a especialidade for encontrada, caso contrário um Optional vazio.
 	 * */
-	Optional<Especialidade> finByDescricao(String descricao);
+	Optional<Especialidade> findByDescricao(String descricao);
 
 }
