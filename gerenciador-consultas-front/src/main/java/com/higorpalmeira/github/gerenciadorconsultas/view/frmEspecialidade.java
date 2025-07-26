@@ -49,7 +49,7 @@ public class frmEspecialidade extends frmGenerico {
             DefaultTableModel dtm = (DefaultTableModel) tblEspecialidades.getModel();
             dtm.setNumRows(0);
             
-            if (especialidadeDto != null) {
+            if (especialidadeDto.getId() != null && especialidadeDto.getDescricao() != null) {
                 
                 Object[] obj = { especialidadeDto.getId(), especialidadeDto.getDescricao(), especialidadeDto.getMedicosAssociados() };
                 
