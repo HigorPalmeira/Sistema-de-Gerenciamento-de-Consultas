@@ -4,6 +4,7 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
@@ -35,9 +36,12 @@ public class EspecialidadeService {
     
     private final EspecialidadeClient client;
     
+    private final ObjectMapper mapper;
+    
     public EspecialidadeService(EspecialidadeClient especialidadeClient) {
         
         client = especialidadeClient;
+        mapper = new ObjectMapper();
         
     }
 
@@ -110,6 +114,36 @@ public class EspecialidadeService {
         }
         
         return false;
+    }
+    
+    public SaidaSimplesEspecialidadeDto buscarSaidaSimplesEspecialidadeDto(String descricao) {
+        
+        SaidaSimplesEspecialidadeDto especialidadeDto = new SaidaSimplesEspecialidadeDto();
+        
+        try {
+            
+            HttpResponse<String> response = client.buscarSaidaSimplesEspecialidadeDtoPorDescricao(descricao);
+            
+            if (response.statusCode() == 200) {
+                
+                especialidadeDto = mapper.readValue(response.body(), SaidaSimplesEspecialidadeDto.class);
+                
+                return especialidadeDto;
+            }
+            
+            
+        } catch (JsonProcessingException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar recuperar as informações da especialidade. Se o erro persistir contate o administrador do sistema.\nErro: " + ex.toString(), "Erro ao recuperar dados", JOptionPane.ERROR_MESSAGE);
+        
+        } catch (IOException | InterruptedException ex) {
+        
+            JOptionPane.showMessageDialog(null, "Erro ao tentar buscar a especialidade.\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+        
+        }
+        
+        return especialidadeDto;
+        
     }
 
     public SaidaSimplesEspecialidadeDto getSaidaSimplesEspecialidadeDto(UUID id) {
