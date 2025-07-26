@@ -43,7 +43,20 @@ public class frmEspecialidade extends frmGenerico {
             JOptionPane.showMessageDialog(this, "É necessário a descrição da especialidade para pesquisa!", "Falha na pesquisa", JOptionPane.ERROR_MESSAGE);
         
         } else {
-            JOptionPane.showMessageDialog(this, "Pesquisando por '" + txtPesquisa.getText().trim() + "'.", "Pesquisando", JOptionPane.INFORMATION_MESSAGE);
+            
+            SaidaSimplesEspecialidadeDto especialidadeDto = this.especialidadeService.buscarSaidaSimplesEspecialidadeDto(txtPesquisa.getText().trim());
+            
+            DefaultTableModel dtm = (DefaultTableModel) tblEspecialidades.getModel();
+            dtm.setNumRows(0);
+            
+            if (especialidadeDto != null) {
+                
+                Object[] obj = { especialidadeDto.getId(), especialidadeDto.getDescricao(), especialidadeDto.getMedicosAssociados() };
+                
+                dtm.addRow(obj);
+                
+            }
+            
         }
     }
     
