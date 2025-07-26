@@ -59,6 +59,20 @@ public class EspecialidadeClient {
         
     }
     
+    public HttpResponse deletarEspecialidade(String idEspecialidade) throws IOException, InterruptedException {
+        
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/" + idEspecialidade))
+                .DELETE()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
     public HttpResponse<String> buscarSaidaSimplesEspecialidadeDtoPorDescricao(String descricao) throws IOException, InterruptedException {
         
         HttpClient client = HttpClient.newHttpClient();
