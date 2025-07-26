@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,11 +21,19 @@ public interface EspecialidadeRepository extends JpaRepository<Especialidade, UU
 	boolean existsByDescricao(String descricao);
 	
 	/*
-	 * Buscar por uma especialidade com a descrição fornecida.
+	 * Busca por uma especialidade com a descrição fornecida.
 	 * 
 	 * @param descricao A descrição da especialidade a ser procurada.
 	 * @return Optional com Especialidade se a especialidade for encontrada, caso contrário um Optional vazio.
 	 * */
 	Optional<Especialidade> findByDescricao(String descricao);
+	
+	/*
+	 * Busca por especialidades cuja descrição contenha o termo pesquisado, ignorando maiúsculas/minúsculas.
+	 * 
+	 * @param descricao A descrição da especialidade a ser procurada.
+	 * @return Lista com as especialidades que contenham a descrição buscada.
+	 * */
+	List<Especialidade> findByDescricaoContainingIgnoreCase(String descricao);
 
 }
