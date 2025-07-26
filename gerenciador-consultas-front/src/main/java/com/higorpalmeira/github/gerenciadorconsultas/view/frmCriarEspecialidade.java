@@ -8,10 +8,6 @@ import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,12 +21,11 @@ public class frmCriarEspecialidade extends frmGenerico {
     /**
      * Creates new form frmCriarEspecialidade
      */
-    public frmCriarEspecialidade() {
+    public frmCriarEspecialidade(EspecialidadeService especialidadeService) {
+        this.especialidadeService = especialidadeService;
         initComponents();
         
         this.settings();
-        
-        especialidadeService = new EspecialidadeService(new EspecialidadeClient());
         
     }
     
@@ -241,7 +236,7 @@ public class frmCriarEspecialidade extends frmGenerico {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCriarEspecialidade().setVisible(true);
+                new frmCriarEspecialidade(new EspecialidadeService(new EspecialidadeClient())).setVisible(true);
             }
         });
     }
