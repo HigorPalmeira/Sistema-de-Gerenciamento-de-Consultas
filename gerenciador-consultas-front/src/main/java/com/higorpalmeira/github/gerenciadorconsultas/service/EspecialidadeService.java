@@ -7,6 +7,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesEspecialidadeDto;
 import java.io.IOException;
@@ -81,6 +82,20 @@ public class EspecialidadeService {
 
         return false;
         
+    }
+    
+    public boolean editarEspecialidade(UUID idEspecialidade, String descricaoEspecialidade) {
+        
+        if (idEspecialidade == null) {
+            return false;
+        }
+        
+        AtualizarEspecialidadeDto especialidadeDto = new AtualizarEspecialidadeDto();
+        especialidadeDto.setDescricao(descricaoEspecialidade);
+        
+        // HttpResponse response = client.
+        
+        return false;
     }
 
     public SaidaSimplesEspecialidadeDto getSaidaSimplesEspecialidadeDto(UUID id) {

@@ -309,7 +309,7 @@ public class frmEspecialidade extends frmGenerico {
             UUID idEspecialidade = UUID.fromString(String.valueOf(tblEspecialidades.getValueAt(idx, 0)));
             String descricaoEspecialidade = String.valueOf(tblEspecialidades.getValueAt(idx, 1));
             
-            frmEditarEspecialidade frmEditarEspecialidade = new frmEditarEspecialidade();
+            frmEditarEspecialidade frmEditarEspecialidade = new frmEditarEspecialidade(this.especialidadeService);
             frmEditarEspecialidade.setIdEspecialidade(idEspecialidade);
             frmEditarEspecialidade.setDescricaoEspecialidade(descricaoEspecialidade);
             frmEditarEspecialidade.setVisible(true);

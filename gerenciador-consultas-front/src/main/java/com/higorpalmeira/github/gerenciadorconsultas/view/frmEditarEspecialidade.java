@@ -4,6 +4,8 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
+import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import java.awt.event.KeyEvent;
 import java.util.UUID;
 import javax.swing.JOptionPane;
@@ -14,6 +16,8 @@ import javax.swing.JOptionPane;
  */
 public class frmEditarEspecialidade extends frmGenerico {
     
+    private final EspecialidadeService especialidadeService;
+    
     private UUID idEspecialidade;
     
     private String descricaoEspecialidade;
@@ -22,8 +26,10 @@ public class frmEditarEspecialidade extends frmGenerico {
 
     /**
      * Creates new form frmCriarEspecialidade
+     * @param especialidadeService
      */
-    public frmEditarEspecialidade() {
+    public frmEditarEspecialidade(EspecialidadeService especialidadeService) {
+        this.especialidadeService = especialidadeService;
         initComponents();
         
         this.focusCount = 0;
@@ -265,7 +271,7 @@ public class frmEditarEspecialidade extends frmGenerico {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmEditarEspecialidade().setVisible(true);
+                new frmEditarEspecialidade(new EspecialidadeService(new EspecialidadeClient())).setVisible(true);
             }
         });
     }
