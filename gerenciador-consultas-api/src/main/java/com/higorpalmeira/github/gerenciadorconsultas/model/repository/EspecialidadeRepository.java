@@ -35,5 +35,13 @@ public interface EspecialidadeRepository extends JpaRepository<Especialidade, UU
 	 * @return Lista com as especialidades que contenham a descrição buscada.
 	 * */
 	List<Especialidade> findByDescricaoContainingIgnoreCase(String descricao);
+	
+	/*
+	 * Buscar por especialidades cuja descrição comece com o termo pesquisado.
+	 * 
+	 * @param descricao A descrição da especialidade a ser procurada.
+	 * @return Lista com as especialidades que começam com o termo pesquisado.
+	 * */
+	List<Especialidade> findByDescricaoStartingWithIgnoreCase(String descricao);
 
 }
