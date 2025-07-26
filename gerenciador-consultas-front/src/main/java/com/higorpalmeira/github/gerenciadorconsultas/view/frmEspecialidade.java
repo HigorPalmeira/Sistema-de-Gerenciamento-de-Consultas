@@ -44,17 +44,21 @@ public class frmEspecialidade extends frmGenerico {
         
         } else {
             
-            SaidaSimplesEspecialidadeDto especialidadeDto = this.especialidadeService.buscarSaidaSimplesEspecialidadeDto(txtPesquisa.getText().trim());
+            List<SaidaSimplesEspecialidadeDto> listaEspecialidadeDto = this.especialidadeService.buscarSaidaSimplesEspecialidadeDto(txtPesquisa.getText().trim());
             
             DefaultTableModel dtm = (DefaultTableModel) tblEspecialidades.getModel();
             dtm.setNumRows(0);
             
-            if (especialidadeDto.getId() != null && especialidadeDto.getDescricao() != null) {
+            if (!listaEspecialidadeDto.isEmpty()) {
                 
-                Object[] obj = { especialidadeDto.getId(), especialidadeDto.getDescricao(), especialidadeDto.getMedicosAssociados() };
+                for (SaidaSimplesEspecialidadeDto especialidadeDto : listaEspecialidadeDto) {
+                    
+                    Object[] obj = { especialidadeDto.getId(), especialidadeDto.getDescricao(), especialidadeDto.getMedicosAssociados() };
                 
-                dtm.addRow(obj);
-                
+                    dtm.addRow(obj);
+                    
+                }
+            
             }
             
         }
