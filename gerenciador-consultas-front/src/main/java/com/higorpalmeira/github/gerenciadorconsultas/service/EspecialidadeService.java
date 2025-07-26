@@ -116,9 +116,9 @@ public class EspecialidadeService {
         return false;
     }
     
-    public SaidaSimplesEspecialidadeDto buscarSaidaSimplesEspecialidadeDto(String descricao) {
+    public List<SaidaSimplesEspecialidadeDto> buscarSaidaSimplesEspecialidadeDto(String descricao) {
         
-        SaidaSimplesEspecialidadeDto especialidadeDto = new SaidaSimplesEspecialidadeDto();
+        List<SaidaSimplesEspecialidadeDto> especialidadeDto = new ArrayList<>();
         
         try {
             
@@ -126,7 +126,7 @@ public class EspecialidadeService {
             
             if (response.statusCode() == 200) {
                 
-                especialidadeDto = mapper.readValue(response.body(), SaidaSimplesEspecialidadeDto.class);
+                especialidadeDto = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesEspecialidadeDto>>() { });
                 
                 return especialidadeDto;
             }
