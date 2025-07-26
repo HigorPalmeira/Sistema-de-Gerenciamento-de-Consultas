@@ -56,6 +56,18 @@ public class EspecialidadeService {
 	}
 	
 	@Transactional(readOnly = true)
+	public List<SaidaSimplesEspecialidadeDto> buscarSaidasSimplesEspecialidadePorDescricao(String descricao) {
+		
+		var especialidades = especialidadeRepository
+				.findByDescricaoContainingIgnoreCase(descricao).stream()
+				.map(especialidade -> especialidadeMapper.especialidadeParaSaidaSimplesEspecialidadeDto(especialidade))
+				.toList();
+		
+		return especialidades;
+		
+	}
+	
+	@Transactional(readOnly = true)
 	public SaidaSimplesEspecialidadeDto buscarSaidaSimplesEspecialidadePorId(String especialidadeId) {
 		
 		var id = UUID.fromString(especialidadeId);
