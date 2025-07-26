@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -93,7 +95,19 @@ public class EspecialidadeService {
         AtualizarEspecialidadeDto especialidadeDto = new AtualizarEspecialidadeDto();
         especialidadeDto.setDescricao(descricaoEspecialidade);
         
-        // HttpResponse response = client.
+        try {
+            
+            HttpResponse<String> response = client.editarEspecialdiade(idEspecialidade.toString(), especialidadeDto);
+            
+            if (response.statusCode() == 200) {
+                return true;
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar atualizar a especialidade.\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
         
         return false;
     }
