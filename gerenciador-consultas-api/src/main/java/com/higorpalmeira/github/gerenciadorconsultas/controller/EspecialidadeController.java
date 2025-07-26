@@ -85,7 +85,7 @@ public class EspecialidadeController {
 		
 	}
 	
-	@PutMapping("/id/{especialidadeId}")
+	@PutMapping("/{especialidadeId}")
 	public ResponseEntity<Void> atualizarEspecialidadePorId(@PathVariable("especialidadeId") String especialidadeId, @RequestBody AtualizarEspecialidadeDto atualizarEspecialidadeDto) {
 		
 		especialidadeService.atualizarEspecialidadePorId(especialidadeId, atualizarEspecialidadeDto);
