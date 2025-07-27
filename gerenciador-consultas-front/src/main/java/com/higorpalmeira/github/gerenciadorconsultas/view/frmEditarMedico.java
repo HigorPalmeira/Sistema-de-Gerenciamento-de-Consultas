@@ -40,7 +40,7 @@ public class frmEditarMedico extends frmGenerico {
     public frmEditarMedico(UUID idMedico, MedicoService medicoService, EspecialidadeService especialidadeService) {
         
         if (idMedico == null) {
-            JOptionPane.showMessageDialog(this, "O médico não pode ser editado!", "Médico não compatível", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "O médico não pode ser editado!", "Médico não compatível", JOptionPane.ERROR_MESSAGE);
             this.dispose();
         }
         initComponents();
@@ -50,9 +50,14 @@ public class frmEditarMedico extends frmGenerico {
         this.medicoService = medicoService;
         this.especialidadeService = especialidadeService;
         
+        this.medicoAtualizar = this.medicoService.buscarSaidaSimplesMedicoDtoPorId(idMedico);
+        
         this.listaEspecialidades = especialidadeService.listarSaidaSimplesEspecialidadeDto();
         
         this.listarEspecialidades();
+        this.listarStatus();
+        
+        this.preencherCampos();
     }
     
     @Override
