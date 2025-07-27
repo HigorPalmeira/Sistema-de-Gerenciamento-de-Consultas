@@ -13,6 +13,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.UUID;
 
 /**
  *
@@ -45,10 +46,10 @@ public class MedicoClient {
         
     }
     
-    public HttpResponse<String> editarMedico(String idMedico, AtualizarMedicoDto atualizarMedicoDto) throws IOException, InterruptedException {
+    public HttpResponse<String> editarMedico(UUID idMedico, AtualizarMedicoDto atualizarMedicoDto) throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(URL_API + "/" + idMedico))
+                .uri(URI.create(URL_API + "/" + idMedico.toString()))
                 .header("Content-Type", "application/json")
                 .PUT(HttpRequest.BodyPublishers.ofString( mapper.writeValueAsString(atualizarMedicoDto) ))
                 .build();
