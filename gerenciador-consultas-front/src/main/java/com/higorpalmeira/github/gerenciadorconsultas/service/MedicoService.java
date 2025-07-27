@@ -6,7 +6,17 @@ package com.higorpalmeira.github.gerenciadorconsultas.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,9 +37,50 @@ public class MedicoService {
         
     }
     
-    public boolean criarMedico() {
+    public boolean criarMedico(String nome, String sobrenome, String crm, String telefone, String email, UUID especialidadeId) {
         
-        HttpResponse response = client.criarMedico(criarMedicoDto);
+        CriarMedicoDto criarMedicoDto = new CriarMedicoDto(nome, sobrenome, crm, telefone, email, especialidadeId);
+        
+        try {
+            
+            HttpResponse response = client.criarMedico(criarMedicoDto);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_CRIACAO.getTipo()) {
+                
+                Optional<String> locationHeader = response.headers().firstValue(LOCATION);
+                
+                if (locationHeader.isPresent()) {
+                    
+                    String locationUrl = locationHeader.get();
+                    
+                    URI uri = new URI(locationUrl);
+                    String path = uri.getPath();
+                    
+                    String idPath = path.substring(path.lastIndexOf("/") + 1);
+                    
+                    try {
+                        UUID.fromString(idPath);
+                    }catch(Exception e) {
+                        return false;
+                    }
+                    
+                }
+                
+                return true;
+                
+            } else {
+                
+                return false;
+                
+            }
+            
+        } catch (IOException | InterruptedException | URISyntaxException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar criar um novo Médico!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return false;
         
     }
     
