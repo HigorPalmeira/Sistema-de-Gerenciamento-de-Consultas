@@ -6,6 +6,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
+import java.net.http.HttpResponse;
 
 /**
  *
@@ -23,6 +24,12 @@ public class MedicoService {
         
         client = medicoClient;
         mapper = new ObjectMapper();
+        
+    }
+    
+    public boolean criarMedico() {
+        
+        HttpResponse response = client.criarMedico(criarMedicoDto);
         
     }
     
