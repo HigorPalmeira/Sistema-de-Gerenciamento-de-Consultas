@@ -47,7 +47,6 @@ public class EspecialidadeClient {
 
     public HttpResponse editarEspecialdiade(String idEspecialidade, AtualizarEspecialidadeDto atualizarEspecialidadeDto) throws IOException, InterruptedException, JsonProcessingException {
         
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API + "/" + idEspecialidade))
                 .header("Content-Type", "application/json")
