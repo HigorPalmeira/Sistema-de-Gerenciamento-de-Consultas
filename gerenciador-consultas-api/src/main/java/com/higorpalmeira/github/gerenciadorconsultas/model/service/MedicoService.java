@@ -117,6 +117,28 @@ public class MedicoService {
 	}
 	
 	@Transactional(readOnly = true)
+	public SaidaSimplesMedicoDto buscarSaidaSimplesMedicoPorCrm(String crm) {
+		
+		if (!Validator.CRMValidation(crm)) {
+			throw new InvalidDataException("CRM inválido.");
+		}
+		
+		var medicoEntidade = medicoRepository
+				.findByCrm(crm)
+				.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com CRM: " + crm));
+		
+		SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+				.especialidadeParaSaidaSimplesEspecialidadeDto(medicoEntidade.getEspecialidade());
+		
+		var medicoDto = medicoMapper.medicoParaSaidaSimplesMedicoDto(medicoEntidade);
+		
+		medicoDto.setEspecialidade(especialidadeDto);
+		
+		return medicoDto;
+		
+	}
+	
+	@Transactional(readOnly = true)
 	public List<SaidaSimplesMedicoDto> listarSaidaSimplesMedicoPorNome(String nome) {
 		
 		List<Medico> listaMedicos = medicoRepository
