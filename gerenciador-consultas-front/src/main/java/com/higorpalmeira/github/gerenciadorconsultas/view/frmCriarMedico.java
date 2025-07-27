@@ -356,14 +356,13 @@ public class frmCriarMedico extends frmGenerico {
         if (status) {
             
             JOptionPane.showMessageDialog(this, "Médico criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            this.limparCampos();
             
         } else {
             
             JOptionPane.showMessageDialog(this, "Médico não pode ser criado!", "Falha", JOptionPane.ERROR_MESSAGE);
             
         }
-        
-        this.limparCampos();
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
