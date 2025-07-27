@@ -147,6 +147,24 @@ public class MedicoService {
 	}
 	
 	@Transactional(readOnly = true)
+	public SaidaSimplesMedicoDto buscarSaidaSimplesMedicoPorTelefone(String telefone) {
+		
+		var medicoEntidade = medicoRepository
+				.findByTelefone(telefone)
+				.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com telefone: " + telefone));
+		
+		SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+				.especialidadeParaSaidaSimplesEspecialidadeDto(medicoEntidade.getEspecialidade());
+		
+		var medicoDto = medicoMapper.medicoParaSaidaSimplesMedicoDto(medicoEntidade);
+		
+		medicoDto.setEspecialidade(especialidadeDto);
+		
+		return medicoDto;
+		
+	}
+	
+	@Transactional(readOnly = true)
 	public List<SaidaSimplesMedicoDto> listarSaidaSimplesMedicoPorNome(String nome) {
 		
 		List<Medico> listaMedicos = medicoRepository
