@@ -4,8 +4,10 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -28,13 +30,17 @@ public class MedicoClient {
         this.mapper = new ObjectMapper();
     }
     
-    public HttpResponse criarMedico(CriarMedicoDto criarMedicoDto) {
+    public HttpResponse criarMedico(CriarMedicoDto criarMedicoDto) throws JsonProcessingException, IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString( mapper.writeValueAsString(criarMedicoDto) ))
                 .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
         
     }
     
