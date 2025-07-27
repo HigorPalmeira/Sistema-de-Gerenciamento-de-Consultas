@@ -59,4 +59,17 @@ public class MedicoClient {
         
     }
     
+    public HttpResponse deletarMedico(String idMedico) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/" + idMedico))
+                .DELETE()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
 }
