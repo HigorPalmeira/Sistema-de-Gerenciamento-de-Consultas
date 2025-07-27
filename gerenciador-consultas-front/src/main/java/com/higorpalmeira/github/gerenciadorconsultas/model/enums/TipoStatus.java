@@ -38,4 +38,30 @@ public class TipoStatus {
         
     }
     
+    public enum TipoStatusConta {
+        
+        ATIVO("ATIVO"),
+        INATIVO("INATIVO");
+        
+        private String tipo;
+        
+        TipoStatusConta(String tipo) {
+            this.tipo = tipo;
+        }
+        
+        public String getTipo() {
+            return this.tipo;
+        }
+        
+        public static TipoStatusConta fromTipo(String tipo) {
+            for (TipoStatusConta status : TipoStatusConta.values()) {
+                if (status.tipo.equalsIgnoreCase(tipo)) {
+                    return status;
+                }
+            }
+            
+            throw new RuntimeException("O tipo não é compatível!");
+        
+    }
+    
 }
