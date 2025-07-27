@@ -4,10 +4,26 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
 
+import java.util.UUID;
+
 /**
  *
  * @author higor
  */
 public class AtualizarMedicoDto {
-    
+
+    private String nome;
+
+    private String sobrenome;
+
+    private String crm;
+
+    private String telefone;
+
+    private String email;
+
+    private TipoStatusConta status;
+
+    private UUID especialidadeId;
+
 }
