@@ -48,6 +48,15 @@ public class MedicoController {
 		
 	}
 	
+	@GetMapping("/telefone/{telefoneMedico}")
+	public ResponseEntity<SaidaSimplesMedicoDto> buscarSaidaSimplesMedicoPorTelefone(@PathVariable("telefoneMedico") String telefoneMedico) {
+		
+		var medico = medicoService.buscarSaidaSimplesMedicoPorTelefone(telefoneMedico);
+		
+		return ResponseEntity.ok(medico);
+		
+	}
+	
 	@GetMapping("/nome/{nomeMedico}")
 	public ResponseEntity<List<SaidaSimplesMedicoDto>> listarSaidaSimplesMedicoDtoPorNome(@PahtVariable("nomeMedico") String nomeMedico) {
 		
