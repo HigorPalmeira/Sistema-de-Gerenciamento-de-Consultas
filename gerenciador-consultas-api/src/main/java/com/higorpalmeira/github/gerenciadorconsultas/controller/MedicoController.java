@@ -48,6 +48,24 @@ public class MedicoController {
 		
 	}
 	
+	@GetMapping("/email/{emailMedico}")
+	public ResponseEntity<SaidaSimplesMedicoDto> buscarSaidaSimplesMedicoPorEmail(@PathVariable("emailMedico") String emailMedico) {
+		
+		var medico = medicoService.buscarSaidaSimplesMedicoPorEmail(emailMedico);
+		
+		return ResponseEntity.ok(medico);
+		
+	}
+	
+	@GetMapping("/crm/{crmMedico}")
+	public ResponseEntity<SaidaSimplesMedicoDto> buscarSaidaSimplesMedicoPorCrm(@PathVariable("crmMedico") String crmMedico) {
+		
+		var medico = medicoService.buscarSaidaSimplesMedicoPorCrm(crmMedico);
+		
+		return ResponseEntity.ok(medico);
+		
+	}
+	
 	@GetMapping("/telefone/{telefoneMedico}")
 	public ResponseEntity<SaidaSimplesMedicoDto> buscarSaidaSimplesMedicoPorTelefone(@PathVariable("telefoneMedico") String telefoneMedico) {
 		
