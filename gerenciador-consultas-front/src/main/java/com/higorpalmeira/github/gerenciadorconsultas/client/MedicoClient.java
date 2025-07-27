@@ -4,10 +4,24 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.client;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.http.HttpClient;
+
 /**
  *
  * @author higor
  */
 public class MedicoClient {
+    
+    private final String URL_API = "http://localhost:8080/v1/medico";
+    
+    private final HttpClient client;
+    
+    private final ObjectMapper mapper;
+    
+    public MedicoClient() {
+        this.client = HttpClient.newHttpClient();
+        this.mapper = new ObjectMapper();
+    }
     
 }
