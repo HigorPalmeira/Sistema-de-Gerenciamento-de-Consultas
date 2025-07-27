@@ -503,7 +503,7 @@ public class frmMedico extends frmGenerico {
     private void tblMedicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMedicosMouseClicked
 
         if (evt.getClickCount() == 2) {
-            JOptionPane.showMessageDialog(this, "Item na tabela selecionado?");
+            JOptionPane.showMessageDialog(this, "Item na tabela selecionado?\nSem suporte para isso por enquanto!");
         }
 
     }//GEN-LAST:event_tblMedicosMouseClicked
