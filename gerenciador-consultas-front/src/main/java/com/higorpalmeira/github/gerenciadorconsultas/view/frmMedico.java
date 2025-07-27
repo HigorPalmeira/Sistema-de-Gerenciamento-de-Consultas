@@ -11,6 +11,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeServic
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import javax.swing.JOptionPane;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.table.DefaultTableModel;
@@ -483,7 +484,9 @@ public class frmMedico extends frmGenerico {
 
     private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
 
-        this.pesquisa_medico();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.pesquisa_medico(); 
+        }
 
     }//GEN-LAST:event_txtPesquisaKeyReleased
 
