@@ -4,15 +4,23 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import javax.swing.JOptionPane;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author higor
  */
 public class frmMedico extends frmGenerico {
+    
+    private final MedicoService medicoService;
 
+    private boolean carregarTabela;
     /**
      * Creates new form frmMedico
      */
@@ -22,6 +30,9 @@ public class frmMedico extends frmGenerico {
         btnDetalhes.setVisible(false);
         
         settings();
+        
+        medicoService = new MedicoService(new MedicoClient());
+        carregarTabela = true;
     }
     
     private void pesquisa_medico() {
@@ -60,6 +71,37 @@ public class frmMedico extends frmGenerico {
         
     }
 
+    private void listar_medicos() {
+        
+        if (this.carregarTabela) {
+            
+            this.carregarTabela = false;
+            
+            List<SaidaSimplesMedicoDto> listaMedicos = medicoService.listarSaidasSimplesMedicoDto();
+            
+            DefaultTableModel dtm = (DefaultTableModel) tblMedicos.getModel();
+            dtm.setNumRows(0);
+            
+            if (!listaMedicos.isEmpty()) {
+                
+                for (SaidaSimplesMedicoDto medicoDto : listaMedicos) {
+                    
+                    Object[] obj = { medicoDto.getId(), 
+                        medicoDto.getNome(), 
+                        medicoDto.getCrm(),
+                        medicoDto.getEspecialidade().getDescricao(),
+                        medicoDto.getEmail(),
+                        medicoDto.getTelefone() };
+                    
+                    dtm.addRow(obj);
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
