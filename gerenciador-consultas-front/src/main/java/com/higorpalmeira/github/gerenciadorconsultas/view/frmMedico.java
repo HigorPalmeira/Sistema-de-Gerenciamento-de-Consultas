@@ -354,6 +354,11 @@ public class frmMedico extends frmGenerico {
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnDeletar.setMnemonic('d');
         btnDeletar.setText("DELETAR");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         btnDetalhes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnDetalhes.setMnemonic('v');
@@ -534,6 +539,44 @@ public class frmMedico extends frmGenerico {
         this.carregarTabela = true;
 
     }//GEN-LAST:event_formWindowLostFocus
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+
+        int idx = tblMedicos.getSelectedRow();
+        
+        if (idx < 0) {
+            
+            JOptionPane.showMessageDialog(this, "Selecione um médico na tabela para excluí-lo!", "Selecione um médico", JOptionPane.ERROR_MESSAGE);
+            
+        } else {
+            
+            int opcao = JOptionPane.showConfirmDialog(this, "Deseja mesmo deletar o médico selecionado?", "Tem certeza?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            
+            if (opcao == JOptionPane.YES_OPTION) {
+                
+                String id = String.valueOf(tblMedicos.getValueAt(idx, 0));
+                UUID idMedico = UUID.fromString(id);
+                
+                boolean statusOperacao = this.medicoService.deletarMedico(idMedico);
+                
+                if (statusOperacao) {
+                    
+                    JOptionPane.showMessageDialog(this, "Médico deletado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                
+                } else {
+                    
+                    JOptionPane.showMessageDialog(this, "O médico não foi deletado!", "Falha", JOptionPane.ERROR_MESSAGE);
+                    
+                }
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(this, "Operação cancelada com sucesso!", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+                
+            }
+        }
+
+    }//GEN-LAST:event_btnDeletarActionPerformed
 
     /**
      * @param args the command line arguments
