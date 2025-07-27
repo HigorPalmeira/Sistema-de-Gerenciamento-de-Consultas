@@ -105,4 +105,12 @@ public class MedicoService {
         
     }
     
+    public boolean editarMedico(UUID idMedico) {
+        
+        if (idMedico == null) {
+            return false;
+        }
+        
+    }
+    
 }
