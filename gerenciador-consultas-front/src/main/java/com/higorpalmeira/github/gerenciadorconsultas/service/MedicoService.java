@@ -139,8 +139,23 @@ public class MedicoService {
             return false;
         }
         
-        HttpResponse<String> response = client.deletarMedico(idMedico);
+        try {
+            
+            HttpResponse<String> response = client.deletarMedico(idMedico);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_DELECAO.getTipo()) {
+                
+                return true;
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar deletar o médico.\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
         
+        return false;
         
     }
     
