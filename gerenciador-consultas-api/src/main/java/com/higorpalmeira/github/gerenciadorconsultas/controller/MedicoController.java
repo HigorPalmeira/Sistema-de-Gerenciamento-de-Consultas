@@ -48,6 +48,15 @@ public class MedicoController {
 		
 	}
 	
+	@GetMapping("/nome/{nomeMedico}")
+	public ResponseEntity<List<SaidaSimplesMedicoDto>> listarSaidaSimplesMedicoDtoPorNome(@PahtVariable("nomeMedico") String nomeMedico) {
+		
+		var medicos = medicoService.listarSaidaSimplesMedicoPorNome(nomeMedico);
+		
+		return ResponseEntity.ok(medicos);
+		
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<SaidaSimplesMedicoDto>> listarTodosSaidaSimplesMedico() {
 		
