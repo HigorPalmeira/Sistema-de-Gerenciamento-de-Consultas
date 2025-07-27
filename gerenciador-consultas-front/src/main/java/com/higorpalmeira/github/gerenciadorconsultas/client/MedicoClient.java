@@ -99,7 +99,7 @@ public class MedicoClient {
         
     }
     
-    public HttpResponse<String> buscarSaidaSimplesMedicoDtoPorEmail(String email) {
+    public HttpResponse<String> buscarSaidaSimplesMedicoDtoPorEmail(String email) throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API + "/email/" + email))
