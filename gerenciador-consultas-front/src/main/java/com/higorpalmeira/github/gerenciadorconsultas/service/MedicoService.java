@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -38,6 +39,26 @@ public class MedicoService {
     }
     
     public boolean criarMedico(String nome, String sobrenome, String crm, String telefone, String email, UUID especialidadeId) {
+        
+        if ( (nome == null || nome.isBlank()) || (sobrenome == null || sobrenome.isBlank()) ) {
+            return false;
+        }
+        
+        if ( !Validador.isCrm(crm) ) {
+            return false;
+        }
+        
+        if ( !Validador.isEmail(email) ) {
+            return false;
+        }
+        
+        if ( !Validador.isTelefone(telefone) ) {
+            return false;
+        }
+        
+        if (especialidadeId == null) {
+            return false;
+        }
         
         CriarMedicoDto criarMedicoDto = new CriarMedicoDto(nome, sobrenome, crm, telefone, email, especialidadeId);
         
