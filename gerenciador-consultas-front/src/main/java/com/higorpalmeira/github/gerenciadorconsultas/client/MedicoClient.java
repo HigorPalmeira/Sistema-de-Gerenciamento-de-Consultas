@@ -72,4 +72,17 @@ public class MedicoClient {
         
     }
     
+    public HttpResponse<String> listarSaidaSimplesMedicoDto() throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API))
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
 }
