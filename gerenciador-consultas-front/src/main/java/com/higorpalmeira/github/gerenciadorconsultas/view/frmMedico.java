@@ -139,6 +139,14 @@ public class frmMedico extends frmGenerico {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("medicos"); // NOI18N
         setResizable(false);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+                formWindowLostFocus(evt);
+            }
+        });
 
         pnlTitulo.setBackground(new java.awt.Color(0, 204, 51));
 
@@ -495,6 +503,18 @@ public class frmMedico extends frmGenerico {
         frmDetalhesMedico frmDetalhesMedico = new frmDetalhesMedico();
         frmDetalhesMedico.setVisible(true);
     }//GEN-LAST:event_btnDetalhesActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+
+        this.listar_medicos();
+
+    }//GEN-LAST:event_formWindowGainedFocus
+
+    private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
+
+        this.carregarTabela = true;
+
+    }//GEN-LAST:event_formWindowLostFocus
 
     /**
      * @param args the command line arguments
