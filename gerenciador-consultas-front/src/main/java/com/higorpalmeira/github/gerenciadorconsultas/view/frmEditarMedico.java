@@ -9,6 +9,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
@@ -68,6 +69,43 @@ public class frmEditarMedico extends frmGenerico {
             cbEspecialidade.addItem(especialidadeDto.getDescricao());
             
         }
+        
+    }
+    
+    private void listarStatus() {
+        
+        for (TipoStatusConta status : TipoStatusConta.values()) {
+            cbStatus.addItem(status.getTipo());
+        }
+        
+    }
+    
+    private void preencherCampos() {
+        
+        txtNome.setText( this.medicoAtualizar.getNome() );
+        txtSobrenome.setText( this.medicoAtualizar.getSobrenome() );
+        txtEmail.setText( this.medicoAtualizar.getEmail() );
+        txtCrm.setText( this.medicoAtualizar.getCrm() );
+        txtTelefone.setText( this.medicoAtualizar.getTelefone() );
+        
+        int idx = 0;
+        for (TipoStatusConta status : TipoStatusConta.values()) {
+            if (status.getTipo().equalsIgnoreCase(this.medicoAtualizar.getStatus().getTipo())) {
+               cbStatus.setSelectedIndex(idx);
+               break;
+            }
+            idx++;
+        }
+        
+        idx = 0;
+        for (SaidaSimplesEspecialidadeDto especialidadeDto : this.listaEspecialidades) {
+            if (especialidadeDto.getDescricao().equals(this.medicoAtualizar.getEspecialidade().getDescricao())) {
+                cbEspecialidade.setSelectedIndex(idx);
+            }
+            idx++;
+        }
+        
+        
         
     }
     
