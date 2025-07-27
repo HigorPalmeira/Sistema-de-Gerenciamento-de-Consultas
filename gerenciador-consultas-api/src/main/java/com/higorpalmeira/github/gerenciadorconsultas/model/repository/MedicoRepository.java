@@ -47,6 +47,14 @@ public interface MedicoRepository extends JpaRepository<Medico, UUID> {
 	 * */
 	Optional<Medico> findByEmail(String email);
 	
+	List<Medico> findByNome(String nome);
+	
+	List<Medico> findByNomeContainingIgnoreCase(String nome);
+	
+	List<Medico> findBySobrenome(String sobrenome);
+	
+	List<Medico> findBySobrenomeContainingIgnoreCase(String sobrenome);
+	
 	/*
 	 * Busca por todos os médicos com o Status fornecido.
 	 * 
