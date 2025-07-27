@@ -32,7 +32,7 @@ public class EspecialidadeClient {
         this.mapper = new ObjectMapper();
     }
 
-    public HttpResponse criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) throws IOException, InterruptedException, URISyntaxException {
+    public HttpResponse<String> criarEspecialidade(CriarEspecialidadeDto criarEspecialidadeDto) throws IOException, InterruptedException, URISyntaxException {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API))
@@ -45,7 +45,7 @@ public class EspecialidadeClient {
         return response;
     }
 
-    public HttpResponse editarEspecialdiade(String idEspecialidade, AtualizarEspecialidadeDto atualizarEspecialidadeDto) throws IOException, InterruptedException, JsonProcessingException {
+    public HttpResponse<String> editarEspecialdiade(String idEspecialidade, AtualizarEspecialidadeDto atualizarEspecialidadeDto) throws IOException, InterruptedException, JsonProcessingException {
         
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API + "/" + idEspecialidade))
@@ -59,7 +59,7 @@ public class EspecialidadeClient {
         
     }
     
-    public HttpResponse deletarEspecialidade(String idEspecialidade) throws IOException, InterruptedException {
+    public HttpResponse<String> deletarEspecialidade(String idEspecialidade) throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API + "/" + idEspecialidade))
