@@ -99,6 +99,30 @@ public class MedicoService {
 	}
 	
 	@Transactional(readOnly = true)
+	public List<SaidaSimplesMedicoDto> listarSaidaSimplesMedicoPorNome(String nome) {
+		
+		List<Medico> listaMedicos = medicoRepository
+				.findByNomeContainingIgnoreCase(nome);
+		
+		var listaMedicosDto = listaMedicos.stream()
+				.map(medico -> {
+					
+					SaidaSimplesMedicoDto dto = medicoMapper.medicoParaSaidaSimplesMedicoDto(medico);
+					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(medico.getEspecialidade());
+					
+					dto.setEspecialidade(especialidadeDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaMedicosDto;
+		
+	}
+	
+	@Transactional(readOnly = true)
 	public List<SaidaSimplesMedicoDto> listarTodosSaidaSimplesMedico() {
 		
 		List<Medico> listaMedicos = medicoRepository
