@@ -102,7 +102,7 @@ public class EspecialidadeService {
             
             HttpResponse<String> response = client.editarEspecialdiade(idEspecialidade.toString(), especialidadeDto);
             
-            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA_EDICAO.getTipo()) {
+            if (response.statusCode() == StatusOperacao.SUCESSO_DELECAO_EDICAO.getTipo()) {
                 return true;
             }
             
@@ -124,7 +124,7 @@ public class EspecialidadeService {
         try {
             HttpResponse<String> response = client.deletarEspecialidade(idEspecialidade.toString());
             
-            if (response.statusCode() == StatusOperacao.SUCESSO_DELECAO.getTipo()) {
+            if (response.statusCode() == StatusOperacao.SUCESSO_DELECAO_EDICAO.getTipo()) {
                 
                 return true;
                 
@@ -148,7 +148,7 @@ public class EspecialidadeService {
             
             HttpResponse<String> response = client.buscarSaidaSimplesEspecialidadeDtoPorDescricao(descricao);
             
-            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA_EDICAO.getTipo()) {
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
                 
                 especialidadeDto = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesEspecialidadeDto>>() { });
                 
@@ -203,7 +203,7 @@ public class EspecialidadeService {
         try {
             HttpResponse<String> response = client.listarSaidaSimplesEspecialidadeDto();
             
-            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA_EDICAO.getTipo()) {
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
                 
                 listaEspecialidades = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesEspecialidadeDto>>() {});
 

@@ -13,8 +13,8 @@ public class TipoStatus {
     public enum StatusOperacao {
         
         SUCESSO_CRIACAO(201),
-        SUCESSO_BUSCA_EDICAO(200),
-        SUCESSO_DELECAO(204);
+        SUCESSO_BUSCA(200),
+        SUCESSO_DELECAO_EDICAO(204);
         
         private int tipo;
         

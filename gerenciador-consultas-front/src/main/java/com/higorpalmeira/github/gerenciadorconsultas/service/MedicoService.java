@@ -123,7 +123,7 @@ public class MedicoService {
             
             HttpResponse<String> response = client.editarMedico(idMedico, atualizarMedicoDto);
             
-            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA_EDICAO.getTipo()) {
+            if (response.statusCode() == StatusOperacao.SUCESSO_DELECAO_EDICAO.getTipo()) {
                 return true;
             }
             
@@ -147,7 +147,7 @@ public class MedicoService {
             
             HttpResponse<String> response = client.deletarMedico(idMedico);
             
-            if (response.statusCode() == StatusOperacao.SUCESSO_DELECAO.getTipo()) {
+            if (response.statusCode() == StatusOperacao.SUCESSO_DELECAO_EDICAO.getTipo()) {
                 
                 return true;
                 
@@ -175,7 +175,7 @@ public class MedicoService {
             
             HttpResponse<String> response = client.buscarSaidaSimplesMedicoDtoPorId(idMedico);
             
-            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA_EDICAO.getTipo()) {
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
                 
                 medicoDto = mapper.readValue(response.body(), SaidaSimplesMedicoDto.class);
                 
@@ -203,7 +203,7 @@ public class MedicoService {
             
             HttpResponse<String> response = client.listarSaidaSimplesMedicoDto();
             
-            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA_EDICAO.getTipo()) {
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
                 
                 listaMedicos = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesMedicoDto>>() { });
                 
