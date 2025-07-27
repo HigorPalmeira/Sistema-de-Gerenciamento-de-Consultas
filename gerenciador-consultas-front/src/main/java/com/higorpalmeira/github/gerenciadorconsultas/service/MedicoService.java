@@ -319,4 +319,36 @@ public class MedicoService {
         
     }
     
+    public List<SaidaSimplesMedicoDto> listarSaidasSimplesMedicoDtoPorNome(String nome) {
+        
+        List<SaidaSimplesMedicoDto> listaMedicos = new ArrayList<>();
+        
+        if (nome == null || nome.isBlank()) {
+            return listaMedicos;
+        }
+        
+        try {
+            
+            HttpResponse<String> response = client.listarSaidaSimplesMedicoDtoPorNome(nome);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                listaMedicos = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesMedicoDto>>() { });
+                
+            } else {
+            
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição dos Médicos! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar listar todos os médicos!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return listaMedicos;
+        
+    }
+    
 }
