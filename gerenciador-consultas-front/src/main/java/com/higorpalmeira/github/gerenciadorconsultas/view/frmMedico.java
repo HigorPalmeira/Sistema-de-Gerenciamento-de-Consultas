@@ -12,6 +12,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import javax.swing.JOptionPane;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import java.util.List;
+import java.util.UUID;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -488,8 +489,23 @@ public class frmMedico extends frmGenerico {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
-        frmEditarMedico frmEditarMedico = new frmEditarMedico(this.medicoService, this.especialidadeService);
-        frmEditarMedico.setVisible(true);
+        int idx = tblMedicos.getSelectedRow();
+        
+        if (idx < 0) {
+            
+            JOptionPane.showMessageDialog(this, "É necessário que você selecione um médico, na tabela, para editá-lo!", "Médico não selecionado", JOptionPane.INFORMATION_MESSAGE);
+            
+        } else {
+            
+            String id = String.valueOf(tblMedicos.getValueAt(idx, 0));
+            
+            UUID idMedico = UUID.fromString(id);
+            
+            frmEditarMedico frmEditarMedico = new frmEditarMedico(idMedico, this.medicoService, this.especialidadeService);
+            frmEditarMedico.setVisible(true);
+            
+        }
+        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnDetalhesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalhesActionPerformed
