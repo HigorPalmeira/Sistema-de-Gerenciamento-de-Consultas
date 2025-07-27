@@ -17,6 +17,8 @@ import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -113,7 +115,21 @@ public class MedicoService {
         
         AtualizarMedicoDto atualizarMedicoDto = new AtualizarMedicoDto(nome, sobrenome, crm, telefone, email, TipoStatusConta.fromTipo(status), especialidadeId);
         
-        HttpResponse<String> response = client.editarMedico(idMedico, atualizarMedicoDto);
+        try {
+            
+            HttpResponse<String> response = client.editarMedico(idMedico, atualizarMedicoDto);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA_EDICAO.getTipo()) {
+                return true;
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar atualizar o médico.\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return false;
         
     }
     
