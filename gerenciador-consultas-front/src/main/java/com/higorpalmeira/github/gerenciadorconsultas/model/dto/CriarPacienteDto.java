@@ -29,4 +29,83 @@ public class CriarPacienteDto {
 
     private CriarEnderecoDto endereco;
 
+    public CriarPacienteDto() {
+    }
+
+    public CriarPacienteDto(String nome, String sobrenome, String cpf, LocalDate dataNascimento, TipoGenero genero, String telefone, String email, CriarEnderecoDto endereco) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.genero = genero;
+        this.telefone = telefone;
+        this.email = email;
+        this.endereco = endereco;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public TipoGenero getGenero() {
+        return genero;
+    }
+
+    public void setGenero(TipoGenero genero) {
+        this.genero = genero;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public CriarEnderecoDto getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(CriarEnderecoDto endereco) {
+        this.endereco = endereco;
+    }
+
+    
 }
