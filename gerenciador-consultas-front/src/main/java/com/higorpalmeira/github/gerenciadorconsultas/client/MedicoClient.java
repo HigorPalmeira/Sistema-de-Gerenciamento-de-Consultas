@@ -5,7 +5,10 @@
 package com.higorpalmeira.github.gerenciadorconsultas.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 /**
  *
@@ -22,6 +25,16 @@ public class MedicoClient {
     public MedicoClient() {
         this.client = HttpClient.newHttpClient();
         this.mapper = new ObjectMapper();
+    }
+    
+    public HttpResponse criarMedico(CriarMedicoDto criarMedicoDto) {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString( mapper.writeValueAsString(criarMedicoDto) ))
+                .build();
+        
     }
     
 }
