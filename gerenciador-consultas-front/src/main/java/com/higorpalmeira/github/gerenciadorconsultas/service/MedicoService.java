@@ -227,6 +227,38 @@ public class MedicoService {
         
     }
     
+    public SaidaSimplesMedicoDto buscarSaidaSimplesMedicoDtoPorCrm(String crm) {
+        
+        if (!Validador.isCrm(crm)) {
+            return null;
+        }
+        
+        SaidaSimplesMedicoDto medicoDto = new SaidaSimplesMedicoDto();
+        
+        try {
+            
+            HttpResponse<String> response = client.buscarSaidaSimplesMedicoDtoPorCrm(crm);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                medicoDto = mapper.readValue(response.body(), SaidaSimplesMedicoDto.class);
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição do Médico! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar buscar o médico!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return medicoDto;
+        
+    }
+    
     public List<SaidaSimplesMedicoDto> listarSaidasSimplesMedicoDto() {
         
         List<SaidaSimplesMedicoDto> listaMedicos = new ArrayList<>();
