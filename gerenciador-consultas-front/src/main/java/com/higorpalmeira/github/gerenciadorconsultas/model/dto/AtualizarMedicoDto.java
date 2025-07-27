@@ -30,6 +30,16 @@ public class AtualizarMedicoDto {
     public AtualizarMedicoDto() {
     }
 
+    public AtualizarMedicoDto(String nome, String sobrenome, String crm, String telefone, String email, TipoStatusConta status, UUID especialidadeId) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.crm = crm;
+        this.telefone = telefone;
+        this.email = email;
+        this.status = status;
+        this.especialidadeId = especialidadeId;
+    }
+
     public String getNome() {
         return nome;
     }
