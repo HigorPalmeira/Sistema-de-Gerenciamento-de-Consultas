@@ -99,6 +99,24 @@ public class MedicoService {
 	}
 	
 	@Transactional(readOnly = true)
+	public SaidaSimplesMedicoDto buscarSaidaSimplesMedicoPorEmail(String email) {
+		
+		var medicoEntidade = medicoRepository
+				.findByEmail(email)
+				.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com o E-mail: " + email));
+		
+		SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+				.especialidadeParaSaidaSimplesEspecialidadeDto(medicoEntidade.getEspecialidade());
+		
+		var medicoDto = medicoMapper.medicoParaSaidaSimplesMedicoDto(medicoEntidade);
+		
+		medicoDto.setEspecialidade(especialidadeDto);
+		
+		return medicoDto;
+		
+	}
+	
+	@Transactional(readOnly = true)
 	public List<SaidaSimplesMedicoDto> listarSaidaSimplesMedicoPorNome(String nome) {
 		
 		List<Medico> listaMedicos = medicoRepository
