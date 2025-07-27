@@ -61,6 +61,7 @@ public class TipoStatus {
             }
             
             throw new RuntimeException("O tipo não é compatível!");
+        }
         
     }
     
