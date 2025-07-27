@@ -4,10 +4,12 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
@@ -15,6 +17,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -156,6 +160,34 @@ public class MedicoService {
         }
         
         return false;
+        
+    }
+    
+    public List<SaidaSimplesMedicoDto> listarSaidasSimplesMedicoDto() {
+        
+        List<SaidaSimplesMedicoDto> listaMedicos = new ArrayList<>();
+        
+        try {
+            
+            HttpResponse<String> response = client.listarSaidaSimplesMedicoDto();
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA_EDICAO.getTipo()) {
+                
+                listaMedicos = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesMedicoDto>>() { });
+                
+            } else {
+            
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição dos Médicos! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar listar todos os médicos!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return listaMedicos;
         
     }
     
