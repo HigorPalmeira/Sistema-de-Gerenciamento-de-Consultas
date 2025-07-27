@@ -462,7 +462,7 @@ public class frmMedico extends frmGenerico {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
 
-        frmCriarMedico frmCriarMedico = new frmCriarMedico();
+        frmCriarMedico frmCriarMedico = new frmCriarMedico(this.medicoService);
         frmCriarMedico.setVisible(true);
 
     }//GEN-LAST:event_btnNovoActionPerformed
