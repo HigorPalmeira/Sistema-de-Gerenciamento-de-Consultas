@@ -4,14 +4,8 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.service;
 
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublishers;
-import java.net.http.HttpResponse;
-import java.util.UUID;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 
 /**
  *
@@ -19,32 +13,16 @@ import java.util.UUID;
  */
 public class MedicoService {
     
-    private final String URL_API = "http://localhost:8080/v1/medico";
+    private final String LOCATION = "Location";
     
-    public UUID criarMedico(CriarMedicoDto criarMedicoDto) {
+    private final MedicoClient client;
+    
+    private final ObjectMapper mapper;
+    
+    public MedicoService(MedicoClient medicoClient) {
         
-        UUID id = null;
-        
-        try {
-            
-            HttpClient client = HttpClient.newHttpClient();
-            
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(URL_API))
-                    .header("Content-Type", "application/json")
-                    .POST(BodyPublishers.ofString(criarMedicoDto.toString()))
-                    .build();
-            
-            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            
-            String[] path = response.uri().getPath().split("/");
-            id = UUID.fromString(path[path.length-1]);
-            
-        } catch(IOException | InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
-        
-        return id;
+        client = medicoClient;
+        mapper = new ObjectMapper();
         
     }
     
