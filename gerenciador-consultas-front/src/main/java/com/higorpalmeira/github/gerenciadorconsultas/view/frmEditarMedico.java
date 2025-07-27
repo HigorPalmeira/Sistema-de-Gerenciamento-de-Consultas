@@ -8,6 +8,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesEspecialidadeDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
@@ -26,6 +27,8 @@ public class frmEditarMedico extends frmGenerico {
     private final EspecialidadeService especialidadeService;
     
     private final List<SaidaSimplesEspecialidadeDto> listaEspecialidades;
+    
+    private SaidaSimplesMedicoDto medicoAtualizar;
     /**
      * Creates new form frmCriarMedico
      * 
