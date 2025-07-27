@@ -4,6 +4,7 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
@@ -20,12 +21,12 @@ public class frmCriarMedico extends frmGenerico {
     /**
      * Creates new form frmCriarMedico
      */
-    public frmCriarMedico() {
+    public frmCriarMedico(MedicoService medicoService) {
         initComponents();
         
         this.settings();
         
-        medicoService = new MedicoService();
+        this.medicoService = medicoService;
     }
     
     @Override
@@ -299,19 +300,23 @@ public class frmCriarMedico extends frmGenerico {
             
         }
         
-        
-        CriarMedicoDto criarMedicoDto = new CriarMedicoDto(
-                txtNome.getText().trim(),
+        boolean status = medicoService.criarMedico(
+                txtNome.getText().trim(), 
                 txtSobrenome.getText().trim(),
                 txtCrm.getText().trim(),
                 txtTelefone.getText().trim(),
                 txtEmail.getText().trim(),
-                UUID.randomUUID()
-        );
+                null);
         
-        UUID medicoId = medicoService.criarMedico(criarMedicoDto);
-        
-        JOptionPane.showMessageDialog(this, "Médico criado com sucesso!\nID: " + medicoId, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        if (status) {
+            
+            JOptionPane.showMessageDialog(this, "Médico criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            
+        } else {
+            
+            JOptionPane.showMessageDialog(this, "Médico não pode ser criado!", "Falha", JOptionPane.ERROR_MESSAGE);
+            
+        }
         
         this.limparCampos();
         
@@ -347,7 +352,7 @@ public class frmCriarMedico extends frmGenerico {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCriarMedico().setVisible(true);
+                new frmCriarMedico(new MedicoService(new MedicoClient())).setVisible(true);
             }
         });
     }
