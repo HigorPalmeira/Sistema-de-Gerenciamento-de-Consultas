@@ -64,6 +64,7 @@ public abstract class MedicoMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "crm", ignore = true)
 	@Mapping(target = "email", ignore = true)
+	@Mapping(target = "telefone", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
 	@Mapping(target = "consultas", ignore = true)
