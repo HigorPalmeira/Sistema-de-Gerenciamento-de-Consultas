@@ -325,13 +325,33 @@ public class frmCriarMedico extends frmGenerico {
             
         }
         
+        int idx = cbEspecialidade.getSelectedIndex();
+        
+        if (idx <= 0) {
+            
+            JOptionPane.showMessageDialog(this, "Selecione uma especialidade para criar o médico!", "Especialidade não selecionada", JOptionPane.ERROR_MESSAGE);
+            return;
+        
+        }
+        
+        String especialidadeSelecionada = cbEspecialidade.getItemAt(idx);
+        
+        SaidaSimplesEspecialidadeDto especialidadeDtoEncontrada = new SaidaSimplesEspecialidadeDto();
+        
+        for (SaidaSimplesEspecialidadeDto especialidadeDto : this.listaEspecialidades) {
+            if (especialidadeDto.getDescricao().equals(especialidadeSelecionada)) {
+                especialidadeDtoEncontrada = especialidadeDto;
+                break;
+            }
+        }
+        
         boolean status = medicoService.criarMedico(
                 txtNome.getText().trim(), 
                 txtSobrenome.getText().trim(),
                 txtCrm.getText().trim(),
                 txtTelefone.getText().trim(),
                 txtEmail.getText().trim(),
-                null);
+                especialidadeDtoEncontrada.getId());
         
         if (status) {
             
