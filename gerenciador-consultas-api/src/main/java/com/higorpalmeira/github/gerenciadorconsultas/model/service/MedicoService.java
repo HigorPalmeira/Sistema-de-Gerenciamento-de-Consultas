@@ -101,6 +101,10 @@ public class MedicoService {
 	@Transactional(readOnly = true)
 	public SaidaSimplesMedicoDto buscarSaidaSimplesMedicoPorEmail(String email) {
 		
+		if (!Validator.EmailValidation(email)) {
+			throw new InvalidDataException("Formato de e-mail inválido.");
+		}
+		
 		var medicoEntidade = medicoRepository
 				.findByEmail(email)
 				.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com o E-mail: " + email));
