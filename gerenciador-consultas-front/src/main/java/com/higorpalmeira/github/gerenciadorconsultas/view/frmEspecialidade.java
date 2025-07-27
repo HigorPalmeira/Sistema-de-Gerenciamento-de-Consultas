@@ -41,7 +41,8 @@ public class frmEspecialidade extends frmGenerico {
     private void pesquisar_especialidade() {
         if (txtPesquisa.getText() == null || txtPesquisa.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, "É necessário a descrição da especialidade para pesquisa!", "Falha na pesquisa", JOptionPane.ERROR_MESSAGE);
-        
+            txtPesquisa.requestFocus();
+            
         } else {
             
             List<SaidaSimplesEspecialidadeDto> listaEspecialidadeDto = this.especialidadeService.buscarSaidaSimplesEspecialidadeDto(txtPesquisa.getText().trim());
