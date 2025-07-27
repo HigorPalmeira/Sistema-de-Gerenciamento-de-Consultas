@@ -133,4 +133,15 @@ public class MedicoService {
         
     }
     
+    public boolean deletarMedico(UUID idMedico) {
+        
+        if (idMedico == null) {
+            return false;
+        }
+        
+        HttpResponse<String> response = client.deletarMedico(idMedico);
+        
+        
+    }
+    
 }
