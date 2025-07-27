@@ -4,8 +4,10 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import javax.swing.JOptionPane;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
@@ -19,6 +21,8 @@ import javax.swing.table.DefaultTableModel;
 public class frmMedico extends frmGenerico {
     
     private final MedicoService medicoService;
+    
+    private final EspecialidadeService especialidadeService;
 
     private boolean carregarTabela;
     /**
@@ -31,8 +35,9 @@ public class frmMedico extends frmGenerico {
         
         settings();
         
-        medicoService = new MedicoService(new MedicoClient());
-        carregarTabela = true;
+        this.medicoService = new MedicoService(new MedicoClient());
+        this.especialidadeService = new EspecialidadeService(new EspecialidadeClient());
+        this.carregarTabela = true;
         
         this.listar_medicos();
     }
@@ -462,7 +467,7 @@ public class frmMedico extends frmGenerico {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
 
-        frmCriarMedico frmCriarMedico = new frmCriarMedico(this.medicoService);
+        frmCriarMedico frmCriarMedico = new frmCriarMedico(this.medicoService, this.especialidadeService);
         frmCriarMedico.setVisible(true);
 
     }//GEN-LAST:event_btnNovoActionPerformed
