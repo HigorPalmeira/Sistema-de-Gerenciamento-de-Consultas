@@ -6,8 +6,10 @@ package com.higorpalmeira.github.gerenciadorconsultas.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import java.io.IOException;
 import java.net.URI;
@@ -15,8 +17,6 @@ import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -105,11 +105,15 @@ public class MedicoService {
         
     }
     
-    public boolean editarMedico(UUID idMedico) {
+    public boolean editarMedico(UUID idMedico, String nome, String sobrenome, String crm, String telefone, String email, String status, UUID especialidadeId) {
         
         if (idMedico == null) {
             return false;
         }
+        
+        AtualizarMedicoDto atualizarMedicoDto = new AtualizarMedicoDto(nome, sobrenome, crm, telefone, email, TipoStatusConta.fromTipo(status), especialidadeId);
+        
+        HttpResponse<String> response = client.editarMedico(idMedico, atualizarMedicoDto);
         
     }
     
