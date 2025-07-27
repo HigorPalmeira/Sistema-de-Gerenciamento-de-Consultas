@@ -31,7 +31,7 @@ public class MedicoClient {
         this.mapper = new ObjectMapper();
     }
     
-    public HttpResponse criarMedico(CriarMedicoDto criarMedicoDto) throws JsonProcessingException, IOException, InterruptedException {
+    public HttpResponse<String> criarMedico(CriarMedicoDto criarMedicoDto) throws JsonProcessingException, IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API))
@@ -45,7 +45,7 @@ public class MedicoClient {
         
     }
     
-    public HttpResponse editarMedico(String idMedico, AtualizarMedicoDto atualizarMedicoDto) throws IOException, InterruptedException {
+    public HttpResponse<String> editarMedico(String idMedico, AtualizarMedicoDto atualizarMedicoDto) throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API + "/" + idMedico))
@@ -59,7 +59,7 @@ public class MedicoClient {
         
     }
     
-    public HttpResponse deletarMedico(String idMedico) throws IOException, InterruptedException {
+    public HttpResponse<String> deletarMedico(String idMedico) throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API + "/" + idMedico))
