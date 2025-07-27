@@ -4,6 +4,7 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesMedicoDto;
@@ -21,96 +22,165 @@ import javax.swing.table.DefaultTableModel;
  * @author higor
  */
 public class frmMedico extends frmGenerico {
-    
+
     private final MedicoService medicoService;
-    
+
     private final EspecialidadeService especialidadeService;
 
     private boolean carregarTabela;
+
     /**
      * Creates new form frmMedico
      */
     public frmMedico() {
         initComponents();
-        
+
         btnDetalhes.setVisible(false);
-        
+
         settings();
-        
+
         this.medicoService = new MedicoService(new MedicoClient());
         this.especialidadeService = new EspecialidadeService(new EspecialidadeClient());
         this.carregarTabela = true;
-        
+
         this.listar_medicos();
     }
-    
+
     private void pesquisa_medico() {
-        
+
         if (txtPesquisa.getText() == null || txtPesquisa.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, "O campo de pesquisa não pode estar vazio!", "Não é possível pesquisar", JOptionPane.ERROR_MESSAGE);
             txtPesquisa.requestFocus();
-            
+
         } else {
-            
+
             if (rbCrm.isSelected()) {
-                
+
                 if (Validador.isCrm(txtPesquisa.getText().trim().toUpperCase())) {
-                    JOptionPane.showMessageDialog(this, "CRM válido!", "CRM Válido", JOptionPane.INFORMATION_MESSAGE);
+
+                    SaidaSimplesMedicoDto medicoDto = this.medicoService.buscarSaidaSimplesMedicoDtoPorCrm(txtPesquisa.getText().trim().toUpperCase());
+
+                    this.preencher_tabela(medicoDto);
+
                 } else {
                     JOptionPane.showMessageDialog(this, "\"" + txtPesquisa.getText() + "\" não é um CRM válido! Informe um válido!", "CRM Inválido", JOptionPane.ERROR_MESSAGE);
                     txtPesquisa.requestFocus();
                 }
-                
+
             } else if (rbEmail.isSelected()) {
                 
-                JOptionPane.showMessageDialog(this, "Pesquisando e-mail: " + txtPesquisa.getText(), "Buscando", JOptionPane.INFORMATION_MESSAGE);
+                if (Validador.isEmail(txtPesquisa.getText().trim())) {
+                    
+                    SaidaSimplesMedicoDto medicoDto = this.medicoService.buscarSaidaSimplesMedicoDtoPorEmail(txtPesquisa.getText().trim());
+                    
+                    this.preencher_tabela(medicoDto);
+                    
+                } else {
+                    
+                    JOptionPane.showMessageDialog(this, "\" " + txtPesquisa.getText() + "\" não é um E-mail válido! Informe um válido!", "E-mail Inválido", JOptionPane.ERROR_MESSAGE);
+                    txtPesquisa.requestFocus();
+                    
+                }
                 
             } else if (rbNome.isSelected()) {
                 
-                JOptionPane.showMessageDialog(this, "Pesquisando nome: " + txtPesquisa.getText(), "Buscando", JOptionPane.INFORMATION_MESSAGE);
+                if (txtPesquisa.getText().isBlank()) {
+                    
+                    JOptionPane.showMessageDialog(this, "\"" + txtPesquisa.getText() + "\" não é um nome válido! Informe um válido!", "Nome Inválido", JOptionPane.ERROR_MESSAGE);
+                    txtPesquisa.requestFocus();
+                    
+                } else {
+                    
+                    List<SaidaSimplesMedicoDto> listaMedicosDto = this.medicoService.listarSaidasSimplesMedicoDtoPorNome(txtPesquisa.getText().trim());
+                    
+                    this.preencher_tabela(listaMedicosDto);
+                    
+                }
                 
             } else if (rbTelefone.isSelected()) {
-                
-                JOptionPane.showMessageDialog(this, "Pesquisando telefone: " + txtPesquisa.getText(), "Buscando", JOptionPane.INFORMATION_MESSAGE);
-                
-            }
-            
-            txtPesquisa.setText("");
-        }
-        
-    }
 
-    private void listar_medicos() {
-        
-        if (this.carregarTabela) {
-            
-            this.carregarTabela = false;
-            
-            List<SaidaSimplesMedicoDto> listaMedicos = medicoService.listarSaidasSimplesMedicoDto();
-            
-            DefaultTableModel dtm = (DefaultTableModel) tblMedicos.getModel();
-            dtm.setNumRows(0);
-            
-            if (!listaMedicos.isEmpty()) {
-                
-                for (SaidaSimplesMedicoDto medicoDto : listaMedicos) {
+                if (Validador.isTelefone(txtPesquisa.getText().trim())) {
                     
-                    Object[] obj = { medicoDto.getId(), 
-                        medicoDto.getNome(), 
-                        medicoDto.getCrm(),
-                        medicoDto.getEspecialidade().getDescricao(),
-                        medicoDto.getEmail(),
-                        medicoDto.getTelefone() };
+                    SaidaSimplesMedicoDto medicoDto = this.medicoService.buscarSaidaSimplesMedicoDtoPorTelefone(txtPesquisa.getText().trim());
                     
-                    dtm.addRow(obj);
+                    this.preencher_tabela(medicoDto);
+                    
+                } else {
+                    
+                    JOptionPane.showMessageDialog(this, "\"" + txtPesquisa.getText().trim() + "\" não é um telefone válido! Informe um válido!", "Telefone Válido", JOptionPane.ERROR_MESSAGE);
+                    txtPesquisa.requestFocus();
                     
                 }
                 
             }
-            
+
+            txtPesquisa.setText("");
         }
-        
+
     }
+
+    private void preencher_tabela(SaidaSimplesMedicoDto medicoDto) {
+
+        DefaultTableModel dtm = (DefaultTableModel) tblMedicos.getModel();
+        dtm.setNumRows(0);
+
+        if (medicoDto != null) {
+            Object[] obj = {
+                medicoDto.getId(),
+                medicoDto.getNome(),
+                medicoDto.getCrm(),
+                medicoDto.getEspecialidade().getDescricao(),
+                medicoDto.getEmail(),
+                medicoDto.getTelefone()
+            };
+
+            dtm.addRow(obj);
+        }
+
+    }
+
+    private void preencher_tabela(List<SaidaSimplesMedicoDto> listaMedicosDto) {
+
+        DefaultTableModel dtm = (DefaultTableModel) tblMedicos.getModel();
+        dtm.setNumRows(0);
+
+        if (!listaMedicosDto.isEmpty()) {
+
+            for (SaidaSimplesMedicoDto medicoDto : listaMedicosDto) {
+
+                Object[] obj = {
+                    medicoDto.getId(),
+                    medicoDto.getNome(),
+                    medicoDto.getCrm(),
+                    medicoDto.getEspecialidade().getDescricao(),
+                    medicoDto.getEmail(),
+                    medicoDto.getTelefone()};
+
+                dtm.addRow(obj);
+
+            }
+
+        }
+
+    }
+
+    private void listar_medicos() {
+
+        if (this.carregarTabela) {
+
+            this.carregarTabela = false;
+
+            List<SaidaSimplesMedicoDto> listaMedicos = medicoService.listarSaidasSimplesMedicoDto();
+
+            DefaultTableModel dtm = (DefaultTableModel) tblMedicos.getModel();
+            dtm.setNumRows(0);
+
+            this.preencher_tabela(listaMedicos);
+
+        }
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -431,11 +501,11 @@ public class frmMedico extends frmGenerico {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblMedicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMedicosMouseClicked
-        
+
         if (evt.getClickCount() == 2) {
             JOptionPane.showMessageDialog(this, "Item na tabela selecionado?");
         }
-        
+
     }//GEN-LAST:event_tblMedicosMouseClicked
 
     private void rbCrmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbCrmMouseClicked
@@ -490,7 +560,7 @@ public class frmMedico extends frmGenerico {
     private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            this.pesquisa_medico(); 
+            this.pesquisa_medico();
         }
 
     }//GEN-LAST:event_txtPesquisaKeyReleased
@@ -498,22 +568,22 @@ public class frmMedico extends frmGenerico {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
         int idx = tblMedicos.getSelectedRow();
-        
+
         if (idx < 0) {
-            
+
             JOptionPane.showMessageDialog(this, "É necessário que você selecione um médico, na tabela, para editá-lo!", "Médico não selecionado", JOptionPane.INFORMATION_MESSAGE);
-            
+
         } else {
-            
+
             String id = String.valueOf(tblMedicos.getValueAt(idx, 0));
-            
+
             UUID idMedico = UUID.fromString(id);
-            
+
             frmEditarMedico frmEditarMedico = new frmEditarMedico(idMedico, this.medicoService, this.especialidadeService);
             frmEditarMedico.setVisible(true);
-            
+
         }
-        
+
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnDetalhesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalhesActionPerformed
@@ -543,36 +613,36 @@ public class frmMedico extends frmGenerico {
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
 
         int idx = tblMedicos.getSelectedRow();
-        
+
         if (idx < 0) {
-            
+
             JOptionPane.showMessageDialog(this, "Selecione um médico na tabela para excluí-lo!", "Selecione um médico", JOptionPane.ERROR_MESSAGE);
-            
+
         } else {
-            
+
             int opcao = JOptionPane.showConfirmDialog(this, "Deseja mesmo deletar o médico selecionado?", "Tem certeza?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            
+
             if (opcao == JOptionPane.YES_OPTION) {
-                
+
                 String id = String.valueOf(tblMedicos.getValueAt(idx, 0));
                 UUID idMedico = UUID.fromString(id);
-                
+
                 boolean statusOperacao = this.medicoService.deletarMedico(idMedico);
-                
+
                 if (statusOperacao) {
-                    
+
                     JOptionPane.showMessageDialog(this, "Médico deletado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                
+
                 } else {
-                    
+
                     JOptionPane.showMessageDialog(this, "O médico não foi deletado!", "Falha", JOptionPane.ERROR_MESSAGE);
-                    
+
                 }
-                
+
             } else {
-                
+
                 JOptionPane.showMessageDialog(this, "Operação cancelada com sucesso!", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
-                
+
             }
         }
 
