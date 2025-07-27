@@ -387,9 +387,48 @@ public class frmEditarMedico extends frmGenerico {
             
         }
         
-        JOptionPane.showMessageDialog(this, "Sem suporte para isso por enquanto!", "Aguarde", JOptionPane.WARNING_MESSAGE);
+        int idxStatus = cbStatus.getSelectedIndex();
+        if (idxStatus < 0) {
+            JOptionPane.showMessageDialog(this, "O Status selecionado é inválido. Selecione um válido!", "Status Inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String statusTipo = cbStatus.getItemAt(idxStatus);
         
-        this.dispose();
+        int idxEspecialidade = cbEspecialidade.getSelectedIndex();
+        if (idxEspecialidade < 0) {
+            JOptionPane.showMessageDialog(this, "A Especialidade selecionada é inválida. Selecione uma válida!", "Especialidade Inválida", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String especialidadeDescricao = cbEspecialidade.getItemAt(idxEspecialidade);
+        SaidaSimplesEspecialidadeDto especialidadeSelecionada = new SaidaSimplesEspecialidadeDto();
+        
+        for (SaidaSimplesEspecialidadeDto especialidadeDto : this.listaEspecialidades) {
+            if (especialidadeDto.getDescricao().equals(especialidadeDescricao)) {
+                especialidadeSelecionada = especialidadeDto;
+                break;
+            }
+        }
+        
+        boolean statusOperacao = this.medicoService.editarMedico(
+                this.medicoAtualizar.getId(),
+                txtNome.getText().trim(),
+                txtSobrenome.getText().trim(),
+                txtCrm.getText().trim(),
+                txtTelefone.getText().trim(),
+                txtEmail.getText().trim(),
+                statusTipo,
+                especialidadeSelecionada.getId());
+        
+        if (statusOperacao) {
+            
+            JOptionPane.showMessageDialog(this, "O Médico foi atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            
+        } else {
+            
+            JOptionPane.showMessageDialog(this, "O Médico não foi atualizado!", "Falha na operação", JOptionPane.ERROR_MESSAGE);
+            
+        }
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
