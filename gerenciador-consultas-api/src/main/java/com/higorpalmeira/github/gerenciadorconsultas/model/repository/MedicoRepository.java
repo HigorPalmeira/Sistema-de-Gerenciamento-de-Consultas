@@ -31,6 +31,8 @@ public interface MedicoRepository extends JpaRepository<Medico, UUID> {
 	 * */
 	boolean existsByEmail(String email);
 	
+	boolean existsByTelefone(String telefone);
+	
 	/*
 	 * Busca por um médico com o CRM fornecido.
 	 * 
@@ -46,6 +48,8 @@ public interface MedicoRepository extends JpaRepository<Medico, UUID> {
 	 * @return Optional com Doctor presente se o médico for encontrado, caso contrário um Optional vazio.
 	 * */
 	Optional<Medico> findByEmail(String email);
+	
+	Optional<Medico> findByTelefone(String telefone);
 	
 	List<Medico> findByNome(String nome);
 	
