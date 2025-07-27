@@ -4,10 +4,14 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesEspecialidadeDto;
+import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
+import java.util.List;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 
@@ -18,15 +22,27 @@ import javax.swing.JOptionPane;
 public class frmEditarMedico extends frmGenerico {
 
     private final MedicoService medicoService;
+    
+    private final EspecialidadeService especialidadeService;
+    
+    private final List<SaidaSimplesEspecialidadeDto> listaEspecialidades;
     /**
      * Creates new form frmCriarMedico
+     * 
+     * @param medicoService
+     * @param especialidadeService
      */
-    public frmEditarMedico(MedicoService medicoService) {
+    public frmEditarMedico(MedicoService medicoService, EspecialidadeService especialidadeService) {
         initComponents();
         
         this.settings();
         
         this.medicoService = medicoService;
+        this.especialidadeService = especialidadeService;
+        
+        this.listaEspecialidades = especialidadeService.listarSaidaSimplesEspecialidadeDto();
+        
+        this.listarEspecialidades();
     }
     
     @Override
@@ -36,15 +52,16 @@ public class frmEditarMedico extends frmGenerico {
         
     }
     
-    private void limparCampos() {
-        txtNome.setText("");
-        txtSobrenome.setText("");
-        txtEmail.setText("");
-        txtTelefone.setText("");
-        txtCrm.setText("");
-        cbEspecialidade.setSelectedIndex(0);
+    private void listarEspecialidades() {
+        
+        for (SaidaSimplesEspecialidadeDto especialidadeDto : this.listaEspecialidades) {
+            
+            cbEspecialidade.addItem(especialidadeDto.getDescricao());
+            
+        }
+        
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -320,7 +337,7 @@ public class frmEditarMedico extends frmGenerico {
         
         JOptionPane.showMessageDialog(this, "Sem suporte para isso por enquanto!", "Aguarde", JOptionPane.WARNING_MESSAGE);
         
-        this.limparCampos();
+        this.dispose();
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -355,7 +372,10 @@ public class frmEditarMedico extends frmGenerico {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmEditarMedico(new MedicoService(new MedicoClient())).setVisible(true);
+                new frmEditarMedico(
+                        new MedicoService(new MedicoClient()),
+                        new EspecialidadeService(new EspecialidadeClient())
+                ).setVisible(true);
             }
         });
     }
