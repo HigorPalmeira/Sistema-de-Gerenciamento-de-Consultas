@@ -6,9 +6,11 @@ package com.higorpalmeira.github.gerenciadorconsultas.view;
 
 import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +22,8 @@ public class frmCriarMedico extends frmGenerico {
     private final MedicoService medicoService;
     
     private final EspecialidadeService especialidadeService;
+    
+    private final List<SaidaSimplesEspecialidadeDto> listaEspecialidades;
     /**
      * Creates new form frmCriarMedico
      * 
@@ -33,6 +37,10 @@ public class frmCriarMedico extends frmGenerico {
         
         this.medicoService = medicoService;
         this.especialidadeService = especialidadeService;
+        
+        this.listaEspecialidades = especialidadeService.listarSaidaSimplesEspecialidadeDto();
+        
+        this.listarEspecialidades();
     }
     
     @Override
@@ -49,6 +57,16 @@ public class frmCriarMedico extends frmGenerico {
         txtTelefone.setText("");
         txtCrm.setText("");
         cbEspecialidade.setSelectedIndex(0);
+    }
+    
+    private void listarEspecialidades() {
+        
+        for (SaidaSimplesEspecialidadeDto especialidadeDto : this.listaEspecialidades) {
+            
+            cbEspecialidade.addItem(especialidadeDto.getDescricao());
+            
+        }
+        
     }
 
     /**
@@ -138,6 +156,7 @@ public class frmCriarMedico extends frmGenerico {
         txtSobrenome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         cbEspecialidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cbEspecialidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione uma especialidade" }));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Especialidade:");
