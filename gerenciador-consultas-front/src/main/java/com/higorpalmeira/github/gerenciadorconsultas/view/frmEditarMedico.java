@@ -29,10 +29,16 @@ public class frmEditarMedico extends frmGenerico {
     /**
      * Creates new form frmCriarMedico
      * 
+     * @param idMedico
      * @param medicoService
      * @param especialidadeService
      */
-    public frmEditarMedico(MedicoService medicoService, EspecialidadeService especialidadeService) {
+    public frmEditarMedico(UUID idMedico, MedicoService medicoService, EspecialidadeService especialidadeService) {
+        
+        if (idMedico == null) {
+            JOptionPane.showMessageDialog(this, "O médico não pode ser editado!", "Médico não compatível", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }
         initComponents();
         
         this.settings();
@@ -373,6 +379,7 @@ public class frmEditarMedico extends frmGenerico {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new frmEditarMedico(
+                        null,
                         new MedicoService(new MedicoClient()),
                         new EspecialidadeService(new EspecialidadeClient())
                 ).setVisible(true);
