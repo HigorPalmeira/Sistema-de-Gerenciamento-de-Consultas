@@ -4,11 +4,11 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
+import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
-import java.util.UUID;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,15 +18,21 @@ import javax.swing.JOptionPane;
 public class frmCriarMedico extends frmGenerico {
 
     private final MedicoService medicoService;
+    
+    private final EspecialidadeService especialidadeService;
     /**
      * Creates new form frmCriarMedico
+     * 
+     * @param medicoService
+     * @param especialidadeService
      */
-    public frmCriarMedico(MedicoService medicoService) {
+    public frmCriarMedico(MedicoService medicoService, EspecialidadeService especialidadeService) {
         initComponents();
         
         this.settings();
         
         this.medicoService = medicoService;
+        this.especialidadeService = especialidadeService;
     }
     
     @Override
@@ -333,7 +339,7 @@ public class frmCriarMedico extends frmGenerico {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -352,7 +358,10 @@ public class frmCriarMedico extends frmGenerico {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCriarMedico(new MedicoService(new MedicoClient())).setVisible(true);
+                new frmCriarMedico(
+                        new MedicoService(new MedicoClient()),
+                        new EspecialidadeService(new EspecialidadeClient())
+                ).setVisible(true);
             }
         });
     }
