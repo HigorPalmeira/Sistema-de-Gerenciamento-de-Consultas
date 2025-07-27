@@ -6,6 +6,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
 import java.io.IOException;
 import java.net.URI;
@@ -36,6 +37,20 @@ public class MedicoClient {
                 .uri(URI.create(URL_API))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString( mapper.writeValueAsString(criarMedicoDto) ))
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
+    public HttpResponse editarMedico(String idMedico, AtualizarMedicoDto atualizarMedicoDto) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/" + idMedico))
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString( mapper.writeValueAsString(atualizarMedicoDto) ))
                 .build();
         
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
