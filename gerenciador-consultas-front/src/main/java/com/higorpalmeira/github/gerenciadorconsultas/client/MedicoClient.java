@@ -60,10 +60,10 @@ public class MedicoClient {
         
     }
     
-    public HttpResponse<String> deletarMedico(String idMedico) throws IOException, InterruptedException {
+    public HttpResponse<String> deletarMedico(UUID idMedico) throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(URL_API + "/" + idMedico))
+                .uri(URI.create(URL_API + "/" + idMedico.toString()))
                 .DELETE()
                 .build();
         
