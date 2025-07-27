@@ -4,6 +4,7 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
@@ -20,12 +21,12 @@ public class frmEditarMedico extends frmGenerico {
     /**
      * Creates new form frmCriarMedico
      */
-    public frmEditarMedico() {
+    public frmEditarMedico(MedicoService medicoService) {
         initComponents();
         
         this.settings();
         
-        medicoService = new MedicoService();
+        this.medicoService = medicoService;
     }
     
     @Override
@@ -299,19 +300,7 @@ public class frmEditarMedico extends frmGenerico {
             
         }
         
-        
-        CriarMedicoDto criarMedicoDto = new CriarMedicoDto(
-                txtNome.getText().trim(),
-                txtSobrenome.getText().trim(),
-                txtCrm.getText().trim(),
-                txtTelefone.getText().trim(),
-                txtEmail.getText().trim(),
-                UUID.randomUUID()
-        );
-        
-        UUID medicoId = medicoService.criarMedico(criarMedicoDto);
-        
-        JOptionPane.showMessageDialog(this, "Médico criado com sucesso!\nID: " + medicoId, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Sem suporte para isso por enquanto!", "Aguarde", JOptionPane.WARNING_MESSAGE);
         
         this.limparCampos();
         
@@ -348,7 +337,7 @@ public class frmEditarMedico extends frmGenerico {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmEditarMedico().setVisible(true);
+                new frmEditarMedico(new MedicoService(new MedicoClient())).setVisible(true);
             }
         });
     }
