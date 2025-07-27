@@ -65,6 +65,10 @@ public class MedicoService {
 			throw new DataConflictException("E-mail já registrado no sistema.");
 		}
 		
+		if (medicoRepository.existsByTelefone(criarMedicoDto.getTelefone())) {
+			throw new DataConflictException("Telefone já registrado no sistema.");
+		}
+		
 		var especialidadeId = criarMedicoDto.getEspecialidadeId();
 		var especialidadeEntidade = especialidadeRepository
 				.findById(especialidadeId)
@@ -380,6 +384,17 @@ public class MedicoService {
 				
 				medicoEntidade.setEmail(atualizarMedicoDto.getEmail());
 			});
+		}
+		
+		if (atualizarMedicoDto.getTelefone() != null) {
+			medicoRepository.findByTelefone(atualizarMedicoDto.getTelefone()).ifPresent(existingDoctor -> {
+				if (!existingDoctor.getId().equals(medicoEntidade.getId())) {
+					throw new DataConflictException("O telefone já está sendo usado por outro médico.");
+				}
+				
+				medicoEntidade.setTelefone(atualizarMedicoDto.getTelefone());
+			});
+			
 		}
 		
 		var especialidadeId = atualizarMedicoDto.getEspecialidadeId();
