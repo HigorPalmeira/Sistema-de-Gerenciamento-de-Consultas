@@ -33,6 +33,8 @@ public class frmMedico extends frmGenerico {
         
         medicoService = new MedicoService(new MedicoClient());
         carregarTabela = true;
+        
+        this.listar_medicos();
     }
     
     private void pesquisa_medico() {
