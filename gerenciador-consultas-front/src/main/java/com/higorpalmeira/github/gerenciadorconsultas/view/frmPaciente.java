@@ -5,7 +5,10 @@
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
 import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,6 +17,8 @@ import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 public class frmPaciente extends frmGenerico {
     
     private final PacienteService pacienteService;
+    
+    private boolean carregarTabela;
 
     /**
      * Creates new form frmPaciente
@@ -26,8 +31,42 @@ public class frmPaciente extends frmGenerico {
         settings();
         
         this.pacienteService = new PacienteService(new PacienteClient());
+        this.carregarTabela = true;
+        
+        this.listar_pacientes();
     }
 
+    public void listar_pacientes() {
+        
+        if (this.carregarTabela) {
+            this.carregarTabela = false;
+            
+            DefaultTableModel dtm = (DefaultTableModel) tbPaciente.getModel();
+            dtm.setNumRows(0);
+            
+            List<SaidaSimplesPacienteDto> listaPacientesDto = this.pacienteService.listarSaidasSimplesPacienteDto();
+            
+            if (!listaPacientesDto.isEmpty()) {
+                
+                for (SaidaSimplesPacienteDto pacienteDto : listaPacientesDto) {
+                    
+                    Object[] obj = {
+                        pacienteDto.getId(),
+                        pacienteDto.getNome(),
+                        pacienteDto.getCpf(),
+                        pacienteDto.getEmail(),
+                        pacienteDto.getTelefone()
+                    };
+                    
+                    dtm.addRow(obj);
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
