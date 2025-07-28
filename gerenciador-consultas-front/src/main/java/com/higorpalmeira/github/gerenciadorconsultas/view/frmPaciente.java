@@ -4,11 +4,16 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
+import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
+
 /**
  *
  * @author higor
  */
 public class frmPaciente extends frmGenerico {
+    
+    private final PacienteService pacienteService;
 
     /**
      * Creates new form frmPaciente
@@ -19,6 +24,8 @@ public class frmPaciente extends frmGenerico {
         btnDetalhes.setVisible(false);
         
         settings();
+        
+        this.pacienteService = new PacienteService(new PacienteClient());
     }
 
     /**
