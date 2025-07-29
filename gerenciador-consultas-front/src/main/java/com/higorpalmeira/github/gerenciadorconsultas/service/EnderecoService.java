@@ -7,6 +7,8 @@ package com.higorpalmeira.github.gerenciadorconsultas.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.external.ExtEnderecoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEnderecoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import java.io.IOException;
 import java.net.http.HttpResponse;
@@ -20,9 +22,9 @@ import javax.swing.JOptionPane;
  */
 public class EnderecoService {
     
-    private ExtEnderecoClient extClient;
+    private final ExtEnderecoClient extClient;
     
-    private ObjectMapper mapper;
+    private final ObjectMapper mapper;
     
     public EnderecoService(ExtEnderecoClient extClient) {
         this.extClient = extClient;
@@ -42,13 +44,19 @@ public class EnderecoService {
             return null;
         }
         
-        CriarEnderecoDto enderecoDto = null;
+        CriarEnderecoDto enderecoDto = new CriarEnderecoDto();
         
         try {
             
             HttpResponse<String> response = this.extClient.getEndereco(cepLimpo);
             
-            enderecoDto = this.mapper.readValue(response, CriarEnderecoDto.class);
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                enderecoDto = this.mapper.readValue(response.body(), CriarEnderecoDto.class);
+                
+            } else if (response.statusCode() == 400) {
+                JOptionPane.showMessageDialog(null, "Houve um erro na requisição. O CEP pode não estar formatado!", "Má Requisição", JOptionPane.ERROR_MESSAGE);
+            }
             
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(EnderecoService.class.getName()).log(Level.SEVERE, null, ex);
