@@ -29,17 +29,19 @@ public class EnderecoService {
     
     public CriarEnderecoDto pesquisarEnderecoPorCep(String cep) {
         
+        CriarEnderecoDto enderecoDto = null;
+        
         try {
             
             HttpResponse<String> response = this.extClient.getEndereco(cep);
             
-            CriarEnderecoDto enderecoDto = this.mapper.readValue(response, CriarEnderecoDto.class);
-            
-            return enderecoDto;
+            enderecoDto = this.mapper.readValue(response, CriarEnderecoDto.class);
             
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(EnderecoService.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return enderecoDto;
         
     }
     
