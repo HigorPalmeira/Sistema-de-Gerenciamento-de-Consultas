@@ -127,6 +127,7 @@ public class frmPaciente extends frmGenerico {
 
         btnPesquisar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/zoom.png"))); // NOI18N
+        btnPesquisar.setMnemonic('p');
         btnPesquisar.setText("PESQUISAR");
 
         rbCpf.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
