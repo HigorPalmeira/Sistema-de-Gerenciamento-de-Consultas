@@ -7,10 +7,12 @@ package com.higorpalmeira.github.gerenciadorconsultas.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.external.ExtEnderecoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEnderecoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,11 +31,16 @@ public class EnderecoService {
     
     public CriarEnderecoDto pesquisarEnderecoPorCep(String cep) {
         
-        if (cep == null || cep.length() < 8) {
+        if (cep == null) {
             return null;
         }
         
-        String cepLimpo = cep.trim().replaceAll("-", "");
+        String cepLimpo = cep.trim().replaceAll("[.-]", "");
+        
+        if (!Validador.isCep(cepLimpo)) {
+            JOptionPane.showMessageDialog(null, "O CEP informado é inválido! Informe um válido.\nEx.: ##.###-###");
+            return null;
+        }
         
         CriarEnderecoDto enderecoDto = null;
         
