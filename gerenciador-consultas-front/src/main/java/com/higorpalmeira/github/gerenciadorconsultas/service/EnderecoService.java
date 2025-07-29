@@ -29,11 +29,17 @@ public class EnderecoService {
     
     public CriarEnderecoDto pesquisarEnderecoPorCep(String cep) {
         
+        if (cep == null || cep.length() < 8) {
+            return null;
+        }
+        
+        String cepLimpo = cep.trim().replaceAll("-", "");
+        
         CriarEnderecoDto enderecoDto = null;
         
         try {
             
-            HttpResponse<String> response = this.extClient.getEndereco(cep);
+            HttpResponse<String> response = this.extClient.getEndereco(cepLimpo);
             
             enderecoDto = this.mapper.readValue(response, CriarEnderecoDto.class);
             
