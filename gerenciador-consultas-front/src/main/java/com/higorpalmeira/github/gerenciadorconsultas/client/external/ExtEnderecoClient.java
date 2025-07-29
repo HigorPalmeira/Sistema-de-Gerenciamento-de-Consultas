@@ -4,9 +4,11 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.client.external;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 /**
  *
@@ -14,7 +16,7 @@ import java.net.http.HttpRequest;
  */
 public class ExtEnderecoClient {
     
-    private final String URL_API = "http://viacep";
+    private final String URL_API = "https://viacep.com.br/ws/01001000/json/";
     
     private final HttpClient client;
     
@@ -22,12 +24,16 @@ public class ExtEnderecoClient {
         this.client = HttpClient.newHttpClient();
     }
     
-    public void getEndereco(String cep) {
+    public HttpResponse<String> getEndereco(String cep) throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(URL_API))
+                .uri(URI.create("https://viacep.com.br/ws/" + cep + "/json/"))
                 .GET()
                 .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
         
     }
     
