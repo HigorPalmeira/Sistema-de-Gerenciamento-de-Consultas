@@ -16,8 +16,6 @@ import java.net.http.HttpResponse;
  */
 public class ExtEnderecoClient {
     
-    private final String URL_API = "https://viacep.com.br/ws/01001000/json/";
-    
     private final HttpClient client;
     
     public ExtEnderecoClient() {
