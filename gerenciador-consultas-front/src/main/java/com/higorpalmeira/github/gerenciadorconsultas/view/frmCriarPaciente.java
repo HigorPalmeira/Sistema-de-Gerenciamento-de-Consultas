@@ -4,6 +4,9 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author higor
@@ -18,6 +21,8 @@ public class frmCriarPaciente extends frmGenerico {
         
         settings();
         
+        this.preencherListaGeneros();
+        
     }
     
     @Override
@@ -29,7 +34,9 @@ public class frmCriarPaciente extends frmGenerico {
     
     private void preencherListaGeneros() {
         
-        
+        for (TipoGenero genero : TipoGenero.values()) {
+            cbGenero.addItem( genero.getTipo() );
+        }
         
     }
 
@@ -109,6 +116,7 @@ public class frmCriarPaciente extends frmGenerico {
         );
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         pnlInformacoesGerais.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -152,7 +160,6 @@ public class frmCriarPaciente extends frmGenerico {
         jLabel8.setText("Gênero:");
 
         cbGenero.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contato", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14))); // NOI18N
 
@@ -219,9 +226,9 @@ public class frmCriarPaciente extends frmGenerico {
                                         .addGroup(pnlInformacoesGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel5)
                                             .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(60, 60, 60)
+                                        .addGap(43, 43, 43)
                                         .addGroup(pnlInformacoesGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel8)))
                                     .addComponent(jLabel3)
                                     .addComponent(txtSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -289,6 +296,11 @@ public class frmCriarPaciente extends frmGenerico {
         btnProcurarCep.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnProcurarCep.setMnemonic('p');
         btnProcurarCep.setText("PROCURAR");
+        btnProcurarCep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProcurarCepActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlEnderecoLayout = new javax.swing.GroupLayout(pnlEndereco);
         pnlEndereco.setLayout(pnlEnderecoLayout);
@@ -319,7 +331,7 @@ public class frmCriarPaciente extends frmGenerico {
                                         .addGap(65, 65, 65)
                                         .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel14)
-                                            .addComponent(txtUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(txtUf, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEnderecoLayout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                                         .addComponent(btnProcurarCep))))
@@ -388,6 +400,7 @@ public class frmCriarPaciente extends frmGenerico {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void pnlTituloComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlTituloComponentMoved
@@ -397,6 +410,12 @@ public class frmCriarPaciente extends frmGenerico {
     private void txtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCpfActionPerformed
+
+    private void btnProcurarCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarCepActionPerformed
+
+        JOptionPane.showMessageDialog(this, "Procurando dados pelo CEP...", "Pesquisando", JOptionPane.INFORMATION_MESSAGE);
+
+    }//GEN-LAST:event_btnProcurarCepActionPerformed
 
     /**
      * @param args the command line arguments
