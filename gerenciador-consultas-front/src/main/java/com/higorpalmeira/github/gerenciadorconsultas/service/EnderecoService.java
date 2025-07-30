@@ -40,7 +40,7 @@ public class EnderecoService {
         String cepLimpo = cep.trim().replaceAll("[.-]", "");
         
         if (!Validador.isCep(cepLimpo)) {
-            JOptionPane.showMessageDialog(null, "O CEP informado é inválido! Informe um válido.\nEx.: ##.###-###");
+            JOptionPane.showMessageDialog(null, "O CEP \"" + cepLimpo + "\" informado é inválido! Informe um válido.\nEx.: ##.###-###");
             return null;
         }
         
