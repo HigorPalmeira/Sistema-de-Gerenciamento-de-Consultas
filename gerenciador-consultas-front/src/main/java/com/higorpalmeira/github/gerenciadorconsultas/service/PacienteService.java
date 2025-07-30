@@ -7,12 +7,19 @@ package com.higorpalmeira.github.gerenciadorconsultas.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,6 +37,53 @@ public class PacienteService {
     public PacienteService(PacienteClient pacienteClient) {
         this.client = pacienteClient;
         this.mapper = new ObjectMapper();
+    }
+    
+    public boolean criarPaciente(CriarPacienteDto criarPacienteDto) {
+        
+        if (criarPacienteDto == null) {
+            return false;
+        }
+        
+        try {
+            
+            HttpResponse<String> response = client.criarPaciente(criarPacienteDto);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_CRIACAO.getTipo()) {
+                
+                Optional<String> locationHeader = response.headers().firstValue(LOCATION);
+                
+                if (locationHeader.isPresent()) {
+                    
+                    String locationUrl = locationHeader.get();
+                    
+                    URI uri = new URI(locationUrl);
+                    String path = uri.getPath();
+                    
+                    String idPath = path.substring(path.lastIndexOf("/") + 1);
+                    
+                    try {
+                        UUID.fromString(idPath);
+                    } catch(Exception e) {
+                        return false;
+                    }
+                    
+                }
+                
+                return true;
+                
+            } else {
+                
+                return false;
+            
+            }
+        } catch (IOException | InterruptedException | URISyntaxException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar criar um novo Paciente!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return false;
     }
     
     public List<SaidaSimplesPacienteDto> listarSaidasSimplesPacienteDto() {
