@@ -570,7 +570,13 @@ public class frmCriarPaciente extends frmGenerico {
                     enderecoDto
             );
             
-            //this.pacienteService
+            if (this.pacienteService.criarPaciente(pacienteDto)) {
+                
+                JOptionPane.showMessageDialog(this, "Paciente criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "O paciente não pode ser criado!", "Falha ao criar", JOptionPane.ERROR_MESSAGE);
+            }
             
         }
 
