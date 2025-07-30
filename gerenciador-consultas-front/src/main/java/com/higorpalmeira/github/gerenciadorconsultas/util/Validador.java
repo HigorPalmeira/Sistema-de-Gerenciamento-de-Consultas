@@ -32,7 +32,7 @@ public class Validador {
     private static final String TELEFONE_REGEX = "^\\(?[1-9]{2}\\)? ?(?:[2-8]|9[0-9])[0-9]{3}\\-?[0-9]{4}$";
     private static final Pattern PATTERN_TELEFONE = Pattern.compile(TELEFONE_REGEX);
     
-    private static final String CEP_REGEX = "/^[0-9]{8}$/";
+    private static final String CEP_REGEX = "^(\\d{2}\\.\\d{3}-\\d{3}|\\d{5}-\\d{3}|\\d{8})$";
     private static final Pattern PATTERN_CEP = Pattern.compile(CEP_REGEX);
 
     public static boolean isCrm(final String crm) {
