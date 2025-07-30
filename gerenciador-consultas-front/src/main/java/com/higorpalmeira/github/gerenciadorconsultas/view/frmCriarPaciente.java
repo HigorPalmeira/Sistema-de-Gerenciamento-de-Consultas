@@ -6,9 +6,12 @@ package com.higorpalmeira.github.gerenciadorconsultas.view;
 
 import com.higorpalmeira.github.gerenciadorconsultas.client.external.ExtEnderecoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEnderecoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EnderecoService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 /**
@@ -47,6 +50,59 @@ public class frmCriarPaciente extends frmGenerico {
             cbGenero.addItem( genero.getTipo() );
         }
         
+    }
+    
+    private boolean validarCampos() {
+        
+        if (txtNome.getText().isBlank() ||
+                txtSobrenome.getText().isBlank() ||
+                txtCpf.getText().isBlank() ||
+                txtDataNascimento.getText().isBlank() ||
+                txtEmail.getText().isBlank() ||
+                txtTelefone.getText().isBlank() ||
+                txtCep.getText().isBlank() ||
+                txtBairro.getText().isBlank() ||
+                txtLocalidade.getText().isBlank() ||
+                txtRua.getText().isBlank() ||
+                txtUf.getText().isBlank()) {
+            
+            JOptionPane.showMessageDialog(this, "Há campo(s) vazio(s) no formulário! É necessário que preencha(-os).", "Campo(s) Inválido(s)", JOptionPane.ERROR_MESSAGE);
+            
+            return false;
+        
+        } else if (txtNome.getText().length() < 3 || txtSobrenome.getText().length() < 3) {
+            
+            JOptionPane.showMessageDialog(this, "O nome/sobrenome deve conter pelo menos três caracteres.", "Campo(s) Inválido(s)", JOptionPane.ERROR_MESSAGE);
+            
+            return false;
+        
+        } else if (!Validador.isEmail(txtEmail.getText().trim())) {
+            
+            JOptionPane.showMessageDialog(this, "Formato de e-mail inválido!", "E-mail Inválido", JOptionPane.ERROR_MESSAGE);
+                
+            return false;
+        
+        } else if (!Validador.isTelefone(txtTelefone.getText().trim())) {
+            
+            JOptionPane.showMessageDialog(this, "Formato de telefone inválido!", "Telefone Inválido", JOptionPane.ERROR_MESSAGE);
+                
+            return false;
+        
+        } else if (!Validador.isCep(txtCep.getText().trim())) {
+            
+            JOptionPane.showMessageDialog(this, "Formato de CEP inválido!", "CEP Inválido", JOptionPane.ERROR_MESSAGE);
+                
+            return false;
+        
+        } else if (!Validador.isCpf(txtCpf.getText().trim())) {
+            
+            JOptionPane.showMessageDialog(this, "Formato do CPF inválido!", "CPF Inválido", JOptionPane.ERROR_MESSAGE);
+                
+            return false;
+        
+        }
+        
+        return true;
     }
 
     /**
@@ -432,6 +488,7 @@ public class frmCriarPaciente extends frmGenerico {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+        
     private void pnlTituloComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlTituloComponentMoved
         // TODO add your handling code here:
     }//GEN-LAST:event_pnlTituloComponentMoved
@@ -484,35 +541,22 @@ public class frmCriarPaciente extends frmGenerico {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-        if (txtNome.getText().isBlank() ||
-                txtSobrenome.getText().isBlank() ||
-                txtCpf.getText().isBlank() ||
-                txtDataNascimento.getText().isBlank() ||
-                txtEmail.getText().isBlank() ||
-                txtTelefone.getText().isBlank() ||
-                txtCep.getText().isBlank() ||
-                txtBairro.getText().isBlank() ||
-                txtLocalidade.getText().isBlank() ||
-                txtRua.getText().isBlank() ||
-                txtUf.getText().isBlank()) {
+        if (this.validarCampos()) {
             
-            JOptionPane.showMessageDialog(this, "Há campo(s) vazio(s) no formulário! É necessário que preencha(-os).", "Campo(s) Inválido(s)", JOptionPane.ERROR_MESSAGE);
+            CriarEnderecoDto enderecoDto = new CriarEnderecoDto();
             
-        } else if (txtNome.getText().length() < 3 || txtSobrenome.getText().length() < 3) {
+            TipoGenero genero = TipoGenero.fromTipo(String.valueOf(cbGenero.getSelectedItem()));
             
-            JOptionPane.showMessageDialog(this, "O nome/sobrenome deve conter pelo menos três caracteres.", "Campo(s) Inválido(s)", JOptionPane.ERROR_MESSAGE);
-        
-        } else if (!Validador.isEmail(txtEmail.getText().trim())) {
-            
-            JOptionPane.showMessageDialog(this, "Formato de e-mail inválido!", "E-mail Inválido", JOptionPane.ERROR_MESSAGE);
-            
-        } else if (!Validador.isTelefone(txtTelefone.getText().trim())) {
-            
-            JOptionPane.showMessageDialog(this, "Formato de telefone inválido!", "Telefone Inválido", JOptionPane.ERROR_MESSAGE);
-            
-        } else if (!Validador.isCep(txtCep.getText().trim())) {
-            
-            JOptionPane.showMessageDialog(this, "Formato de CEP inválido!", "CEP Inválido", JOptionPane.ERROR_MESSAGE);
+            CriarPacienteDto pacienteDto = new CriarPacienteDto(
+                    txtNome.getText().trim(),
+                    txtSobrenome.getText().trim(),
+                    txtCpf.getText().trim(),
+                    LocalDate.parse(txtDataNascimento.getText().trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    genero,
+                    txtTelefone.getText().trim(),
+                    txtEmail.getText().trim(),
+                    enderecoDto
+            );
             
         }
 
