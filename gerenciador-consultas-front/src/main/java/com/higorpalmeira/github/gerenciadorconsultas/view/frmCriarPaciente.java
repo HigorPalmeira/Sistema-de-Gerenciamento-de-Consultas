@@ -4,11 +4,13 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.external.ExtEnderecoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EnderecoService;
+import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,17 +21,20 @@ import javax.swing.JOptionPane;
  * @author higor
  */
 public class frmCriarPaciente extends frmGenerico {
+
+    private final PacienteService pacienteService;
     
     private final EnderecoService enderecoService;
 
     /**
      * Creates new form frmCriarPaciente
      */
-    public frmCriarPaciente() {
+    public frmCriarPaciente(PacienteService pacienteService) {
         initComponents();
         
         settings();
         
+        this.pacienteService = pacienteService;
         this.enderecoService = new EnderecoService(new ExtEnderecoClient());
         
         this.preencherListaGeneros();
@@ -543,7 +548,14 @@ public class frmCriarPaciente extends frmGenerico {
 
         if (this.validarCampos()) {
             
-            CriarEnderecoDto enderecoDto = new CriarEnderecoDto();
+            CriarEnderecoDto enderecoDto = new CriarEnderecoDto(
+                    txtCep.getText().trim(),
+                    txtRua.getText().trim(),
+                    txtComplemento.getText().trim(),
+                    txtBairro.getText().trim(),
+                    txtLocalidade.getText().trim(),
+                    txtUf.getText().trim()
+            );
             
             TipoGenero genero = TipoGenero.fromTipo(String.valueOf(cbGenero.getSelectedItem()));
             
@@ -557,6 +569,8 @@ public class frmCriarPaciente extends frmGenerico {
                     txtEmail.getText().trim(),
                     enderecoDto
             );
+            
+            //this.pacienteService
             
         }
 
@@ -592,7 +606,7 @@ public class frmCriarPaciente extends frmGenerico {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCriarPaciente().setVisible(true);
+                new frmCriarPaciente(new PacienteService(new PacienteClient())).setVisible(true);
             }
         });
     }
