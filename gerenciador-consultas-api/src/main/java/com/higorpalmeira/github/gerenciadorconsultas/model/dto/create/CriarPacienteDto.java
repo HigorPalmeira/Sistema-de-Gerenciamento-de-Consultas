@@ -2,6 +2,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.dto.create;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 
 public class CriarPacienteDto {
@@ -12,6 +13,7 @@ public class CriarPacienteDto {
 	
 	private String cpf;
 	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataNascimento;
 	
 	private TipoGenero genero;

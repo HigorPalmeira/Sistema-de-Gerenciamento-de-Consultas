@@ -323,7 +323,7 @@ public class frmPaciente extends frmGenerico {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
 
-        frmCriarPaciente frmCriarPaciente = new frmCriarPaciente();
+        frmCriarPaciente frmCriarPaciente = new frmCriarPaciente(this.pacienteService);
         frmCriarPaciente.setVisible(true);
 
     }//GEN-LAST:event_btnNovoActionPerformed

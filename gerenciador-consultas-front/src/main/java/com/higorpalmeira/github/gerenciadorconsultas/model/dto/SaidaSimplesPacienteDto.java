@@ -4,6 +4,7 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConta;
 import java.time.LocalDate;
@@ -23,6 +24,7 @@ public class SaidaSimplesPacienteDto {
 
     private String cpf;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
     private TipoGenero genero;

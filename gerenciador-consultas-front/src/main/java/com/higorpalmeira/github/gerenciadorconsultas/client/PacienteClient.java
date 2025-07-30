@@ -6,6 +6,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarPacienteDto;
 import java.io.IOException;
 import java.net.URI;
@@ -28,6 +29,7 @@ public class PacienteClient {
     public PacienteClient() {
         this.client = HttpClient.newHttpClient();
         this.mapper = new ObjectMapper();
+        this.mapper.registerModule(new JavaTimeModule());
     }
     
     public HttpResponse<String> criarPaciente(CriarPacienteDto criarPacienteDto) throws JsonProcessingException, IOException, InterruptedException {
