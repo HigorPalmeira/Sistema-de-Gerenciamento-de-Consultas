@@ -4,7 +4,10 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.external.ExtEnderecoClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
+import com.higorpalmeira.github.gerenciadorconsultas.service.EnderecoService;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,6 +15,8 @@ import javax.swing.JOptionPane;
  * @author higor
  */
 public class frmCriarPaciente extends frmGenerico {
+    
+    private final EnderecoService enderecoService;
 
     /**
      * Creates new form frmCriarPaciente
@@ -21,7 +26,10 @@ public class frmCriarPaciente extends frmGenerico {
         
         settings();
         
+        this.enderecoService = new EnderecoService(new ExtEnderecoClient());
+        
         this.preencherListaGeneros();
+        lblAvisoEndereco.setVisible(false);
         
     }
     
@@ -82,6 +90,7 @@ public class frmCriarPaciente extends frmGenerico {
         jLabel14 = new javax.swing.JLabel();
         txtUf = new javax.swing.JTextField();
         btnProcurarCep = new javax.swing.JButton();
+        lblAvisoEndereco = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -267,6 +276,11 @@ public class frmCriarPaciente extends frmGenerico {
         jLabel9.setText("CEP:");
 
         txtCep.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCep.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCepFocusGained(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setText("Rua:");
@@ -302,6 +316,9 @@ public class frmCriarPaciente extends frmGenerico {
             }
         });
 
+        lblAvisoEndereco.setForeground(new java.awt.Color(188, 0, 0));
+        lblAvisoEndereco.setText("*Endereço não encontrado!");
+
         javax.swing.GroupLayout pnlEnderecoLayout = new javax.swing.GroupLayout(pnlEndereco);
         pnlEndereco.setLayout(pnlEnderecoLayout);
         pnlEnderecoLayout.setHorizontalGroup(
@@ -311,9 +328,7 @@ public class frmCriarPaciente extends frmGenerico {
                 .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlEnderecoLayout.createSequentialGroup()
                         .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlEnderecoLayout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel12)
                             .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlEnderecoLayout.createSequentialGroup()
@@ -323,7 +338,10 @@ public class frmCriarPaciente extends frmGenerico {
                                     .addComponent(jLabel10)
                                     .addComponent(jLabel11)
                                     .addComponent(jLabel9)
-                                    .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pnlEnderecoLayout.createSequentialGroup()
+                                        .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblAvisoEndereco))
                                     .addComponent(txtLocalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel13))
                                 .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,7 +355,7 @@ public class frmCriarPaciente extends frmGenerico {
                                         .addComponent(btnProcurarCep))))
                             .addComponent(txtRua)
                             .addComponent(txtComplemento))
-                        .addContainerGap(201, Short.MAX_VALUE))))
+                        .addContainerGap(131, Short.MAX_VALUE))))
         );
         pnlEnderecoLayout.setVerticalGroup(
             pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,7 +365,8 @@ public class frmCriarPaciente extends frmGenerico {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnProcurarCep))
+                    .addComponent(btnProcurarCep)
+                    .addComponent(lblAvisoEndereco))
                 .addGap(12, 12, 12)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -413,9 +432,39 @@ public class frmCriarPaciente extends frmGenerico {
 
     private void btnProcurarCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarCepActionPerformed
 
-        JOptionPane.showMessageDialog(this, "Procurando dados pelo CEP...", "Pesquisando", JOptionPane.INFORMATION_MESSAGE);
+        lblAvisoEndereco.setVisible(false);
+        
+        if (txtCep.getText().isBlank()) {
+            
+            lblAvisoEndereco.setText("*Informe um CEP para poder pesquisá-lo!");
+            lblAvisoEndereco.setVisible(true);
+            
+        } else {
+            
+            CriarEnderecoDto enderecoDto = this.enderecoService.pesquisarEnderecoPorCep( txtCep.getText().trim() );
+            
+            if (enderecoDto == null || enderecoDto.getUf() == null) {
+                lblAvisoEndereco.setText("*O endereço não foi encontrado!");
+                lblAvisoEndereco.setVisible(true);
+                return;
+            }
+            
+            txtBairro.setText( enderecoDto.getBairro() );
+            txtComplemento.setText( enderecoDto.getComplemento() );
+            txtLocalidade.setText( enderecoDto.getLocalidade() );
+            txtRua.setText( enderecoDto.getRua() );
+            txtUf.setText( enderecoDto.getUf() );
+            
+        }
+        
 
     }//GEN-LAST:event_btnProcurarCepActionPerformed
+
+    private void txtCepFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCepFocusGained
+
+        lblAvisoEndereco.setVisible(false);
+
+    }//GEN-LAST:event_txtCepFocusGained
 
     /**
      * @param args the command line arguments
@@ -472,6 +521,7 @@ public class frmCriarPaciente extends frmGenerico {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblAvisoEndereco;
     private javax.swing.JPanel pnlEndereco;
     private javax.swing.JPanel pnlInformacoesGerais;
     private javax.swing.JPanel pnlTitulo;
