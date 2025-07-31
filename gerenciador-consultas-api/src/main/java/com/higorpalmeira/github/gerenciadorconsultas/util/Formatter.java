@@ -26,5 +26,20 @@ public class Formatter {
 		return cpfDigitos.replaceAll(regex, replacement);
 		
 	}
+	
+	public static String ofCep(String cep) {
+		
+		if (cep == null || cep.isBlank()) return cep;
+		
+		String cepDigitos = cep.replaceAll("[^\\d]", "");
+		
+		if (cepDigitos.length() != 8) return cep;
+		
+		String regex = "^(\\d{2})(\\d{3})(\\d{3})$";
+		String replacement = "$1.$2-$3";
+		
+		return cepDigitos.replaceAll(regex, replacement);
+		
+	}
 
 }
