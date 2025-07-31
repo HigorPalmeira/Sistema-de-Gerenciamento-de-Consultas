@@ -25,6 +25,7 @@ public abstract class EnderecoMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
+	@Mapping(source = "cep", target = "cep", qualifiedByName = "mapCepFormatadoToCepLimpo")
 	public abstract Endereco criarEnderecoDtoParaEndereco(CriarEnderecoDto criarEnderecoDto);
 	
 	/*
@@ -52,6 +53,13 @@ public abstract class EnderecoMapper {
 	public String mapCepLimpoToCepFormatado(String cep) {
 		
 		return Formatter.ofCep(cep);
+		
+	}
+	
+	@Named("mapCepFormatadoToCepLimpo")
+	public String mapCepFormatadoToCepLimpo(String cep) {
+		
+		return Formatter.clearCpfCepCrmTelefone(cep);
 		
 	}
 }
