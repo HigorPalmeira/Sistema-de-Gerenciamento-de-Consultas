@@ -16,6 +16,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarM
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Formatter;
 
 @Mapper(componentModel = "spring", imports = {TipoStatusConta.class})
 public abstract class MedicoMapper {
@@ -32,6 +33,7 @@ public abstract class MedicoMapper {
 	@Mapping(target = "consultas", ignore = true)
 	@Mapping(target = "especialidade", ignore = true)
 	@Mapping(target = "status", expression = "java(TipoStatusConta.ATIVO)")
+	@Mapping(source = "crm", target = "crm", qualifiedByName = "mapCrmLimpoToCrmFormatado")
 	public abstract Medico criarMedicoDtoParaMedico(CriarMedicoDto criarMedicoDto);
 
 	/*
@@ -41,6 +43,7 @@ public abstract class MedicoMapper {
 	 * @return SaidaSimplesMedicoDto DTO de saída simples criado.
 	 * */
 	@Mapping(source = "consultas", target = "consultas", qualifiedByName = "mapConsultasToCount")
+	@Mapping(source = "crm", target = "crm", qualifiedByName = "mapCrmLimpoToCrmFormatado")
 	@Mapping(target = "especialidade", ignore = true)
 	public abstract SaidaSimplesMedicoDto medicoParaSaidaSimplesMedicoDto(Medico medico);
 	
@@ -52,6 +55,7 @@ public abstract class MedicoMapper {
 	 * */
 	@Mapping(target = "consultas", ignore = true)
 	@Mapping(target = "especialidade", ignore = true)
+	@Mapping(source = "crm", target = "crm", qualifiedByName = "mapCrmLimpoToCrmFormatado")
 	public abstract SaidaDetalhadaMedicoDto medicoParaSaidaDetalhadaMedicoDto(Medico medico);
 	
 	/**
@@ -75,6 +79,13 @@ public abstract class MedicoMapper {
 	public int mapConsultasToCount(List<Consulta> consultas) {
 		
 		return consultas != null ? consultas.size() : 0;
+		
+	}
+	
+	@Named("mapCrmLimpoToCrmFormatado")
+	public String mapCrmLimpoToCrmFormatado(String crm) {
+		
+		return Formatter.ofCrm(crm);
 		
 	}
 }
