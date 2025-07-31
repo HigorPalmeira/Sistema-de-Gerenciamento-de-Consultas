@@ -88,6 +88,21 @@ public class PacienteService {
         return false;
     }
     
+    public SaidaSimplesPacienteDto buscarSaidaSimplesPacienteDto(String idPaciente) {
+        
+        if (idPaciente == null) {
+            return null;
+        }
+        
+        SaidaSimplesPacienteDto pacienteDto = new SaidaSimplesPacienteDto();
+        
+        HttpResponse<String> response = client.buscarSaidaSimplesPacienteDtoPorId(UUID.fromString(idPaciente));
+        
+        
+        return pacienteDto;
+        
+    }
+    
     public List<SaidaSimplesPacienteDto> listarSaidasSimplesPacienteDto() {
         
         List<SaidaSimplesPacienteDto> listaPacientes = new ArrayList<>();
