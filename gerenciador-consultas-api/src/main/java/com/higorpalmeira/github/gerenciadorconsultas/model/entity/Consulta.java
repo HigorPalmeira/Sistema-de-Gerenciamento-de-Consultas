@@ -30,7 +30,7 @@ public class Consulta {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	
-	@Column(name = "data_hora")
+	@Column(name = "data_hora", nullable = false, unique = true)
 	private LocalDateTime dataHora;
 	
 	@Enumerated(EnumType.STRING)
@@ -40,7 +40,7 @@ public class Consulta {
 	@Column(name = "observacoes")
 	private String observacoes;
 	
-	@Column(name = "valor")
+	@Column(name = "valor", precision = 10, scale = 2)
 	private float valor;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
