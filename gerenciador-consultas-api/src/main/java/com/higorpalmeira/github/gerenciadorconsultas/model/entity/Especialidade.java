@@ -27,13 +27,14 @@ public class Especialidade {
 	@GeneratedValue (strategy = GenerationType.UUID)
 	private UUID id;
 	
-	@Column (name = "descricao")
+	@Column (name = "descricao", nullable = false, unique = true)
 	private String descricao;
 	
 	@OneToMany(mappedBy = "especialidade", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private List<Medico> medicos = new ArrayList<>();
 	
 	@CreationTimestamp
+	@Column(updatable = false)
 	private Instant creationTimestamp;
 	
 	@UpdateTimestamp
