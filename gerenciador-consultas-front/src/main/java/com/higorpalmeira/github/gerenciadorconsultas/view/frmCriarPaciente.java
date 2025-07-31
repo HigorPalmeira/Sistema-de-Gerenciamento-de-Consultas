@@ -49,6 +49,23 @@ public class frmCriarPaciente extends frmGenerico {
         
     }
     
+    private void limparCampos() {
+        
+        txtBairro.setText("");
+        txtCep.setText("");
+        txtComplemento.setText("");
+        txtCpf.setText("");
+        txtDataNascimento.setText("");
+        txtEmail.setText("");
+        txtLocalidade.setText("");
+        txtNome.setText("");
+        txtRua.setText("");
+        txtSobrenome.setText("");
+        txtTelefone.setText("");
+        txtUf.setText("");
+        
+    }
+    
     private void preencherListaGeneros() {
         
         for (TipoGenero genero : TipoGenero.values()) {
@@ -574,6 +591,7 @@ public class frmCriarPaciente extends frmGenerico {
             if (this.pacienteService.criarPaciente(pacienteDto)) {
                 
                 JOptionPane.showMessageDialog(this, "Paciente criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                this.limparCampos();
                 
             } else {
                 JOptionPane.showMessageDialog(this, "O paciente não pode ser criado!", "Falha ao criar", JOptionPane.ERROR_MESSAGE);
