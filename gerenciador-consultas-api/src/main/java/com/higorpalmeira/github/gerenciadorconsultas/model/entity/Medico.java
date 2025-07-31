@@ -33,23 +33,23 @@ public class Medico {
 	@GeneratedValue (strategy = GenerationType.UUID)
 	private UUID id;
 	
-	@Column(name = "nome")
+	@Column(name = "nome", nullable = false, length = 128)
 	private String nome;
 	
-	@Column(name = "sobrenome")
+	@Column(name = "sobrenome", nullable = false)
 	private String sobrenome;
 	
-	@Column(name = "crm")
+	@Column(name = "crm", nullable = false, unique = true, length = 13)
 	private String crm;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
 	private TipoStatusConta status;
 	
-	@Column(name = "telefone")
+	@Column(name = "telefone", nullable = false, length = 11)
 	private String telefone;
 	
-	@Column(name = "email")
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
 	@ManyToOne (fetch = FetchType.LAZY)
@@ -60,6 +60,7 @@ public class Medico {
 	private List<Consulta> consultas = new ArrayList<>();
 	
 	@CreationTimestamp
+	@Column(updatable = false)
 	private Instant creationTimestamp;
 	
 	@UpdateTimestamp
