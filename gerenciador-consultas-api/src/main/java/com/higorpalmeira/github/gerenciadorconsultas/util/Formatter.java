@@ -41,5 +41,20 @@ public class Formatter {
 		return cepDigitos.replaceAll(regex, replacement);
 		
 	}
+	
+	public static String ofTelefone(String telefone) {
+		
+		if (telefone == null || telefone.isBlank()) return telefone;
+		
+		String telefoneDigitos = telefone.replaceAll("[^\\d]", "");
+		
+		if (telefoneDigitos.length() != 11) return telefone;
+		
+		String regex = "^(\\d{2})(\\d{5})(\\d{4})$";
+		String replacement = "($1) $2-$3";
+		
+		return telefoneDigitos.replaceAll(regex, replacement);
+		
+	}
 
 }
