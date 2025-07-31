@@ -61,6 +61,9 @@ public class PacienteService {
 			throw new InvalidDataException("Formato de e-mail inválido.");
 		}
 		
+		criarPacienteDto.setCpf( Formatter.clearCpfCepCrmTelefone(criarPacienteDto.getCpf()) );
+		criarPacienteDto.setTelefone( Formatter.clearCpfCepCrmTelefone(criarPacienteDto.getTelefone()) );
+		
 		if (pacienteRepository.existsByCpf(criarPacienteDto.getCpf())) {
 			throw new DataConflictException("CPF já registrado no sistema.");
 		}
@@ -70,8 +73,6 @@ public class PacienteService {
 		}
 
 		Paciente paciente = pacienteMapper.criarPacienteDtoParePaciente(criarPacienteDto);
-		paciente.setCpf( Formatter.clearCpfCepCrmTelefone(paciente.getCpf()) );
-		paciente.setTelefone( Formatter.clearCpfCepCrmTelefone(paciente.getTelefone()) );
 		
 		Endereco endereco = enderecoMapper
 				.criarEnderecoDtoParaEndereco(criarPacienteDto.getEndereco());
