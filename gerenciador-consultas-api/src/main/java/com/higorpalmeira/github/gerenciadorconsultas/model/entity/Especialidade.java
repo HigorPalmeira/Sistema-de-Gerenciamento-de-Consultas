@@ -34,7 +34,6 @@ public class Especialidade {
 	private List<Medico> medicos = new ArrayList<>();
 	
 	@CreationTimestamp
-	@Column(updatable = false)
 	private Instant creationTimestamp;
 	
 	@UpdateTimestamp
