@@ -8,12 +8,14 @@ import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.external.ExtEnderecoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EnderecoService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,11 +27,19 @@ public class frmEditarPaciente extends frmGenerico {
     private final PacienteService pacienteService;
     
     private final EnderecoService enderecoService;
+    
+    private SaidaSimplesPacienteDto pacieteAtualizar;
 
     /**
      * Creates new form frmCriarPaciente
      */
-    public frmEditarPaciente(PacienteService pacienteService) {
+    public frmEditarPaciente(UUID idPaciente, PacienteService pacienteService) {
+        
+        if (idPaciente == null) {
+            JOptionPane.showMessageDialog(null, "O paciente não pode ser editado!", "Paciente não compatível", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }
+        
         initComponents();
         
         settings();
@@ -37,8 +47,11 @@ public class frmEditarPaciente extends frmGenerico {
         this.pacienteService = pacienteService;
         this.enderecoService = new EnderecoService(new ExtEnderecoClient());
         
+//        this.pacieteAtualizar = this.pacienteService
+        
         this.preencherListaGeneros();
         lblAvisoEndereco.setVisible(false);
+        btnProcurarCep.setVisible(false);
         
     }
     
@@ -173,7 +186,7 @@ public class frmEditarPaciente extends frmGenerico {
         btnSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setName("criar paciente"); // NOI18N
+        setName("editar paciente"); // NOI18N
 
         pnlTitulo.setBackground(new java.awt.Color(0, 204, 51));
         pnlTitulo.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -631,7 +644,7 @@ public class frmEditarPaciente extends frmGenerico {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmEditarPaciente(new PacienteService(new PacienteClient())).setVisible(true);
+                new frmEditarPaciente(null, new PacienteService(new PacienteClient())).setVisible(true);
             }
         });
     }
