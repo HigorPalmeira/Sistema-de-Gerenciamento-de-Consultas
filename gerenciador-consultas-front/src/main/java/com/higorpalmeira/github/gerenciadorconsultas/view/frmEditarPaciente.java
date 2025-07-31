@@ -47,7 +47,7 @@ public class frmEditarPaciente extends frmGenerico {
         this.pacienteService = pacienteService;
         this.enderecoService = new EnderecoService(new ExtEnderecoClient());
         
-//        this.pacieteAtualizar = this.pacienteService
+        this.pacieteAtualizar = this.pacienteService.buscarSaidaSimplesPacienteDto(idPaciente);
         
         this.preencherListaGeneros();
         lblAvisoEndereco.setVisible(false);
