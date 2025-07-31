@@ -56,5 +56,20 @@ public class Formatter {
 		return telefoneDigitos.replaceAll(regex, replacement);
 		
 	}
+	
+	public static String ofCrm(String crm) {
+		
+		if (crm == null || crm.isBlank()) return crm;
+		
+		String crmCaracteres = crm.replaceAll("[^A-Z0-9]", "");
+		
+		if (crmCaracteres.length() != 11) return crm;
+		
+		String regex = "^([A-Z]{3})([A-Z]{2})(\\d{6})$";
+    	String replacement = "$1/$2 $3";
+    	
+    	return crmCaracteres.replaceAll(regex, replacement);
+		
+	}
 
 }
