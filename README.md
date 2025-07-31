@@ -3,7 +3,34 @@ Sistema para gerenciar consultas.
 
 ## Menu
 
+* [Sobre](#sobre)
+
+* [Entidades](#entidades)
+
 * [Tabelas do Banco de Dados](#tabelas-do-banco-de-dados)
+
+## Sobre
+
+O projeto foi desenvolvido como composição de nota para a matéria de `Programação Orientada a Objetos - POO`. Ele possui os seguintes requisitos avaliativos: 
+
+* O projeto deve possuir pelo menos duas entidades/tabelas, no banco de dados, com um relacionamento entre elas.
+
+* Deverá ser entregue primeiramente o back-end, como parte inicial do projeto.
+
+* Por último, deverá ser entregue o front-end, como projeto finalizado.
+
+O `Sistema de Gerenciamento de Consultas - SGC` é pensado como um sistema para gerenciar consultas. Consequentemente ele vai gerir dados de `pacientes` e `médicos`. Ele está sendo desenvolvido como um sistema de gerenciamento básico.
+
+O `SGC` foi desenvolvido usando `Java` e o `MySQL` no `Docker`. O Back-end foi feito com o `Spring Boot` e o Front-end com o `Java Swing`.
+
+## Entidades
+
+* Foram criadas 5 entidades para o projeto, sendo elas:
+  * Consulta
+  * Médico
+  * Paciente
+  * Especialidade
+  * Endereço
 
 ## Tabelas do Banco de Dados
 
