@@ -26,6 +26,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.EnderecoMappe
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.PacienteMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EnderecoRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PacienteRepository;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Formatter;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
 @Service
@@ -69,9 +70,12 @@ public class PacienteService {
 		}
 
 		Paciente paciente = pacienteMapper.criarPacienteDtoParePaciente(criarPacienteDto);
+		paciente.setCpf( Formatter.clearCpfCepTelefone(paciente.getCpf()) );
+		paciente.setTelefone( Formatter.clearCpfCepTelefone(paciente.getTelefone()) );
 		
 		Endereco endereco = enderecoMapper
 				.criarEnderecoDtoParaEndereco(criarPacienteDto.getEndereco());
+		endereco.setCep( Formatter.clearCpfCepTelefone(endereco.getCep()) );
 		
 		paciente.setEndereco(endereco);
 
@@ -332,7 +336,8 @@ public class PacienteService {
 				}
 			});
 			
-			pacienteEntidade.setCpf(atualizarPacienteDto.getCpf());
+			pacienteEntidade
+				.setCpf( Formatter.clearCpfCepTelefone( atualizarPacienteDto.getCpf() ) );
 		}
 		
 		if (atualizarPacienteDto.getEmail() != null) {
@@ -346,6 +351,7 @@ public class PacienteService {
 		}
 		
 		AtualizarEnderecoDto enderecoDto = atualizarPacienteDto.getEndereco();
+		enderecoDto.setCep( Formatter.clearCpfCepTelefone( enderecoDto.getCep() ) );
 		
 		Endereco enderecoEntidade = enderecoRepository
 			.findByCep(enderecoDto.getCep())
@@ -353,6 +359,7 @@ public class PacienteService {
 		
 		enderecoMapper.atualizarEnderecoDeAtualizarEnderecoDto(enderecoDto, enderecoEntidade);
 		
+		atualizarPacienteDto.setTelefone( Formatter.clearCpfCepTelefone( atualizarPacienteDto.getTelefone() ) );
 		pacienteMapper.atualizarPacienteDeAtualizarPacienteDto(atualizarPacienteDto, pacienteEntidade);
 
 	}
