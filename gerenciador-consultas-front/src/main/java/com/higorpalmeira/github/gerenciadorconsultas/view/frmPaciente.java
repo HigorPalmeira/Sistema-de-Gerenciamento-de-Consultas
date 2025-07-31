@@ -8,6 +8,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 import java.util.List;
+import java.util.UUID;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -345,6 +346,9 @@ public class frmPaciente extends frmGenerico {
         } else {
             
             String id = String.valueOf( tbPaciente.getValueAt(idx, 0) );
+            
+            frmEditarPaciente frmEditarPaciente = new frmEditarPaciente(UUID.fromString(id), this.pacienteService);
+            frmEditarPaciente.setVisible(true);
             
         }
 
