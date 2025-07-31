@@ -581,7 +581,6 @@ public class frmCriarPaciente extends frmGenerico {
                     txtSobrenome.getText().trim(),
                     txtCpf.getText().trim(),
                     LocalDate.parse(txtDataNascimento.getText().trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    //txtDataNascimento.getText().trim().replaceAll("/", "-"),
                     genero,
                     txtTelefone.getText().trim(),
                     txtEmail.getText().trim(),
