@@ -76,7 +76,6 @@ public class PacienteService {
 		
 		Endereco endereco = enderecoMapper
 				.criarEnderecoDtoParaEndereco(criarPacienteDto.getEndereco());
-		endereco.setCep( Formatter.clearCpfCepCrmTelefone(endereco.getCep()) );
 		
 		paciente.setEndereco(endereco);
 
