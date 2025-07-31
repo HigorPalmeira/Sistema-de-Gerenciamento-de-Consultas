@@ -58,7 +58,7 @@ public class Paciente {
 	@Column(name = "telefone", nullable = false, length = 11)
 	private String telefone;
 	
-	@Column(name = "email", nullable = false, length = 11, unique = true)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
 	@OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
