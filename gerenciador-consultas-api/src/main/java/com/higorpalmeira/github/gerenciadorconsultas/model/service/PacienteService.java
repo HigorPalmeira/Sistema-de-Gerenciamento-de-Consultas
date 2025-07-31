@@ -70,12 +70,12 @@ public class PacienteService {
 		}
 
 		Paciente paciente = pacienteMapper.criarPacienteDtoParePaciente(criarPacienteDto);
-		paciente.setCpf( Formatter.clearCpfCepTelefone(paciente.getCpf()) );
-		paciente.setTelefone( Formatter.clearCpfCepTelefone(paciente.getTelefone()) );
+		paciente.setCpf( Formatter.clearCpfCepCrmTelefone(paciente.getCpf()) );
+		paciente.setTelefone( Formatter.clearCpfCepCrmTelefone(paciente.getTelefone()) );
 		
 		Endereco endereco = enderecoMapper
 				.criarEnderecoDtoParaEndereco(criarPacienteDto.getEndereco());
-		endereco.setCep( Formatter.clearCpfCepTelefone(endereco.getCep()) );
+		endereco.setCep( Formatter.clearCpfCepCrmTelefone(endereco.getCep()) );
 		
 		paciente.setEndereco(endereco);
 
@@ -340,7 +340,7 @@ public class PacienteService {
 			});
 			
 			pacienteEntidade
-				.setCpf( Formatter.clearCpfCepTelefone( atualizarPacienteDto.getCpf() ) );
+				.setCpf( Formatter.clearCpfCepCrmTelefone( atualizarPacienteDto.getCpf() ) );
 		}
 		
 		if (atualizarPacienteDto.getEmail() != null) {
@@ -354,7 +354,7 @@ public class PacienteService {
 		}
 		
 		AtualizarEnderecoDto enderecoDto = atualizarPacienteDto.getEndereco();
-		enderecoDto.setCep( Formatter.clearCpfCepTelefone( enderecoDto.getCep() ) );
+		enderecoDto.setCep( Formatter.clearCpfCepCrmTelefone( enderecoDto.getCep() ) );
 		
 		Endereco enderecoEntidade = enderecoRepository
 			.findByCep(enderecoDto.getCep())
@@ -362,7 +362,7 @@ public class PacienteService {
 		
 		enderecoMapper.atualizarEnderecoDeAtualizarEnderecoDto(enderecoDto, enderecoEntidade);
 		
-		atualizarPacienteDto.setTelefone( Formatter.clearCpfCepTelefone( atualizarPacienteDto.getTelefone() ) );
+		atualizarPacienteDto.setTelefone( Formatter.clearCpfCepCrmTelefone( atualizarPacienteDto.getTelefone() ) );
 		pacienteMapper.atualizarPacienteDeAtualizarPacienteDto(atualizarPacienteDto, pacienteEntidade);
 
 	}
