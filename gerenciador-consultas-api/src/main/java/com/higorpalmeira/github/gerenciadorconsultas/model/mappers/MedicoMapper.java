@@ -33,7 +33,6 @@ public abstract class MedicoMapper {
 	@Mapping(target = "consultas", ignore = true)
 	@Mapping(target = "especialidade", ignore = true)
 	@Mapping(target = "status", expression = "java(TipoStatusConta.ATIVO)")
-	@Mapping(source = "crm", target = "crm", qualifiedByName = "mapCrmLimpoToCrmFormatado")
 	public abstract Medico criarMedicoDtoParaMedico(CriarMedicoDto criarMedicoDto);
 
 	/*
@@ -44,6 +43,7 @@ public abstract class MedicoMapper {
 	 * */
 	@Mapping(source = "consultas", target = "consultas", qualifiedByName = "mapConsultasToCount")
 	@Mapping(source = "crm", target = "crm", qualifiedByName = "mapCrmLimpoToCrmFormatado")
+	@Mapping(source = "telefone", target = "telefone", qualifiedByName = "mapTelefoneLimpoToTelefoneFormatado")
 	@Mapping(target = "especialidade", ignore = true)
 	public abstract SaidaSimplesMedicoDto medicoParaSaidaSimplesMedicoDto(Medico medico);
 	
@@ -56,6 +56,7 @@ public abstract class MedicoMapper {
 	@Mapping(target = "consultas", ignore = true)
 	@Mapping(target = "especialidade", ignore = true)
 	@Mapping(source = "crm", target = "crm", qualifiedByName = "mapCrmLimpoToCrmFormatado")
+	@Mapping(source = "telefone", target = "telefone", qualifiedByName = "mapTelefoneLimpoToTelefoneFormatado")
 	public abstract SaidaDetalhadaMedicoDto medicoParaSaidaDetalhadaMedicoDto(Medico medico);
 	
 	/**
@@ -86,6 +87,14 @@ public abstract class MedicoMapper {
 	public String mapCrmLimpoToCrmFormatado(String crm) {
 		
 		return Formatter.ofCrm(crm);
+		
+	}
+	
+	@Named("mapTelefoneLimpoToTelefoneFormatado")
+	public String mapTelefoneLimpoToTelefoneFormatado(String telefone) {
+		
+		return Formatter.ofTelefone(telefone);
+		
 		
 	}
 }
