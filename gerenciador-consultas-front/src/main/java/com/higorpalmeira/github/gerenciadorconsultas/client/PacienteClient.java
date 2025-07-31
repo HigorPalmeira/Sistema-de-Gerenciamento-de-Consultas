@@ -13,6 +13,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.UUID;
 
 /**
  *
@@ -46,10 +47,10 @@ public class PacienteClient {
         
     }
     
-    public HttpResponse<String> buscarSaidaSimplesPacienteDtoPorId(String idPaciente) throws IOException, InterruptedException {
+    public HttpResponse<String> buscarSaidaSimplesPacienteDtoPorId(UUID idPaciente) throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(URL_API + "/" + idPaciente))
+                .uri(URI.create(URL_API + "/" + idPaciente.toString()))
                 .GET()
                 .build();
         
