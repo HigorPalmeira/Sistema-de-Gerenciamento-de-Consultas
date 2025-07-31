@@ -88,7 +88,7 @@ public class PacienteService {
         return false;
     }
     
-    public SaidaSimplesPacienteDto buscarSaidaSimplesPacienteDto(String idPaciente) {
+    public SaidaSimplesPacienteDto buscarSaidaSimplesPacienteDto(UUID idPaciente) {
         
         if (idPaciente == null) {
             return null;
@@ -98,7 +98,7 @@ public class PacienteService {
         
         try {
             
-            HttpResponse<String> response = client.buscarSaidaSimplesPacienteDtoPorId(UUID.fromString(idPaciente));
+            HttpResponse<String> response = client.buscarSaidaSimplesPacienteDtoPorId(idPaciente);
             
             if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
                 
