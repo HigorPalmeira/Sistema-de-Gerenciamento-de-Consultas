@@ -22,25 +22,26 @@ public class Endereco {
 	@GeneratedValue (strategy = GenerationType.UUID)
 	private UUID id;
 	
-	@Column(name = "cep")
+	@Column(name = "cep", nullable = false, length = 8)
 	private String cep;
 	
-	@Column(name = "rua")
+	@Column(name = "rua", nullable = false)
 	private String rua;
 	
 	@Column(name = "complemento")
 	private String complemento;
 	
-	@Column(name = "bairro")
+	@Column(name = "bairro", nullable = false)
 	private String bairro;
 	
-	@Column(name = "localidade")
+	@Column(name = "localidade", nullable = false)
 	private String localidade;
 	
-	@Column(name = "uf")
+	@Column(name = "uf", nullable = false, length = 2)
 	private String uf;
 	
 	@CreationTimestamp
+	@Column(updatable = false)
 	private Instant creationTimestamp;
 	
 	@UpdateTimestamp
