@@ -1,6 +1,10 @@
 # Sistema de Gerenciamento de Consultas
 Sistema para gerenciar consultas.
 
+## Menu
+
+* [Tabelas do Banco de Dados](#tabelas-do-banco-de-dados)
+
 ## Tabelas do Banco de Dados
 
 * Tabela `sgc_endereco`
