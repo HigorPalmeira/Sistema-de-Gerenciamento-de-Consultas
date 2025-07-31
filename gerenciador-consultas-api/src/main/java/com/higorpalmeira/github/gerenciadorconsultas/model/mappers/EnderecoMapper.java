@@ -46,7 +46,6 @@ public abstract class EnderecoMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
-	@Mapping(source = "cep", target = "cep", qualifiedByName = "mapCepLimpoToCepFormatado")
 	public abstract void atualizarEnderecoDeAtualizarEnderecoDto(AtualizarEnderecoDto atualizarEnderecoDto, @MappingTarget Endereco endereco);
 
 	@Named("mapCepLimpoToCepFormatado")
