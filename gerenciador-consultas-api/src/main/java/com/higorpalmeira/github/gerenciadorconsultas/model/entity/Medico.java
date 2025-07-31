@@ -39,7 +39,7 @@ public class Medico {
 	@Column(name = "sobrenome", nullable = false)
 	private String sobrenome;
 	
-	@Column(name = "crm", nullable = false, unique = true, length = 13)
+	@Column(name = "crm", nullable = false, unique = true, length = 11)
 	private String crm;
 	
 	@Enumerated(EnumType.STRING)
