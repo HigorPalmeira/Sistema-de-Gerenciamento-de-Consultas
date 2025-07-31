@@ -96,8 +96,25 @@ public class PacienteService {
         
         SaidaSimplesPacienteDto pacienteDto = new SaidaSimplesPacienteDto();
         
-        HttpResponse<String> response = client.buscarSaidaSimplesPacienteDtoPorId(UUID.fromString(idPaciente));
-        
+        try {
+            
+            HttpResponse<String> response = client.buscarSaidaSimplesPacienteDtoPorId(UUID.fromString(idPaciente));
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                pacienteDto = mapper.readValue(response.body(), SaidaSimplesPacienteDto.class);
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição do Paciente! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar buscar o paciente!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
         
         return pacienteDto;
         
