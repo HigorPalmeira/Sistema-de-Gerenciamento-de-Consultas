@@ -16,6 +16,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarP
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Formatter;
 
 @Mapper(componentModel = "spring", imports = {TipoStatusConta.class})
 public abstract class PacienteMapper {
@@ -41,6 +42,8 @@ public abstract class PacienteMapper {
 	 * @return SaidaSimplePacienteDto DTO de saída simples criado.
 	 * */
 	@Mapping(source = "consultas", target = "consultas", qualifiedByName = "mapConsultasToCount")
+	@Mapping(source = "cpf", target = "cpf", qualifiedByName = "mapCpfLimpoToCpfFormatado")
+	@Mapping(source = "telefone", target = "telefone", qualifiedByName = "mapTelefoneLimpoToTelefoneFormatado")
 	public abstract SaidaSimplesPacienteDto pacienteParaSaidaSimplesPacienteDto(Paciente paciente);
 	
 	/*
@@ -51,6 +54,8 @@ public abstract class PacienteMapper {
 	 * */
 	@Mapping(target = "endereco", ignore = true)
 	@Mapping(target = "consultas", ignore = true)
+	@Mapping(source = "cpf", target = "cpf", qualifiedByName = "mapCpfLimpoToCpfFormatado")
+	@Mapping(source = "telefone", target = "telefone", qualifiedByName = "mapTelefoneLimpoToTelefoneFormatado")
 	public abstract SaidaDetalhadaPacienteDto pacienteParaSaidaDetalhadaPacienteDto(Paciente paciente);
 
 	/**
@@ -73,6 +78,20 @@ public abstract class PacienteMapper {
 	public int mapConsultasToCount(List<Consulta> consultas) {
 		
 		return consultas != null ? consultas.size() : 0;
+		
+	}
+	
+	@Named("mapCpfLimpoToCpfFormatado")
+	public String mapCpfLimpoToCpfFormatado(String cpf) {
+		
+		return Formatter.ofCpf(cpf);
+		
+	}
+	
+	@Named("mapTelefoneLimpoToTelefoneFormatado")
+	public String mapTelefoneLimpoToTelefoneFormatado(String telefone) {
+		
+		return Formatter.ofTelefone(telefone);
 		
 	}
 	
