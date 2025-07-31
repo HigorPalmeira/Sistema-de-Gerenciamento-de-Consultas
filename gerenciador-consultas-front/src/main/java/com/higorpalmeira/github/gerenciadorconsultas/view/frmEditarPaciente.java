@@ -10,11 +10,14 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EnderecoService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 
@@ -28,7 +31,7 @@ public class frmEditarPaciente extends frmGenerico {
     
     private final EnderecoService enderecoService;
     
-    private SaidaSimplesPacienteDto pacieteAtualizar;
+    private SaidaSimplesPacienteDto pacienteAtualizar;
 
     /**
      * Creates new form frmCriarPaciente
@@ -47,9 +50,10 @@ public class frmEditarPaciente extends frmGenerico {
         this.pacienteService = pacienteService;
         this.enderecoService = new EnderecoService(new ExtEnderecoClient());
         
-        this.pacieteAtualizar = this.pacienteService.buscarSaidaSimplesPacienteDto(idPaciente);
+        this.pacienteAtualizar = this.pacienteService.buscarSaidaSimplesPacienteDto(idPaciente);
         
         this.preencherListaGeneros();
+        this.preencherListaStatus();
         lblAvisoEndereco.setVisible(false);
         btnProcurarCep.setVisible(false);
         
@@ -62,27 +66,48 @@ public class frmEditarPaciente extends frmGenerico {
         
     }
     
-    private void limparCampos() {
+    private void preencherCampos() {
         
-        txtBairro.setText("");
-        txtCep.setText("");
-        txtComplemento.setText("");
-        txtCpf.setText("");
-        txtDataNascimento.setText("");
-        txtEmail.setText("");
-        txtLocalidade.setText("");
-        txtNome.setText("");
-        txtRua.setText("");
-        txtSobrenome.setText("");
-        txtTelefone.setText("");
-        txtUf.setText("");
+        txtNome.setText( pacienteAtualizar.getNome() );
+        txtSobrenome.setText( pacienteAtualizar.getSobrenome() );
+        txtCpf.setText( pacienteAtualizar.getCpf() );
+        txtDataNascimento.setText( pacienteAtualizar.getDataNascimento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) );
+        txtEmail.setText( pacienteAtualizar.getEmail() );
+        txtTelefone.setText( pacienteAtualizar.getTelefone() );
         
+        txtCep.setText( pacienteAtualizar.getEndereco().getCep() );
+        txtBairro.setText( pacienteAtualizar.getEndereco().getBairro() );
+        txtComplemento.setText( pacienteAtualizar.getEndereco().getComplemento() );
+        txtLocalidade.setText( pacienteAtualizar.getEndereco().getLocalidade() );
+        txtRua.setText( pacienteAtualizar.getEndereco().getRua() );
+        txtUf.setText( pacienteAtualizar.getEndereco().getUf() );
+        
+        int idx = 0;
+        for (TipoGenero genero : TipoGenero.values()) {
+            if (genero.getTipo().equalsIgnoreCase(pacienteAtualizar.getGenero().getTipo())) {
+                cbGenero.setSelectedIndex(idx);
+                break;
+            }
+            idx++;
+        }
+        
+        //
+        pacienteAtualizar.getS
     }
     
     private void preencherListaGeneros() {
         
         for (TipoGenero genero : TipoGenero.values()) {
             cbGenero.addItem( genero.getTipo() );
+        }
+        
+    }
+    
+    private void preencherListaStatus() {
+        
+        for (TipoStatusConta status : TipoStatusConta.values()) {
+            //cbStatus.addItem(status.getTipo());
+            
         }
         
     }
@@ -600,10 +625,10 @@ public class frmEditarPaciente extends frmGenerico {
                     enderecoDto
             );
             
-            if (this.pacienteService.criarPaciente(pacienteDto)) {
+            if (/*this.pacienteService.criarPaciente(pacienteDto)*/false) {
                 
                 JOptionPane.showMessageDialog(this, "Paciente criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                this.limparCampos();
+                this.dispose();
                 
             } else {
                 JOptionPane.showMessageDialog(this, "O paciente não pode ser criado!", "Falha ao criar", JOptionPane.ERROR_MESSAGE);
