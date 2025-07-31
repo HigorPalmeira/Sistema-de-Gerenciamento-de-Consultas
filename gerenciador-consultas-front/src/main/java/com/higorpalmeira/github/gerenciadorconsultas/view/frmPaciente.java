@@ -8,6 +8,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -245,6 +246,11 @@ public class frmPaciente extends frmGenerico {
         btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnEditar.setMnemonic('e');
         btnEditar.setText("EDITAR");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnDeletar.setMnemonic('d');
@@ -327,6 +333,22 @@ public class frmPaciente extends frmGenerico {
         frmCriarPaciente.setVisible(true);
 
     }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+
+        int idx = tbPaciente.getSelectedRow();
+        
+        if (idx < 0) {
+            
+            JOptionPane.showMessageDialog(this, "Selecione um paciente para poder editá-lo!", "Paciente não selecionado", JOptionPane.ERROR_MESSAGE);
+        
+        } else {
+            
+            String id = String.valueOf( tbPaciente.getValueAt(idx, 0) );
+            
+        }
+
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
