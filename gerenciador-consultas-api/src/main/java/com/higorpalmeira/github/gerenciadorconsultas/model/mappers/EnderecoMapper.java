@@ -4,12 +4,14 @@ import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Endereco;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Formatter;
 
 @Mapper(componentModel = "spring")
 public abstract class EnderecoMapper {
@@ -23,6 +25,7 @@ public abstract class EnderecoMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
+	@Mapping(source = "cep", target = "cep", qualifiedByName = "mapCepLimpoToCepFormatado")
 	public abstract Endereco criarEnderecoDtoParaEndereco(CriarEnderecoDto criarEnderecoDto);
 	
 	/*
@@ -31,6 +34,7 @@ public abstract class EnderecoMapper {
 	 * @param endereco Entidade a ser transformada.
 	 * @return EnderecoParaSaidaEnderecoDto DTO de saída criado.
 	 * */
+	@Mapping(source = "cep", target = "cep", qualifiedByName = "mapCepLimpoToCepFormatado")
 	public abstract SaidaEnderecoDto EnderecoParaSaidaEnderecoDto(Endereco endereco);
 	
 	/*
@@ -43,6 +47,13 @@ public abstract class EnderecoMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationTimestamp", ignore = true)
 	@Mapping(target = "updateTimestamp", ignore = true)
+	@Mapping(source = "cep", target = "cep", qualifiedByName = "mapCepLimpoToCepFormatado")
 	public abstract void atualizarEnderecoDeAtualizarEnderecoDto(AtualizarEnderecoDto atualizarEnderecoDto, @MappingTarget Endereco endereco);
 
+	@Named("mapCepLimpoToCepFormatado")
+	public String mapCepLimpoToCepFormatado(String cep) {
+		
+		return Formatter.ofCep(cep);
+		
+	}
 }

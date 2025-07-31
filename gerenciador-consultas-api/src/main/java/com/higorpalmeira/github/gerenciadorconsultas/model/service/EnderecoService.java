@@ -12,6 +12,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarE
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.EnderecoMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EnderecoRepository;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Formatter;
 
 @Service
 public class EnderecoService {
@@ -29,6 +30,7 @@ public class EnderecoService {
 	public UUID criarEndereco(CriarEnderecoDto criarEnderecoDto) {
 		
 		var endereco = addressMapper.criarEnderecoDtoParaEndereco(criarEnderecoDto);
+		endereco.setCep( Formatter.clearCpfCepCrmTelefone(endereco.getCep()) );
 		
 		var enderecoSalvo = enderecoRepository.save(endereco);
 		
@@ -43,6 +45,8 @@ public class EnderecoService {
 		var enderecoEntidade = enderecoRepository
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado com ID: " + id));
+		
+		enderecoEntidade.setCep( Formatter.ofCep(enderecoEntidade.getCep()) );
 		
 		return addressMapper.EnderecoParaSaidaEnderecoDto(enderecoEntidade);
 		
