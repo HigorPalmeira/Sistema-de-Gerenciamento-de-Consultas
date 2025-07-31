@@ -115,9 +115,12 @@ public class PacienteService {
 				.map(paciente -> {
 					
 					SaidaSimplesPacienteDto dto = pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente);
+					dto.setCpf( Formatter.ofCpf(dto.getCpf()) );
+					dto.setTelefone( Formatter.ofTelefone(dto.getTelefone()) );
 					
 					SaidaEnderecoDto enderecoDto = enderecoMapper
 							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
+					enderecoDto.setCep( Formatter.ofCep(enderecoDto.getCep()) );
 					
 					dto.setEndereco(enderecoDto);
 					
