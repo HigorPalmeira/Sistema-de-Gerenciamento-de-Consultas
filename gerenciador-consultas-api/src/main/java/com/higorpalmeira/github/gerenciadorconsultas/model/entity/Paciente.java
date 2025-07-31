@@ -35,13 +35,13 @@ public class Paciente {
 	@GeneratedValue (strategy = GenerationType.UUID)
 	private UUID id;
 	
-	@Column(name = "nome")
+	@Column(name = "nome", nullable = false, length = 128)
 	private String nome;
 	
-	@Column(name = "sobrenome")
+	@Column(name = "sobrenome", nullable = false)
 	private String sobrenome;
 	
-	@Column(name = "cpf")
+	@Column(name = "cpf", nullable = false, unique = true, length = 11)
 	private String cpf;
 	
 	@Column(name = "data_nascimento")
@@ -55,10 +55,10 @@ public class Paciente {
 	@Column(name = "status")
 	private TipoStatusConta status;
 	
-	@Column(name = "telefone")
+	@Column(name = "telefone", nullable = false, length = 11)
 	private String telefone;
 	
-	@Column(name = "email")
+	@Column(name = "email", nullable = false, length = 11, unique = true)
 	private String email;
 	
 	@OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
