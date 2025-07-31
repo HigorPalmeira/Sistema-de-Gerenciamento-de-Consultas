@@ -52,7 +52,7 @@ public class ConsultaService {
 	public UUID criarConsulta(CriarConsultaDto criarConsultaDto) {
 		
 		// criar validação para o datetime
-		if (Float.isNaN(criarConsultaDto.getValor()) || criarConsultaDto.getValor() < 0.0f) {
+		if (criarConsultaDto.getValor() == null || criarConsultaDto.getValor().doubleValue() < 0.0) {
 			throw new InvalidDataException("Valor inválido.");
 		}
 		
@@ -194,7 +194,7 @@ public class ConsultaService {
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Consulta não encontrada com ID: " + id));
 		
-		if (atualizarConsultaDto.getValor() < 0.0f || Float.isNaN(atualizarConsultaDto.getValor())) {
+		if (atualizarConsultaDto.getValor() == null || atualizarConsultaDto.getValor().doubleValue() < 0.0) {
 			throw new InvalidDataException("Valor inválido.");
 		}
 		

@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.entity;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -41,7 +42,7 @@ public class Consulta {
 	private String observacoes;
 	
 	@Column(name = "valor", precision = 10, scale = 2)
-	private float valor;
+	private BigDecimal valor;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "medico_id")
@@ -61,7 +62,7 @@ public class Consulta {
 		
 	}
 
-	public Consulta(LocalDateTime dataHora, TipoStatusConsulta status, String observacoes, float valor, Medico medico,
+	public Consulta(LocalDateTime dataHora, TipoStatusConsulta status, String observacoes, BigDecimal valor, Medico medico,
 			Paciente paciente, Instant creationTimestamp, Instant updateTimestamp) {
 		this.dataHora = dataHora;
 		this.status = status;
@@ -73,7 +74,7 @@ public class Consulta {
 		this.updateTimestamp = updateTimestamp;
 	}
 
-	public Consulta(UUID id, LocalDateTime dataHora, TipoStatusConsulta status, String observacoes, float valor,
+	public Consulta(UUID id, LocalDateTime dataHora, TipoStatusConsulta status, String observacoes, BigDecimal valor,
 			Medico medico, Paciente paciente, Instant creationTimestamp, Instant updateTimestamp) {
 		this.id = id;
 		this.dataHora = dataHora;
@@ -118,11 +119,11 @@ public class Consulta {
 		this.observacoes = observacoes;
 	}
 
-	public float getValor() {
+	public BigDecimal getValor() {
 		return valor;
 	}
 
-	public void setValor(float valor) {
+	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
 
@@ -177,7 +178,8 @@ public class Consulta {
 				&& Objects.equals(id, other.id) && Objects.equals(medico, other.medico)
 				&& Objects.equals(observacoes, other.observacoes) && Objects.equals(paciente, other.paciente)
 				&& status == other.status && Objects.equals(updateTimestamp, other.updateTimestamp)
-				&& Float.floatToIntBits(valor) == Float.floatToIntBits(other.valor);
+				&& Objects.equals(valor, other.valor);
 	}
 
+	
 }

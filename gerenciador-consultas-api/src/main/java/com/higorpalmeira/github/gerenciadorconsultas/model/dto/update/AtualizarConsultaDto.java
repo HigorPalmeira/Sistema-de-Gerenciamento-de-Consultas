@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto.update;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ public class AtualizarConsultaDto {
 	
 	private String observacoes;
 	
-	private float valor;
+	private BigDecimal valor;
 	
 	private UUID medicoId;
 	
@@ -43,11 +44,11 @@ public class AtualizarConsultaDto {
 		this.observacoes = observacoes;
 	}
 
-	public float getValor() {
+	public BigDecimal getValor() {
 		return valor;
 	}
 
-	public void setValor(float valor) {
+	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
 

@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto.output;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
@@ -12,7 +13,7 @@ public class SaidaSimplesConsultaDto {
 	
 	private String observacoes;
 	
-	private float valor;
+	private BigDecimal valor;
 	
 	private SaidaSimplesMedicoDto medico;
 	
@@ -42,11 +43,11 @@ public class SaidaSimplesConsultaDto {
 		this.observacoes = observacoes;
 	}
 
-	public float getValor() {
+	public BigDecimal getValor() {
 		return valor;
 	}
 
-	public void setValor(float valor) {
+	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
 
