@@ -41,7 +41,6 @@ public class Endereco {
 	private String uf;
 	
 	@CreationTimestamp
-	@Column(updatable = false)
 	private Instant creationTimestamp;
 	
 	@UpdateTimestamp
