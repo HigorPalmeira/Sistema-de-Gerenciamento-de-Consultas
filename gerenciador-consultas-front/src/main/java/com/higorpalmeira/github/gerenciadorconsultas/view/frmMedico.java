@@ -4,6 +4,7 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.view.detalhes.frmDetalhesMedico;
 import com.higorpalmeira.github.gerenciadorconsultas.view.editar.frmEditarMedico;
 import com.higorpalmeira.github.gerenciadorconsultas.view.criar.frmCriarMedico;
 import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
