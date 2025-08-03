@@ -129,6 +129,29 @@ public class PacienteService {
 	}
 	
 	@Transactional(readOnly = true)
+	public SaidaSimplesPacienteDto buscarSaidaSimplesPacientePorEmail(String email) {
+
+		if (!Validator.EmailValidation(email)) {
+			throw new InvalidDataException("E-mail inválido!");
+		}
+		
+		var pacienteEntidade = pacienteRepository
+				.findByEmail(email)
+				.orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com E-mail: " + email));
+		
+		SaidaSimplesPacienteDto pacienteDto = pacienteMapper
+				.pacienteParaSaidaSimplesPacienteDto(pacienteEntidade);
+		
+		SaidaEnderecoDto enderecoDto = enderecoMapper
+				.EnderecoParaSaidaEnderecoDto(pacienteEntidade.getEndereco());
+		
+		pacienteDto.setEndereco(enderecoDto);
+		
+		return pacienteDto;
+		
+	}
+	
+	@Transactional(readOnly = true)
 	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPaciente() {
 		
 		List<Paciente> listaPacientes = pacienteRepository
