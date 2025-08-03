@@ -17,6 +17,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarE
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Endereco;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
@@ -274,7 +275,57 @@ public class PacienteService {
 		
 	}
 	
+	@Transactional(readOnly = true)
+	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacienteGenero(String genero) {
+		
+		TipoGenero eGenero = TipoGenero.fromTipo(genero);
+		
+		List<Paciente> listaPacientes = pacienteRepository
+				.findAllByGenero(eGenero);
+		
+		var listaPacientesDto = listaPacientes.stream()
+				.map(paciente -> {
+					
+					SaidaSimplesPacienteDto dto = pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente);
+					
+					SaidaEnderecoDto enderecoDto = enderecoMapper
+							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
+					
+					dto.setEndereco(enderecoDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaPacientesDto;
+		
+	}
 	
+	@Transactional(readOnly = true)
+	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacienteGeneroNot(String genero) {
+
+		TipoGenero eGenero = TipoGenero.fromTipo(genero);
+		
+		List<Paciente> listaPacientes = pacienteRepository
+				.findAllByGeneroNot(eGenero);
+		
+		var listaPacientesDto = listaPacientes.stream()
+				.map(paciente -> {
+					
+					SaidaSimplesPacienteDto dto = pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente);
+					
+					SaidaEnderecoDto enderecoDto = enderecoMapper
+							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
+					
+					dto.setEndereco(enderecoDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaPacientesDto;
+		
+	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacientePorDataNascimento(LocalDate dataNascimento) {
