@@ -228,34 +228,16 @@ public class PacienteService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacienteAtivos() {
+	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacientePorStatus(String status) {
+		
+		if (status == null || status.isBlank()) {
+			throw new InvalidDataException("Status inválido!");
+		}
+		
+		TipoStatusConta eStatus = TipoStatusConta.fromTipo(status);
 		
 		List<Paciente> listaPacientes = pacienteRepository
-				.findAllByStatus(TipoStatusConta.ATIVO);
-		
-		var listaPacientesDto = listaPacientes.stream()
-				.map(paciente -> {
-					
-					SaidaSimplesPacienteDto dto = pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente);
-					
-					SaidaEnderecoDto enderecoDto = enderecoMapper
-							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
-					
-					dto.setEndereco(enderecoDto);
-					
-					return dto;
-					
-				}).collect(Collectors.toList());
-		
-		return listaPacientesDto;
-		
-	}
-	
-	@Transactional(readOnly = true)
-	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacienteInativos() {
-		
-		List<Paciente> listaPacientes = pacienteRepository
-				.findAllByStatus(TipoStatusConta.INATIVO);
+				.findAllByStatus(eStatus);
 		
 		var listaPacientesDto = listaPacientes.stream()
 				.map(paciente -> {
