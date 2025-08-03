@@ -23,6 +23,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.Especialidade
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.MedicoMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EspecialidadeRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.MedicoRepository;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Formatter;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
 @Service
@@ -132,7 +133,7 @@ public class MedicoService {
 		}
 		
 		var medicoEntidade = medicoRepository
-				.findByCrm(crm)
+				.findByCrm(Formatter.ofCrm(crm))
 				.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com CRM: " + crm));
 		
 		SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
@@ -150,7 +151,7 @@ public class MedicoService {
 	public SaidaSimplesMedicoDto buscarSaidaSimplesMedicoPorTelefone(String telefone) {
 		
 		var medicoEntidade = medicoRepository
-				.findByTelefone(telefone)
+				.findByTelefone(Formatter.ofTelefone(telefone))
 				.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com telefone: " + telefone));
 		
 		SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
