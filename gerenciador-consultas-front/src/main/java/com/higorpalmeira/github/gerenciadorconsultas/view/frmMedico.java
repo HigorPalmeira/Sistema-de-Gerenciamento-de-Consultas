@@ -124,7 +124,7 @@ public class frmMedico extends frmGenerico {
         DefaultTableModel dtm = (DefaultTableModel) tblMedicos.getModel();
         dtm.setNumRows(0);
 
-        if (medicoDto != null) {
+        if (medicoDto != null && medicoDto.getId() != null) {
             Object[] obj = {
                 medicoDto.getId(),
                 medicoDto.getNome(),
@@ -135,6 +135,8 @@ public class frmMedico extends frmGenerico {
             };
 
             dtm.addRow(obj);
+        } else {
+            JOptionPane.showMessageDialog(this, "Não foi encontrado nenhum médico!", "Não encontrado", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }
