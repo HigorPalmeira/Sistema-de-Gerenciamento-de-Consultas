@@ -358,6 +358,76 @@ public class ConsultaService {
 	}
 	
 	@Transactional(readOnly = true)
+	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaPorDataHoraDepois(LocalDateTime dataHora) {
+		
+		if (dataHora == null) {
+			throw new InvalidDataException("Data e Hora Inválida!");
+		}
+		
+		List<Consulta> listaConsultas = consultaRepository
+				.findByDataHoraAfterOrderByDataHoraAsc(dataHora);
+		
+		var listaConsultasDto = listaConsultas.stream()
+				.map(consulta -> {
+					
+					SaidaSimplesConsultaDto dto = consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta);
+					
+					SaidaSimplesMedicoDto medicoDto = medicoMapper
+							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					dto.setMedico(medicoDto);
+					
+					SaidaSimplesPacienteDto pacienteDto = pacienteMapper
+							.pacienteParaSaidaSimplesPacienteDto(consulta.getPaciente());
+					
+					dto.setPaciente(pacienteDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaConsultasDto;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaPorDataHoraNoIntervalo(LocalDateTime dataHoraInicial, LocalDateTime dataHoraFinal) {
+		
+		if (dataHoraInicial == null) {
+			throw new InvalidDataException("Data e Hora Inicial Inválida!");
+		}
+		
+		if (dataHoraFinal == null) {
+			throw new InvalidDataException("Data e Hora Final Inválida!");
+		}
+		
+		List<Consulta> listaConsultas = consultaRepository
+				.findByDataHoraBetween(dataHoraInicial, dataHoraFinal);
+		
+		var listaConsultasDto = listaConsultas.stream()
+				.map(consulta -> {
+					
+					SaidaSimplesConsultaDto dto = consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta);
+					
+					SaidaSimplesMedicoDto medicoDto = medicoMapper
+							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					dto.setMedico(medicoDto);
+					
+					SaidaSimplesPacienteDto pacienteDto = pacienteMapper
+							.pacienteParaSaidaSimplesPacienteDto(consulta.getPaciente());
+					
+					dto.setPaciente(pacienteDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaConsultasDto;
+		
+	}
+	
+	@Transactional(readOnly = true)
 	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaAtiva() {
 		
 		List<Consulta> listaConsultas = consultaRepository
