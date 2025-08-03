@@ -6,8 +6,8 @@ package com.higorpalmeira.github.gerenciadorconsultas.view;
 
 import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.external.ExtEnderecoClient;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEnderecoDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarEnderecoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConta;

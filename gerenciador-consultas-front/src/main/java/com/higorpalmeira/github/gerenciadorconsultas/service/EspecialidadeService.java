@@ -9,7 +9,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarEspecialidadeDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEspecialidadeDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
 import java.io.IOException;

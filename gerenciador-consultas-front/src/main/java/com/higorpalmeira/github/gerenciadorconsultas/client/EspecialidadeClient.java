@@ -7,7 +7,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarEspecialidadeDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEspecialidadeDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarEspecialidadeDto;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;

@@ -5,7 +5,7 @@
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
 import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEspecialidadeDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;

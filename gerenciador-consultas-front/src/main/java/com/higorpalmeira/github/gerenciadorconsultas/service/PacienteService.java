@@ -10,7 +10,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarPacienteDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConta;

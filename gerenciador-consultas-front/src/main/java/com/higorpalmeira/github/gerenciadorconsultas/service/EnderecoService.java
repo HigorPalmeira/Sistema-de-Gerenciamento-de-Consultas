@@ -6,7 +6,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.external.ExtEnderecoClient;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEnderecoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;

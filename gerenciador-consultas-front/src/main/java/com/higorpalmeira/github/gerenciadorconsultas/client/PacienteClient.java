@@ -8,7 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarPacienteDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarPacienteDto;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
