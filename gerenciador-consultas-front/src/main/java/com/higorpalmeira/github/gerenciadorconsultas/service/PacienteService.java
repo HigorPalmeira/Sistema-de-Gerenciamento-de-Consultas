@@ -12,14 +12,16 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarEndereco
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesPacienteDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero;
-import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -98,6 +100,29 @@ public class PacienteService {
             String email, String telefone, String cep, String rua, 
             String complemento, String bairro, String localidade, String uf) {
         
+        if (idPaciente == null || idPaciente.isBlank()) {
+            return false;
+        }
+        
+        if (nome == null || nome.isBlank() || nome.length() < 3) {
+            return false;
+        }
+        
+        if (sobrenome == null || sobrenome.isBlank() || sobrenome.length() < 3) {
+            return false;
+        }
+        
+        if (!Validador.isCpf(cpf) ||
+                !Validador.isEmail(email) ||
+                !Validador.isTelefone(telefone) ||
+                !Validador.isCep(cep)) {
+            return false;
+        }
+        
+        LocalDate ldDataNascimento = LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        TipoGenero eGenero = TipoGenero.fromTipo(genero);
+        TipoStatusConta eStatus = TipoStatusConta.fromTipo(status);
+        
         AtualizarEnderecoDto endereco = new AtualizarEnderecoDto(
                 cep, 
                 rua, 
@@ -110,9 +135,9 @@ public class PacienteService {
                 nome, 
                 sobrenome, 
                 cpf, 
-                dataNascimento, 
-                genero, 
-                status, 
+                ldDataNascimento, 
+                eGenero, 
+                eStatus, 
                 email, 
                 telefone, 
                 endereco);
