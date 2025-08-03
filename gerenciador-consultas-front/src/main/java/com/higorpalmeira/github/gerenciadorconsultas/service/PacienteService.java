@@ -178,6 +178,32 @@ public class PacienteService {
         
     }
     
+    public boolean deletarPaciente(String idPaciente) {
+        
+        if (idPaciente == null || idPaciente.isBlank()) {
+            return false;
+        }
+        
+        try {
+            
+            HttpResponse<String> response = client.deletarPaciente(UUID.fromString(idPaciente));
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_DELECAO_EDICAO.getTipo()) {
+                
+                return true;
+            
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar deletar o paciente.\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return false;
+        
+    }
+    
     public SaidaSimplesPacienteDto buscarSaidaSimplesPacienteDto(UUID idPaciente) {
         
         if (idPaciente == null) {
