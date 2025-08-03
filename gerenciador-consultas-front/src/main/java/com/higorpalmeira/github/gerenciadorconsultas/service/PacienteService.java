@@ -119,6 +119,22 @@ public class PacienteService {
             return false;
         }
         
+        if (rua == null || rua.isBlank()) {
+            return false;
+        }
+        
+        if (bairro == null || bairro.isBlank()) {
+            return false;
+        }
+        
+        if (localidade == null || bairro.isBlank()) {
+            return false;
+        }
+        
+        if (uf == null || uf.isBlank() || uf.length() > 2) {
+            return false;
+        }
+        
         LocalDate ldDataNascimento = LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         TipoGenero eGenero = TipoGenero.fromTipo(genero);
         TipoStatusConta eStatus = TipoStatusConta.fromTipo(status);
@@ -141,6 +157,22 @@ public class PacienteService {
                 email, 
                 telefone, 
                 endereco);
+        
+        try {
+            
+            HttpResponse<String> response = client.editarPaciente(UUID.fromString(idPaciente), atualizarPacienteDto);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_DELECAO_EDICAO.getTipo()) {
+                
+                return true;
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar atualizar o paciente.\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
         
         return false;
         
