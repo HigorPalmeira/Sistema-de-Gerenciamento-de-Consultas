@@ -59,6 +59,56 @@ public class PacienteController {
 		
 	}
 	
+	@GetMapping("/cpf/{cpfPaciente}")
+	public ResponseEntity<SaidaSimplesPacienteDto> buscarSaidaSimplesPacienteDtoPorCpf(@PathVariable("cpfPaciente") String cpfPaciente) {
+		
+		var paciente = pacienteService.buscarSaidaSimplesPacientePorCpf(cpfPaciente);
+		
+		return ResponseEntity.ok(paciente);
+		
+	}
+	
+	@GetMapping("/telefone/{telefonePaciente}")
+	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPacientePorTelefone(@PathVariable("telefonePaciente") String telefonePaciente) {
+		
+		return null;
+		
+	}
+	
+	@GetMapping("/nome/{nomePaciente}")
+	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPacientePorNome(@PathVariable("nomePaciente") String nomePaciente) {
+		
+		var paciente = pacienteService.listarTodosSaidaSimplesPacientePorNome(nomePaciente);
+		
+		return ResponseEntity.ok(paciente);
+		
+	}
+	
+	@GetMapping("/sobrenome/{sobrenomePaciente}")
+	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPacientePorSobrenome(@PathVariable("sobrenomePaciente") String sobrenomePaciente) {
+		
+		var paciente = pacienteService.listarTodosSaidaSimplesPacientePorSobrenome(sobrenomePaciente);
+		
+		return ResponseEntity.ok(paciente);
+		
+	}
+	
+	@GetMapping("/status/{statusPaciente}")
+	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPacientePorStatus(@PathVariable("statusPaciente") String statusPaciente) {
+		
+		return null;
+		
+	}
+	
+	@GetMapping("/genero/{generoPaciente}")
+	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPacientePorGenero(@PathVariable("generoPaciente") String generoPaciente) {
+		
+		var paciente = pacienteService.listarTodosSaidaSimplesPacienteGenero(generoPaciente);
+		
+		return ResponseEntity.ok(paciente);
+		
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPaciente() {
 		
