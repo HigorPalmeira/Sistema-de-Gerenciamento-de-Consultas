@@ -216,34 +216,16 @@ public class MedicoService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SaidaSimplesMedicoDto> listarTodosSaidaSimplesMedicoAtivos() {
-		
-		var listaMedicos = medicoRepository
-				.findAllByStatus(TipoStatusConta.ATIVO);
-		
-		var listaMedicosDto = listaMedicos.stream()
-				.map(medico -> {
-					
-					SaidaSimplesMedicoDto dto = medicoMapper.medicoParaSaidaSimplesMedicoDto(medico);
-					
-					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
-							.especialidadeParaSaidaSimplesEspecialidadeDto(medico.getEspecialidade());
-					
-					dto.setEspecialidade(especialidadeDto);
-					
-					return dto;
-					
-				}).collect(Collectors.toList());
-		
-		return listaMedicosDto;
-		
-	}
+	public List<SaidaSimplesMedicoDto> listarTodosSaidaSimplesMedicoPorStatus(String status) {
 	
-	@Transactional(readOnly = true)
-	public List<SaidaSimplesMedicoDto> listarTodosSaidaSimplesMedicoInativos() {
+		if (status == null || status.isBlank()) {
+			throw new InvalidDataException("Status inválido!");
+		}
 		
-		var listaMedicos = medicoRepository
-				.findAllByStatus(TipoStatusConta.INATIVO);
+		TipoStatusConta eStatus = TipoStatusConta.fromTipo(status);
+		
+		List<Medico> listaMedicos = medicoRepository
+				.findAllByStatus(eStatus);
 		
 		var listaMedicosDto = listaMedicos.stream()
 				.map(medico -> {
