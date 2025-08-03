@@ -65,10 +65,10 @@ public class ConsultaController {
 		
 	}
 	
-	@GetMapping("/status/agendada")
-	public ResponseEntity<List<SaidaSimplesConsultaDto>> listarTodasSaidaSimplesConsultaAgendada() {
+	@GetMapping("/status/{statusConsulta}")
+	public ResponseEntity<List<SaidaSimplesConsultaDto>> listarTodasSaidaSimplesConsultaPorStatus(@PathVariable("statusConsulta") String statusConsulta) {
 		
-		var consultas = consultaService.listarTodasSaidaSimplesConsultaAgendada();
+		var consultas = consultaService.listarTodasSaidaSimplesConsultaPorStatus(statusConsulta);
 		
 		return ResponseEntity.ok(consultas);
 		
