@@ -54,7 +54,7 @@ public class ConsultaService {
 	public UUID criarConsulta(CriarConsultaDto criarConsultaDto) {
 		
 		// criar validação para o datetime
-		if (criarConsultaDto.getValor() == null || criarConsultaDto.getValor().doubleValue() < 0.0) {
+		if (!Validator.ValorValidation(criarConsultaDto.getValor())) {
 			throw new InvalidDataException("Valor inválido.");
 		}
 		
