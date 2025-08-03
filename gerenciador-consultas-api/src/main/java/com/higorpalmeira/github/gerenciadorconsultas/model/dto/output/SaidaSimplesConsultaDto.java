@@ -3,10 +3,12 @@ package com.higorpalmeira.github.gerenciadorconsultas.model.dto.output;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
 
 public class SaidaSimplesConsultaDto {
 	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
 	private LocalDateTime dataHora;
 	
 	private TipoStatusConsulta status;

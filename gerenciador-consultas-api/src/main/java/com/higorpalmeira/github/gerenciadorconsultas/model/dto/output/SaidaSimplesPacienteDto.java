@@ -17,7 +17,7 @@ public class SaidaSimplesPacienteDto {
 	
 	private String cpf;
 	
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
 	private LocalDate dataNascimento;
 	
 	private TipoGenero genero;

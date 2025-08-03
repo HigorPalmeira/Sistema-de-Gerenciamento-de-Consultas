@@ -4,8 +4,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class CriarConsultaDto {
 	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
 	private LocalDateTime dataHora;
 	
 	private String observacoes;
