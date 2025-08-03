@@ -120,19 +120,10 @@ public class MedicoController {
 		
 	}
 	
-	@GetMapping("/detalhes/status/ativos")
-	public ResponseEntity<List<SaidaDetalhadaMedicoDto>> listarTodosSaidaDetalhadaMedicoAtivos() {
+	@GetMapping("/detalhes/status/{statusMedico}")
+	public ResponseEntity<List<SaidaDetalhadaMedicoDto>> listarTodosSaidaDetalhadaMedicoPorStatus(@PathVariable("statusMedico") String statusMedico) {
 		
-		var medicos = medicoService.listarTodosSaidaDetalhadaMedicoAtivos();
-		
-		return ResponseEntity.ok(medicos);
-		
-	}
-	
-	@GetMapping("/detalhes/status/inativos")
-	public ResponseEntity<List<SaidaDetalhadaMedicoDto>> listarTodosSaidaDetalhadaMedicoInativos() {
-		
-		var medicos = medicoService.listarTodosSaidaDetalhadaMedicoInativos();
+		var medicos = medicoService.listarTodosSaidaDetalhadaMedicoPorStatus(statusMedico);
 		
 		return ResponseEntity.ok(medicos);
 		
