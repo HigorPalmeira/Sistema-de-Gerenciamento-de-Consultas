@@ -113,4 +113,16 @@ public class PacienteClient {
         return response;
     }
     
+    public HttpResponse<String> listarSaidaSimplesPacienteDtoPorDataNascimento(String dataNascimento) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/" + dataNascimento))
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+    }
+    
 }
