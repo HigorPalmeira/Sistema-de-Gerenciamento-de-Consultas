@@ -106,6 +106,29 @@ public class PacienteService {
 	}
 	
 	@Transactional(readOnly = true)
+	public SaidaSimplesPacienteDto buscarSaidaSimplesPacientePorCpf(String cpf) {
+		
+		if (!Validator.CPFValidation(Formatter.ofCpf(cpf))) {
+			throw new InvalidDataException("CPF inválido!");
+		}
+		
+		var pacienteEntidade = pacienteRepository
+				.findByCpf(cpf)
+				.orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com o CPF: " + cpf));
+		
+		SaidaSimplesPacienteDto pacienteDto = pacienteMapper
+				.pacienteParaSaidaSimplesPacienteDto(pacienteEntidade);
+		
+		SaidaEnderecoDto enderecoDto = enderecoMapper
+				.EnderecoParaSaidaEnderecoDto(pacienteEntidade.getEndereco());
+		
+		pacienteDto.setEndereco(enderecoDto);
+		
+		return pacienteDto;
+		
+	}
+	
+	@Transactional(readOnly = true)
 	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPaciente() {
 		
 		List<Paciente> listaPacientes = pacienteRepository
