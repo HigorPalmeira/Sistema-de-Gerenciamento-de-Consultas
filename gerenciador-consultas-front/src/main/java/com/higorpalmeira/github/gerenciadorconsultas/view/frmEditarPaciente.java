@@ -625,35 +625,30 @@ public class frmEditarPaciente extends frmGenerico {
 
         if (this.validarCampos()) {
             
-            CriarEnderecoDto enderecoDto = new CriarEnderecoDto(
-                    txtCep.getText().trim(),
-                    txtRua.getText().trim(),
+            boolean operacao = this.pacienteService.editarPaciente(
+                    pacienteAtualizar.getId().toString(), 
+                    txtNome.getText().trim(), 
+                    txtSobrenome.getText().trim(),
+                    txtCpf.getText().trim(), 
+                    txtDataNascimento.getText().trim(),
+                    String.valueOf(cbGenero.getSelectedItem()), 
+                    String.valueOf(cbStatus.getSelectedItem()),
+                    txtEmail.getText().trim(), 
+                    txtTelefone.getText().trim(),
+                    txtCep.getText().trim(), 
+                    txtRua.getText().trim(), 
                     txtComplemento.getText().trim(),
                     txtBairro.getText().trim(),
                     txtLocalidade.getText().trim(),
-                    txtUf.getText().trim()
-            );
+                    txtUf.getText().trim());
             
-            TipoGenero genero = TipoGenero.fromTipo(String.valueOf(cbGenero.getSelectedItem()));
-            
-            CriarPacienteDto pacienteDto = new CriarPacienteDto(
-                    txtNome.getText().trim(),
-                    txtSobrenome.getText().trim(),
-                    txtCpf.getText().trim(),
-                    LocalDate.parse(txtDataNascimento.getText().trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    genero,
-                    txtTelefone.getText().trim(),
-                    txtEmail.getText().trim(),
-                    enderecoDto
-            );
-            
-            if (/*this.pacienteService.criarPaciente(pacienteDto)*/false) {
+            if (operacao) {
                 
-                JOptionPane.showMessageDialog(this, "Paciente criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Paciente editado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
                 
             } else {
-                JOptionPane.showMessageDialog(this, "O paciente não pode ser criado!", "Falha ao criar", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "O paciente não pode ser editado!", "Falha ao criar", JOptionPane.ERROR_MESSAGE);
             }
             
         }
