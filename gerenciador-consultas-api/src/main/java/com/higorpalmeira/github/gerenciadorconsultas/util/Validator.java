@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.util;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -20,6 +21,8 @@ public class Validator {
             "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", 
             "RR", "SC", "SP", "SE", "TO"
     );
+	
+	private static final BigDecimal VALOR_MAXIMO = new BigDecimal("99999.99");
 	
 	public static boolean CPFValidation(final String input) {
 		
@@ -103,6 +106,20 @@ public class Validator {
 		if (!UFS_VALIDAS.contains(uf)) {
 			return false;
 		}
+		
+		return true;
+		
+	}
+	
+	public static boolean ValorValidation(BigDecimal valor) {
+		
+		if (valor == null) return false;
+		
+		if (valor.compareTo(BigDecimal.ZERO) < 0) return false;
+		
+		if (valor.scale() > 2) return false;
+		
+		if (valor.compareTo( VALOR_MAXIMO ) > 0) return false;
 		
 		return true;
 		
