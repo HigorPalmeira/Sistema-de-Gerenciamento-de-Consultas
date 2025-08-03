@@ -17,9 +17,23 @@ public interface ConsultaRepository extends JpaRepository<Consulta, UUID> {
 	
 	Optional<Consulta> findByDataHora(LocalDateTime dataHora);
 	
+	List<Consulta> findByDataHoraBefore(LocalDateTime dataLimite);
+	
+	List<Consulta> findByDataHoraAfter(LocalDateTime dataInicial);
+	
+	List<Consulta> findByDataHoraBetween(LocalDateTime inicioDoIntervalo, LocalDateTime fimDoIntervalo);
+	
+	List<Consulta> findByDataHoraAfterOrderByDataHoraAsc(LocalDateTime dataHora);
+	
 	List<Consulta> findByObservacoesContainingIgnoreCase(String observacoes);
 	
 	List<Consulta> findByValor(BigDecimal valor);
+	
+	List<Consulta> findByValorGreaterThan(BigDecimal valor);
+	
+	List<Consulta> findByValorLessThanEqual(BigDecimal valor);
+	
+	List<Consulta> findByValorBetween(BigDecimal valorInicial, BigDecimal valorFinal);
 	
 	List<Consulta> findAllByStatus(TipoStatusConsulta status);
 	
