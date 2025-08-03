@@ -295,4 +295,36 @@ public class PacienteService {
         return listaPacientes;
         
     }
+    
+    public List<SaidaSimplesPacienteDto> listarSaidasSimplesPacienteDtoPorDataNascimento(String dataNascimento) {
+        
+        List<SaidaSimplesPacienteDto> listaPacientes = new ArrayList<>();
+        
+        if (dataNascimento == null || dataNascimento.isBlank()) {
+            return listaPacientes;
+        }
+        
+        try {
+            
+            HttpResponse<String> response = client.listarSaidaSimplesPacienteDtoPorDataNascimento(dataNascimento);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                listaPacientes = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesPacienteDto>>() { });
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição dos Pacientes! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar listar todos os pacientes pela data de nascimento!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return listaPacientes;
+        
+    }
 }
