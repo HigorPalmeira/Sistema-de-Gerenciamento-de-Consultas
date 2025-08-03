@@ -302,40 +302,16 @@ public class MedicoService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SaidaDetalhadaMedicoDto> listarTodosSaidaDetalhadaMedicoAtivos() {
+	public List<SaidaDetalhadaMedicoDto> listarTodosSaidaDetalhadaMedicoPorStatus(String status) {
+		
+		if (status == null || status.isBlank()) {
+			throw new InvalidDataException("Status Inválido!");
+		}
+		
+		TipoStatusConta eStatus = TipoStatusConta.fromTipo(status);
 		
 		List<Medico> listaMedicos = medicoRepository
-				.findAllByStatus(TipoStatusConta.ATIVO);
-		
-		var listaMedicosDto = listaMedicos.stream()
-				.map(medico -> {
-					
-					SaidaDetalhadaMedicoDto dto = medicoMapper.medicoParaSaidaDetalhadaMedicoDto(medico);
-					
-					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
-							.especialidadeParaSaidaSimplesEspecialidadeDto(medico.getEspecialidade());
-					
-					dto.setEspecialidade(especialidadeDto);
-					
-					List<SaidaSimplesConsultaDto> consultasDto = medico.getConsultas().stream()
-							.map(consultaMapper::consultaParaSaidaSimplesConsultaDto)
-							.collect(Collectors.toList());
-					
-					dto.setConsultas(consultasDto);
-					
-					return dto;
-					
-				}).collect(Collectors.toList());
-		
-		return listaMedicosDto;
-		
-	}
-	
-	@Transactional(readOnly = true)
-	public List<SaidaDetalhadaMedicoDto> listarTodosSaidaDetalhadaMedicoInativos() {
-		
-		List<Medico> listaMedicos = medicoRepository
-				.findAllByStatus(TipoStatusConta.INATIVO);
+				.findAllByStatus(eStatus);
 		
 		var listaMedicosDto = listaMedicos.stream()
 				.map(medico -> {
