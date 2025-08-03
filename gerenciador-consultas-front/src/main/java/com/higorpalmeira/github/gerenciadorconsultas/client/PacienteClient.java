@@ -104,7 +104,7 @@ public class PacienteClient {
     public HttpResponse<String> listarSaidaSimplesPacienteDtoPorStatus(String status) throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(URL_API + "/" + status))
+                .uri(URI.create(URL_API + "/status/" + status))
                 .GET()
                 .build();
         
@@ -116,7 +116,7 @@ public class PacienteClient {
     public HttpResponse<String> listarSaidaSimplesPacienteDtoPorDataNascimento(String dataNascimento) throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(URL_API + "/" + dataNascimento))
+                .uri(URI.create(URL_API + "/datanascimento/" + dataNascimento))
                 .GET()
                 .build();
         
