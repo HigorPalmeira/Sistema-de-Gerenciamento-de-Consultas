@@ -278,6 +278,10 @@ public class PacienteService {
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacienteGenero(String genero) {
 		
+		if (genero == null || genero.isBlank()) {
+			throw new InvalidDataException("Genero inválido!");
+		}
+		
 		TipoGenero eGenero = TipoGenero.fromTipo(genero);
 		
 		List<Paciente> listaPacientes = pacienteRepository
@@ -304,6 +308,10 @@ public class PacienteService {
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacienteGeneroNot(String genero) {
 
+		if (genero == null || genero.isBlank()) {
+			throw new InvalidDataException("Genero inválido!");
+		}
+		
 		TipoGenero eGenero = TipoGenero.fromTipo(genero);
 		
 		List<Paciente> listaPacientes = pacienteRepository
