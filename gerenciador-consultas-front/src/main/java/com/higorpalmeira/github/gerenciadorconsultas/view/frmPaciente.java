@@ -256,6 +256,11 @@ public class frmPaciente extends frmGenerico {
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnDeletar.setMnemonic('d');
         btnDeletar.setText("DELETAR");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         btnDetalhes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnDetalhes.setMnemonic('v');
@@ -353,6 +358,39 @@ public class frmPaciente extends frmGenerico {
         }
 
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+
+        int idx = tbPaciente.getSelectedRow();
+        
+        if (idx < 0) {
+            
+            JOptionPane.showMessageDialog(this, "Selecione um paciente para poder deletá-lo!", "Paciente não selecionado", JOptionPane.ERROR_MESSAGE);
+            
+        } else {
+            
+            int confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja deletar o paciente?", "Deseja deletá-lo?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            
+            if (confirmacao == JOptionPane.YES_OPTION) {
+            
+                String idPaciente = String.valueOf(tbPaciente.getValueAt(idx, 0));
+                
+                boolean operacao = this.pacienteService.deletarPaciente(idPaciente);
+                
+                if (operacao) {
+                    
+                    JOptionPane.showMessageDialog(this, "O Paciente foi deletado com sucesso!", "Sucesso na operação", JOptionPane.INFORMATION_MESSAGE);
+                
+                } else {
+                    
+                    JOptionPane.showMessageDialog(this, "O Paciente não pode ser deletado!", "Falha na operação", JOptionPane.ERROR_MESSAGE);
+                    
+                }
+            }
+            
+        }
+
+    }//GEN-LAST:event_btnDeletarActionPerformed
 
     /**
      * @param args the command line arguments
