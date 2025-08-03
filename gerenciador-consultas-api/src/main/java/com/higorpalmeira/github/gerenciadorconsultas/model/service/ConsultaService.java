@@ -23,6 +23,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.PacienteMappe
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.ConsultaRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.MedicoRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.PacienteRepository;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Validator;
 
 @Service
 public class ConsultaService {
@@ -132,20 +133,8 @@ public class ConsultaService {
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaPorValor(BigDecimal valor) {
 		
-		if (valor == null) {
+		if (!Validator.ValorValidation(valor)) {
 			throw new InvalidDataException("Valor Inválido!");
-		}
-		
-		if (valor.compareTo(BigDecimal.ZERO) < 0) {
-			throw new InvalidDataException("Valor Inválido! O Valor não pode ser negativo.");
-		}
-		
-		if (valor.scale() > 2) {
-			throw new InvalidDataException("Valor Inválido! O Valor não pode ter mais que duas casas decimais.");
-		}
-		
-		if (valor.compareTo( new BigDecimal("99999.99") ) > 0) {
-			throw new InvalidDataException("Valor Inválido! O Valor excede o valor máximo permitido.");
 		}
 		
 		List<Consulta> listaConsultas = consultaRepository
