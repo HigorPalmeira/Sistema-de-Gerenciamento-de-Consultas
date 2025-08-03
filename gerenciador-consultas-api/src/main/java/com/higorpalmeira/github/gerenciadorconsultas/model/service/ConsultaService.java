@@ -103,6 +103,30 @@ public class ConsultaService {
 	}
 	
 	@Transactional(readOnly = true)
+	public SaidaSimplesConsultaDto buscarSaidaSimplesConsultaPorDataHora(LocalDateTime dataHora) {
+		
+		if (!Validator.DataHoraValidation(dataHora)) {
+			throw new InvalidDataException("Data e hora da consulta inválida!");
+		}
+		
+		Consulta consulta = consultaRepository
+				.findByDataHora(dataHora)
+				.orElseThrow(() -> new ResourceNotFoundException("Consulta não encontrada com data e hora: " + dataHora.toString()));
+		
+		SaidaSimplesConsultaDto consultaDto = consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta);
+		
+		SaidaSimplesMedicoDto medicoDto = medicoMapper.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+		
+		SaidaSimplesPacienteDto pacienteDto = pacienteMapper.pacienteParaSaidaSimplesPacienteDto(consulta.getPaciente());
+		
+		consultaDto.setMedico(medicoDto);
+		consultaDto.setPaciente(pacienteDto);
+		
+		return consultaDto;
+		
+	}
+	
+	@Transactional(readOnly = true)
 	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsulta() {
 		
 		List<Consulta> listaConsultas = consultaRepository
@@ -297,13 +321,6 @@ public class ConsultaService {
 				}).collect(Collectors.toList());
 		
 		return listaConsultasDto;
-		
-	}
-	
-	@Transactional(readOnly = true)
-	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaPorDataHora(LocalDateTime dataHora) {
-		
-		
 		
 	}
 	
