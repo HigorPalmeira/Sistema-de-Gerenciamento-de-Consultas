@@ -10,4 +10,12 @@ package com.higorpalmeira.github.gerenciadorconsultas.util;
  */
 public class Formatador {
     
+    public static String limparFormatacao(String formatado) {
+        
+        if (formatado == null || formatado.isBlank()) return formatado;
+        
+        return formatado.replaceAll("[^A-Z0-9]", "");
+        
+    }
+    
 }
