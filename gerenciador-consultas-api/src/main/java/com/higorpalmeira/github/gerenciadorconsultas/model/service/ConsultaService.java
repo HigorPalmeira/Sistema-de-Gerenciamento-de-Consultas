@@ -164,7 +164,7 @@ public class ConsultaService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaValorMaiorQue(BigDecimal valor) {
+	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaPorValorMaiorQue(BigDecimal valor) {
 		
 		if (!Validator.ValorValidation(valor)) {
 			throw new InvalidDataException("Valor Inválido!");
@@ -172,6 +172,39 @@ public class ConsultaService {
 		
 		List<Consulta> listaConsultas = consultaRepository
 				.findByValorGreaterThan(valor);
+		
+		var listaConsultaDto = listaConsultas.stream()
+				.map(consulta -> {
+					
+					SaidaSimplesConsultaDto dto = consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta);
+					
+					SaidaSimplesMedicoDto medicoDto = medicoMapper
+							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					dto.setMedico(medicoDto);
+					
+					SaidaSimplesPacienteDto pacienteDto = pacienteMapper
+							.pacienteParaSaidaSimplesPacienteDto(consulta.getPaciente());
+					
+					dto.setPaciente(pacienteDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaConsultaDto;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaPorValorMenorIgualQue(BigDecimal valor) {
+		
+		if (!Validator.ValorValidation(valor)) {
+			throw new InvalidDataException("Valor Inválido!");
+		}
+		
+		List<Consulta> listaConsultas = consultaRepository
+				.findByValorLessThanEqual(valor);
 		
 		var listaConsultaDto = listaConsultas.stream()
 				.map(consulta -> {
