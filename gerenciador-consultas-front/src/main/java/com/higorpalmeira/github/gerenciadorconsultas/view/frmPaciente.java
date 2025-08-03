@@ -4,6 +4,7 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.view.editar.frmEditarPaciente;
 import com.higorpalmeira.github.gerenciadorconsultas.view.criar.frmCriarPaciente;
 import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesPacienteDto;

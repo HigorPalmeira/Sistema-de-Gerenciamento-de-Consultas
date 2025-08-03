@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.higorpalmeira.github.gerenciadorconsultas.view;
+package com.higorpalmeira.github.gerenciadorconsultas.view.editar;
 
 import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
@@ -13,6 +13,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.Tipo
 import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
+import com.higorpalmeira.github.gerenciadorconsultas.view.frmGenerico;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.JOptionPane;

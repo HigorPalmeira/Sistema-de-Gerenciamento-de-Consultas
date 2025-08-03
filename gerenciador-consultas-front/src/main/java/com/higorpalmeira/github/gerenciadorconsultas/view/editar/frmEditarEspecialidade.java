@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.higorpalmeira.github.gerenciadorconsultas.view;
+package com.higorpalmeira.github.gerenciadorconsultas.view.editar;
 
 import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
+import com.higorpalmeira.github.gerenciadorconsultas.view.frmGenerico;
 import java.awt.event.KeyEvent;
 import java.util.UUID;
 import javax.swing.JOptionPane;
