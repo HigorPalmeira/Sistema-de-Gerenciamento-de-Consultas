@@ -84,8 +84,8 @@ public class frmPaciente extends frmGenerico {
         txtPesquisa = new javax.swing.JTextField();
         btnPesquisar = new javax.swing.JButton();
         rbCpf = new javax.swing.JRadioButton();
-        cbEmail = new javax.swing.JRadioButton();
-        cbTelefone = new javax.swing.JRadioButton();
+        rbEmail = new javax.swing.JRadioButton();
+        rbTelefone = new javax.swing.JRadioButton();
         rbNome = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -141,16 +141,37 @@ public class frmPaciente extends frmGenerico {
         btnPesquisar.setText("PESQUISAR");
 
         rbCpf.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        rbCpf.setSelected(true);
         rbCpf.setText("CPF");
+        rbCpf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbCpfActionPerformed(evt);
+            }
+        });
 
-        cbEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbEmail.setText("E-mail");
+        rbEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        rbEmail.setText("E-mail");
+        rbEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbEmailActionPerformed(evt);
+            }
+        });
 
-        cbTelefone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbTelefone.setText("Telefone");
+        rbTelefone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        rbTelefone.setText("Telefone");
+        rbTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbTelefoneActionPerformed(evt);
+            }
+        });
 
         rbNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         rbNome.setText("Nome");
+        rbNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbNomeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlPesquisaLayout = new javax.swing.GroupLayout(pnlPesquisa);
         pnlPesquisa.setLayout(pnlPesquisaLayout);
@@ -165,12 +186,12 @@ public class frmPaciente extends frmGenerico {
                         .addComponent(btnPesquisar))
                     .addGroup(pnlPesquisaLayout.createSequentialGroup()
                         .addGroup(pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbEmail)
+                            .addComponent(rbEmail)
                             .addComponent(rbCpf))
                         .addGap(18, 18, 18)
                         .addGroup(pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rbNome)
-                            .addComponent(cbTelefone))))
+                            .addComponent(rbTelefone))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlPesquisaLayout.setVerticalGroup(
@@ -186,8 +207,8 @@ public class frmPaciente extends frmGenerico {
                     .addComponent(rbNome))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbEmail)
-                    .addComponent(cbTelefone))
+                    .addComponent(rbEmail)
+                    .addComponent(rbTelefone))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -209,8 +230,10 @@ public class frmPaciente extends frmGenerico {
                 return canEdit [columnIndex];
             }
         });
+        tbPaciente.setColumnSelectionAllowed(true);
         tbPaciente.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbPaciente);
+        tbPaciente.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         if (tbPaciente.getColumnModel().getColumnCount() > 0) {
             tbPaciente.getColumnModel().getColumn(0).setPreferredWidth(0);
             tbPaciente.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -412,6 +435,42 @@ public class frmPaciente extends frmGenerico {
 
     }//GEN-LAST:event_formWindowLostFocus
 
+    private void rbCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCpfActionPerformed
+
+        rbCpf.setSelected(true);
+        rbNome.setSelected(false);
+        rbEmail.setSelected(false);
+        rbTelefone.setSelected(false);
+
+    }//GEN-LAST:event_rbCpfActionPerformed
+
+    private void rbEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbEmailActionPerformed
+
+        rbCpf.setSelected(false);
+        rbNome.setSelected(false);
+        rbEmail.setSelected(true);
+        rbTelefone.setSelected(false);
+        
+    }//GEN-LAST:event_rbEmailActionPerformed
+
+    private void rbNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNomeActionPerformed
+
+        rbCpf.setSelected(false);
+        rbNome.setSelected(true);
+        rbEmail.setSelected(false);
+        rbTelefone.setSelected(false);
+
+    }//GEN-LAST:event_rbNomeActionPerformed
+
+    private void rbTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbTelefoneActionPerformed
+
+        rbCpf.setSelected(false);
+        rbNome.setSelected(false);
+        rbEmail.setSelected(false);
+        rbTelefone.setSelected(true);
+
+    }//GEN-LAST:event_rbTelefoneActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -453,8 +512,6 @@ public class frmPaciente extends frmGenerico {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnPesquisar;
-    private javax.swing.JRadioButton cbEmail;
-    private javax.swing.JRadioButton cbTelefone;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -462,7 +519,9 @@ public class frmPaciente extends frmGenerico {
     private javax.swing.JPanel pnlPesquisa;
     private javax.swing.JPanel pnlTitulo;
     private javax.swing.JRadioButton rbCpf;
+    private javax.swing.JRadioButton rbEmail;
     private javax.swing.JRadioButton rbNome;
+    private javax.swing.JRadioButton rbTelefone;
     private javax.swing.JTable tbPaciente;
     private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
