@@ -12,6 +12,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConta;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Formatador;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import java.io.IOException;
 import java.net.URI;
@@ -237,7 +238,7 @@ public class MedicoService {
         
         try {
             
-            HttpResponse<String> response = client.buscarSaidaSimplesMedicoDtoPorCrm(crm);
+            HttpResponse<String> response = client.buscarSaidaSimplesMedicoDtoPorCrm(Formatador.limparFormatacao(crm));
             
             if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
                 
@@ -269,7 +270,7 @@ public class MedicoService {
         
         try {
             
-            HttpResponse<String> response = client.buscarSaidaSimplesMedicoDtoPorTelefone(telefone);
+            HttpResponse<String> response = client.buscarSaidaSimplesMedicoDtoPorTelefone(Formatador.limparFormatacao(telefone));
             
             if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
                 
