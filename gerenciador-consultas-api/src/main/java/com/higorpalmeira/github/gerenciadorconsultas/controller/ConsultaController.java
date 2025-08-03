@@ -1,6 +1,8 @@
 package com.higorpalmeira.github.gerenciadorconsultas.controller;
 
+import java.math.BigDecimal;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,6 +46,24 @@ public class ConsultaController {
 		var consulta = consultaService.buscarSaidaSimplesConsultaPorId(consultaId);
 		
 		return ResponseEntity.ok(consulta);
+		
+	}
+	
+	@GetMapping("/datahora/{dataHoraConsulta}")
+	public ResponseEntity<SaidaSimplesConsultaDto> buscarSaidaSimplesConsultaPorDataHora(@PathVariable("dataHoraConsulta") LocalDateTime dataHora) {
+		
+		var consulta = consultaService.buscarSaidaSimplesConsultaPorDataHora(dataHora);
+		
+		return ResponseEntity.ok(consulta);
+		
+	}
+	
+	@GetMapping("/valor/{valorConsulta}")
+	public ResponseEntity<List<SaidaSimplesConsultaDto>> listarTodasSaidaSimplesConsultaPorValor(@PathVariable("valorConsulta") BigDecimal valorConsulta) {
+		
+		var consultas = consultaService.listarTodasSaidaSimplesConsultaPorValor(valorConsulta);
+		
+		return ResponseEntity.ok(consultas);
 		
 	}
 	
