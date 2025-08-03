@@ -8,13 +8,18 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarEnderecoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -86,6 +91,34 @@ public class PacienteService {
         }
         
         return false;
+    }
+    
+    public boolean editarPaciente(String idPaciente, String nome, String sobrenome,
+            String cpf, String dataNascimento, String genero, String status, 
+            String email, String telefone, String cep, String rua, 
+            String complemento, String bairro, String localidade, String uf) {
+        
+        AtualizarEnderecoDto endereco = new AtualizarEnderecoDto(
+                cep, 
+                rua, 
+                complemento, 
+                bairro, 
+                localidade, 
+                uf);
+        
+        AtualizarPacienteDto atualizarPacienteDto = new AtualizarPacienteDto(
+                nome, 
+                sobrenome, 
+                cpf, 
+                dataNascimento, 
+                genero, 
+                status, 
+                email, 
+                telefone, 
+                endereco);
+        
+        return false;
+        
     }
     
     public SaidaSimplesPacienteDto buscarSaidaSimplesPacienteDto(UUID idPaciente) {
