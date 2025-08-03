@@ -33,6 +33,8 @@ public abstract class PacienteMapper {
 	@Mapping(target = "consultas", ignore = true)
 	@Mapping(target = "endereco", ignore = true)
 	@Mapping(target = "status", expression = "java(TipoStatusConta.ATIVO)")
+	@Mapping(source = "cpf", target = "cpf", qualifiedByName = "mapCpfFormatadoToCpfLimpo")
+	@Mapping(source = "telefone", target = "telefone", qualifiedByName = "mapTelefoneFormatadoToTelefoneLimpo")
 	public abstract Paciente criarPacienteDtoParePaciente(CriarPacienteDto criarPacienteDto);
 	
 	/*
@@ -88,10 +90,24 @@ public abstract class PacienteMapper {
 		
 	}
 	
+	@Named("mapCpfFormatadoToCpfLimpo")
+	public String mapCpfFormatadoToCpfLimpo(String cpf) {
+		
+		return Formatter.clearCpfCepCrmTelefone(cpf);
+		
+	}
+	
 	@Named("mapTelefoneLimpoToTelefoneFormatado")
 	public String mapTelefoneLimpoToTelefoneFormatado(String telefone) {
 		
 		return Formatter.ofTelefone(telefone);
+		
+	}
+	
+	@Named("mapTelefoneFormatadoToTelefoneLimpo")
+	public String mapTelefoneFormatadoToTelefoneLimpo(String telefone) {
+		
+		return Formatter.clearCpfCepCrmTelefone(telefone);
 		
 	}
 	
