@@ -67,6 +67,24 @@ public class ConsultaController {
 		
 	}
 	
+	@GetMapping("/valor/maior/{valorConsulta}")
+	public ResponseEntity<List<SaidaSimplesConsultaDto>> listarTodasSaidaSimplesConsultaPorValorMaior(@PathVariable("valorConsulta") BigDecimal valorConsulta) {
+		
+		var consultas = consultaService.listarTodasSaidaSimplesConsultaPorValorMaiorQue(valorConsulta);
+		
+		return ResponseEntity.ok(consultas);
+		
+	}
+	
+	@GetMapping("/valor/menor_igual/{valorConsulta}")
+	public ResponseEntity<List<SaidaSimplesConsultaDto>> listarTodasSaidaSimplesConsultaPorValorMenorIgual(@PathVariable("valorConsulta") BigDecimal valorConsulta) {
+		
+		var consultas = consultaService.listarTodasSaidaSimplesConsultaPorValorMenorIgualQue(valorConsulta);
+		
+		return ResponseEntity.ok(consultas);
+		
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<SaidaSimplesConsultaDto>> listarTodasSaidaSimplesConsultaAtiva() {
 		
