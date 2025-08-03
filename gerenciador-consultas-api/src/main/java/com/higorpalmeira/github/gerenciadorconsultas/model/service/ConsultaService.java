@@ -1,5 +1,6 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -104,6 +105,51 @@ public class ConsultaService {
 		
 		List<Consulta> listaConsultas = consultaRepository
 				.findAll();
+		
+		var listaConsultaDto = listaConsultas.stream()
+				.map(consulta -> {
+					
+					SaidaSimplesConsultaDto dto = consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta);
+					
+					SaidaSimplesMedicoDto medicoDto = medicoMapper
+							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					dto.setMedico(medicoDto);
+					
+					SaidaSimplesPacienteDto pacienteDto = pacienteMapper
+							.pacienteParaSaidaSimplesPacienteDto(consulta.getPaciente());
+					
+					dto.setPaciente(pacienteDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaConsultaDto;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaPorValor(BigDecimal valor) {
+		
+		if (valor == null) {
+			throw new InvalidDataException("Valor Inválido!");
+		}
+		
+		if (valor.compareTo(BigDecimal.ZERO) < 0) {
+			throw new InvalidDataException("Valor Inválido! O Valor não pode ser negativo.");
+		}
+		
+		if (valor.scale() > 2) {
+			throw new InvalidDataException("Valor Inválido! O Valor não pode ter mais que duas casas decimais.");
+		}
+		
+		if (valor.compareTo( new BigDecimal("99999.99") ) > 0) {
+			throw new InvalidDataException("Valor Inválido! O Valor excede o valor máximo permitido.");
+		}
+		
+		List<Consulta> listaConsultas = consultaRepository
+				.findByValor(valor);
 		
 		var listaConsultaDto = listaConsultas.stream()
 				.map(consulta -> {
