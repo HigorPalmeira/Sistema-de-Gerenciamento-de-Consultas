@@ -11,7 +11,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.atualizar.AtualizarEnderecoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.atualizar.AtualizarPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarPacienteDto;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;

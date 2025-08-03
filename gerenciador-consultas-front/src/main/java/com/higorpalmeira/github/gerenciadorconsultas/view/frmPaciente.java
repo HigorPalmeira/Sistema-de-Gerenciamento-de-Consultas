@@ -5,7 +5,7 @@
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
 import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 import java.util.List;
 import java.util.UUID;

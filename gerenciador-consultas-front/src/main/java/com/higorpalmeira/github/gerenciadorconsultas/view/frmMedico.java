@@ -7,7 +7,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.view;
 import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.higorpalmeira.github.gerenciadorconsultas.client.EspecialidadeClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.EspecialidadeService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import javax.swing.JOptionPane;
