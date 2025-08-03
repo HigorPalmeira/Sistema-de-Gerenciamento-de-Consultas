@@ -235,7 +235,7 @@ public class ConsultaService {
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Consulta não encontrada com ID: " + id));
 		
-		if (atualizarConsultaDto.getValor() == null || atualizarConsultaDto.getValor().doubleValue() < 0.0) {
+		if (!Validator.ValorValidation(atualizarConsultaDto.getValor())) {
 			throw new InvalidDataException("Valor inválido.");
 		}
 		
