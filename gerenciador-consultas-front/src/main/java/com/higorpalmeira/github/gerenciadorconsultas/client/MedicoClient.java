@@ -6,7 +6,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.atualizar.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarMedicoDto;
 import java.io.IOException;
 import java.net.URI;

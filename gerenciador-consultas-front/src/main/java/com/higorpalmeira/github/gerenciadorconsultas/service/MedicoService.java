@@ -7,7 +7,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
-import com.higorpalmeira.github.gerenciadorconsultas.model.dto.AtualizarMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.atualizar.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
