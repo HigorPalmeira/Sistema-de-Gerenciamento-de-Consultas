@@ -4,6 +4,8 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.external.ExtEnderecoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.CriarEnderecoDto;
@@ -14,6 +16,8 @@ import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -174,6 +178,7 @@ public class frmCriarPaciente extends frmGenerico {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("criar paciente"); // NOI18N
+        setResizable(false);
 
         pnlTitulo.setBackground(new java.awt.Color(0, 204, 51));
         pnlTitulo.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -438,7 +443,7 @@ public class frmCriarPaciente extends frmGenerico {
                                         .addComponent(btnProcurarCep))))
                             .addComponent(txtRua, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtComplemento, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addContainerGap(131, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnlEnderecoLayout.setVerticalGroup(
             pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
