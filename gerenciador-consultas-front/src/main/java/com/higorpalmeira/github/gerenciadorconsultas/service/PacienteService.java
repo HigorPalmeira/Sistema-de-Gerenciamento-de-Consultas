@@ -264,4 +264,35 @@ public class PacienteService {
         
     }
     
+    public List<SaidaSimplesPacienteDto> listarSaidasSimplesPacienteDtoPorStatus(TipoStatusConta status) {
+        
+        List<SaidaSimplesPacienteDto> listaPacientes = new ArrayList<>();
+        
+        if (status == null) {
+            return listaPacientes;
+        }
+        
+        try {
+            
+            HttpResponse<String> response = client.listarSaidaSimplesPacienteDtoPorStatus(status.getTipo());
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                listaPacientes = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesPacienteDto>>() { });
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição dos Pacientes! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar listar todos os pacientes pelo status!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return listaPacientes;
+        
+    }
 }
