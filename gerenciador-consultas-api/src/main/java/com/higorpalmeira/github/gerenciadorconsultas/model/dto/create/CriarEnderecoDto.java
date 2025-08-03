@@ -1,9 +1,12 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.dto.create;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CriarEnderecoDto {
 
 	private String cep;
 	
+	@JsonProperty("logradouro")
 	private String rua;
 	
 	private String complemento;
