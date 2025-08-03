@@ -1,6 +1,7 @@
 package com.higorpalmeira.github.gerenciadorconsultas.model.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -299,7 +300,12 @@ public class ConsultaService {
 		
 	}
 	
-	
+	@Transactional(readOnly = true)
+	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaPorDataHora(LocalDateTime dataHora) {
+		
+		
+		
+	}
 	
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaAtiva() {
