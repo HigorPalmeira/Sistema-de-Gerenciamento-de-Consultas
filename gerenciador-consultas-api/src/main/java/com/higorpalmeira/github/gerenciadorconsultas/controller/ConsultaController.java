@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,7 +51,7 @@ public class ConsultaController {
 	}
 	
 	@GetMapping("/datahora/{dataHoraConsulta}")
-	public ResponseEntity<SaidaSimplesConsultaDto> buscarSaidaSimplesConsultaPorDataHora(@PathVariable("dataHoraConsulta") LocalDateTime dataHora) {
+	public ResponseEntity<SaidaSimplesConsultaDto> buscarSaidaSimplesConsultaPorDataHora(@PathVariable("dataHoraConsulta") @DateTimeFormat(pattern = "dd-MM-yyyy_HH-mm-ss") LocalDateTime dataHora) {
 		
 		var consulta = consultaService.buscarSaidaSimplesConsultaPorDataHora(dataHora);
 		
