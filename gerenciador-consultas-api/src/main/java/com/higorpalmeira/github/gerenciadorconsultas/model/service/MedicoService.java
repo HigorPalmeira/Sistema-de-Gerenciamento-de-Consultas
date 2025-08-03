@@ -135,7 +135,7 @@ public class MedicoService {
 		}
 		
 		var medicoEntidade = medicoRepository
-				.findByCrm(crmFormatado)
+				.findByCrm(crm)
 				.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com CRM: " + crm));
 		
 		SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
@@ -153,7 +153,7 @@ public class MedicoService {
 	public SaidaSimplesMedicoDto buscarSaidaSimplesMedicoPorTelefone(String telefone) {
 		
 		var medicoEntidade = medicoRepository
-				.findByTelefone(Formatter.ofTelefone(telefone))
+				.findByTelefone(telefone)
 				.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com telefone: " + telefone));
 		
 		SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
