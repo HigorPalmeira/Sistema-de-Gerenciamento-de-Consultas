@@ -267,6 +267,41 @@ public class ConsultaService {
 	}
 	
 	@Transactional(readOnly = true)
+	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaPorObservacoes(String observacoes) {
+		
+		if (observacoes == null || observacoes.isBlank()) {
+			throw new InvalidDataException("Observações Inválidas!");
+		}
+		
+		List<Consulta> listaConsultas = consultaRepository
+				.findByObservacoesContainingIgnoreCase(observacoes);
+		
+		var listaConsultasDto = listaConsultas.stream()
+				.map(consulta -> {
+					
+					SaidaSimplesConsultaDto dto = consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta);
+					
+					SaidaSimplesMedicoDto medicoDto = medicoMapper
+							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					dto.setMedico(medicoDto);
+					
+					SaidaSimplesPacienteDto pacienteDto = pacienteMapper
+							.pacienteParaSaidaSimplesPacienteDto(consulta.getPaciente());
+					
+					dto.setPaciente(pacienteDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaConsultasDto;
+		
+	}
+	
+	
+	
+	@Transactional(readOnly = true)
 	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaAtiva() {
 		
 		List<Consulta> listaConsultas = consultaRepository
