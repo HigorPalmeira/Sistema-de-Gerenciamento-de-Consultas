@@ -152,6 +152,54 @@ public class PacienteService {
 	}
 	
 	@Transactional(readOnly = true)
+	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacientePorNome(String nome) {
+		
+		List<Paciente> listaPacientes = pacienteRepository
+				.findByNomeContainingIgnoreCase(nome);
+		
+		var listaPacientesDto = listaPacientes.stream()
+				.map(paciente -> {
+					
+					SaidaSimplesPacienteDto dto = pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente);
+					
+					SaidaEnderecoDto enderecoDto = enderecoMapper
+							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
+					
+					dto.setEndereco(enderecoDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaPacientesDto;
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacientePorSobrenome(String sobrenome) {
+		
+		List<Paciente> listaPacientes = pacienteRepository
+				.findBySobrenomeContainingIgnoreCase(sobrenome);
+		
+		var listaPacientesDto = listaPacientes.stream()
+				.map(paciente -> {
+					
+					SaidaSimplesPacienteDto dto = pacienteMapper.pacienteParaSaidaSimplesPacienteDto(paciente);
+					
+					SaidaEnderecoDto enderecoDto = enderecoMapper
+							.EnderecoParaSaidaEnderecoDto(paciente.getEndereco());
+					
+					dto.setEndereco(enderecoDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
+		
+		return listaPacientesDto;
+		
+	}
+	
+	@Transactional(readOnly = true)
 	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPaciente() {
 		
 		List<Paciente> listaPacientes = pacienteRepository
@@ -225,6 +273,8 @@ public class PacienteService {
 		return listaPacientesDto;
 		
 	}
+	
+	
 	
 	@Transactional(readOnly = true)
 	public List<SaidaSimplesPacienteDto> listarTodosSaidaSimplesPacientePorDataNascimento(LocalDate dataNascimento) {
