@@ -128,12 +128,14 @@ public class MedicoService {
 	@Transactional(readOnly = true)
 	public SaidaSimplesMedicoDto buscarSaidaSimplesMedicoPorCrm(String crm) {
 		
-		if (!Validator.CRMValidation(crm)) {
+		String crmFormatado = Formatter.ofCrm(crm);
+		
+		if (!Validator.CRMValidation(crmFormatado)) {
 			throw new InvalidDataException("CRM inválido.");
 		}
 		
 		var medicoEntidade = medicoRepository
-				.findByCrm(Formatter.ofCrm(crm))
+				.findByCrm(crmFormatado)
 				.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com CRM: " + crm));
 		
 		SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
