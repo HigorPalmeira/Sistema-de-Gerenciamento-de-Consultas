@@ -1,6 +1,9 @@
 package com.higorpalmeira.github.gerenciadorconsultas.util;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -23,6 +26,9 @@ public class Validator {
     );
 	
 	private static final BigDecimal VALOR_MAXIMO = new BigDecimal("99999.99");
+	
+	private static final LocalTime INICIO_EXPEDIENTE = LocalTime.of(8, 0);
+	private static final LocalTime FIM_EXPEDIENTE = LocalTime.of(18, 0);
 	
 	public static boolean CPFValidation(final String input) {
 		
@@ -120,6 +126,24 @@ public class Validator {
 		if (valor.scale() > 2) return false;
 		
 		if (valor.compareTo( VALOR_MAXIMO ) > 0) return false;
+		
+		return true;
+		
+	}
+	
+	public static boolean DataHoraValidation(LocalDateTime dataHora) {
+		
+		if (dataHora == null) return false;
+		
+		if (dataHora.isBefore(LocalDateTime.now())) return false;
+		
+		DayOfWeek diaSemana = dataHora.getDayOfWeek();
+		
+		if (diaSemana == DayOfWeek.SATURDAY || diaSemana == DayOfWeek.SUNDAY) return false;
+		
+		LocalTime hora = dataHora.toLocalTime();
+        
+		if (hora.isBefore(INICIO_EXPEDIENTE) || hora.isAfter(FIM_EXPEDIENTE)) return false;
 		
 		return true;
 		
