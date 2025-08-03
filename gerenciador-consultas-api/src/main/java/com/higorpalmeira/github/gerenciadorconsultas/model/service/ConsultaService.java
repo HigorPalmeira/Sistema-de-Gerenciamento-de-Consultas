@@ -158,10 +158,16 @@ public class ConsultaService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaAgendada() {
+	public List<SaidaSimplesConsultaDto> listarTodasSaidaSimplesConsultaPorStatus(String status) {
+		
+		if (status == null || status.isBlank()) {
+			throw new InvalidDataException("Status Inválido!");
+		}
+		
+		TipoStatusConsulta eStatus = TipoStatusConsulta.fromTipo(status);
 		
 		List<Consulta> listaConsultas = consultaRepository
-				.findAllByStatus(TipoStatusConsulta.AGENDADA);
+				.findAllByStatus(eStatus);
 		
 		var listaConsultaDto = listaConsultas.stream()
 				.map(consulta -> {
