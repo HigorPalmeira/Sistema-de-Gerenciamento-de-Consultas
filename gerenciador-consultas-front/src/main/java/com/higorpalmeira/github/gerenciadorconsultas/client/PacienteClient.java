@@ -62,6 +62,19 @@ public class PacienteClient {
         
     }
     
+    public HttpResponse<String> deletarPaciente(UUID idPaciente) throws IOException, InterruptedException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/" + idPaciente.toString()))
+                .DELETE()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
     public HttpResponse<String> buscarSaidaSimplesPacienteDtoPorId(UUID idPaciente) throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
