@@ -47,16 +47,52 @@ public interface PacienteRepository extends JpaRepository<Paciente, UUID> {
 	 * */
 	Optional<Paciente> findByEmail(String email);
 	
+	/*
+	 * Busca por todos os pacientes com o Nome exato do fornecido.
+	 * 
+	 * @param nome O Nome exato a ser procurado.
+	 * @return Lista com todos os pacientes com o nome fornecido, ou uma lista vazia.
+	 * */
 	List<Paciente> findByNome(String nome);
 	
+	/*
+	 * Busca por todos os pacientes que contenham o Nome fornecido, ignorando case (maiúsculas ou minúsculas).
+	 * 
+	 * @param nome O Nome a ser procurado.
+	 * @return Lista com todos os pacientes com o nome fornecido, ou uma lista vazia.
+	 * */
 	List<Paciente> findByNomeContainingIgnoreCase(String nome);
 	
+	/*
+	 * Busca por todos os pacientes com o Sobrenome exato do fornecido.
+	 * 
+	 * @param sobrenome O Sobrenome exato a ser procurado.
+	 * @return Lista com todos os pacientes com o sobrenome fornecido, ou uma lista vazia.
+	 * */
 	List<Paciente> findBySobrenome(String sobrenome);
 	
+	/*
+	 * Busca por todos os pacientes que contenham o Sobrenome, ignorando case (maiúsculas ou minúsculas).
+	 * 
+	 * @param sobrenome O Sobrenome exato a ser procurado.
+	 * @return Lista com todos os pacientes com o sobrenome fornecido, ou uma lista vazia.
+	 * */
 	List<Paciente> findBySobrenomeContainingIgnoreCase(String sobrenome);
 	
+	/*
+	 * Busca por todos os pacientes com o Genero fornecido.
+	 * 
+	 * @param genero O Genero a ser procurado.
+	 * @return Lista com todos os pacientes com o genero fornecido, ou uma lista vazia.
+	 * */
 	List<Paciente> findAllByGenero(TipoGenero genero);
 	
+	/*
+	 * Busca por todos os pacientes que não tenham o Genero fornecido.
+	 * 
+	 * @param genero O Genero a ser evitado.
+	 * @return Lista com todos os pacientes com o genero exceto o fornecido, ou uma lista vazia.
+	 * */
 	List<Paciente> findAllByGeneroNot(TipoGenero genero);
 
 	/*
@@ -71,7 +107,7 @@ public interface PacienteRepository extends JpaRepository<Paciente, UUID> {
 	 * Busca por todos os pacientes que não tenham o Status fornecido.
 	 * 
 	 * @param status O Status a ser evitado.
-	 * @return Lista com todos os pacientes com o status fornecido, ou uma lista vazia.
+	 * @return Lista com todos os pacientes com o status exceto o fornecido, ou uma lista vazia.
 	 * */
 	List<Paciente> findAllByStatusNot(TipoStatusConta status);
 	
