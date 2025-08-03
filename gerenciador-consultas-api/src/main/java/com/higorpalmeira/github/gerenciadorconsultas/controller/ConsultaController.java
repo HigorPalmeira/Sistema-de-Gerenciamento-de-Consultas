@@ -85,6 +85,25 @@ public class ConsultaController {
 		
 	}
 	
+	@GetMapping("/valor/{valorInicial}/{valorFinal}")
+	public ResponseEntity<List<SaidaSimplesConsultaDto>> listarTodasSaidasSimplesConsultaPorIntervaloValor(@PathVariable("valorInicial") BigDecimal valorInicial,
+			@PathVariable("valorFinal") BigDecimal valorFinal) {
+		
+		var consultas = consultaService.listarTodasSaidaSimplesConsultaPorIntervaloValor(valorInicial, valorFinal);
+		
+		return ResponseEntity.ok(consultas);
+		
+	}
+	
+	@GetMapping("/observacoes/{observacoesConsulta}")
+	public ResponseEntity<List<SaidaSimplesConsultaDto>> listarTodasSaidasSimplesConsultaPorObservacoes(@PathVariable("observacoesConsulta") String observacoesConsulta) {
+		
+		var consultas = consultaService.listarTodasSaidaSimplesConsultaPorObservacoes(observacoesConsulta);
+		
+		return ResponseEntity.ok(consultas);
+		
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<SaidaSimplesConsultaDto>> listarTodasSaidaSimplesConsultaAtiva() {
 		
