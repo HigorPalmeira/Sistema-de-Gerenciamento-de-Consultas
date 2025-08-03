@@ -96,7 +96,9 @@ public class PacienteController {
 	@GetMapping("/status/{statusPaciente}")
 	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPacientePorStatus(@PathVariable("statusPaciente") String statusPaciente) {
 		
-		return null;
+		var pacientes = pacienteService.listarTodosSaidaSimplesPacientePorStatus(statusPaciente);
+		
+		return ResponseEntity.ok(pacientes);
 		
 	}
 	
@@ -113,24 +115,6 @@ public class PacienteController {
 	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPaciente() {
 		
 		var pacientes = pacienteService.listarTodosSaidaSimplesPaciente();
-		
-		return ResponseEntity.ok(pacientes);
-		
-	}
-	
-	@GetMapping("/status/ativo")
-	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPacienteAtivos() {
-		
-		var pacientes = pacienteService.listarTodosSaidaSimplesPacienteAtivos();
-		
-		return ResponseEntity.ok(pacientes);
-		
-	}
-	
-	@GetMapping("/status/inativo")
-	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPacienteInativos() {
-		
-		var pacientes = pacienteService.listarTodosSaidaSimplesPacienteInativos();
 		
 		return ResponseEntity.ok(pacientes);
 		
