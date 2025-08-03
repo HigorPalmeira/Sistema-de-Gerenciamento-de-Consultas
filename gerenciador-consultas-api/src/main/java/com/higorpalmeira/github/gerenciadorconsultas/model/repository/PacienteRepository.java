@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Paciente;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
 
 @Repository
@@ -45,6 +46,18 @@ public interface PacienteRepository extends JpaRepository<Paciente, UUID> {
 	 * @return Optional com Patient presente se o paciente for encontrado, caso contrário um Optional vazio.
 	 * */
 	Optional<Paciente> findByEmail(String email);
+	
+	List<Paciente> findByNome(String nome);
+	
+	List<Paciente> findByNomeContainingIgnoreCase(String nome);
+	
+	List<Paciente> findBySobrenome(String sobrenome);
+	
+	List<Paciente> findBySobrenomeContainingIgnoreCase(String sobrenome);
+	
+	List<Paciente> findAllByGenero(TipoGenero genero);
+	
+	List<Paciente> findAllByGeneroNot(TipoGenero genero);
 
 	/*
 	 * Busca por todos os pacientes com o Status fornecido.
