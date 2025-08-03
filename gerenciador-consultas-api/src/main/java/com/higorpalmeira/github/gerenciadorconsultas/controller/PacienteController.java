@@ -50,6 +50,15 @@ public class PacienteController {
 		
 	}
 	
+	@GetMapping("/email/{emailPaciente}")
+	public ResponseEntity<SaidaSimplesPacienteDto> buscarSaidaSimplesPacienteDtoPorEmail(@PathVariable("emailPaciente") String emailPaciente) {
+		
+		var paciente = pacienteService.buscarSaidaSimplesPacientePorEmail(emailPaciente);
+		
+		return ResponseEntity.ok(paciente);
+		
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<SaidaSimplesPacienteDto>> listarTodosSaidaSimplesPaciente() {
 		
