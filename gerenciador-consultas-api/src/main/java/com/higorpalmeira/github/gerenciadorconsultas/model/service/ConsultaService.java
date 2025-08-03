@@ -54,9 +54,12 @@ public class ConsultaService {
 	@Transactional
 	public UUID criarConsulta(CriarConsultaDto criarConsultaDto) {
 		
-		// criar validação para o datetime
 		if (!Validator.ValorValidation(criarConsultaDto.getValor())) {
 			throw new InvalidDataException("Valor inválido.");
+		}
+		
+		if (!Validator.DataHoraValidation(criarConsultaDto.getDataHora())) {
+			throw new InvalidDataException("Data e hora inválido.");
 		}
 		
 		var medicoId = criarConsultaDto.getMedicoId();
