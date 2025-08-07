@@ -4,6 +4,10 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
+import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
+import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
+import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 import com.higorpalmeira.github.gerenciadorconsultas.view.criar.frmCriarConsulta;
 
 /**
@@ -11,12 +15,19 @@ import com.higorpalmeira.github.gerenciadorconsultas.view.criar.frmCriarConsulta
  * @author higor
  */
 public class frmConsulta extends frmGenerico {
+    
+    private final MedicoService medicoService;
+    
+    private final PacienteService pacienteService;
 
     /**
      * Creates new form frmConsulta
      */
     public frmConsulta() {
         initComponents();
+        
+        this.medicoService = new MedicoService(new MedicoClient());
+        this.pacienteService = new PacienteService(new PacienteClient());
     }
 
     /**
@@ -223,7 +234,7 @@ public class frmConsulta extends frmGenerico {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        frmCriarConsulta frmCriarConsulta = new frmCriarConsulta();
+        frmCriarConsulta frmCriarConsulta = new frmCriarConsulta(this.medicoService, this.pacienteService);
         frmCriarConsulta.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
