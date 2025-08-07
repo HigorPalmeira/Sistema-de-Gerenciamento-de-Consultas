@@ -4,21 +4,81 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view.criar;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
+import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarConsultaDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
+import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import com.higorpalmeira.github.gerenciadorconsultas.view.frmGenerico;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author higor
  */
 public class frmCriarConsulta extends frmGenerico {
+    
+    private final MedicoService medicoService;
+    
+    private final PacienteService pacienteService;
+    
+    private UUID idMedico;
+    private UUID idPaciente;
 
     /**
      * Creates new form frmCriarConsulta
+     * 
+     * @param medicoService
+     * @param pacienteService
      */
-    public frmCriarConsulta() {
+    public frmCriarConsulta(MedicoService medicoService, PacienteService pacienteService) {
         initComponents();
+        
+        lblAvisoConsulta.setVisible(false);
+        lblAvisoConsultaHora.setVisible(false);
+        lblAvisoMedico.setVisible(false);
+        lblAvisoPaciente.setVisible(false);
+        
+        this.medicoService = medicoService;
+        this.pacienteService = pacienteService;
+        
+        this.idMedico = null;
+        this.idPaciente = null;
     }
 
+    private boolean validar_campos() {
+        
+        if (txtData.getText().isBlank()) {
+            return false;
+        }
+        
+        if (txtHora.getText().isBlank()) {
+            return false;
+        }
+        
+        if (txtValor.getText().isBlank()) {
+            return false;
+        }
+        
+        if (txtCrm.getText().isBlank()) {
+            return false;
+        }
+        
+        if (txtCpf.getText().isBlank()) {
+            return false;
+        }
+        
+        return true;
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,7 +98,7 @@ public class frmCriarConsulta extends frmGenerico {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtObservacoes = new javax.swing.JTextArea();
         txtData = new javax.swing.JFormattedTextField();
         txtHora = new javax.swing.JFormattedTextField();
         txtValor = new javax.swing.JFormattedTextField();
@@ -68,7 +128,7 @@ public class frmCriarConsulta extends frmGenerico {
         txtEmailPaciente = new javax.swing.JTextField();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         lblAvisoPaciente = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnRegistrarPaciente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("criar consulta"); // NOI18N
@@ -99,6 +159,11 @@ public class frmCriarConsulta extends frmGenerico {
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnSalvar.setMnemonic('s');
         btnSalvar.setText("SALVAR");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Informações:"));
 
@@ -114,9 +179,9 @@ public class frmCriarConsulta extends frmGenerico {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Observações:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtObservacoes.setColumns(20);
+        txtObservacoes.setRows(5);
+        jScrollPane1.setViewportView(txtObservacoes);
 
         txtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         txtData.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -206,6 +271,11 @@ public class frmCriarConsulta extends frmGenerico {
         jLabel9.setText("Especialidade:");
 
         txtCrm.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCrm.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCrmFocusGained(evt);
+            }
+        });
 
         txtNomeMedico.setEditable(false);
         txtNomeMedico.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -218,6 +288,11 @@ public class frmCriarConsulta extends frmGenerico {
 
         btnRegistrarMedico.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnRegistrarMedico.setText("REGISTRAR");
+        btnRegistrarMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarMedicoActionPerformed(evt);
+            }
+        });
 
         lblAvisoMedico.setForeground(new java.awt.Color(204, 0, 0));
         lblAvisoMedico.setText("* CRM inválido.");
@@ -293,6 +368,11 @@ public class frmCriarConsulta extends frmGenerico {
             ex.printStackTrace();
         }
         txtCpf.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCpf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCpfFocusGained(evt);
+            }
+        });
 
         txtNomePaciente.setEditable(false);
         txtNomePaciente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -349,8 +429,13 @@ public class frmCriarConsulta extends frmGenerico {
         lblAvisoPaciente.setForeground(new java.awt.Color(204, 0, 0));
         lblAvisoPaciente.setText("* CPF inválido.");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("REGISTRAR");
+        btnRegistrarPaciente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnRegistrarPaciente.setText("REGISTRAR");
+        btnRegistrarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarPacienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -372,7 +457,7 @@ public class frmCriarConsulta extends frmGenerico {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtSobrenomePaciente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(btnRegistrarPaciente, javax.swing.GroupLayout.Alignment.LEADING))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -383,7 +468,7 @@ public class frmCriarConsulta extends frmGenerico {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnRegistrarPaciente))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblAvisoPaciente)
                 .addGap(5, 5, 5)
@@ -427,6 +512,92 @@ public class frmCriarConsulta extends frmGenerico {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+
+        if (this.validar_campos() && (this.idMedico != null && this.idPaciente != null)) {
+            
+            CriarConsultaDto consultaDto;
+            
+            consultaDto = new CriarConsultaDto(
+                    LocalDateTime.parse( txtData.getText() + " " + txtHora.getText() , DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")),
+                    txtObservacoes.getText(),
+                    BigDecimal.valueOf(Double.parseDouble( txtValor.getText() ) ),
+                    this.idMedico,
+                    this.idPaciente
+            );
+            
+            JOptionPane.showMessageDialog(this, "Processo para criação de consulta...", "Sem suporte", JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnRegistrarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarMedicoActionPerformed
+
+        if (txtCrm.getText().isBlank()) {
+            lblAvisoMedico.setText("* Informe o CRM do médico para registrá-lo.");
+            lblAvisoMedico.setVisible(true);
+        } else {
+            
+            if (!Validador.isCrm(txtCrm.getText())) {
+                lblAvisoMedico.setText("* CRM inválido.");
+                lblAvisoMedico.setVisible(true);
+                return;
+            }
+            
+            SaidaSimplesMedicoDto medicoDto = this.medicoService.buscarSaidaSimplesMedicoDtoPorCrm( txtCrm.getText() );
+            
+            if (medicoDto == null || (medicoDto.getId() == null && medicoDto.getCrm() == null)) {
+                lblAvisoMedico.setText("Não foi encontrado um médico com este CRM!");
+                lblAvisoMedico.setVisible(true);
+            } else {
+                
+                this.idMedico = medicoDto.getId();
+                
+                txtNomeMedico.setText( medicoDto.getNome() );
+                txtSobrenomeMedico.setText( medicoDto.getSobrenome() );
+                txtEspecialidadeMedico.setText( medicoDto.getEspecialidade().getDescricao() );
+                
+            }
+            
+        }
+        
+    }//GEN-LAST:event_btnRegistrarMedicoActionPerformed
+
+    private void btnRegistrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPacienteActionPerformed
+
+        if (txtCpf.getText().isBlank()) {
+            
+            lblAvisoPaciente.setText("* Informe um CPF do paciente para registrá-lo.");
+            lblAvisoPaciente.setVisible(true);
+            
+        } else {
+            
+            if (Validador.isCpf(txtCpf.getText())) {
+                lblAvisoPaciente.setText("* CPF inválido.");
+                lblAvisoPaciente.setVisible(true);
+                
+            } else {
+                SaidaSimplesPacienteDto pacienteDto;
+                JOptionPane.showMessageDialog(this, "Sem suporte para isso ainda.", "Sem suporte", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+        }
+
+    }//GEN-LAST:event_btnRegistrarPacienteActionPerformed
+
+    private void txtCrmFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCrmFocusGained
+
+        lblAvisoMedico.setVisible(false);
+
+    }//GEN-LAST:event_txtCrmFocusGained
+
+    private void txtCpfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCpfFocusGained
+
+        lblAvisoPaciente.setVisible(false);
+        
+    }//GEN-LAST:event_txtCpfFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -457,15 +628,15 @@ public class frmCriarConsulta extends frmGenerico {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCriarConsulta().setVisible(true);
+                new frmCriarConsulta(new MedicoService(new MedicoClient()), new PacienteService(new PacienteClient())).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrarMedico;
+    private javax.swing.JButton btnRegistrarPaciente;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -487,7 +658,6 @@ public class frmCriarConsulta extends frmGenerico {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblAvisoConsulta;
     private javax.swing.JLabel lblAvisoConsultaHora;
     private javax.swing.JLabel lblAvisoMedico;
@@ -501,6 +671,7 @@ public class frmCriarConsulta extends frmGenerico {
     private javax.swing.JFormattedTextField txtHora;
     private javax.swing.JTextField txtNomeMedico;
     private javax.swing.JTextField txtNomePaciente;
+    private javax.swing.JTextArea txtObservacoes;
     private javax.swing.JTextField txtSobrenomeMedico;
     private javax.swing.JTextField txtSobrenomePaciente;
     private javax.swing.JFormattedTextField txtValor;
