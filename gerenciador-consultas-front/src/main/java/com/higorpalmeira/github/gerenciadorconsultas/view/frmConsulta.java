@@ -4,6 +4,8 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.view.criar.frmCriarConsulta;
+
 /**
  *
  * @author higor
@@ -131,6 +133,11 @@ public class frmConsulta extends frmGenerico {
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setMnemonic('n');
         jButton1.setText("NOVA");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setMnemonic('e');
@@ -213,6 +220,13 @@ public class frmConsulta extends frmGenerico {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        frmCriarConsulta frmCriarConsulta = new frmCriarConsulta();
+        frmCriarConsulta.setVisible(true);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
