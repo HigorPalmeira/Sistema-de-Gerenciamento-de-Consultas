@@ -43,6 +43,11 @@ public class frmPrincipal extends frmGenerico {
 
         mitConsultas.setText("Consultas");
         mitConsultas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        mitConsultas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mitConsultasMouseClicked(evt);
+            }
+        });
         menuPrincipal.add(mitConsultas);
 
         mitPacientes.setText("Pacientes");
@@ -132,6 +137,13 @@ public class frmPrincipal extends frmGenerico {
         frmPaciente.setVisible(true);
 
     }//GEN-LAST:event_mitPacientesMouseClicked
+
+    private void mitConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mitConsultasMouseClicked
+
+        frmConsulta frmConsulta = new frmConsulta();
+        frmConsulta.setVisible(true);
+
+    }//GEN-LAST:event_mitConsultasMouseClicked
 
     /**
      * @param args the command line arguments
