@@ -101,6 +101,19 @@ public class PacienteClient {
         
     }
     
+    public HttpResponse<String> buscarSaidaSimplesPacienteDtoPorEmail(String email) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/email/" + email))
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
     public HttpResponse<String> listarSaidaSimplesPacienteDto() throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
