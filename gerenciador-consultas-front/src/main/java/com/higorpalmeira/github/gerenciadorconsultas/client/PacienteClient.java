@@ -114,6 +114,32 @@ public class PacienteClient {
         
     }
     
+    public HttpResponse<String> buscarSaidasSimplesPacienteDtoPorNome(String nome) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/nome/" + nome))
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
+    public HttpResponse<String> buscarSaidasSimplesPacienteDtoPorSobrenome(String sobrenome) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/sobrenome/" + sobrenome))
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
     public HttpResponse<String> listarSaidaSimplesPacienteDto() throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
