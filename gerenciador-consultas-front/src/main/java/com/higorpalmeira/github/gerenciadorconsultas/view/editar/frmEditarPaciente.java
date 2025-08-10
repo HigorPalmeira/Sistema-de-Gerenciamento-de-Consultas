@@ -230,7 +230,7 @@ public class frmEditarPaciente extends frmGenerico {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("CRIAR PACIENTE");
+        jLabel1.setText("EDITAR PACIENTE");
 
         javax.swing.GroupLayout pnlTituloLayout = new javax.swing.GroupLayout(pnlTitulo);
         pnlTitulo.setLayout(pnlTituloLayout);

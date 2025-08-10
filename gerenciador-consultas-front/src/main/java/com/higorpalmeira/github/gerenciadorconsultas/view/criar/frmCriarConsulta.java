@@ -126,7 +126,7 @@ public class frmCriarConsulta extends frmGenerico {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         txtEmailPaciente = new javax.swing.JTextField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        txtTelefonePaciente = new javax.swing.JFormattedTextField();
         lblAvisoPaciente = new javax.swing.JLabel();
         btnRegistrarPaciente = new javax.swing.JButton();
 
@@ -391,13 +391,13 @@ public class frmCriarConsulta extends frmGenerico {
         txtEmailPaciente.setEditable(false);
         txtEmailPaciente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jFormattedTextField1.setEditable(false);
+        txtTelefonePaciente.setEditable(false);
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+            txtTelefonePaciente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jFormattedTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtTelefonePaciente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -409,7 +409,7 @@ public class frmCriarConsulta extends frmGenerico {
                     .addComponent(jLabel14)
                     .addComponent(txtEmailPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTelefonePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(162, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -422,7 +422,7 @@ public class frmCriarConsulta extends frmGenerico {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTelefonePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -548,7 +548,7 @@ public class frmCriarConsulta extends frmGenerico {
             SaidaSimplesMedicoDto medicoDto = this.medicoService.buscarSaidaSimplesMedicoDtoPorCrm( txtCrm.getText() );
             
             if (medicoDto == null || (medicoDto.getId() == null && medicoDto.getCrm() == null)) {
-                lblAvisoMedico.setText("Não foi encontrado um médico com este CRM!");
+                lblAvisoMedico.setText("*Não foi encontrado um médico com este CRM!");
                 lblAvisoMedico.setVisible(true);
             } else {
                 
@@ -578,7 +578,23 @@ public class frmCriarConsulta extends frmGenerico {
                 lblAvisoPaciente.setVisible(true);
                 
             } else {
-                SaidaSimplesPacienteDto pacienteDto;
+                SaidaSimplesPacienteDto pacienteDto = this.pacienteService.buscarSaidaSimplesPacienteDtoPorCpf(txtCpf.getText().trim());
+                
+                if (pacienteDto == null || (pacienteDto.getId() == null && pacienteDto.getCpf() == null) ) {
+                    lblAvisoPaciente.setText("*Não foi encontrado um paciente com este CPF!");
+                    lblAvisoPaciente.setVisible(true);
+                    
+                } else {
+                    
+                    this.idPaciente = pacienteDto.getId();
+                    
+                    txtNomePaciente.setText(pacienteDto.getNome());
+                    txtSobrenomePaciente.setText(pacienteDto.getSobrenome());
+                    txtEmailPaciente.setText(pacienteDto.getEmail());
+                    txtTelefonePaciente.setText(pacienteDto.getTelefone());
+                    
+                }
+                
                 JOptionPane.showMessageDialog(this, "Sem suporte para isso ainda.", "Sem suporte", JOptionPane.INFORMATION_MESSAGE);
             }
             
@@ -637,7 +653,6 @@ public class frmCriarConsulta extends frmGenerico {
     private javax.swing.JButton btnRegistrarMedico;
     private javax.swing.JButton btnRegistrarPaciente;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -674,6 +689,7 @@ public class frmCriarConsulta extends frmGenerico {
     private javax.swing.JTextArea txtObservacoes;
     private javax.swing.JTextField txtSobrenomeMedico;
     private javax.swing.JTextField txtSobrenomePaciente;
+    private javax.swing.JFormattedTextField txtTelefonePaciente;
     private javax.swing.JFormattedTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }
