@@ -39,7 +39,7 @@ public class frmCriarMedico extends frmGenerico {
         this.medicoService = medicoService;
         this.especialidadeService = especialidadeService;
         
-        this.listaEspecialidades = especialidadeService.listarSaidaSimplesEspecialidadeDto();
+        this.listaEspecialidades = this.especialidadeService.listarSaidaSimplesEspecialidadeDto();
         
         this.listarEspecialidades();
     }
