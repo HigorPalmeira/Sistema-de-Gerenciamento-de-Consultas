@@ -269,6 +269,102 @@ public class PacienteService {
         
     }
     
+    public SaidaSimplesPacienteDto buscarSaidaSimplesPacienteDtoPorEmail(String email) {
+        
+        if (!Validador.isEmail(email)) {
+            return null;
+        }
+        
+        SaidaSimplesPacienteDto pacienteDto = new SaidaSimplesPacienteDto();
+        
+        try {
+            
+            HttpResponse<String> response = client.buscarSaidaSimplesPacienteDtoPorEmail(email);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                pacienteDto = mapper.readValue(response.body(), SaidaSimplesPacienteDto.class);
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição do Paciente! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar buscar o paciente!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return pacienteDto;
+        
+    }
+    
+    public List<SaidaSimplesPacienteDto> buscarSaidaSimplesPacienteDtoPorNome(String nome) {
+        
+        if (nome == null || nome.isBlank()) {
+            return null;
+        }
+        
+        List<SaidaSimplesPacienteDto> listaPacientes = new ArrayList<>();
+        
+        try {
+            
+            HttpResponse<String> response = client.buscarSaidasSimplesPacienteDtoPorNome(nome);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                listaPacientes = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesPacienteDto>>() { });
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição dos Pacientes! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar buscar os pacientes!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return listaPacientes;
+        
+    }
+    
+    public List<SaidaSimplesPacienteDto> buscarSaidaSimplesPacienteDtoPorSobrenome(String sobrenome) {
+        
+        if (sobrenome == null || sobrenome.isBlank()) {
+            return null;
+        }
+        
+        List<SaidaSimplesPacienteDto> listaPacientes = new ArrayList<>();
+        
+        try {
+            
+            HttpResponse<String> response = client.buscarSaidasSimplesPacienteDtoPorSobrenome(sobrenome);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                listaPacientes = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesPacienteDto>>() { });
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição dos Pacientes! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar buscar os pacientes!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return listaPacientes;
+        
+    }
+    
     public List<SaidaSimplesPacienteDto> listarSaidasSimplesPacienteDto() {
         
         List<SaidaSimplesPacienteDto> listaPacientes = new ArrayList<>();
