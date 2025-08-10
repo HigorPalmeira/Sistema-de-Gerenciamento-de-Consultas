@@ -4,11 +4,13 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view.criar;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.ConsultaClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.service.ConsultaService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
@@ -25,6 +27,8 @@ import javax.swing.JOptionPane;
  */
 public class frmCriarConsulta extends frmGenerico {
     
+    private final ConsultaService consultaService;
+    
     private final MedicoService medicoService;
     
     private final PacienteService pacienteService;
@@ -38,7 +42,7 @@ public class frmCriarConsulta extends frmGenerico {
      * @param medicoService
      * @param pacienteService
      */
-    public frmCriarConsulta(MedicoService medicoService, PacienteService pacienteService) {
+    public frmCriarConsulta(ConsultaService consultaService, MedicoService medicoService, PacienteService pacienteService) {
         initComponents();
         
         lblAvisoConsulta.setVisible(false);
@@ -46,6 +50,7 @@ public class frmCriarConsulta extends frmGenerico {
         lblAvisoMedico.setVisible(false);
         lblAvisoPaciente.setVisible(false);
         
+        this.consultaService = consultaService;
         this.medicoService = medicoService;
         this.pacienteService = pacienteService;
         
@@ -76,6 +81,24 @@ public class frmCriarConsulta extends frmGenerico {
         }
         
         return true;
+        
+    }
+    
+    private void limpar_campos() {
+        
+        txtCpf.setText("");
+        txtCrm.setText("");
+        txtData.setText("");
+        txtEmailPaciente.setText("");
+        txtEspecialidadeMedico.setText("");
+        txtHora.setText("");
+        txtNomeMedico.setText("");
+        txtNomePaciente.setText("");
+        txtObservacoes.setText("");
+        txtSobrenomeMedico.setText("");
+        txtSobrenomePaciente.setText("");
+        txtTelefonePaciente.setText("");
+        txtValor.setText("");
         
     }
     
@@ -534,17 +557,23 @@ public class frmCriarConsulta extends frmGenerico {
 
         if (this.validar_campos() && (this.idMedico != null && this.idPaciente != null)) {
             
-            CriarConsultaDto consultaDto;
+            boolean status = this.consultaService.criarConsulta(
+                    LocalDateTime.parse( txtData.getText() + " " + txtHora.getText() , DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), 
+                    new BigDecimal(txtValor.getText().replace(",", ".")),
+                    txtObservacoes.getText(), 
+                    this.idMedico, 
+                    this.idPaciente);
             
-            consultaDto = new CriarConsultaDto(
-                    LocalDateTime.parse( txtData.getText() + " " + txtHora.getText() , DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")),
-                    txtObservacoes.getText(),
-                    BigDecimal.valueOf(Double.parseDouble( txtValor.getText() ) ),
-                    this.idMedico,
-                    this.idPaciente
-            );
-            
-            JOptionPane.showMessageDialog(this, "Processo para criação de consulta...", "Sem suporte", JOptionPane.INFORMATION_MESSAGE);
+            if (status) {
+                
+                JOptionPane.showMessageDialog(this, "Consulta criada com sucesso!", "Consulta Criada", JOptionPane.INFORMATION_MESSAGE);
+                this.limpar_campos();
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(this, "A consulta não pode ser criada!", "Consulta não criada", JOptionPane.ERROR_MESSAGE);
+                
+            }
             
         }
 
@@ -662,7 +691,7 @@ public class frmCriarConsulta extends frmGenerico {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCriarConsulta(new MedicoService(new MedicoClient()), new PacienteService(new PacienteClient())).setVisible(true);
+                new frmCriarConsulta(new ConsultaService(new ConsultaClient()) , new MedicoService(new MedicoClient()), new PacienteService(new PacienteClient())).setVisible(true);
             }
         });
     }

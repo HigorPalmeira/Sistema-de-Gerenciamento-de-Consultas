@@ -46,7 +46,7 @@ public class ConsultaService {
             return false;
         }
         
-        if (valor == null || valor.scale() != 2 || (valor.compareTo(BigDecimal.ZERO) < 0) || valor.compareTo( new BigDecimal("criarConsultaDto") ) > 0) {
+        if (valor == null || valor.scale() != 2 || (valor.compareTo(BigDecimal.ZERO) < 0) || valor.compareTo( new BigDecimal("99999.99") ) > 0) {
             return false;
         }
         
