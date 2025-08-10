@@ -15,6 +15,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimple
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Genero.TipoGenero;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Formatador;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import java.io.IOException;
 import java.net.URI;
@@ -215,6 +216,38 @@ public class PacienteService {
         try {
             
             HttpResponse<String> response = client.buscarSaidaSimplesPacienteDtoPorId(idPaciente);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                pacienteDto = mapper.readValue(response.body(), SaidaSimplesPacienteDto.class);
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição do Paciente! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar buscar o paciente!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return pacienteDto;
+        
+    }
+    
+    public SaidaSimplesPacienteDto buscarSaidaSimplesPacienteDtoPorCpf(String cpf) {
+        
+        if (!Validador.isCpf(cpf)) {
+            return null;
+        }
+        
+        SaidaSimplesPacienteDto pacienteDto = new SaidaSimplesPacienteDto();
+        
+        try {
+            
+            HttpResponse<String> response = client.buscarSaidaSimplesPacienteDtoPorCpf(Formatador.limparFormatacao(cpf));
             
             if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
                 
