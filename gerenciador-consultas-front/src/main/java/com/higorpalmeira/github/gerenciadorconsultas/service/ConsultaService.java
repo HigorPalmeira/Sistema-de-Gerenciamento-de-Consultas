@@ -103,6 +103,38 @@ public class ConsultaService {
         
     }
     
+    public SaidaSimplesConsultaDto buscarConsultaPorDataHora(LocalDateTime dataHora) {
+        
+        if (dataHora == null) {
+            return null;
+        }
+        
+        SaidaSimplesConsultaDto consultaDto = new SaidaSimplesConsultaDto();
+        
+        try {
+            
+            HttpResponse<String> response = client.buscarConsultaPorDataHora(dataHora);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                consultaDto = mapper.readValue(response.body(), SaidaSimplesConsultaDto.class);
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição da Consulta! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar listar todas as consultas!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return consultaDto;
+        
+    }
+    
     public List<SaidaSimplesConsultaDto> listarTodasConsultasAtivas() {
         
         List<SaidaSimplesConsultaDto> listaConsultas = new ArrayList<>();

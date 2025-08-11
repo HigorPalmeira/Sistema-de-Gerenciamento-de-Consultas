@@ -8,12 +8,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConsulta;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  *
  * @author higor
  */
 public class SaidaSimplesConsultaDto {
+    
+    private UUID idConsulta;
     
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataHora;
@@ -31,13 +34,22 @@ public class SaidaSimplesConsultaDto {
     public SaidaSimplesConsultaDto() {
     }
 
-    public SaidaSimplesConsultaDto(LocalDateTime dataHora, TipoStatusConsulta status, String observacoes, BigDecimal valor, SaidaSimplesMedicoDto medico, SaidaSimplesPacienteDto paciente) {
+    public SaidaSimplesConsultaDto(UUID idConsulta, LocalDateTime dataHora, TipoStatusConsulta status, String observacoes, BigDecimal valor, SaidaSimplesMedicoDto medico, SaidaSimplesPacienteDto paciente) {
+        this.idConsulta = idConsulta;
         this.dataHora = dataHora;
         this.status = status;
         this.observacoes = observacoes;
         this.valor = valor;
         this.medico = medico;
         this.paciente = paciente;
+    }
+
+    public UUID getIdConsulta() {
+        return idConsulta;
+    }
+
+    public void setIdConsulta(UUID idConsulta) {
+        this.idConsulta = idConsulta;
     }
 
     public LocalDateTime getDataHora() {

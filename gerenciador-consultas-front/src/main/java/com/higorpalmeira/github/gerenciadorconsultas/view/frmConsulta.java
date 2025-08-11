@@ -14,6 +14,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 import com.higorpalmeira.github.gerenciadorconsultas.view.criar.frmCriarConsulta;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -60,7 +61,7 @@ public class frmConsulta extends frmGenerico {
                 for (SaidaSimplesConsultaDto consulta : listaConsultas) {
                     
                     Object[] obj = {
-                        "sem id",
+                        consulta.getIdConsulta(),
                         consulta.getDataHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
                         consulta.getMedico().getNome() + " " + consulta.getMedico().getSobrenome(),
                         consulta.getPaciente().getNome() + " " + consulta.getPaciente().getSobrenome(),
@@ -73,6 +74,14 @@ public class frmConsulta extends frmGenerico {
                 
             }
             
+        }
+        
+    }
+    
+    private void pesquisar() {
+        
+        if (txtPesquisa.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Escreva na caixa de pesquisa!", "Falha ao pesquisar", JOptionPane.ERROR_MESSAGE);
         }
         
     }
@@ -89,7 +98,7 @@ public class frmConsulta extends frmGenerico {
         pnlTitulo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pnlPesquisa = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        txtPesquisa = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -128,7 +137,7 @@ public class frmConsulta extends frmGenerico {
 
         pnlPesquisa.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisa:"));
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton5.setText("PESQUISAR");
@@ -139,7 +148,7 @@ public class frmConsulta extends frmGenerico {
             pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPesquisaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addContainerGap())
@@ -148,7 +157,7 @@ public class frmConsulta extends frmGenerico {
             pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPesquisaLayout.createSequentialGroup()
                 .addGroup(pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5))
                 .addGap(0, 51, Short.MAX_VALUE))
         );
@@ -355,9 +364,9 @@ public class frmConsulta extends frmGenerico {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel pnlPesquisa;
     private javax.swing.JPanel pnlTitulo;
     private javax.swing.JTable tblConsultas;
+    private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
 }
