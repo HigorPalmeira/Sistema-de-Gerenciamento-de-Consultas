@@ -7,10 +7,14 @@ package com.higorpalmeira.github.gerenciadorconsultas.view;
 import com.higorpalmeira.github.gerenciadorconsultas.client.ConsultaClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.service.ConsultaService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 import com.higorpalmeira.github.gerenciadorconsultas.view.criar.frmCriarConsulta;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,6 +27,8 @@ public class frmConsulta extends frmGenerico {
     private final MedicoService medicoService;
     
     private final PacienteService pacienteService;
+    
+    private boolean carregarTabela;
 
     /**
      * Creates new form frmConsulta
@@ -33,6 +39,42 @@ public class frmConsulta extends frmGenerico {
         this.consultaService = new ConsultaService(new ConsultaClient());
         this.medicoService = new MedicoService(new MedicoClient());
         this.pacienteService = new PacienteService(new PacienteClient());
+        
+        this.carregarTabela = true;
+        
+        this.listar_consultas();
+    }
+    
+    private void listar_consultas() {
+        
+        if (this.carregarTabela) {
+            this.carregarTabela = false;
+            
+            List<SaidaSimplesConsultaDto> listaConsultas = this.consultaService.listarTodasConsultasAtivas();
+            
+            DefaultTableModel dtm = (DefaultTableModel) tblConsultas.getModel();
+            dtm.setNumRows(0);
+            
+            if (!listaConsultas.isEmpty()) {
+                
+                for (SaidaSimplesConsultaDto consulta : listaConsultas) {
+                    
+                    Object[] obj = {
+                        "sem id",
+                        consulta.getDataHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
+                        consulta.getMedico().getNome() + " " + consulta.getMedico().getSobrenome(),
+                        consulta.getPaciente().getNome() + " " + consulta.getPaciente().getSobrenome(),
+                        consulta.getStatus().getTipo()
+                    };
+                    
+                    dtm.addRow(obj);
+                    
+                }
+                
+            }
+            
+        }
+        
     }
 
     /**
@@ -141,6 +183,14 @@ public class frmConsulta extends frmGenerico {
         if (tblConsultas.getColumnModel().getColumnCount() > 0) {
             tblConsultas.getColumnModel().getColumn(0).setPreferredWidth(0);
             tblConsultas.getColumnModel().getColumn(0).setMaxWidth(0);
+            tblConsultas.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tblConsultas.getColumnModel().getColumn(1).setMaxWidth(130);
+            tblConsultas.getColumnModel().getColumn(2).setPreferredWidth(150);
+            tblConsultas.getColumnModel().getColumn(2).setMaxWidth(200);
+            tblConsultas.getColumnModel().getColumn(3).setPreferredWidth(150);
+            tblConsultas.getColumnModel().getColumn(3).setMaxWidth(200);
+            tblConsultas.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tblConsultas.getColumnModel().getColumn(4).setMaxWidth(150);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

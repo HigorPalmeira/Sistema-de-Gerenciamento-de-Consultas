@@ -177,9 +177,11 @@ public class frmMedico extends frmGenerico {
 
             List<SaidaSimplesMedicoDto> listaMedicos = medicoService.listarSaidasSimplesMedicoDto();
 
+            /*
             DefaultTableModel dtm = (DefaultTableModel) tblMedicos.getModel();
             dtm.setNumRows(0);
-
+            */
+            
             this.preencher_tabela(listaMedicos);
 
         }

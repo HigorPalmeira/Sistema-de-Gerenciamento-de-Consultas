@@ -49,6 +49,7 @@ public class ConsultaService {
 		this.pacienteRepository = pacienteRepository;
 		this.consultaMapper = consultaMapper;
 		this.pacienteMapper = pacienteMapper;
+		this.medicoMapper = medicoMapper;
 	}
 	
 	@Transactional
