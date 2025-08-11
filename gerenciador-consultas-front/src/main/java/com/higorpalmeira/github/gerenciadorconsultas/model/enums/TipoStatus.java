@@ -65,4 +65,33 @@ public class TipoStatus {
         
     }
     
+    public enum TipoStatusConsulta {
+        AGENDADA("AGENDADA"),
+        REALIZADA("REALIZADA"),
+        REAGENDADA("REAGENDADA"),
+        CANCELADA("CANCELADA"),
+        FALTA("FALTA"),
+        INATIVA("INATIVA");
+        
+        private String tipo;
+        
+        TipoStatusConsulta(String tipo) {
+            this.tipo = tipo;
+        }
+        
+        public String getTipo() {
+            return this.tipo;
+        }
+        
+        public static TipoStatusConsulta fromTipo(String tipo) {
+            for (TipoStatusConsulta status : TipoStatusConsulta.values()) {
+                if (status.tipo.equalsIgnoreCase(tipo)) {
+                    return status;
+                }
+            }
+            
+            throw new RuntimeException("O tipo não é compatível!");
+        }
+    }
+    
 }
