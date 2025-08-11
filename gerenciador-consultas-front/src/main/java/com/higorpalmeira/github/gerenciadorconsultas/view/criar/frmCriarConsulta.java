@@ -223,7 +223,7 @@ public class frmCriarConsulta extends frmGenerico {
         txtHora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtHora.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        txtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        txtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         txtValor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         lblAvisoConsulta.setForeground(new java.awt.Color(204, 0, 0));
@@ -558,7 +558,7 @@ public class frmCriarConsulta extends frmGenerico {
         if (this.validar_campos() && (this.idMedico != null && this.idPaciente != null)) {
             
             boolean status = this.consultaService.criarConsulta(
-                    LocalDateTime.parse( txtData.getText() + " " + txtHora.getText() , DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), 
+                    LocalDateTime.parse( txtData.getText() + " " + txtHora.getText().trim() + ":00" , DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), 
                     new BigDecimal(txtValor.getText().replace(",", ".")),
                     txtObservacoes.getText(), 
                     this.idMedico, 
@@ -642,7 +642,6 @@ public class frmCriarConsulta extends frmGenerico {
                     
                 }
                 
-                JOptionPane.showMessageDialog(this, "Sem suporte para isso ainda.", "Sem suporte", JOptionPane.INFORMATION_MESSAGE);
             }
             
         }

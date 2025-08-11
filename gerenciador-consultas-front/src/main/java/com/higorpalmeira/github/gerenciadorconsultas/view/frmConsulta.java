@@ -4,8 +4,10 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.ConsultaClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
+import com.higorpalmeira.github.gerenciadorconsultas.service.ConsultaService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 import com.higorpalmeira.github.gerenciadorconsultas.view.criar.frmCriarConsulta;
@@ -15,6 +17,8 @@ import com.higorpalmeira.github.gerenciadorconsultas.view.criar.frmCriarConsulta
  * @author higor
  */
 public class frmConsulta extends frmGenerico {
+    
+    private final ConsultaService consultaService;
     
     private final MedicoService medicoService;
     
@@ -26,6 +30,7 @@ public class frmConsulta extends frmGenerico {
     public frmConsulta() {
         initComponents();
         
+        this.consultaService = new ConsultaService(new ConsultaClient());
         this.medicoService = new MedicoService(new MedicoClient());
         this.pacienteService = new PacienteService(new PacienteClient());
     }
@@ -42,6 +47,8 @@ public class frmConsulta extends frmGenerico {
         pnlTitulo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pnlPesquisa = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblConsultas = new javax.swing.JTable();
@@ -79,15 +86,29 @@ public class frmConsulta extends frmGenerico {
 
         pnlPesquisa.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisa:"));
 
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        jButton5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton5.setText("PESQUISAR");
+
         javax.swing.GroupLayout pnlPesquisaLayout = new javax.swing.GroupLayout(pnlPesquisa);
         pnlPesquisa.setLayout(pnlPesquisaLayout);
         pnlPesquisaLayout.setHorizontalGroup(
             pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 397, Short.MAX_VALUE)
+            .addGroup(pnlPesquisaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jButton5)
+                .addContainerGap())
         );
         pnlPesquisaLayout.setVerticalGroup(
             pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 73, Short.MAX_VALUE)
+            .addGroup(pnlPesquisaLayout.createSequentialGroup()
+                .addGroup(pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5))
+                .addGap(0, 51, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -219,7 +240,7 @@ public class frmConsulta extends frmGenerico {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 102, Short.MAX_VALUE)
+                        .addGap(0, 97, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -234,7 +255,7 @@ public class frmConsulta extends frmGenerico {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        frmCriarConsulta frmCriarConsulta = new frmCriarConsulta(this.medicoService, this.pacienteService);
+        frmCriarConsulta frmCriarConsulta = new frmCriarConsulta(this.consultaService, this.medicoService, this.pacienteService);
         frmCriarConsulta.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -279,10 +300,12 @@ public class frmConsulta extends frmGenerico {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel pnlPesquisa;
     private javax.swing.JPanel pnlTitulo;
     private javax.swing.JTable tblConsultas;
