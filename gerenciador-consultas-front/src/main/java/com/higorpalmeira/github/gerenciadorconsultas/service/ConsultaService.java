@@ -234,4 +234,36 @@ public class ConsultaService {
         return listaConsultas;
     }
     
+    public List<SaidaSimplesConsultaDto> listarTodasConsultasSimplesPorStatus(TipoStatusConsulta status) {
+        
+        List<SaidaSimplesConsultaDto> listaConsultasDto = new ArrayList<>();
+        
+        if (status == null) {
+            return listaConsultasDto;
+        }
+        
+        try {
+            
+            HttpResponse<String> response = client.listarTodasConsultasSimplesPorStatus(status.getTipo());
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                listaConsultasDto = mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesConsultaDto>>() { });
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição das Consultas! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar listar todas as consultas por status '" + status.getTipo() + "'!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return listaConsultasDto;
+        
+    }
+    
 }
