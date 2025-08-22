@@ -6,6 +6,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.atualizar.AtualizarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarConsultaDto;
 import java.io.IOException;
 import java.net.URI;
@@ -39,6 +40,33 @@ public class ConsultaClient {
                 .uri(URI.create(URL_API))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(criarConsultaDto)))
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
+    public HttpResponse<String> editarConsulta(String idConsulta, AtualizarConsultaDto atualizarConsultaDto) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/" + idConsulta))
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString( mapper.writeValueAsString(atualizarConsultaDto)))
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
+    public HttpResponse<String> buscarSaidaSimplesConsultaPorId(String id) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/" + id))
+                .GET()
                 .build();
         
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

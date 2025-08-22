@@ -2,14 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.higorpalmeira.github.gerenciadorconsultas.view.criar;
+package com.higorpalmeira.github.gerenciadorconsultas.view.editar;
 
+import com.higorpalmeira.github.gerenciadorconsultas.view.criar.*;
 import com.higorpalmeira.github.gerenciadorconsultas.client.ConsultaClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.client.PacienteClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.atualizar.AtualizarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarConsultaDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesPacienteDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConsulta;
 import com.higorpalmeira.github.gerenciadorconsultas.service.ConsultaService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
@@ -19,13 +23,14 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
+import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author higor
  */
-public class frmCriarConsulta extends frmGenerico {
+public class frmEditarConsulta extends frmGenerico {
     
     private final ConsultaService consultaService;
     
@@ -35,14 +40,24 @@ public class frmCriarConsulta extends frmGenerico {
     
     private UUID idMedico;
     private UUID idPaciente;
+    
+    private SaidaSimplesConsultaDto consultaAtualizarDto;
 
     /**
      * Creates new form frmCriarConsulta
      * 
+     * @param idConsultaAtualizar
+     * @param consultaService
      * @param medicoService
      * @param pacienteService
      */
-    public frmCriarConsulta(ConsultaService consultaService, MedicoService medicoService, PacienteService pacienteService) {
+    public frmEditarConsulta(UUID idConsultaAtualizar, ConsultaService consultaService, MedicoService medicoService, PacienteService pacienteService) {
+        
+        if (idConsultaAtualizar == null) {
+            JOptionPane.showMessageDialog(null, "É necessário uma identificação de consulta válida para editá-la!", "Erro ao carregar consulta", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }
+        
         initComponents();
         
         lblAvisoConsulta.setVisible(false);
@@ -54,8 +69,19 @@ public class frmCriarConsulta extends frmGenerico {
         this.medicoService = medicoService;
         this.pacienteService = pacienteService;
         
-        this.idMedico = null;
-        this.idPaciente = null;
+        this.consultaAtualizarDto = this.consultaService.buscarSaidaSimplesConsultaDtoPorId(idConsultaAtualizar);
+        
+        if (this.consultaAtualizarDto == null || (this.consultaAtualizarDto.getIdConsulta() == null && this.consultaAtualizarDto.getDataHora() == null)) {
+            JOptionPane.showMessageDialog(this, "A consulta referente ao ID informado não é válido!", "Consulta Inválida", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }
+        
+        this.carregar_status();
+        this.preencher_campos();
+        
+        this.idMedico = this.consultaAtualizarDto.getMedico().getId();
+        this.idPaciente = this.consultaAtualizarDto.getPaciente().getId();
+        
     }
 
     private boolean validar_campos() {
@@ -84,21 +110,44 @@ public class frmCriarConsulta extends frmGenerico {
         
     }
     
-    private void limpar_campos() {
+    private void preencher_campos() {
         
-        txtCpf.setText("");
-        txtCrm.setText("");
-        txtData.setText("");
-        txtEmailPaciente.setText("");
-        txtEspecialidadeMedico.setText("");
-        txtHora.setText("");
-        txtNomeMedico.setText("");
-        txtNomePaciente.setText("");
-        txtObservacoes.setText("");
-        txtSobrenomeMedico.setText("");
-        txtSobrenomePaciente.setText("");
-        txtTelefonePaciente.setText("");
-        txtValor.setText("");
+        txtData.setText( this.consultaAtualizarDto.getDataHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) );
+        txtHora.setText( this.consultaAtualizarDto.getDataHora().format(DateTimeFormatter.ofPattern("HH:mm")) );
+        txtValor.setText( this.consultaAtualizarDto.getValor().toPlainString().replaceAll("\\.", ",") );
+        txtObservacoes.setText( this.consultaAtualizarDto.getObservacoes() != null 
+                ? this.consultaAtualizarDto.getObservacoes() 
+                : "" );
+        
+        txtCrm.setText( this.consultaAtualizarDto.getMedico().getCrm() );
+        txtNomeMedico.setText( this.consultaAtualizarDto.getMedico().getNome() );
+        txtSobrenomeMedico.setText( this.consultaAtualizarDto.getMedico().getSobrenome() );
+        txtEspecialidadeMedico.setText( this.consultaAtualizarDto.getMedico().getEspecialidade().getDescricao() );
+        
+        txtCpf.setText( this.consultaAtualizarDto.getPaciente().getCpf() );
+        txtNomePaciente.setText( this.consultaAtualizarDto.getPaciente().getNome() );
+        txtSobrenomePaciente.setText( this.consultaAtualizarDto.getPaciente().getSobrenome() );
+        txtEmailPaciente.setText( this.consultaAtualizarDto.getPaciente().getEmail() );
+        txtTelefonePaciente.setText( this.consultaAtualizarDto.getPaciente().getTelefone() );
+     
+        TipoStatusConsulta eStatus = this.consultaAtualizarDto.getStatus();
+        int idx = 0;
+        for (TipoStatusConsulta status : TipoStatusConsulta.values()) {
+            if (status.getTipo().equalsIgnoreCase(eStatus.getTipo())) {
+                break;
+            }
+            idx++;
+        }
+        
+        cbStatus.setSelectedIndex(idx);
+        
+    }
+    
+    private void carregar_status() {
+        
+        for (TipoStatusConsulta status : TipoStatusConsulta.values()) {
+            cbStatus.addItem( status.getTipo() );
+        }
         
     }
     
@@ -128,6 +177,8 @@ public class frmCriarConsulta extends frmGenerico {
         lblAvisoConsulta = new javax.swing.JLabel();
         lblAvisoConsultaHora = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        cbStatus = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -155,13 +206,13 @@ public class frmCriarConsulta extends frmGenerico {
         btnRegistrarPaciente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setName("criar consulta"); // NOI18N
+        setName("editar consulta"); // NOI18N
 
         pnlTitulo.setBackground(new java.awt.Color(0, 204, 51));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("CRIAR CONSULTA");
+        jLabel1.setText("EDITAR CONSULTA");
 
         javax.swing.GroupLayout pnlTituloLayout = new javax.swing.GroupLayout(pnlTitulo);
         pnlTitulo.setLayout(pnlTituloLayout);
@@ -235,6 +286,11 @@ public class frmCriarConsulta extends frmGenerico {
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel15.setText("R$");
 
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel16.setText("Status:");
+
+        cbStatus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -245,29 +301,36 @@ public class frmCriarConsulta extends frmGenerico {
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(148, 148, 148)
-                                .addComponent(jLabel3))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel15)
-                                .addGap(5, 5, 5)
-                                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel3)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtData)
+                                        .addGap(90, 90, 90))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lblAvisoConsulta)
+                                        .addGap(104, 104, 104)))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(145, 145, 145)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtData)
-                                .addGap(90, 90, 90))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblAvisoConsulta)
-                                .addGap(104, 104, 104)))
+                                .addComponent(jLabel15)
+                                .addGap(5, 5, 5)
+                                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(69, 69, 69)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel16)
                             .addComponent(lblAvisoConsultaHora)
-                            .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(208, 208, 208)))
+                            .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(167, 167, 167)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -286,11 +349,14 @@ public class frmCriarConsulta extends frmGenerico {
                     .addComponent(lblAvisoConsulta)
                     .addComponent(lblAvisoConsultaHora))
                 .addGap(20, 20, 20)
-                .addComponent(jLabel4)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel16))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -558,21 +624,29 @@ public class frmCriarConsulta extends frmGenerico {
 
         if (this.validar_campos() && (this.idMedico != null && this.idPaciente != null)) {
             
-            boolean status = this.consultaService.criarConsulta(
-                    LocalDateTime.parse( txtData.getText() + " " + txtHora.getText().trim() + ":00" , DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), 
-                    new BigDecimal(txtValor.getText().contains(",") ? txtValor.getText().replace(",", ".") : txtValor.getText().concat(".00")),
-                    txtObservacoes.getText(), 
-                    this.idMedico, 
-                    this.idPaciente);
+            String strStatus = cbStatus.getItemAt(cbStatus.getSelectedIndex());
+            TipoStatusConsulta eStatus = TipoStatusConsulta.fromTipo(strStatus);
+            
+            boolean status = this.consultaService.editarConsulta(
+                    this.consultaAtualizarDto.getIdConsulta(), 
+                    LocalDateTime.parse( txtData.getText().trim() + " " + txtHora.getText().trim() + ":00" , DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), 
+                    eStatus,
+                    txtObservacoes.getText().trim(), 
+                    new BigDecimal( txtValor.getText().contains(",") 
+                            ? txtValor.getText().replace(",", ".") 
+                            : txtValor.getText().concat(".00") ), 
+                    idMedico, 
+                    idPaciente
+            );
             
             if (status) {
                 
-                JOptionPane.showMessageDialog(this, "Consulta criada com sucesso!", "Consulta Criada", JOptionPane.INFORMATION_MESSAGE);
-                this.limpar_campos();
+                JOptionPane.showMessageDialog(this, "A consulta foi atualizada com sucesso!", "Sucesso na atualização", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
                 
             } else {
                 
-                JOptionPane.showMessageDialog(this, "A consulta não pode ser criada!", "Consulta não criada", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "A consulta não pode ser atualizada!", "Falha na atualização", JOptionPane.ERROR_MESSAGE);
                 
             }
             
@@ -600,6 +674,10 @@ public class frmCriarConsulta extends frmGenerico {
                 lblAvisoMedico.setVisible(true);
             } else {
                 
+                txtNomeMedico.setText("");
+                txtSobrenomeMedico.setText("");
+                txtEspecialidadeMedico.setText("");
+            
                 this.idMedico = medicoDto.getId();
                 
                 txtNomeMedico.setText( medicoDto.getNome() );
@@ -633,6 +711,11 @@ public class frmCriarConsulta extends frmGenerico {
                     lblAvisoPaciente.setVisible(true);
                     
                 } else {
+                    
+                    txtNomePaciente.setText("");
+                    txtSobrenomePaciente.setText("");
+                    txtEmailPaciente.setText("");
+                    txtTelefonePaciente.setText("");
                     
                     this.idPaciente = pacienteDto.getId();
                     
@@ -678,20 +761,21 @@ public class frmCriarConsulta extends frmGenerico {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmCriarConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmEditarConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmCriarConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmEditarConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmCriarConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmEditarConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmCriarConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmEditarConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCriarConsulta(new ConsultaService(new ConsultaClient()) , new MedicoService(new MedicoClient()), new PacienteService(new PacienteClient())).setVisible(true);
+                new frmEditarConsulta(null, new ConsultaService(new ConsultaClient()) , new MedicoService(new MedicoClient()), new PacienteService(new PacienteClient())).setVisible(true);
             }
         });
     }
@@ -700,6 +784,7 @@ public class frmCriarConsulta extends frmGenerico {
     private javax.swing.JButton btnRegistrarMedico;
     private javax.swing.JButton btnRegistrarPaciente;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<String> cbStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -707,6 +792,7 @@ public class frmCriarConsulta extends frmGenerico {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

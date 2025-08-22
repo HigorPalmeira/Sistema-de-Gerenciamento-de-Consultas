@@ -8,10 +8,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.higorpalmeira.github.gerenciadorconsultas.client.ConsultaClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.atualizar.AtualizarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
+import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConsulta;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
@@ -100,6 +102,76 @@ public class ConsultaService {
         }
         
         return false;
+        
+    }
+    
+    public boolean editarConsulta(UUID idConsulta, LocalDateTime dataHora, 
+            TipoStatusConsulta status, String observacoes, BigDecimal valor, 
+            UUID medicoId, UUID pacienteId) {
+        
+        if (idConsulta == null) {
+            return false;
+        }
+        
+        if (valor == null || valor.scale() != 2 || (valor.compareTo(BigDecimal.ZERO) < 0) || valor.compareTo( new BigDecimal("99999.99") ) > 0) {
+            return false;
+        }
+        
+        if (medicoId == null || pacienteId == null) {
+            return false;
+        }
+        
+        AtualizarConsultaDto atualizarConsultaDto = new AtualizarConsultaDto(dataHora, status, observacoes, valor, medicoId, pacienteId);
+        
+        try {
+            
+            HttpResponse<String> response = client.editarConsulta(idConsulta.toString(), atualizarConsultaDto);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_DELECAO_EDICAO.getTipo()) {
+                
+                return true;
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar editar uma Consulta!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return false;
+        
+    }
+    
+    public SaidaSimplesConsultaDto buscarSaidaSimplesConsultaDtoPorId(UUID id) {
+        
+        if (id == null) {
+            return null;
+        }
+        
+        SaidaSimplesConsultaDto consultaDto = new SaidaSimplesConsultaDto();
+        
+        try {
+            
+            HttpResponse<String> response = client.buscarSaidaSimplesConsultaPorId(id.toString());
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                consultaDto = mapper.readValue(response.body(), SaidaSimplesConsultaDto.class);
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição da Consulta! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar buscar a consulta pelo ID!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return consultaDto;
         
     }
     

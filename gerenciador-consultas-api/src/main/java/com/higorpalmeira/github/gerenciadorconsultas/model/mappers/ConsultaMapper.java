@@ -25,6 +25,7 @@ public abstract class ConsultaMapper {
 	
 	@Mapping(target = "medico", ignore = true)
 	@Mapping(target = "paciente", ignore = true)
+	@Mapping(source = "id", target = "idConsulta")
 	public abstract SaidaSimplesConsultaDto consultaParaSaidaSimplesConsultaDto(Consulta consulta);
 
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

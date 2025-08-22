@@ -12,8 +12,10 @@ import com.higorpalmeira.github.gerenciadorconsultas.service.ConsultaService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
 import com.higorpalmeira.github.gerenciadorconsultas.view.criar.frmCriarConsulta;
+import com.higorpalmeira.github.gerenciadorconsultas.view.editar.frmEditarConsulta;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -111,6 +113,14 @@ public class frmConsulta extends frmGenerico {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("consultas"); // NOI18N
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                formFocusLost(evt);
+            }
+        });
 
         pnlTitulo.setBackground(new java.awt.Color(0, 204, 51));
 
@@ -233,6 +243,11 @@ public class frmConsulta extends frmGenerico {
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setMnemonic('e');
         jButton2.setText("EDITAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton3.setMnemonic('d');
@@ -318,6 +333,39 @@ public class frmConsulta extends frmGenerico {
         frmCriarConsulta.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        int idx = tblConsultas.getSelectedRow();
+        
+        if (idx == -1) {
+            
+            JOptionPane.showMessageDialog(this, "É necessário selecionar uma consulta para editá-la!", "Selecione uma consulta", JOptionPane.ERROR_MESSAGE);
+            
+        } else {
+            
+            String strId = String.valueOf(tblConsultas.getValueAt(idx, 0));
+            UUID idConsulta = UUID.fromString(strId);
+            
+            
+            frmEditarConsulta frmEditarConsulta = new frmEditarConsulta(idConsulta, this.consultaService, this.medicoService, this.pacienteService);
+            frmEditarConsulta.setVisible(true);
+            
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
+
+        this.listar_consultas();
+        
+    }//GEN-LAST:event_formFocusGained
+
+    private void formFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusLost
+
+        this.carregarTabela = true;
+        
+    }//GEN-LAST:event_formFocusLost
 
     /**
      * @param args the command line arguments

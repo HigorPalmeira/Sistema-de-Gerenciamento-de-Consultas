@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.create.CriarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesConsultaDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarConsultaDto;
@@ -19,6 +20,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStat
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultaMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.EspecialidadeMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.MedicoMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.PacienteMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.ConsultaRepository;
@@ -41,15 +43,18 @@ public class ConsultaService {
 	
 	private PacienteMapper pacienteMapper;
 	
+	private EspecialidadeMapper especialidadeMapper;
+	
 	public ConsultaService(ConsultaRepository consultaRepository, MedicoRepository medicoRepository, 
 			PacienteRepository pacienteRepository, ConsultaMapper consultaMapper, MedicoMapper medicoMapper,
-			PacienteMapper pacienteMapper) {
+			PacienteMapper pacienteMapper, EspecialidadeMapper especialidadeMapper) {
 		this.consultaRepository = consultaRepository;
 		this.medicoRepository = medicoRepository;
 		this.pacienteRepository = pacienteRepository;
 		this.consultaMapper = consultaMapper;
 		this.pacienteMapper = pacienteMapper;
 		this.medicoMapper = medicoMapper;
+		this.especialidadeMapper = especialidadeMapper;
 	}
 	
 	@Transactional
@@ -96,6 +101,11 @@ public class ConsultaService {
 		SaidaSimplesMedicoDto medicoDto = medicoMapper
 				.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
 		
+		SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+				.especialidadeParaSaidaSimplesEspecialidadeDto(consulta.getMedico().getEspecialidade());
+		
+		medicoDto.setEspecialidade(especialidadeDto);
+		
 		SaidaSimplesPacienteDto pacienteDto = pacienteMapper
 				.pacienteParaSaidaSimplesPacienteDto(consulta.getPaciente());
 		
@@ -121,6 +131,11 @@ public class ConsultaService {
 		
 		SaidaSimplesMedicoDto medicoDto = medicoMapper.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
 		
+		SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+				.especialidadeParaSaidaSimplesEspecialidadeDto(consulta.getMedico().getEspecialidade());
+		
+		medicoDto.setEspecialidade(especialidadeDto);
+		
 		SaidaSimplesPacienteDto pacienteDto = pacienteMapper.pacienteParaSaidaSimplesPacienteDto(consulta.getPaciente());
 		
 		consultaDto.setMedico(medicoDto);
@@ -143,6 +158,11 @@ public class ConsultaService {
 					
 					SaidaSimplesMedicoDto medicoDto = medicoMapper
 							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(consulta.getMedico().getEspecialidade());
+					
+					medicoDto.setEspecialidade(especialidadeDto);
 					
 					dto.setMedico(medicoDto);
 					
@@ -177,6 +197,11 @@ public class ConsultaService {
 					SaidaSimplesMedicoDto medicoDto = medicoMapper
 							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
 					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(consulta.getMedico().getEspecialidade());
+					
+					medicoDto.setEspecialidade(especialidadeDto);
+					
 					dto.setMedico(medicoDto);
 					
 					SaidaSimplesPacienteDto pacienteDto = pacienteMapper
@@ -210,6 +235,11 @@ public class ConsultaService {
 					SaidaSimplesMedicoDto medicoDto = medicoMapper
 							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
 					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(consulta.getMedico().getEspecialidade());
+					
+					medicoDto.setEspecialidade(especialidadeDto);
+					
 					dto.setMedico(medicoDto);
 					
 					SaidaSimplesPacienteDto pacienteDto = pacienteMapper
@@ -242,6 +272,11 @@ public class ConsultaService {
 					
 					SaidaSimplesMedicoDto medicoDto = medicoMapper
 							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(consulta.getMedico().getEspecialidade());
+					
+					medicoDto.setEspecialidade(especialidadeDto);
 					
 					dto.setMedico(medicoDto);
 					
@@ -280,6 +315,11 @@ public class ConsultaService {
 					SaidaSimplesMedicoDto medicoDto = medicoMapper
 							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
 					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(consulta.getMedico().getEspecialidade());
+					
+					medicoDto.setEspecialidade(especialidadeDto);
+					
 					dto.setMedico(medicoDto);
 					
 					SaidaSimplesPacienteDto pacienteDto = pacienteMapper
@@ -312,6 +352,11 @@ public class ConsultaService {
 					
 					SaidaSimplesMedicoDto medicoDto = medicoMapper
 							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(consulta.getMedico().getEspecialidade());
+					
+					medicoDto.setEspecialidade(especialidadeDto);
 					
 					dto.setMedico(medicoDto);
 					
@@ -346,6 +391,11 @@ public class ConsultaService {
 					SaidaSimplesMedicoDto medicoDto = medicoMapper
 							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
 					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(consulta.getMedico().getEspecialidade());
+					
+					medicoDto.setEspecialidade(especialidadeDto);
+					
 					dto.setMedico(medicoDto);
 					
 					SaidaSimplesPacienteDto pacienteDto = pacienteMapper
@@ -378,6 +428,11 @@ public class ConsultaService {
 					
 					SaidaSimplesMedicoDto medicoDto = medicoMapper
 							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(consulta.getMedico().getEspecialidade());
+					
+					medicoDto.setEspecialidade(especialidadeDto);
 					
 					dto.setMedico(medicoDto);
 					
@@ -416,6 +471,11 @@ public class ConsultaService {
 					SaidaSimplesMedicoDto medicoDto = medicoMapper
 							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
 					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(consulta.getMedico().getEspecialidade());
+					
+					medicoDto.setEspecialidade(especialidadeDto);
+					
 					dto.setMedico(medicoDto);
 					
 					SaidaSimplesPacienteDto pacienteDto = pacienteMapper
@@ -444,6 +504,11 @@ public class ConsultaService {
 					
 					SaidaSimplesMedicoDto medicoDto = medicoMapper
 							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(consulta.getMedico().getEspecialidade());
+					
+					medicoDto.setEspecialidade(especialidadeDto);
 					
 					dto.setMedico(medicoDto);
 					
@@ -479,6 +544,11 @@ public class ConsultaService {
 					
 					SaidaSimplesMedicoDto medicoDto = medicoMapper
 							.medicoParaSaidaSimplesMedicoDto(consulta.getMedico());
+					
+					SaidaSimplesEspecialidadeDto especialidadeDto = especialidadeMapper
+							.especialidadeParaSaidaSimplesEspecialidadeDto(consulta.getMedico().getEspecialidade());
+					
+					medicoDto.setEspecialidade(especialidadeDto);
 					
 					dto.setMedico(medicoDto);
 					
