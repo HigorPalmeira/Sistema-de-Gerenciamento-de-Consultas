@@ -13,6 +13,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimple
 import com.higorpalmeira.github.gerenciadorconsultas.service.ConsultaService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
+import com.higorpalmeira.github.gerenciadorconsultas.util.BigDecimalUtil;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import com.higorpalmeira.github.gerenciadorconsultas.view.frmGenerico;
 import java.math.BigDecimal;
@@ -560,7 +561,7 @@ public class frmCriarConsulta extends frmGenerico {
             
             boolean status = this.consultaService.criarConsulta(
                     LocalDateTime.parse( txtData.getText() + " " + txtHora.getText().trim() + ":00" , DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), 
-                    new BigDecimal(txtValor.getText().contains(",") ? txtValor.getText().replace(",", ".") : txtValor.getText().concat(".00")),
+                    BigDecimalUtil.ofString(txtValor.getText().trim()),
                     txtObservacoes.getText(), 
                     this.idMedico, 
                     this.idPaciente);

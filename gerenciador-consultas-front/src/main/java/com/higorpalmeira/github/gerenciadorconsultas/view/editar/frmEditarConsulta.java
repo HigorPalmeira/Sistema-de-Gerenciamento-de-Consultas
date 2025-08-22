@@ -17,6 +17,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.Tipo
 import com.higorpalmeira.github.gerenciadorconsultas.service.ConsultaService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
+import com.higorpalmeira.github.gerenciadorconsultas.util.BigDecimalUtil;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Validador;
 import com.higorpalmeira.github.gerenciadorconsultas.view.frmGenerico;
 import java.math.BigDecimal;
@@ -632,9 +633,7 @@ public class frmEditarConsulta extends frmGenerico {
                     LocalDateTime.parse( txtData.getText().trim() + " " + txtHora.getText().trim() + ":00" , DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), 
                     eStatus,
                     txtObservacoes.getText().trim(), 
-                    new BigDecimal( txtValor.getText().contains(",") 
-                            ? txtValor.getText().replace(",", ".") 
-                            : txtValor.getText().concat(".00") ), 
+                    BigDecimalUtil.ofString(txtValor.getText().trim()), 
                     idMedico, 
                     idPaciente
             );
