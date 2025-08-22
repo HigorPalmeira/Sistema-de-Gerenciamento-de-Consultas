@@ -8,7 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.atualizar.AtualizarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarConsultaDto;
+import com.higorpalmeira.github.gerenciadorconsultas.util.Formatador;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -78,7 +80,72 @@ public class ConsultaClient {
     public HttpResponse<String> buscarConsultaPorDataHora(LocalDateTime dataHora) throws IOException, InterruptedException {
         
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(URL_API + "/datahora/" + dataHora.format(DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss"))))
+                .uri(URI.create(URL_API + "/datahora/" + Formatador.ofLocalDateTime(dataHora)))
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
+    public HttpResponse<String> buscarConsultaSimplesPorValor(BigDecimal valor) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/valor/" + valor))
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
+    public HttpResponse<String> buscarConsultaSimplesPorValorMaior(BigDecimal valor) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/valor/maior/" + valor))
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
+    public HttpResponse<String> buscarConsultaSimplesPorValorMenorIgual(BigDecimal valor) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/valor/menor_igual/" + valor))
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
+    public HttpResponse<String> buscarConsultaSimplesPorIntervaloValor(BigDecimal valorInicial, BigDecimal valorFinal) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/valor/" + valorInicial + "/" + valorFinal))
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
+    public HttpResponse<String> buscarConsultaSimplesPorObservacoes(String observacoes) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/observacoes/" + observacoes))
                 .GET()
                 .build();
         
@@ -92,6 +159,19 @@ public class ConsultaClient {
         
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL_API))
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+        
+    }
+    
+    public HttpResponse<String> listarTodasConsultasSimplesPorStatus(String status) throws IOException, InterruptedException {
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL_API + "/status/" + status))
                 .GET()
                 .build();
         
