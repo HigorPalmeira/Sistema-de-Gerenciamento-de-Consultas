@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.atualizar.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaDetalhadaMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.StatusOperacao;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.TipoStatus.TipoStatusConta;
@@ -42,6 +43,18 @@ public class MedicoService {
         
         client = medicoClient;
         mapper = new ObjectMapper();
+        
+    }
+    
+    private void erroRequisicao(int statusCode) {
+        
+        JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição do Médico! Status da requisição: " + statusCode + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+        
+    }
+    
+    private void erroException(String erro, String mensagem) {
+        
+        JOptionPane.showMessageDialog(null, "Erro ao tentar " + erro + " o médico!\nErro: " + mensagem, "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
         
     }
     
@@ -349,6 +362,38 @@ public class MedicoService {
         }
         
         return listaMedicos;
+        
+    }
+    
+    public SaidaDetalhadaMedicoDto buscarSaidaDetalhadaMedicoDtoPorId(UUID idMedico) {
+        
+        if (idMedico == null) {
+            return null;
+        }
+        
+        SaidaDetalhadaMedicoDto medicoDto = new SaidaDetalhadaMedicoDto();
+        
+        try {
+            
+            HttpResponse<String> response = client.buscarMedicoDetalhadoPorId(idMedico);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                medicoDto = mapper.readValue(response.body(), SaidaDetalhadaMedicoDto.class);
+                
+            } else {
+                
+                this.erroRequisicao(response.statusCode());
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            this.erroException("buscar", ex.toString());
+            
+        }
+        
+        return medicoDto;
         
     }
     
