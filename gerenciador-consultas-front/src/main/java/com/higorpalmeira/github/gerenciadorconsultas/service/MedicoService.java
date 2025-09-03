@@ -6,6 +6,7 @@ package com.higorpalmeira.github.gerenciadorconsultas.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.atualizar.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.criar.CriarMedicoDto;
@@ -43,6 +44,7 @@ public class MedicoService {
         
         client = medicoClient;
         mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         
     }
     

@@ -4,27 +4,89 @@
  */
 package com.higorpalmeira.github.gerenciadorconsultas.view.detalhes;
 
+import com.higorpalmeira.github.gerenciadorconsultas.client.MedicoClient;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaDetalhadaMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimplesConsultaDto;
+import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.view.frmGenerico;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.UUID;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author higor
  */
 public class frmDetalhesMedico extends frmGenerico {
+    
+    private final MedicoService medicoService;
+    
+    private SaidaDetalhadaMedicoDto medicoDto;
 
     /**
      * Creates new form frmDetalhesMedico
+     * @param idMedico
+     * @param medicoService
      */
-    public frmDetalhesMedico() {
+    public frmDetalhesMedico(UUID idMedico, MedicoService medicoService) {
         initComponents();
         
+        if (idMedico == null) {
+            this.dispose();
+        }
+        
+        this.medicoService = medicoService;
+        
+        this.medicoDto = this.medicoService.buscarSaidaDetalhadaMedicoDtoPorId(idMedico);
+        
         settings();
+        
+        this.preencher_campos();
+        
     }
     
     @Override
     public void settings() {
         
         this.setTitle(super.ACRON_DEFAULT + ": " + this.getName().toUpperCase());
+        
+    }
+    
+    private void preencher_campos() {
+        
+        txtNome.setText( this.medicoDto.getNome() );
+        txtSobrenome.setText( this.medicoDto.getSobrenome() );
+        txtCrm.setText( this.medicoDto.getCrm() );
+        txtEmail.setText( this.medicoDto.getEmail() );
+        txtTelefone.setText( this.medicoDto.getTelefone() );
+        
+        preencher_tabela_consultas(this.medicoDto.getConsultas());
+        
+    }
+    
+    private void preencher_tabela_consultas(List<SaidaSimplesConsultaDto> consultas) {
+        
+        DefaultTableModel dtm = (DefaultTableModel) tbConsultas.getModel();
+        dtm.setNumRows(0);
+        
+        if (consultas == null || consultas.isEmpty()) return;
+        
+        for(SaidaSimplesConsultaDto consultaDto : consultas) {
+            
+            String paciente = consultaDto.getPaciente().getNome() + " " + consultaDto.getPaciente().getSobrenome();
+            
+            Object[] rowData = {
+                consultaDto.getIdConsulta(),
+                consultaDto.getDataHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
+                consultaDto.getStatus().getTipo(),
+                paciente
+            };
+            
+            dtm.addRow(rowData);
+            
+        }
         
     }
 
@@ -272,7 +334,7 @@ public class frmDetalhesMedico extends frmGenerico {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmDetalhesMedico().setVisible(true);
+                new frmDetalhesMedico(null, new MedicoService(new MedicoClient())).setVisible(true);
             }
         });
     }

@@ -187,6 +187,22 @@ public class frmMedico extends frmGenerico {
         }
 
     }
+    
+    private void view_detalhes() {
+        
+        int idx = tblMedicos.getSelectedRow();
+        
+        if (idx >= 0) {
+            
+            String strId = String.valueOf(tblMedicos.getValueAt(idx, 0));
+            UUID idMedico = UUID.fromString(strId);
+            
+            frmDetalhesMedico frmDetalhesMedico = new frmDetalhesMedico(idMedico, this.medicoService);
+            frmDetalhesMedico.setVisible(true);
+            
+        }
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -510,7 +526,10 @@ public class frmMedico extends frmGenerico {
     private void tblMedicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMedicosMouseClicked
 
         if (evt.getClickCount() == 2) {
-            JOptionPane.showMessageDialog(this, "Item na tabela selecionado?\nSem suporte para isso por enquanto!");
+            
+            this.view_detalhes();
+            
+            //JOptionPane.showMessageDialog(this, "Item na tabela selecionado?\nSem suporte para isso por enquanto!");
         }
 
     }//GEN-LAST:event_tblMedicosMouseClicked
@@ -595,14 +614,8 @@ public class frmMedico extends frmGenerico {
 
     private void btnDetalhesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalhesActionPerformed
 
-        int idx = tblMedicos.getSelectedRow();
+        this.view_detalhes();
 
-        String nome = "Não há valores"; //(String) tblMedicos.getModel().getValueAt(idx, 1);
-
-        JOptionPane.showMessageDialog(this, "Linha " + idx + " selecionada!\nNome: " + nome, "Ver detalhes", JOptionPane.INFORMATION_MESSAGE);
-
-        frmDetalhesMedico frmDetalhesMedico = new frmDetalhesMedico();
-        frmDetalhesMedico.setVisible(true);
     }//GEN-LAST:event_btnDetalhesActionPerformed
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
