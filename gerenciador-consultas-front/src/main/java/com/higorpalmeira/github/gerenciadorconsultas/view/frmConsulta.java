@@ -27,13 +27,13 @@ import javax.swing.table.DefaultTableModel;
  * @author higor
  */
 public class frmConsulta extends frmGenerico {
-    
+
     private final ConsultaService consultaService;
-    
+
     private final MedicoService medicoService;
-    
+
     private final PacienteService pacienteService;
-    
+
     private boolean carregarTabela;
 
     /**
@@ -41,23 +41,23 @@ public class frmConsulta extends frmGenerico {
      */
     public frmConsulta() {
         initComponents();
-        
+
         this.consultaService = new ConsultaService(new ConsultaClient());
         this.medicoService = new MedicoService(new MedicoClient());
         this.pacienteService = new PacienteService(new PacienteClient());
-        
+
         this.carregarTabela = true;
-        
-        this.preencher_tabela();
+
+        this.carregar_tabela();
     }
-    
+
     private void preencher_tabela(SaidaSimplesConsultaDto consultaDto) {
-        
+
         DefaultTableModel dtm = (DefaultTableModel) tblConsultas.getModel();
-        dtm.setRowCount(0);;
-        
+        dtm.setRowCount(0);
+
         if (consultaDto != null) {
-            
+
             Object[] obj = {
                 consultaDto.getIdConsulta(),
                 consultaDto.getDataHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
@@ -65,51 +65,57 @@ public class frmConsulta extends frmGenerico {
                 consultaDto.getPaciente().getNome() + " " + consultaDto.getPaciente().getSobrenome(),
                 consultaDto.getStatus().getTipo()
             };
-            
+
             dtm.addRow(obj);
-            
+
         }
-        
+
     }
-    
-    private void preencher_tabela() {
-        
+
+    private void preencher_tabela(List<SaidaSimplesConsultaDto> listaConsultas) {
+
+        DefaultTableModel dtm = (DefaultTableModel) tblConsultas.getModel();
+        dtm.setNumRows(0);
+
+        if (!listaConsultas.isEmpty()) {
+
+            for (SaidaSimplesConsultaDto consulta : listaConsultas) {
+
+                Object[] obj = {
+                    consulta.getIdConsulta(),
+                    consulta.getDataHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
+                    consulta.getMedico().getNome() + " " + consulta.getMedico().getSobrenome(),
+                    consulta.getPaciente().getNome() + " " + consulta.getPaciente().getSobrenome(),
+                    consulta.getStatus().getTipo()
+                };
+
+                dtm.addRow(obj);
+
+            }
+
+        }
+
+    }
+
+    private void carregar_tabela() {
+
         if (this.carregarTabela) {
             this.carregarTabela = false;
-            
+
             List<SaidaSimplesConsultaDto> listaConsultas = this.consultaService.listarTodasConsultasAtivas();
-            
-            DefaultTableModel dtm = (DefaultTableModel) tblConsultas.getModel();
-            dtm.setNumRows(0);
-            
-            if (!listaConsultas.isEmpty()) {
-                
-                for (SaidaSimplesConsultaDto consulta : listaConsultas) {
-                    
-                    Object[] obj = {
-                        consulta.getIdConsulta(),
-                        consulta.getDataHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
-                        consulta.getMedico().getNome() + " " + consulta.getMedico().getSobrenome(),
-                        consulta.getPaciente().getNome() + " " + consulta.getPaciente().getSobrenome(),
-                        consulta.getStatus().getTipo()
-                    };
-                    
-                    dtm.addRow(obj);
-                    
-                }
-                
-            }
+
+            this.preencher_tabela(listaConsultas);
             
         }
-        
+
     }
-    
+
     private void pesquisar() {
-        
+
         if (txtPesquisa.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, "Escreva na caixa de pesquisa!", "Falha ao pesquisar", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }
 
     /**
@@ -128,6 +134,8 @@ public class frmConsulta extends frmGenerico {
         jButton5 = new javax.swing.JButton();
         rbValorMenorIgualQue = new javax.swing.JRadioButton();
         rbHorario = new javax.swing.JRadioButton();
+        rbObservacoes = new javax.swing.JRadioButton();
+        rbValorMaiorQue = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblConsultas = new javax.swing.JTable();
@@ -198,6 +206,20 @@ public class frmConsulta extends frmGenerico {
             }
         });
 
+        rbObservacoes.setText("Observacoes");
+        rbObservacoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbObservacoesActionPerformed(evt);
+            }
+        });
+
+        rbValorMaiorQue.setText("Valor Maior que");
+        rbValorMaiorQue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbValorMaiorQueActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlPesquisaLayout = new javax.swing.GroupLayout(pnlPesquisa);
         pnlPesquisa.setLayout(pnlPesquisaLayout);
         pnlPesquisaLayout.setHorizontalGroup(
@@ -210,9 +232,13 @@ public class frmConsulta extends frmGenerico {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addComponent(jButton5))
                     .addGroup(pnlPesquisaLayout.createSequentialGroup()
-                        .addComponent(rbHorario)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbValorMenorIgualQue)
+                        .addGroup(pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbObservacoes)
+                            .addComponent(rbHorario))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbValorMenorIgualQue)
+                            .addComponent(rbValorMaiorQue))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -226,7 +252,10 @@ public class frmConsulta extends frmGenerico {
                 .addGroup(pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbValorMenorIgualQue)
                     .addComponent(rbHorario))
-                .addGap(0, 24, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbObservacoes)
+                    .addComponent(rbValorMaiorQue)))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -371,7 +400,7 @@ public class frmConsulta extends frmGenerico {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 97, Short.MAX_VALUE)
+                        .addGap(0, 94, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -394,40 +423,41 @@ public class frmConsulta extends frmGenerico {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         int idx = tblConsultas.getSelectedRow();
-        
+
         if (idx == -1) {
-            
+
             JOptionPane.showMessageDialog(this, "É necessário selecionar uma consulta para editá-la!", "Selecione uma consulta", JOptionPane.ERROR_MESSAGE);
-            
+
         } else {
-            
+
             String strId = String.valueOf(tblConsultas.getValueAt(idx, 0));
             UUID idConsulta = UUID.fromString(strId);
-            
-            
+
             frmEditarConsulta frmEditarConsulta = new frmEditarConsulta(idConsulta, this.consultaService, this.medicoService, this.pacienteService);
             frmEditarConsulta.setVisible(true);
-            
+
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
 
-        this.preencher_tabela();
-        
+        this.carregar_tabela();
+
     }//GEN-LAST:event_formFocusGained
 
     private void formFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusLost
 
         this.carregarTabela = true;
-        
+
     }//GEN-LAST:event_formFocusLost
 
     private void rbHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbHorarioActionPerformed
 
         this.rbHorario.setSelected(true);
         this.rbValorMenorIgualQue.setSelected(false);
+        this.rbObservacoes.setSelected(false);
+        this.rbValorMaiorQue.setSelected(false);
 
     }//GEN-LAST:event_rbHorarioActionPerformed
 
@@ -435,41 +465,79 @@ public class frmConsulta extends frmGenerico {
 
         this.rbValorMenorIgualQue.setSelected(true);
         this.rbHorario.setSelected(false);
+        this.rbObservacoes.setSelected(false);
+        this.rbValorMaiorQue.setSelected(false);
 
     }//GEN-LAST:event_rbValorMenorIgualQueActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
         String textoPesquisa = this.txtPesquisa.getText().trim();
-        
+
         if (textoPesquisa.isBlank()) {
             JOptionPane.showMessageDialog(this, "O campo de pesquisa não pode estar vazio!", "Não é possível pesquisar", JOptionPane.ERROR_MESSAGE);
             this.txtPesquisa.requestFocus();
         }
-        
+
         if (this.rbHorario.isSelected()) {
-            
+
             LocalDateTime horario = null;
-            
+
             try {
-                horario = LocalDateTime.parse( textoPesquisa + ":00" , DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+                horario = LocalDateTime.parse(textoPesquisa + ":00", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Erro ao tentar utilizar o horário informado! Verifique se o horário informado está no formato correto: dd/MM/yyyy HH:mm.", "Erro de Conversão", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             SaidaSimplesConsultaDto buscarConsultaPorDataHora = this.consultaService.buscarConsultaPorDataHora(horario);
             this.preencher_tabela(buscarConsultaPorDataHora);
-            
+
         } else if (this.rbValorMenorIgualQue.isSelected()) {
+
+            BigDecimal valor = BigDecimalUtil.ofString(textoPesquisa);
+
+            List<SaidaSimplesConsultaDto> buscarConsultaSimplesPorValorMenorIgual = this.consultaService.buscarConsultaSimplesPorValorMenorIgual(valor);
+
+            this.preencher_tabela(buscarConsultaSimplesPorValorMenorIgual);
+
+        } else if (this.rbValorMaiorQue.isSelected()) {
             
             BigDecimal valor = BigDecimalUtil.ofString(textoPesquisa);
             
-            JOptionPane.showMessageDialog(this, "Sem suporte");
+            List<SaidaSimplesConsultaDto> buscarConsultaSimplesPorValorMaior = this.consultaService.buscarConsultaSimplesPorValorMaior(valor);
+            
+            this.preencher_tabela(buscarConsultaSimplesPorValorMaior);
+            
+        } else if (this.rbObservacoes.isSelected()) {
+            
+            List<SaidaSimplesConsultaDto> buscarConsultaSimplesPorObservacoes = this.consultaService.buscarConsultaSimplesPorObservacoes(textoPesquisa);
+            
+            this.preencher_tabela(buscarConsultaSimplesPorObservacoes);
             
         }
+        
+        this.txtPesquisa.setText("");
 
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void rbObservacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbObservacoesActionPerformed
+
+        this.rbObservacoes.setSelected(true);
+        this.rbHorario.setSelected(false);
+        this.rbValorMenorIgualQue.setSelected(false);
+        this.rbValorMaiorQue.setSelected(false);
+
+    }//GEN-LAST:event_rbObservacoesActionPerformed
+
+    private void rbValorMaiorQueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbValorMaiorQueActionPerformed
+
+        this.rbValorMaiorQue.setSelected(true);
+        this.rbHorario.setSelected(false);
+        this.rbValorMenorIgualQue.setSelected(false);
+        this.rbObservacoes.setSelected(false);
+                
+    }//GEN-LAST:event_rbValorMaiorQueActionPerformed
 
     /**
      * @param args the command line arguments
@@ -519,6 +587,8 @@ public class frmConsulta extends frmGenerico {
     private javax.swing.JPanel pnlPesquisa;
     private javax.swing.JPanel pnlTitulo;
     private javax.swing.JRadioButton rbHorario;
+    private javax.swing.JRadioButton rbObservacoes;
+    private javax.swing.JRadioButton rbValorMaiorQue;
     private javax.swing.JRadioButton rbValorMenorIgualQue;
     private javax.swing.JTable tblConsultas;
     private javax.swing.JTextField txtPesquisa;
