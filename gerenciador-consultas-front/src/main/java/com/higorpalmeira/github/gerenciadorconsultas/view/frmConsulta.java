@@ -481,14 +481,7 @@ public class frmConsulta extends frmGenerico {
 
         if (this.rbHorario.isSelected()) {
 
-            LocalDateTime horario = null;
-
-            try {
-                horario = LocalDateTime.parse(textoPesquisa + ":00", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro ao tentar utilizar o horário informado! Verifique se o horário informado está no formato correto: dd/MM/yyyy HH:mm.", "Erro de Conversão", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+            LocalDateTime horario = LocalDateTime.parse(textoPesquisa + ":00", DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss"));
 
             SaidaSimplesConsultaDto buscarConsultaPorDataHora = this.consultaService.buscarConsultaPorDataHora(horario);
             this.preencher_tabela(buscarConsultaPorDataHora);
