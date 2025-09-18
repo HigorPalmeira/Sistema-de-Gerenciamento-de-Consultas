@@ -11,8 +11,11 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.saida.SaidaSimple
 import com.higorpalmeira.github.gerenciadorconsultas.service.ConsultaService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.MedicoService;
 import com.higorpalmeira.github.gerenciadorconsultas.service.PacienteService;
+import com.higorpalmeira.github.gerenciadorconsultas.util.BigDecimalUtil;
 import com.higorpalmeira.github.gerenciadorconsultas.view.criar.frmCriarConsulta;
 import com.higorpalmeira.github.gerenciadorconsultas.view.editar.frmEditarConsulta;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
@@ -45,10 +48,31 @@ public class frmConsulta extends frmGenerico {
         
         this.carregarTabela = true;
         
-        this.listar_consultas();
+        this.preencher_tabela();
     }
     
-    private void listar_consultas() {
+    private void preencher_tabela(SaidaSimplesConsultaDto consultaDto) {
+        
+        DefaultTableModel dtm = (DefaultTableModel) tblConsultas.getModel();
+        dtm.setRowCount(0);;
+        
+        if (consultaDto != null) {
+            
+            Object[] obj = {
+                consultaDto.getIdConsulta(),
+                consultaDto.getDataHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
+                consultaDto.getMedico().getNome() + " " + consultaDto.getMedico().getSobrenome(),
+                consultaDto.getPaciente().getNome() + " " + consultaDto.getPaciente().getSobrenome(),
+                consultaDto.getStatus().getTipo()
+            };
+            
+            dtm.addRow(obj);
+            
+        }
+        
+    }
+    
+    private void preencher_tabela() {
         
         if (this.carregarTabela) {
             this.carregarTabela = false;
@@ -102,6 +126,8 @@ public class frmConsulta extends frmGenerico {
         pnlPesquisa = new javax.swing.JPanel();
         txtPesquisa = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
+        rbValorMenorIgualQue = new javax.swing.JRadioButton();
+        rbHorario = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblConsultas = new javax.swing.JTable();
@@ -151,6 +177,26 @@ public class frmConsulta extends frmGenerico {
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton5.setText("PESQUISAR");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        rbValorMenorIgualQue.setText("Valor Menor Igual que");
+        rbValorMenorIgualQue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbValorMenorIgualQueActionPerformed(evt);
+            }
+        });
+
+        rbHorario.setSelected(true);
+        rbHorario.setText("Horário");
+        rbHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbHorarioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlPesquisaLayout = new javax.swing.GroupLayout(pnlPesquisa);
         pnlPesquisa.setLayout(pnlPesquisaLayout);
@@ -158,9 +204,16 @@ public class frmConsulta extends frmGenerico {
             pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPesquisaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jButton5)
+                .addGroup(pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPesquisaLayout.createSequentialGroup()
+                        .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addComponent(jButton5))
+                    .addGroup(pnlPesquisaLayout.createSequentialGroup()
+                        .addComponent(rbHorario)
+                        .addGap(18, 18, 18)
+                        .addComponent(rbValorMenorIgualQue)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlPesquisaLayout.setVerticalGroup(
@@ -169,7 +222,11 @@ public class frmConsulta extends frmGenerico {
                 .addGroup(pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5))
-                .addGap(0, 51, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbValorMenorIgualQue)
+                    .addComponent(rbHorario))
+                .addGap(0, 24, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -357,7 +414,7 @@ public class frmConsulta extends frmGenerico {
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
 
-        this.listar_consultas();
+        this.preencher_tabela();
         
     }//GEN-LAST:event_formFocusGained
 
@@ -366,6 +423,53 @@ public class frmConsulta extends frmGenerico {
         this.carregarTabela = true;
         
     }//GEN-LAST:event_formFocusLost
+
+    private void rbHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbHorarioActionPerformed
+
+        this.rbHorario.setSelected(true);
+        this.rbValorMenorIgualQue.setSelected(false);
+
+    }//GEN-LAST:event_rbHorarioActionPerformed
+
+    private void rbValorMenorIgualQueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbValorMenorIgualQueActionPerformed
+
+        this.rbValorMenorIgualQue.setSelected(true);
+        this.rbHorario.setSelected(false);
+
+    }//GEN-LAST:event_rbValorMenorIgualQueActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        String textoPesquisa = this.txtPesquisa.getText().trim();
+        
+        if (textoPesquisa.isBlank()) {
+            JOptionPane.showMessageDialog(this, "O campo de pesquisa não pode estar vazio!", "Não é possível pesquisar", JOptionPane.ERROR_MESSAGE);
+            this.txtPesquisa.requestFocus();
+        }
+        
+        if (this.rbHorario.isSelected()) {
+            
+            LocalDateTime horario = null;
+            
+            try {
+                horario = LocalDateTime.parse( textoPesquisa + ":00" , DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao tentar utilizar o horário informado! Verifique se o horário informado está no formato correto: dd/MM/yyyy HH:mm.", "Erro de Conversão", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            SaidaSimplesConsultaDto buscarConsultaPorDataHora = this.consultaService.buscarConsultaPorDataHora(horario);
+            this.preencher_tabela(buscarConsultaPorDataHora);
+            
+        } else if (this.rbValorMenorIgualQue.isSelected()) {
+            
+            BigDecimal valor = BigDecimalUtil.ofString(textoPesquisa);
+            
+            JOptionPane.showMessageDialog(this, "Sem suporte");
+            
+        }
+
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -414,6 +518,8 @@ public class frmConsulta extends frmGenerico {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlPesquisa;
     private javax.swing.JPanel pnlTitulo;
+    private javax.swing.JRadioButton rbHorario;
+    private javax.swing.JRadioButton rbValorMenorIgualQue;
     private javax.swing.JTable tblConsultas;
     private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables

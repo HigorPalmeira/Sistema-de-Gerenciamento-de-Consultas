@@ -12,6 +12,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaDetal
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesEspecialidadeDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesMedicoDto;
+import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimplesPacienteDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarMedicoDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Medico;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConta;
@@ -21,6 +22,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNo
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultaMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.EspecialidadeMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.MedicoMapper;
+import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.PacienteMapper;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.EspecialidadeRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.model.repository.MedicoRepository;
 import com.higorpalmeira.github.gerenciadorconsultas.util.Formatter;
@@ -39,12 +41,15 @@ public class MedicoService {
 	
 	private ConsultaMapper consultaMapper;
 	
-	public MedicoService(MedicoRepository medicoRepository, EspecialidadeRepository especialidadeRepository, MedicoMapper medicoMapper, EspecialidadeMapper especialidadeMapper, ConsultaMapper consultaMapper) {
+	private PacienteMapper pacienteMapper;
+	
+	public MedicoService(MedicoRepository medicoRepository, EspecialidadeRepository especialidadeRepository, MedicoMapper medicoMapper, EspecialidadeMapper especialidadeMapper, ConsultaMapper consultaMapper, PacienteMapper pacienteMapper) {
 		this.medicoRepository = medicoRepository;
 		this.especialidadeRepository = especialidadeRepository;
 		this.medicoMapper = medicoMapper;
 		this.especialidadeMapper = especialidadeMapper;
 		this.consultaMapper = consultaMapper;
+		this.pacienteMapper = pacienteMapper;
 	}
 	
 	@Transactional
@@ -260,11 +265,33 @@ public class MedicoService {
 		
 		medicoDto.setEspecialidade(especialidadeDto);
 		
-		List<SaidaSimplesConsultaDto> listaConsultasDto = medicoEntidade.getConsultas().stream()
-				.map(consultaMapper::consultaParaSaidaSimplesConsultaDto)
-				.collect(Collectors.toList());
+		List<SaidaSimplesConsultaDto> listaConsultaDto = medicoEntidade.getConsultas().stream()
+				.map(consulta -> {
+					
+					SaidaSimplesConsultaDto dto = consultaMapper.consultaParaSaidaSimplesConsultaDto(consulta);
+					
+					SaidaSimplesMedicoDto tempMedicoDto = medicoMapper
+							.medicoParaSaidaSimplesMedicoDto(medicoEntidade);
+					
+					tempMedicoDto.setEspecialidade(especialidadeDto);
+					
+					dto.setMedico(tempMedicoDto);
+					
+					SaidaSimplesPacienteDto tempPacienteDto = pacienteMapper
+							.pacienteParaSaidaSimplesPacienteDto(consulta.getPaciente());
+					
+					dto.setPaciente(tempPacienteDto);
+					
+					return dto;
+					
+				}).collect(Collectors.toList());
 		
-		medicoDto.setConsultas(listaConsultasDto);
+		// antigo
+		/*List<SaidaSimplesConsultaDto> listaConsultasDto = medicoEntidade.getConsultas().stream()
+				.map(consultaMapper::consultaParaSaidaSimplesConsultaDto)
+				.collect(Collectors.toList());*/
+		
+		medicoDto.setConsultas(listaConsultaDto);
 		
 		return medicoDto;
 		

@@ -17,6 +17,7 @@ import com.higorpalmeira.github.gerenciadorconsultas.model.dto.output.SaidaSimpl
 import com.higorpalmeira.github.gerenciadorconsultas.model.dto.update.AtualizarConsultaDto;
 import com.higorpalmeira.github.gerenciadorconsultas.model.entity.Consulta;
 import com.higorpalmeira.github.gerenciadorconsultas.model.enums.Status.TipoStatusConsulta;
+import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.DataConflictException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.InvalidDataException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.exceptions.ResourceNotFoundException;
 import com.higorpalmeira.github.gerenciadorconsultas.model.mappers.ConsultaMapper;
@@ -66,6 +67,13 @@ public class ConsultaService {
 		
 		if (!Validator.DataHoraValidation(criarConsultaDto.getDataHora())) {
 			throw new InvalidDataException("Data e hora inválido.");
+		}
+		
+		var tempConsulta = consultaRepository
+				.findByDataHora(criarConsultaDto.getDataHora());
+		
+		if (tempConsulta.isPresent()) {
+			throw new DataConflictException("Consulta já cadastrada no horário informado.");
 		}
 		
 		var medicoId = criarConsultaDto.getMedicoId();
