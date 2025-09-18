@@ -207,6 +207,134 @@ public class ConsultaService {
         
     }
     
+    public List<SaidaSimplesConsultaDto> buscarConsultaSimplesPorValorMaior(BigDecimal valor) {
+        
+        List<SaidaSimplesConsultaDto> listaConsultas = new ArrayList<>();
+        
+        if (valor == null) {
+            return listaConsultas;
+        }
+        
+        try {
+            
+            HttpResponse<String> response = this.client.buscarConsultaSimplesPorValorMaior(valor);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                listaConsultas = this.mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesConsultaDto>>() { });
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição das Consultas! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar listar todas as consultas com valor maior que " + valor.toString() + "!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return listaConsultas;
+        
+    }
+    
+    public List<SaidaSimplesConsultaDto> buscarConsultaSimplesPorValorMenorIgual(BigDecimal valor) {
+        
+        List<SaidaSimplesConsultaDto> listaConsultas = new ArrayList<>();
+        
+        if (valor == null) {
+            return listaConsultas;
+        }
+        
+        try {
+            
+            HttpResponse<String> response = this.client.buscarConsultaSimplesPorValorMenorIgual(valor);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                listaConsultas = this.mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesConsultaDto>>() { });
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição das Consultas! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar listar todas as consultas com valor menor ou igual a " + valor.toString() + "!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return listaConsultas;
+        
+    }
+    
+    public List<SaidaSimplesConsultaDto> buscarConsultaSimplesPorIntervaloValor(BigDecimal valorInicial, BigDecimal valorFinal) {
+        
+        List<SaidaSimplesConsultaDto> listaConsultas = new ArrayList<>();
+        
+        if (valorInicial == null || valorFinal == null) {
+            return listaConsultas;
+        }
+        
+        try {
+            
+            HttpResponse<String> response = this.client.buscarConsultaSimplesPorIntervaloValor(valorInicial, valorFinal);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                listaConsultas = this.mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesConsultaDto>>() { });
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição das Consultas! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar listar todas as consultas no intervalo de " + valorInicial.toString() + " até " + valorFinal.toString() + "!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return listaConsultas;
+        
+    }
+    
+    public List<SaidaSimplesConsultaDto> buscarConsultaSimplesPorObservacoes(String observacoes) {
+        
+        List<SaidaSimplesConsultaDto> listaConsultas = new ArrayList<>();
+        
+        if (observacoes == null || observacoes.trim().isBlank()) {
+            return listaConsultas;
+        }
+        
+        try {
+            
+            HttpResponse<String> response = this.client.buscarConsultaSimplesPorObservacoes(observacoes);
+            
+            if (response.statusCode() == StatusOperacao.SUCESSO_BUSCA.getTipo()) {
+                
+                listaConsultas = this.mapper.readValue(response.body(), new TypeReference<List<SaidaSimplesConsultaDto>>() { });
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro na requisição das Consultas! Status da requisição: " + response.statusCode() + "\nSe o erro persistir contate o administrador do sistema!", "Erro de requisição", JOptionPane.ERROR_MESSAGE);
+                
+            }
+            
+        } catch (IOException | InterruptedException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao tentar listar todas as consultas com as observações: \"" + observacoes + "\"!\nErro: " + ex.toString(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+        return listaConsultas;
+        
+    }
+    
     public List<SaidaSimplesConsultaDto> listarTodasConsultasAtivas() {
         
         List<SaidaSimplesConsultaDto> listaConsultas = new ArrayList<>();
