@@ -41,7 +41,7 @@ public class frmConsulta extends frmGenerico {
      */
     public frmConsulta() {
         initComponents();
-
+        this.jButton4.setVisible(false);
         this.consultaService = new ConsultaService(new ConsultaClient());
         this.medicoService = new MedicoService(new MedicoClient());
         this.pacienteService = new PacienteService(new PacienteClient());
@@ -481,7 +481,13 @@ public class frmConsulta extends frmGenerico {
 
         if (this.rbHorario.isSelected()) {
 
-            LocalDateTime horario = LocalDateTime.parse(textoPesquisa + ":00", DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss"));
+            LocalDateTime horario = null;
+            
+            try {
+                horario = LocalDateTime.parse(textoPesquisa + ":00", DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss"));
+            } catch(Exception e) {
+                System.out.println("Erro ao converter...");
+            }
 
             SaidaSimplesConsultaDto buscarConsultaPorDataHora = this.consultaService.buscarConsultaPorDataHora(horario);
             this.preencher_tabela(buscarConsultaPorDataHora);
